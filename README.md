@@ -3,7 +3,7 @@ Webpage for the cycle frontier wiki apps pages
 
 
 To run locally, do: 
-```ps1
+```sh
 $ git clone https://github.com/Stevnbak/TCF-Apps
 $ cd TCF-Apps
 $ npm install --save
