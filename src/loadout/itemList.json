@@ -1,0 +1,868 @@
+[
+    {
+        "name": "Attachment",
+        "ingame": "Attachment",
+        "rarity": "Unknown",
+        "description": "",
+        "icon": "Attachment.png"
+    },
+    {
+        "name": "Consumable_Health",
+        "ingame": "Health Consumable",
+        "rarity": "Unknown",
+        "description": "",
+        "icon": "Health Consumable.png"
+    },
+    {
+        "name": "Consumable_Offensive",
+        "ingame": "Offensive Consumable",
+        "rarity": "Unknown",
+        "description": "",
+        "icon": "Offensive Consumable.png"
+    },
+    {
+        "name": "Fabrics",
+        "ingame": "Textiles",
+        "rarity": "Common",
+        "description": "Heavy and durable fabrics, useful for printing various items.\r\n\r\nYou can never get the smell of mildew out of these. Can be found in Civilian Lockers.",
+        "icon": "Textiles.png"
+    },
+    {
+        "name": "Battery",
+        "ingame": "Fusion Cartridge Batteries",
+        "rarity": "Common",
+        "description": "A pack of high-powered, slightly radioactive batteries. Safe to use in most electronic devices.\r\n\r\nNot actually fusion powered, but still worryingly radioactive. Can be found in Civilian Lockers.",
+        "icon": "\"Fusion Cartridge\" Batteries .png"
+    },
+    {
+        "name": "ProteinBar",
+        "ingame": "Nutritional Bar",
+        "rarity": "Common",
+        "description": "Nutrions flagship product, a full days meal in a single candy bar. Can be found in Coolers and Civilian Lockers within high danger areas.",
+        "icon": "Nutritional Bar.png"
+    },
+    {
+        "name": "Adhesive",
+        "ingame": "Resin Gun",
+        "rarity": "Uncommon",
+        "description": "Multi purpose tool, handy for sticking things together or providing flexible insulation.\r\n\r\nThe warning label says to not use if you need a warning label. Can be found in Coolers and Civilian Lockers.",
+        "icon": "Resin Gun.png"
+    },
+    {
+        "name": "SampleContainer",
+        "ingame": "Sample Container",
+        "rarity": "Rare",
+        "description": "A sealed self-powered container for exotic alien samples.\r\n\r\nScientists are always putting little things in jars and hoping for the best. Can be found in Coolers and Civilian Lockers.",
+        "icon": "Sample Container.png"
+    },
+    {
+        "name": "ShardSlicer",
+        "ingame": "Shard Slicer",
+        "rarity": "Rare",
+        "description": "A delicate yet powerful machine used for printing certain items. Can be found in Civilian Lockers within high danger areas.",
+        "icon": "Shard Slicer.png"
+    },
+    {
+        "name": "Map01_KeyCard_03",
+        "ingame": "Tall House Key",
+        "rarity": "Common",
+        "description": "A generic keycard, someone drew a house on stilts on the back. ",
+        "icon": "Tall House Key.png"
+    },
+    {
+        "name": "Map01_KeyCard_05",
+        "ingame": "Skeleton Key",
+        "rarity": "Common",
+        "description": "The original label is too worn out to read, but someone scratched skeleton onto it with a knife. Hopefully still works. ",
+        "icon": "Skeleton Key.png"
+    },
+    {
+        "name": "Map02_KeyCard_02",
+        "ingame": "Janitors Key",
+        "rarity": "Common",
+        "description": "A janitors key loop with a single simple key with a cute broom charm attached; it appears to longingly sweep at the floor as it dangles from your hand ",
+        "icon": "Janitors Key.png"
+    },
+    {
+        "name": "Map02_KeyCard_05",
+        "ingame": "Loose House Key",
+        "rarity": "Common",
+        "description": "Looks like the key to someones house. The amount of rust and moss on it seems to imply its origin is somewhere deep in a jungle. ",
+        "icon": "Loose House Key.png"
+    },
+    {
+        "name": "Map01_KeyCard_01",
+        "ingame": "Server Access Key",
+        "rarity": "Uncommon",
+        "description": "Labeled only as Servers - Bright Sands, with the Com-Base logo. ",
+        "icon": "Server Access Key.png"
+    },
+    {
+        "name": "Map01_KeyCard_04",
+        "ingame": "Bright Sands Observation Room Key",
+        "rarity": "Uncommon",
+        "description": "Keycard carrying the Asclepius Vaccines logo. And several biohazard warnings... may want to wash your hands. ",
+        "icon": "Bright Sands Observation Room Key.png"
+    },
+    {
+        "name": "Map01_KeyCard_02",
+        "ingame": "Mine Access Key",
+        "rarity": "Uncommon",
+        "description": "Appears to be for one of the mine entrances along the northern edge of Bright Sands. ",
+        "icon": "Mine Access Key.png"
+    },
+    {
+        "name": "Map02_KeyCard_04",
+        "ingame": "Overseers Office",
+        "rarity": "Uncommon",
+        "description": "Labeled with Nutrion Farms and is emblazoned the Nutrion Farms logo. Its still covered in a sickly stale pumpkin juice... ew. ",
+        "icon": "Overseers Office.png"
+    },
+    {
+        "name": "Map01_KeyCard_06",
+        "ingame": "Armory Key",
+        "rarity": "Rare",
+        "description": "The original label is almost unreadable but you can still identify the word Jungle at the top. ",
+        "icon": "Armory Key.png"
+    },
+    {
+        "name": "Map01_KeyCard_07",
+        "ingame": "Luggage Saferoom Key",
+        "rarity": "Rare",
+        "description": "The key looks like it is for somewhere in the Base Camp in Bright sands. ",
+        "icon": "Luggage Saferoom Key.png"
+    },
+    {
+        "name": "Map02_KeyCard_03",
+        "ingame": "Garage Office",
+        "rarity": "Rare",
+        "description": "The keycard has an image of one of those rad looking 6-wheeler trucks printed on it with the text Garage Office alongside it.  ",
+        "icon": "Garage Office.png"
+    },
+    {
+        "name": "Map02_KeyCard_01",
+        "ingame": "Boss Office",
+        "rarity": "Epic",
+        "description": "The unmistakable STARPORT logo leaps out from the card. The smaller Top Floor Admin whispers for your attention in pitiful subscript underneath. ",
+        "icon": "Boss' Office.png"
+    },
+    {
+        "name": "Map02_KeyCard_06",
+        "ingame": "Lab Keycard",
+        "rarity": "Epic",
+        "description": "A bright white keycard with the telltale livery of Osiris. Pinnacle Labs is laser etched professionally onto it. ",
+        "icon": "Lab Keycard.png"
+    },
+    {
+        "name": "Map02_KeyCard_07",
+        "ingame": "Bar Storage Key",
+        "rarity": "Epic",
+        "description": "A key to The Tipsy Drone attached to a miniature trinket of the namesakes affable drone mascot. ",
+        "icon": "Bar Storage Key.png"
+    },
+    {
+        "name": "Map02_KeyCard_08",
+        "ingame": "Community Room",
+        "rarity": "Epic",
+        "description": "A key to a public space ",
+        "icon": "Community Room.png"
+    },
+    {
+        "name": "Shield_01",
+        "ingame": "Shield",
+        "rarity": "Common",
+        "description": "Protects the body of its wearer. ",
+        "icon": "Shield.png"
+    },
+    {
+        "name": "Shield_02",
+        "ingame": "Shield",
+        "rarity": "Uncommon",
+        "description": "Protects the body of its wearer. ",
+        "icon": "Shield.png"
+    },
+    {
+        "name": "Shield_03",
+        "ingame": "Shield",
+        "rarity": "Rare",
+        "description": "Protects the body of its wearer. ",
+        "icon": "Shield.png"
+    },
+    {
+        "name": "Shield_04",
+        "ingame": "Shield",
+        "rarity": "Epic",
+        "description": "Protects the body of its wearer. ",
+        "icon": "Shield.png"
+    },
+    {
+        "name": "Shield_05",
+        "ingame": "Shield",
+        "rarity": "Exotic",
+        "description": "Protects the body of its wearer. ",
+        "icon": "Shield.png"
+    },
+    {
+        "name": "SpareCasing",
+        "ingame": "Hardened Metals",
+        "rarity": "Common",
+        "description": "Material used in a variety of printing and upgrading processes. Can be found in any Structures and Containers.",
+        "icon": "Hardened Metals.png"
+    },
+    {
+        "name": "CompoundSheets",
+        "ingame": "Compound Sheets",
+        "rarity": "Common",
+        "description": "Standardized metal and plastic sheets like these are used to print everything from tractors to weapons, so long as you follow the right printing instructions. Can be found in any Structures and Containers.",
+        "icon": "Compound Sheets.png"
+    },
+    {
+        "name": "Insulation",
+        "ingame": "Salvaged Insulation",
+        "rarity": "Common",
+        "description": "Even outside of its intended purpose, the materials still have various uses in item printing.\r\n\r\nYes, its asbestos. Can be found in any Structures and Containers.",
+        "icon": "Salvaged Insulation.png"
+    },
+    {
+        "name": "AluminumParts",
+        "ingame": "Aluminum scrap",
+        "rarity": "Common",
+        "description": "Mostly aluminum and steel; not the most valuable salvage, but useful for printing. Can be found in any Structures and Containers within high danger areas.",
+        "icon": "Aluminum scrap.png"
+    },
+    {
+        "name": "Bag_01",
+        "ingame": "Small Backpack",
+        "rarity": "Common",
+        "description": "A small backpack for storing items. ",
+        "icon": "Small Backpack.png"
+    },
+    {
+        "name": "Bag_02",
+        "ingame": "Medium Backpack",
+        "rarity": "Uncommon",
+        "description": "A medium backpack for storing items. ",
+        "icon": "Medium Backpack.png"
+    },
+    {
+        "name": "Bag_03",
+        "ingame": "Large Backpack",
+        "rarity": "Rare",
+        "description": "A large backpack for storing items. ",
+        "icon": "Large Backpack.png"
+    },
+    {
+        "name": "Bag_04",
+        "ingame": "Heavy Duty Backpack",
+        "rarity": "Epic",
+        "description": "An extra large backpack for storing items. ",
+        "icon": "Heavy Duty Backpack.png"
+    },
+    {
+        "name": "CircuitBoard",
+        "ingame": "Circuit Board",
+        "rarity": "Uncommon",
+        "description": "An old circuit board, its components can be salvaged and repurposed to build new items.\r\n\r\nAnd now you can put e-waste management on your resume. Can be found in Briefcases and Luggage.",
+        "icon": "Circuit Board.png"
+    },
+    {
+        "name": "RadioSpareParts",
+        "ingame": "Radio Equipment",
+        "rarity": "Uncommon",
+        "description": "An old colonial radio transceiver; salvaging these for item printing is cheaper than buying new parts. Can be found in Briefcases and Luggage.",
+        "icon": "Radio Equipment.png"
+    },
+    {
+        "name": "Datapad",
+        "ingame": "Interactive Screen",
+        "rarity": "Rare",
+        "description": "Interactive Screens were common among civilians on Fortuna III, used for all sorts of purposes. Cached data and basic components give them some selling value. Can be found in Briefcases and Luggage within high danger areas.",
+        "icon": "Interactive Screen.png"
+    },
+    {
+        "name": "WP_E_Pistol_Bullet_01",
+        "ingame": "K-28",
+        "rarity": "Common",
+        "description": "A standard semi-automatic pistol. Its an effective sidearm for any Prospector. With a design thats seen no change in over two centuries, the CoTEC K-28 is one of the most popular weapons throughout known space, as are its many knock offs. undefined",
+        "icon": "K-28.png"
+    },
+    {
+        "name": "WP_E_SMG_Bullet_01",
+        "ingame": "S-576 PDW",
+        "rarity": "Common",
+        "description": "A commonly used SMG with high rate of fire which makes it formidable up close. The CoTEC S-576 is one of the standard firearms used aboard Federation ships, stations, and outposts. Lightweight, compact, and produced in mass by various manufacturers, this model is a staple in practically every weapons market. This model doesnt look quite right, but it still gets the job done. undefined",
+        "icon": "S-576 PDW.png"
+    },
+    {
+        "name": "WP_E_SGun_Bullet_01",
+        "ingame": "B9 Trenchgun",
+        "rarity": "Common",
+        "description": "Pump-action shotgun, high-spread, short range. Yep, its a shotgun, all right. undefined undefined",
+        "icon": "B9 Trenchgun.png"
+    },
+    {
+        "name": "WP_E_AR_Energy_01",
+        "ingame": "AR-55 Autorifle",
+        "rarity": "Common",
+        "description": "A decent fully automatic rifle, doesnt excel in any one department, but comfortably versatile and lethally effective. The AR-55 Phase Autorifle was commissioned by the IFA in an attempt to improve standard Authority armament without further increasing their reliance on Korolev Heavy Industries. While the IFA would eventually settle with the SAR-62, CoTECs AR-55 remains a popular weapon in private armies and corporate security forces, and has succeeded at being an effective market counter to the popular KOR-47. undefined",
+        "icon": "AR-55 Autorifle.png"
+    },
+    {
+        "name": "WP_E_Sniper_Bullet_01",
+        "ingame": "C-32 Bolt Action",
+        "rarity": "Common",
+        "description": "Bolt action sniper rifle that was commonly used by the local population. Anachronistic by design, this CoTEC bolt action rifle was meant for civilian use in frontier planets to manage hostile wildlife. Effective in its purpose, the massive increase in wildlife hostility and numbers lead to mass production of lower grade rifles like this one. undefined",
+        "icon": "C-32 Bolt Action.png"
+    },
+    {
+        "name": "WP_D_Pistol_Bullet_01",
+        "ingame": "Bulldog",
+        "rarity": "Uncommon",
+        "description": "Shotgun that suffers from very limited range. Simple and effective, compact firearms utilizing shotgun shells are popular on stations as close range problem solvers for their high damage as well as for mitigating the risk of overpenetration that more conventional pistols carry. The Bulldog is the ICAs prefered design, easy to build and maintain, and even easier to operate. undefined",
+        "icon": "Bulldog.png"
+    },
+    {
+        "name": "WP_G_Pistol_Energy_01",
+        "ingame": "Scarab",
+        "rarity": "Uncommon",
+        "description": "A dependable pistol, fires controlled and powerful three-shot bursts. The Scarab, an Adaptive Phase Pistol, is one of Osiris most successful weapons, able to induce a localized rapid matter state change on remote targets at a fraction of the energy cost of more conventional laser-based weaponry. With energy efficiency and safety in mind, the Scarab is a solid choice of sidearm, though its compact form limits the extent of its lethality. undefined",
+        "icon": "Scarab.png"
+    },
+    {
+        "name": "WP_A_SMG_Shard_01",
+        "ingame": "KM-9 Scrapper",
+        "rarity": "Uncommon",
+        "description": "A rapid-firing shard SMG, a good choice for taking out targets at close range, though of little use in long range engagements. Faced with an ever-increasing surplus of adrentite sludge, an inventive Korolev waste management engineer brought forth a novel way of handling the hazardous byproduct: shoot it. The Scrapper was the first viable weapon produced by Korolev Munitions, one of the megacorps many competing arms manufacturing branches, and the first known to use adrentite crystals as ammunition. undefined",
+        "icon": "KM-9 'Scrapper'.png"
+    },
+    {
+        "name": "WP_G_AR_Needle_01",
+        "ingame": "Manticore",
+        "rarity": "Uncommon",
+        "description": "A flechette assault rifle, its heavy hitting but less accurate compared to other rifles. Intended for use in pressurised environments, the Manticore was designed for more militaristic use than the compact ASP. Lightweight, accurate, and lethal, its seen use by marines both performing as and defending against boarding parties. undefined",
+        "icon": "Manticore.png"
+    },
+    {
+        "name": "WP_A_SGun_Energy_01",
+        "ingame": "PKR Maelstrom",
+        "rarity": "Rare",
+        "description": "A semi-automatic shotgun, its heavy and a poor choice at range, but utterly devastating up close. Korolevs first attempt at a building a phase weapon, the Phase-Kinetic Reactive Maelstroms ammo pack carries more than enough energy to fulminate whatever gets in its way in a matter of seconds, provided its close enough. undefined",
+        "icon": "PKR Maelstrom.png"
+    },
+    {
+        "name": "WP_G_AR_Energy_01",
+        "ingame": "Phasic Lancer",
+        "rarity": "Rare",
+        "description": "A burst rifle shooting accurate controlled 3-shot bursts, effective against most threats a Prospector might encounter. After the success of the Adaptive Phase Pistol, Osiris thought to develop a weapon platform of more interest to the military market. While this new powered-up weapon can handle significantly more energy than its smaller cousin, Osiris has yet to solve the problem of overheating in full-auto firing mode, or the high risk of carrier-shield leakage when in charged mode. undefined",
+        "icon": "Phasic Lancer.png"
+    },
+    {
+        "name": "WP_D_LMG_Energy_01",
+        "ingame": "ICA Guarantee",
+        "rarity": "Rare",
+        "description": "A fast firing Phase LMG perfect to suppress targets. This Fortuna III custom isnt known for its finesse, but itll chew through any target if the user manages keep it under control. With the amount of ammo expended, youre Guaranteed to hit something! undefined",
+        "icon": "ICA Guarantee.png"
+    },
+    {
+        "name": "WP_D_BR_Shard_01",
+        "ingame": "Lacerator",
+        "rarity": "Rare",
+        "description": "A capable marksman rifle boasting a decent fire rate, accuracy, and handling. Building upon the the ICAs own Shattergun, this battle rifle is tuned to discharge the crystaline shards it uses as ammunition in a more controlled and accurate burst. undefined",
+        "icon": "Lacerator.png"
+    },
+    {
+        "name": "WP_G_SMG_Needle_01",
+        "ingame": "Asp Flechette Gun",
+        "rarity": "Epic",
+        "description": "Lightweight SMG. A formidable automatic weapon for close range encounters. Intended for use by law enforcement in pressurized environments, this weapons flechettes provide lethal stopping power, can easily defeat light armor, and are designed to prevent overpenetration; a risk in any environment, but disastrous on ships and stations. undefined",
+        "icon": "Asp Flechette Gun.png"
+    },
+    {
+        "name": "WP_D_SGun_Shard_01",
+        "ingame": "Shattergun",
+        "rarity": "Epic",
+        "description": "An unconventional shotgun shooting crystal fragments through kinetic and thermal energy. Crafted on Prospect station using salvage and wood from the planet itself, this scattergun demonstrates The ICAs ingenuity and ability to thrive with limited resources. A molded adrentite crystal, byproduct of its refinement for use as rocket fuel, serves as both projectile and propellant; a small electric charge incites a rearrangement in the crystals lattice, with the sudden energy release fracturing the crystal into thin shards along its length as theyre shot through the barrel. undefined",
+        "icon": "Shattergun.png"
+    },
+    {
+        "name": "WP_D_AR_Bullet_01",
+        "ingame": "Advocate",
+        "rarity": "Epic",
+        "description": "A dependable assault rifle offering a good balance between accuracy and rate of fire. Based on the SAR-62 carbine used by the Federation itself, the ICA Advocate has only a few deviations from the original design, meant to allow for its manufacture in environments of relative scarcity. undefined",
+        "icon": "Advocate.png"
+    },
+    {
+        "name": "WP_G_AR_Beam_01",
+        "ingame": "Gorgon",
+        "rarity": "Epic",
+        "description": "A powerful beam rifle that requires charging up before firing. Not the easiest to handle, but lethal in proper hands. The Zeus little sister, the Gorgon may not be as devastating, but its glare can leave any target petrified in place. And crispy. undefined",
+        "icon": "Gorgon.png"
+    },
+    {
+        "name": "WP_A_BR_Bullet_01",
+        "ingame": "KBR Longshot",
+        "rarity": "Epic",
+        "description": "A marksman rifle with good accuracy and power excels in medium range engagements. The predecessor to the KOR-47, the Longshot was developed for the Federation to serve as a long range support weapon for ground troops. Designed with a low unit cost in mind, Korolev opted to ensure high accuracy and power over developing a fully automatic weapon. undefined",
+        "icon": "KBR Longshot.png"
+    },
+    {
+        "name": "WP_A_Pistol_Bullet_01",
+        "ingame": "Hammer",
+        "rarity": "Exotic",
+        "description": "Pistol, inflicts devastating damage on its targets, at the cost of any kind of subtlety. Based on their ubiquitous rivet guns, also known as energy hammers, the Hammer was an attempt at developing a low cost personal defense weapon. Popular among those wanting a dependable high-powered pistol, its weight and complex operation make it unattractive to the mass market. undefined",
+        "icon": "Hammer.png"
+    },
+    {
+        "name": "WP_D_SMG_Energy_01",
+        "ingame": "Voltaic Brute",
+        "rarity": "Exotic",
+        "description": "An SMG offering high versatility in its effective range. Using parts built on Prospect station with material from the surface combined with salvaged components from power tools meant to build starships, the ICAs Brute more than lives up to its name. undefined",
+        "icon": "Voltaic Brute.png"
+    },
+    {
+        "name": "WP_A_AR_Bullet_01",
+        "ingame": "KOR-47",
+        "rarity": "Exotic",
+        "description": "Heavy assault rifle. Lower firing rate than most competing weapons in its class but packs a punch. The KOR Bullpup Automatic Rifle 2247, more commonly known as the KOR-47, is Korolev Heavy Industries signature weapon and a mainstay of many national and private armed forces. undefined",
+        "icon": "KOR-47.png"
+    },
+    {
+        "name": "WP_G_Sniper_Energy_01",
+        "ingame": "Basilisk",
+        "rarity": "Exotic",
+        "description": "A phase tech marksman rifle; considered ahead of its time the impacts are powerful in its class, and also boasts a high rate of fire. The result of an offshoot project during early development of the Phasic Lancer, the Basilisk trades higher ammo count for a much stronger energy discharge. While still in the prototyping, Osiris is happy to offer this rifle to Prospectors of a high enough standing. undefined",
+        "icon": "Basilisk.png"
+    },
+    {
+        "name": "WP_D_Sniper_Gauss_01",
+        "ingame": "Kinetic Arbiter",
+        "rarity": "Exotic",
+        "description": "A gauss sniper rifle firing metal rods at immense velocity. This weapon is favored among Prospectors that want to resolve their differences quickly and from a safe distance. One of The ICAs most advanced conventional weapons, the Kinetic Arbiter is little more than a military-grade gauss gun stripped down to its most basic components needed to function, without any of the the fancy fittings or safety mechanisms. undefined",
+        "icon": "Kinetic Arbiter.png"
+    },
+    {
+        "ingame": "Zeus Beam",
+        "rarity": "Legendary"
+    },
+    {
+        "ingame": "KARMA-1",
+        "rarity": "Legendary"
+    },
+    {
+        "ingame": "Komrad",
+        "rarity": "Legendary"
+    },
+    {
+        "name": "HardDrive_common",
+        "ingame": "Common Data Drive",
+        "rarity": "Unknown",
+        "description": "",
+        "icon": "Common Data Drive.png"
+    },
+    {
+        "name": "HardDrive_uncommon",
+        "ingame": "Uncommon Data Drive",
+        "rarity": "Unknown",
+        "description": "",
+        "icon": "Uncommon Data Drive.png"
+    },
+    {
+        "name": "HardDrive_rare",
+        "ingame": "Rare Data Drive",
+        "rarity": "Unknown",
+        "description": "",
+        "icon": "Rare Data Drive.png"
+    },
+    {
+        "name": "HardDrive_epic",
+        "ingame": "Valuable Data Drive",
+        "rarity": "Unknown",
+        "description": "",
+        "icon": "Valuable Data Drive.png"
+    },
+    {
+        "name": "HardDrive_legendary",
+        "ingame": "Unique Data Drive",
+        "rarity": "Unknown",
+        "description": "",
+        "icon": "Unique Data Drive.png"
+    },
+    {
+        "name": "HydraulicPiston",
+        "ingame": "Hydraulic Piston",
+        "rarity": "Uncommon",
+        "description": "Useful for printing weapons and beacons. The tech may be hundreds of years old, but if it works, it works. Can be found in Industrial Crates.",
+        "icon": "Hydraulic Piston.png"
+    },
+    {
+        "name": "MultiTool",
+        "ingame": "Co-TEC MultiTool",
+        "rarity": "Rare",
+        "description": "Used to print, repair, and manipulate simple machinery and electronics. That includes weapons, of course. Can be found in Industrial Crates.",
+        "icon": "Co-TEC MultiTool.png"
+    },
+    {
+        "name": "Alloys",
+        "ingame": "Metallic Alloys",
+        "rarity": "Common",
+        "description": "A collection of metal alloys used as a base material in many items, ready to slot into compatible printers. Can be found in Dumpsters and Industrial Crates.",
+        "icon": "Metallic Alloys.png"
+    },
+    {
+        "name": "BallBearings",
+        "ingame": "Ball Bearings",
+        "rarity": "Uncommon",
+        "description": "A simple mechanical component used to print a multitude of machines with moving parts, such as firearms. Can be found in Dumpsters and Industrial Crates.",
+        "icon": "Ball Bearings.png"
+    },
+    {
+        "name": "Antibiotics",
+        "ingame": "Old Medicine",
+        "rarity": "Common",
+        "description": "Medicine left behind on the planet, can be processed to make new supplies.\r\n\r\nFortunas colonists definitely had a lot of pills... Can be found in Medical Cases.",
+        "icon": "Old Medicine.png"
+    },
+    {
+        "name": "AnaestheticsContainers",
+        "ingame": "Medical Supplies",
+        "rarity": "Uncommon",
+        "description": "A small crate of miscellaneous medical supplies, has all sorts of chemicals useful for printing new items.\r\n\r\nThere are A LOT of warning labels here. Can be found in Medical Cases.",
+        "icon": "Medical Supplies.png"
+    },
+    {
+        "name": "SamplingDevice",
+        "ingame": "Biological Sampler",
+        "rarity": "Rare",
+        "description": "A portable device used for collecting biological samples in the field. Can be used to assist with printing delicate items.\r\n\r\nThis model incorporates a pressure-activated injector as well. Mildly concerning. Can be found in Medical Cases.",
+        "icon": "Biological Sampler.png"
+    },
+    {
+        "name": "PolymetallicPrefabricate",
+        "ingame": "Polymetallic Prefabricate",
+        "rarity": "Common",
+        "description": "One of those miracle materials, sheets of this stuff is commonly used in the printing of various tools, machinery, and of course, weapons. Can be found in Cabinets.",
+        "icon": "Polymetallic Prefabricate.png"
+    },
+    {
+        "name": "OpticGlass",
+        "ingame": "Optic Glass",
+        "rarity": "Uncommon",
+        "description": "Perfectly polished, lenses like these often find themselves used more in high-powered cutting machinery than in actual optic equipment. Can be found in Cabinets.",
+        "icon": "Optic Glass.png"
+    },
+    {
+        "name": "Cables",
+        "ingame": "Electronic Cables",
+        "rarity": "Common",
+        "description": "A bundle of cables, still in good condition.\r\n\r\nUnfortunately not platinum plated, unsuitable for true audio transmission. Can be found in Cabinets",
+        "icon": "Electronic Cables.png"
+    },
+    {
+        "name": "CombatCPU_Blue",
+        "ingame": "Zero Systems CPU",
+        "rarity": "Rare",
+        "description": "Made for crunching through large datasets, used in several devices that require large amounts of simple calculations. Can be found in Cabinets",
+        "icon": "Zero Systems CPU.png"
+    },
+    {
+        "name": "CopperWire",
+        "ingame": "Copper Wire",
+        "rarity": "Common",
+        "description": "Still the best bang for the buck for electric cables, makes for a good and cheap electric conductor. Can be found in Dumpsters.",
+        "icon": "Copper Wire.png"
+    },
+    {
+        "name": "MagneticFieldStabilizer",
+        "ingame": "Magnetic Field Stabilizer",
+        "rarity": "Uncommon",
+        "description": "A component necessary for certain weapons with high power usage. Can be found in Dumpsters.",
+        "icon": "Magnetic Field Stabilizer.png"
+    },
+    {
+        "name": "ShockAbsorber",
+        "ingame": "Shock Absorber",
+        "rarity": "Epic",
+        "description": "A component used for certain weapons with heavy recoil. Can be found in Dumpsters.",
+        "icon": "Shock Absorber.png"
+    },
+    {
+        "name": "BlueWood",
+        "ingame": "Azure Tree Bark",
+        "rarity": "Common",
+        "description": "Azure Trees are found sprinkled around the less shaded areas of Fortuna III, with their bark coveted for artisanal goods. Can be found in Coolers and at Woodcutter Camp.",
+        "icon": "Azure Tree Bark.png"
+    },
+    {
+        "name": "LiquidFertilizer",
+        "ingame": "Magic-GROW Fertilizer",
+        "rarity": "Uncommon",
+        "description": "A powerful and sweet smelling chemical, can be processed to help manufacture other items.\r\n\r\nDont ingest within 6 hours of consuming any fruits or nuts. Or ideally ever. Can be found in Coolers.",
+        "icon": "\"Magic-GROW\" Fertilizer.png"
+    },
+    {
+        "name": "AlienFruit",
+        "ingame": "Indigenous Fruit",
+        "rarity": "Uncommon",
+        "description": "Tastes delicious, and can be processed to gain some useful chemicals. Can be found in Coolers.",
+        "icon": "Indigenous Fruit.png"
+    },
+    {
+        "name": "Bag_05",
+        "ingame": "Bag_05",
+        "rarity": "Exotic",
+        "description": "",
+        "icon": "Bag_05.png"
+    },
+    {
+        "name": "Helmet_01",
+        "ingame": "Helmet",
+        "rarity": "Common",
+        "description": "Protects the head of its wearer. ",
+        "icon": "Helmet.png"
+    },
+    {
+        "name": "Helmet_02",
+        "ingame": "Helmet",
+        "rarity": "Uncommon",
+        "description": "Protects the head of its wearer. ",
+        "icon": "Helmet.png"
+    },
+    {
+        "name": "Helmet_03",
+        "ingame": "Helmet",
+        "rarity": "Rare",
+        "description": "Protects the head of its wearer. ",
+        "icon": "Helmet.png"
+    },
+    {
+        "name": "Helmet_04",
+        "ingame": "Helmet",
+        "rarity": "Epic",
+        "description": "Protects the head of its wearer. ",
+        "icon": "Helmet.png"
+    },
+    {
+        "name": "Helmet_05",
+        "ingame": "Helmet",
+        "rarity": "Exotic",
+        "description": "Protects the head of its wearer. ",
+        "icon": "Helmet.png"
+    },
+    {
+        "name": "TOOL_MineralScanner_01",
+        "ingame": "Mineral Scanner",
+        "rarity": "Common",
+        "description": "A highly versatile scanning device that is only able to detect Nickel by default, but can be modded to detect any Minerals on Fortuna.  undefined",
+        "icon": "Mineral Scanner.png"
+    },
+    {
+        "name": "TOOL_Mining_01",
+        "ingame": "Heavy Mining Tool",
+        "rarity": "Common",
+        "description": "An experimental automatic Mining tool designed by Korolev to allow for more efficient extraction of Minerals from Fortuna III.  undefined",
+        "icon": "Heavy Mining Tool.png"
+    },
+    {
+        "name": "WP_E_Pistol_Bullet_01_scrappy",
+        "ingame": "Rusty K-28",
+        "rarity": "Common",
+        "description": "An old rusty semi-automatic pistol. Its glory days are over. undefined undefined",
+        "icon": "Rusty K-28.png"
+    },
+    {
+        "name": "WP_E_SMG_Bullet_01_scrappy",
+        "ingame": "Rusty S-576 PDW",
+        "rarity": "Common",
+        "description": "A rusty used SMG with high rate of fire that still has some worth in close range engagements. undefined undefined",
+        "icon": "Rusty S-576 PDW.png"
+    },
+    {
+        "name": "WP_E_SGun_Bullet_01_scrappy",
+        "ingame": "Rusty B9 Trenchgun",
+        "rarity": "Common",
+        "description": "Rusty Pump-action shotgun, high-spread, short range. Just a bit damaged. undefined undefined",
+        "icon": "Rusty B9 Trenchgun.png"
+    },
+    {
+        "name": "WP_E_AR_Energy_01_scrappy",
+        "ingame": "Rusty AR-55 Autorifle",
+        "rarity": "Common",
+        "description": "A rusty automatic rifle, doesnt seem to excel anymore. undefined undefined",
+        "icon": "Rusty AR-55 Autorifle.png"
+    },
+    {
+        "name": "SmartMesh",
+        "ingame": "Smart Mesh",
+        "rarity": "Rare",
+        "description": "Adaptable material, used for printing various items.\r\n\r\nAlso a fun art tool! Can be found in Dumpsters and Industrial Crates within high danger areas.",
+        "icon": "Smart Mesh.png"
+    },
+    {
+        "name": "Gyroscope",
+        "ingame": "Gyroscope",
+        "rarity": "Epic",
+        "description": "Helps keeps things pointing where theyre supposed to be pointing even in the roughest conditions, making it quite useful for printing some weapon components. Can be found in Cabinets within high danger areas.",
+        "icon": "Gyroscope.png"
+    },
+    {
+        "name": "OldCurrency",
+        "ingame": "Old Currency",
+        "rarity": "Common",
+        "description": "Currency used on Fortuna III before the evacuations. Still in use by some on Prospect Station. Can be found in civilian structures and belongings.",
+        "icon": "Old Currency.png"
+    },
+    {
+        "name": "Jewellery",
+        "ingame": "Jewellery",
+        "rarity": "Rare",
+        "description": "A simple and easy way to carry ones riches and memories.\r\n\r\nAlso very easy to lose during an emergency evacuation. Can be found in Safes",
+        "icon": "Jewellery.png"
+    },
+    {
+        "name": "CombatCPU_red",
+        "ingame": "Master Unit CPU",
+        "rarity": "Epic",
+        "description": "An advanced CPU, ideal for the running adaptive AI systems or the manipulation of complex energy fields. Can be found in Safes within very high danger areas.",
+        "icon": "Master Unit CPU.png"
+    },
+    {
+        "name": "BrittleTitanOre",
+        "ingame": "Brittle Titan Ore",
+        "rarity": "Uncommon",
+        "description": "Somewhat common on H-C5 planets, Titan Ore was essential during the initial colonization. Still used in a variety of printing and upgrading processes. Titan Ore Veins can often be found in Caves and Mines. A Mineral Scanner can be modded to help find them.",
+        "icon": "Brittle Titan Ore.png"
+    },
+    {
+        "name": "TitanOre",
+        "ingame": "Titan Ore",
+        "rarity": "Rare",
+        "description": "Somewhat common on H-C5 planets, Titan Ore was essential during the initial colonization. Still used in a variety of printing and upgrading processes. Titan Ore Veins can often be found in Caves and Mines. A Mineral Scanner can be modded to help find them.",
+        "icon": "Titan Ore.png"
+    },
+    {
+        "name": "PortableLabEquipmentBox",
+        "ingame": "Portable Lab",
+        "rarity": "Epic",
+        "description": "A full lab in a box, also contains all sorts of specialized equipment and materials that can be repurposed.\r\n\r\nLoaded with delicate tools, sensitive software, and no manual. Can be found in Cabinets within very high danger areas.",
+        "icon": "Portable Lab.png"
+    },
+    {
+        "name": "AutoLoader",
+        "ingame": "Autoloader",
+        "rarity": "Epic",
+        "description": "Used for printing a variety of equipment requiring regular charges, such as weapons. Can be found in Industrial Crates within very high danger areas.",
+        "icon": "Autoloader.png"
+    },
+    {
+        "name": "FocusCrystal",
+        "ingame": "Focus Crystal",
+        "rarity": "Rare",
+        "description": "Growths of these crystals are common on Fortuna III, valuable on the station for where theyre often used in the creation of miniature figures. Crystal Veins can often be found in the Jungles of Fortuna. A Mineral Scanner can be modded to help find them.",
+        "icon": "Focus Crystal.png"
+    },
+    {
+        "name": "PureFocusCrystal",
+        "ingame": "Pure Focus Crystal",
+        "rarity": "Epic",
+        "description": "Growths of these crystals are common on Fortuna III, valuable on the station for where theyre often used in the creation of miniature figures. Crystal Veins can often be found in the Jungles of Fortuna. A Mineral Scanner can be modded to help find them.",
+        "icon": "Pure Focus Crystal.png"
+    },
+    {
+        "name": "Nickel",
+        "ingame": "Nickel",
+        "rarity": "Common",
+        "description": "Found in various mineral veins pushed to the surface by the same process that spawns veltecite, this material is still worth mining. Nickel Veins be found in most areas on Fortuna. You can use a Mineral Scanner to help you find them.",
+        "icon": "Nickel.png"
+    },
+    {
+        "name": "PureNickel",
+        "ingame": "Altered Nickel",
+        "rarity": "Uncommon",
+        "description": "Found in various mineral veins pushed to the surface by the same process that spawns veltecite, this ore seems to have been affected by proximity with the rare crystals. Nickel Veins can be found in most areas on Fortuna. A Mineral Scanner can help find them.",
+        "icon": "Altered Nickel.png"
+    },
+    {
+        "name": "IvyPlant",
+        "ingame": "Pale Ivy Blossom",
+        "rarity": "Rare",
+        "description": "The blossom of Pale Ivy, a strange plant that likes to climb up walls to keep its gorgeous, divinely smelling petals out of the reach of critters and insects. Likes to grow on walls and cliffs in overgrown areas.",
+        "icon": "Pale Ivy Blossom.png"
+    },
+    {
+        "name": "CommonVeltecite",
+        "ingame": "Flawed Veltecite",
+        "rarity": "Common",
+        "description": "While relatively low in value, flawed veltecite is still valuable enough to be worth taking a pickaxe to some rocks. Veltecite Veins can often be found around Waterfalls. A Mineral Scanner can be modded to help find them.",
+        "icon": "Flawed Veltecite.png"
+    },
+    {
+        "name": "UncommonVelticite",
+        "ingame": "Cloudy Veltecite",
+        "rarity": "Uncommon",
+        "description": "Shards of Cloudy Veltecite are often used for energy storage and generation. Korolev are always looking for any that prospectors can mine. Veltecite Veins can often be found around Waterfalls. A Mineral Scanner can be modded to help find them.",
+        "icon": "Cloudy Veltecite.png"
+    },
+    {
+        "name": "RareVeltecite",
+        "ingame": "Clear Veltecite",
+        "rarity": "Rare",
+        "description": "A rare shard of clear Veltecite. Korolev will pay a decent bit of pocket money for any that prospectors uncover with their pickaxes. Veltecite Veins can often be found around Waterfalls. A Mineral Scanner can be modded to help find them.",
+        "icon": "Clear Veltecite.png"
+    },
+    {
+        "name": "EpicVeltecite",
+        "ingame": "Pure Veltecite",
+        "rarity": "Epic",
+        "description": "Very rare shard of pure Veltecite torn out of a mineral vein, highly valued by Korolev and others. Veltecite Veins can often be found around Waterfalls. A Mineral Scanner can be modded to help find them.",
+        "icon": "Pure Veltecite.png"
+    },
+    {
+        "name": "VelteciteHeart",
+        "ingame": "Veltecite Heart",
+        "rarity": "Legendary",
+        "description": "The heart of a veltecite vein, from which pure and common veltecite grows out of like roots reaching upwards to the surface. Incredibly rare and highly coveted. Veltecite Veins can often be found around Waterfalls. A Mineral Scanner can be modded to help find them.",
+        "icon": "Veltecite Heart.png"
+    },
+    {
+        "name": "WaterPlant",
+        "ingame": "Waterweed Filament",
+        "rarity": "Uncommon",
+        "description": "The pollen filament of a Waterweed, a plant that can only be harvested around water bodies such as lakes or swamps on Fortuna III. The blossoms themselves are worthless, but these Filaments fetch a decent price on Prospect Station. Grows around Lakes and other still waters on Fortuna.",
+        "icon": "Waterweed Filament.png"
+    },
+    {
+        "name": "Brightcap",
+        "ingame": "Brightcap Mushroom",
+        "rarity": "Unknown",
+        "description": "",
+        "icon": "Brightcap Mushroom.png"
+    },
+    {
+        "name": "BlueRunnerEgg",
+        "ingame": "Blue Runner Egg",
+        "rarity": "Rare",
+        "description": "Blue Runner eggs have a notoriously thick shell, allowing them to only care for the eggs when close to hatching. Can be sold on the station. The creatures that lay these eggs often leave tracks behind. Follow them!",
+        "icon": "Blue Runner Egg.png"
+    },
+    {
+        "name": "DerelictExplosives",
+        "ingame": "Derelict Explosives",
+        "rarity": "Uncommon",
+        "description": "Fortuna IIIs settlers took to using explosives to both mold the environment to their liking and get rid of the local pests. Can still be sold on the station, for fireworks of course. Can be found in Dumpsters within very high danger areas.",
+        "icon": "Derelict Explosives.png"
+    },
+    {
+        "name": "PrintResin",
+        "ingame": "Print Resin",
+        "rarity": "Uncommon",
+        "description": "Can be loaded into most printers to print the base components of almost anything, from rubber ducks to weapon parts. Can be found in any Structures or Containers within very high danger areas.",
+        "icon": "Print Resin.png"
+    },
+    {
+        "name": "DesertPlant",
+        "ingame": "Dustbloom",
+        "rarity": "Epic",
+        "description": "This lonely weed grows in open, arid areas on Fortuna III and develops valuable vibrant blossoms when exposed to direct sunlight. Flourishes in open, arid areas of Fortuna.",
+        "icon": "Dustbloom.png"
+    }
+]
