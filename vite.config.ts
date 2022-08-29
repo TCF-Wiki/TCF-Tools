@@ -12,3 +12,7 @@ export default defineConfig({
         },
     },
 });
+
+module.exports = {
+    publicPath: '/TCF-Apps/',
+};
