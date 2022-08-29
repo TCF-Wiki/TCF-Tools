@@ -17,7 +17,7 @@
         </div>
         <div class="projects">
             <div class="header">
-                <h1>Our Projects</h1>
+                <h1>Our Projects:</h1>
             </div>
 
             <div class="right">
