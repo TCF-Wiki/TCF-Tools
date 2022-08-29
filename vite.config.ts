@@ -5,7 +5,6 @@ import vue from '@vitejs/plugin-vue';
 
 //Define config
 export default defineConfig({
-    base: '/TCF-Apps/',
     plugins: [vue()],
     resolve: {
         alias: {
