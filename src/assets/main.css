@@ -8,7 +8,7 @@ body {
   position: absolute;
   width: 100vw;
 
-  background-image: url('border_left.png');
+  background-image: url('https://cdn.discordapp.com/attachments/994517357512904807/1014653866131861504/border_left.png');
   background-color: var(--background-menu-color);
   background-attachment: scroll;
   background-position: top left;
