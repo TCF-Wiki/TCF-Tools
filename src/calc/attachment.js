@@ -1,7 +1,6 @@
 import { weaponData, attachmentData } from './data'
 import { unusableAttachments, ignoredEffects, lowercaseFirstLetter  } from './utils'
 import { selectedAttachments } from './store'
-import { effect } from 'vue'
 
 export const attachment = {
     savedAttachmentList : {},

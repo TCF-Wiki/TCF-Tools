@@ -5,7 +5,12 @@
         "baseUrl": ".",
         "paths": {
             "@/*": ["./src/*"]
-        }
+        },
+        "target": "es2017",
+        "module": "esnext",
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "allowJs": true
     },
 
     "references": [
