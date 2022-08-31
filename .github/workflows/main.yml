@@ -19,4 +19,4 @@ jobs:
         username: 'Stevnbak'
         reponame: 'TCF-Apps'
         token: ${{ secrets.GITHUB_TOKEN }}
-        PAGES_CNAME: apps.thecyclefrontier.wiki
+        cname: apps.thecyclefrontier.wiki
