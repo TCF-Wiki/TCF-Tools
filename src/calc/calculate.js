@@ -49,7 +49,7 @@ export const calculate = {
         }
 
         if (weapon == 'WP_A_Sniper_Gauss_01') {
-            timePermag = this.s(weapon,'ammoInClip') * this.s(weapon,'spinupTime') + (this.s(weapon,'ammoInClip') - 1) * this.s(weapon,'refireTime') + this.s(weapon,'reloadTime');
+            timePerMag = this.s(weapon,'ammoInClip') * this.s(weapon,'spinupTime') + (this.s(weapon,'ammoInClip') - 1) * this.s(weapon,'refireTime') + this.s(weapon,'reloadTime');
         }
 
         return (60 / timePerMag) * ( this.s(weapon,'ammoInClip') / this.s(weapon,'ammoPerBullet') );
