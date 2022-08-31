@@ -2,6 +2,7 @@
 import {defineComponent} from 'vue';
 
 import Home from './home/PageHome.vue';
+// @ts-ignore
 import Calc from './calc/PageCalc.vue';
 import Loadout from './loadout/PageLoadout.vue';
 import Map from './map/PageMap.vue';
@@ -9,10 +10,10 @@ import NotFound from './Page404.vue';
 
 const routes = {
     '/': Home,
-    '/About': Home,
-    '/Calc': Calc,
-    '/Loadout': Loadout,
-    '/Map': Map,
+    '/about': Home,
+    '/calculator': Calc,
+    '/loadout': Loadout,
+    '/map': Map,
 };
 
 export default defineComponent({

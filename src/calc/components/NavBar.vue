@@ -3,14 +3,13 @@
         <font-awesome-icon width="4rem" icon="fa-solid fa-bars" @click="showMenu()"></font-awesome-icon> 
         <div class="nav-content" :class="showMobileMenu ? 'open-menu' : 'closed-menu'"> 
 
-            <a class="logo" href="https://thecyclefrontier.wiki/wiki/Main_Page" target="_blank"><img src="wiki_logo_bar.png"></a>
+            <a class="logo" href="https://thecyclefrontier.wiki/wiki/Main_Page" target="_blank"><img src="images/wiki_logo_bar.png"></a>
             <div class="nav-items">
-                <a href="/"> Home </a> 
-                <a href="https://thecyclefrontier.wiki/wiki/Main_Page" target="_blank"> Official Wiki </a>
-                <a href="/map"> Interactive Map </a>
-                <a href="/calculator"> Weapon Calculator </a>
-                <a href="https://tracker.thecyclefrontier.wiki"> Item Tracker </a>
-                <a href="/loadout"> Loadout Generator </a>
+                <a> Official Wiki </a>
+                <a> Interactive Map </a>
+                <a> Weapon Calculator </a>
+                <a> Item Tracker </a>
+                <a> Loadout Generator </a>
             </div>
         </div>
     </div>

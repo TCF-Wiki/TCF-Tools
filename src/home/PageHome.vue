@@ -291,22 +291,9 @@ ul {
     padding: 0;
 }
 
-/* BUTTON */
-
-.button {
-    text-align: center;
-    margin: 0.3em auto;
-    align-self: center;
-    background-color: #f0a447;
-    border: none;
-    border-radius: 5px;
-    padding: 0.4em 1em;
-    transition: 0.5s;
-}
-
-.button:hover,
-.button:focus {
-    background-color: #04da97;
+.page-content {
+    margin-left: 10rem;
+    background-color: var(--background-body-color);
 }
 
 /* grid design */
