@@ -29,9 +29,6 @@ export default {
         <WeaponComparer />
       </div>
     </section>
-    <section class="selectors">
-      
-    </section>
     <section>
       <div class="header">
         <h1> Charts </h1>
@@ -68,6 +65,12 @@ main {
   border: 1px solid #121C25;
   background-color: var(--background-body-color);
   gap: 2rem;
+}
+
+@media screen and (max-width: 900px) {
+    main {
+        margin-left: 0;
+    }
 }
 
 h1 {
@@ -120,4 +123,11 @@ h1 {
   display: flex;
   max-width: 100vw;
 }
+
+@media screen and (max-width: 900px) {
+  .main-container {
+    flex-direction: column;
+  }
+}
+
 </style>

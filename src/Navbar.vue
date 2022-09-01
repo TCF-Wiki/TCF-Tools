@@ -73,11 +73,11 @@
         display: none;
     }
     /* Mobile version - hidden hamburger menu */
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 900px) {
     .nav-menu {
         padding: 1rem 0;
         position: absolute;
-        width: 100%;
+        width: 100vw;
         border-bottom: 2px solid var(--background-body-color)
     }
     .open-menu {
@@ -88,6 +88,7 @@
         opacity: 0;
         height: 0;
         padding: 0;
+        pointer-events: none;
     }
     .nav-content {
         flex-direction: column;
@@ -107,6 +108,7 @@
         display: block;
         margin-left: auto;
         padding: 0 1rem 1rem 0;
+        font-size: 2rem;
         
     }
     .logo {

@@ -87,6 +87,12 @@ footer {
     margin-left: 10vw;
 }
 
+@media screen and (max-width: 900px) {
+  footer {
+    margin-left: 0;
+  }
+}
+
 h1,
 footer {
     flex-grow: 0;

@@ -296,6 +296,12 @@ ul {
     background-color: var(--background-body-color);
 }
 
+@media screen and (max-width: 900px) {
+    .page-content {
+        margin-left: 0;
+    }
+}
+
 /* grid design */
 .grid-image {
     width: 50%;

@@ -2,12 +2,13 @@
     <section>
         <div> 
             <h2> Options </h2>
-
-            <WeaponSelector />
-            <ArmorSelector />
-            <TargetSelector />
-            <AccuracySelector />
-            <DistanceSelector />
+            <div class="content">
+                <WeaponSelector />
+                <ArmorSelector />
+                <TargetSelector />
+                <AccuracySelector />
+                <DistanceSelector />
+            </div>
         </div>
     </section>
 </template>
@@ -51,6 +52,12 @@ div {
 h2 {
     font-size: 2rem;
     line-height: 1.2;
+}
+
+@media screen and (max-width: 900px) {
+  .content {
+    flex-direction: row;
+  }
 }
 </style>
 
