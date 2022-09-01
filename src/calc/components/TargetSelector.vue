@@ -54,11 +54,9 @@ export default {
 
 <style scoped>
 .target-image {
-    width: 10em
+    width: 10rem;
+    margin: auto;
 }
-
-
-
 
 .target-container {
     display: grid;
