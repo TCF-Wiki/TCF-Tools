@@ -51,10 +51,10 @@ function displayLoadout(weapon1, weapon2, helmet, backpack, shield, items, itemN
     resetLoadout();
 
     //Weapons
-    document.getElementById('Weapon1').src = '/loadout-images/Weapons/' + weapon1 + '.png';
+    document.getElementById('Weapon1').firstChild.src = '/loadout-images/Weapons/' + weapon1 + '.png';
     document.getElementById('Weapon1').style = `background-image: url('/loadout-images/${getRarity(weapon1)}_Weapon.png');`;
     if (weapon2) {
-        document.getElementById('Weapon2').src = '/loadout-images/Weapons/' + weapon2 + '.png';
+        document.getElementById('Weapon2').firstChild.src = '/loadout-images/Weapons/' + weapon2 + '.png';
         document.getElementById('Weapon2').style = `background-image: url('/loadout-images/${getRarity(weapon2)}_Weapon.png');`;
         //console.log(getRarity(weapon2));
     }
@@ -72,7 +72,7 @@ function displayLoadout(weapon1, weapon2, helmet, backpack, shield, items, itemN
     }
     if (shield != 'None' && shield) {
         document.getElementById('Shield').src = '/loadout-images/Shield_' + shield + '.png';
-        console.log(getRarity(shield));
+        //console.log(getRarity(shield));
         document.getElementById('Shield').style = `background-image: url('/loadout-images/${getRarity(shield)}.png');`;
     }
     if (backpack != 'None' && backpack) {
@@ -94,8 +94,8 @@ function getRarity(IGN) {
         if (IGN.includes('Combat')) return 'Rare';
     }
     if (IGN.includes('Grenade')) {
-        if (IGN == 'GrenadeFrag' || IGN == 'GrenadeSmoke') return 'Common';
-        if (IGN == 'GrenadeSound' || IGN == 'GrenadeGas') return 'Uncommon';
+        if (IGN == 'GrenadeSmoke') return 'Common';
+        if (IGN == 'GrenadeSound' || IGN == 'GrenadeGas' || IGN == 'GrenadeFrag') return 'Uncommon';
     }
     if (IGN.includes('Ammo')) {
         if (IGN.includes('Light') || IGN.includes('Medium')) return 'Common';
@@ -135,8 +135,8 @@ function getLoadoutFromURL() {
 
 export function ShareLoadout(clipboard = false) {
     let shareString = '?';
-    let Weapon1 = document.getElementById('Weapon1').getAttribute('src').replace('/loadout-images/Weapons/', '').replace('.png', '');
-    let Weapon2 = document.getElementById('Weapon2').getAttribute('src').replace('/loadout-images/', '').replace('Weapons/', '').replace('.png', '');
+    let Weapon1 = document.getElementById('Weapon1').firstChild.getAttribute('src').replace('/loadout-images/Weapons/', '').replace('.png', '');
+    let Weapon2 = document.getElementById('Weapon2').firstChild.getAttribute('src').replace('/loadout-images/', '').replace('Weapons/', '').replace('.png', '');
     shareString += 'weapon=' + Weapon1;
     if (Weapon2 != 'None') shareString += '&weapon=' + Weapon2;
     for (let i = 1; i <= 4; i++) {
@@ -153,11 +153,11 @@ export function ShareLoadout(clipboard = false) {
     if (clipboard) {
         navigator.clipboard.writeText(document.baseURI + shareString);
         let popup = document.getElementById('sharePopup');
-        window.history.replaceState({}, document.title, '/Loadout' + shareString);
+        window.history.replaceState({}, document.title, '/loadout' + shareString);
         popup.classList.add('show');
         delay(2000).then(() => popup.classList.remove('show'));
     } else {
-        window.history.replaceState({}, document.title, '/Loadout');
+        window.history.replaceState({}, document.title, '/loadout');
     }
 }
 function delay(time) {
@@ -248,9 +248,9 @@ function resetLoadout() {
     document.getElementById('Shield').style = `background-image: url('/loadout-images/None.png');`;
     document.getElementById('Backpack').src = '/loadout-images/None.png';
     document.getElementById('Backpack').style = `background-image: url('/loadout-images/None.png');`;
-    document.getElementById('Weapon1').src = '/loadout-images/None.png';
+    document.getElementById('Weapon1').firstChild.src = '/loadout-images/None.png';
     document.getElementById('Weapon1').style = `background-image: url('/loadout-images/None.png');`;
-    document.getElementById('Weapon2').src = '/loadout-images/None.png';
+    document.getElementById('Weapon2').firstChild.src = '/loadout-images/None.png';
     document.getElementById('Weapon2').style = `background-image: url('/loadout-images/None.png');`;
     document.getElementById(`Item1`).src = '/loadout-images/None.png';
     document.getElementById('Item1').style = `background-image: url('/loadout-images/None.png');`;

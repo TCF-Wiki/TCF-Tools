@@ -1,35 +1,41 @@
 <template>
-    <h1 class="title">The Cycle: Frontier - Random Loadout Generator</h1>
-    <div class="buttons">
-        <button class="loadoutBtn" @click.prevent="RandomLoadout()">Generate new loadout</button>
-        <button class="loadoutBtn" @click.prevent="ShareLoadout(true)">Share loadout</button>
-        <span class="popup" id="sharePopup">Link copied to clipboard</span>
-    </div>
-    <div class="loadout">
-        <img class="loadout-image" src="/loadout-images/Inventory.png" />
-        <img class="weaponImg" id="Weapon1" src="/loadout-images/None.png" />
-        <img class="weaponImg" id="Weapon2" src="/loadout-images/None.png" />
-        <div class="gear">
-            <img class="gearImg" id="Backpack" src="/loadout-images/None.png" />
-            <img class="gearImg" id="Shield" src="/loadout-images/None.png" />
-            <img class="gearImg" id="Helmet" src="/loadout-images/None.png" />
+    <div class="loadoutPage">
+        <h1 class="title">The Cycle: Frontier - Random Loadout Generator</h1>
+        <div class="buttons">
+            <button class="button loadoutBtn" @click.prevent="RandomLoadout()">Generate new loadout</button>
+            <button class="button loadoutBtn" @click.prevent="ShareLoadout(true)">Share loadout</button>
+            <span class="popup" id="sharePopup">Link copied to clipboard</span>
         </div>
-        <div class="items">
-            <div class="Item">
-                <img class="itemImg" id="Item1" src="/loadout-images/None.png" />
-                <p class="itemNumber" id="Item1Number"></p>
+        <div class="loadout">
+            <img class="loadout-image" src="/loadout-images/Inventory.png" />
+            <div class="weapon" id="Weapon1">
+                <img class="weaponImg" src="/loadout-images/None.png" />
             </div>
-            <div class="Item">
-                <img class="itemImg" id="Item2" src="/loadout-images/None.png" />
-                <p class="itemNumber" id="Item2Number"></p>
+            <div class="weapon" id="Weapon2">
+                <img class="weaponImg" src="/loadout-images/None.png" />
             </div>
-            <div class="Item">
-                <img class="itemImg" id="Item3" src="/loadout-images/None.png" />
-                <p class="itemNumber" id="Item3Number"></p>
+            <div class="gear">
+                <img class="gearImg" id="Backpack" src="/loadout-images/None.png" />
+                <img class="gearImg" id="Shield" src="/loadout-images/None.png" />
+                <img class="gearImg" id="Helmet" src="/loadout-images/None.png" />
             </div>
-            <div class="Item">
-                <img class="itemImg" id="Item4" src="/loadout-images/None.png" />
-                <p class="itemNumber" id="Item4Number"></p>
+            <div class="items">
+                <div class="Item">
+                    <img class="itemImg" id="Item1" src="/loadout-images/None.png" />
+                    <p class="itemNumber" id="Item1Number"></p>
+                </div>
+                <div class="Item">
+                    <img class="itemImg" id="Item2" src="/loadout-images/None.png" />
+                    <p class="itemNumber" id="Item2Number"></p>
+                </div>
+                <div class="Item">
+                    <img class="itemImg" id="Item3" src="/loadout-images/None.png" />
+                    <p class="itemNumber" id="Item3Number"></p>
+                </div>
+                <div class="Item">
+                    <img class="itemImg" id="Item4" src="/loadout-images/None.png" />
+                    <p class="itemNumber" id="Item4Number"></p>
+                </div>
             </div>
         </div>
     </div>
@@ -56,6 +62,14 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.loadoutPage {
+    width: 100%;
+    margin: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
 .title {
     width: 100%;
     text-align: center;
@@ -77,41 +91,37 @@ export default defineComponent({
 .loadoutBtn {
     width: 15vw;
     height: 100%;
-    background-color: #2faae7;
-    border-radius: 0.3em;
     margin: 10px;
-    text-transform: uppercase;
-    font-size: 1vw;
-    font-family: 'Noto Sans', sans-serif;
-}
-
-.loadoutBtn:hover {
-    background-color: #1a7eb1;
-    cursor: pointer;
-}
-
-.loadoutBtn:active {
-    background-color: #0c6794;
-    font-size: 1.01vw;
 }
 
 .loadout {
     max-width: 100%;
     margin-bottom: 5vh;
     position: relative;
+    display: block;
 }
 .loadout-image {
     width: auto;
-    height: 87.5vh;
+    height: 87.5%;
+    display: block;
 }
-.weaponImg {
-    background-size: cover;
-    background-repeat: no-repeat;
+.weapon {
     position: absolute;
-    object-fit: cover;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
     left: 52.5%;
     width: 45%;
     height: 15%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.weaponImg {
+    position: relative;
+    width: auto;
+    height: 100%;
+    padding: 1%;
 }
 #Weapon1 {
     top: 8.5%;
@@ -120,21 +130,33 @@ export default defineComponent({
     top: 25.4%;
 }
 
-.gearImg {
+.gear {
     position: absolute;
+    left: 52.5%;
+    top: 45.2%;
+    width: 45%;
+    height: 13.5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+}
+.gearImg {
     background-size: cover;
     background-repeat: no-repeat;
-    top: 45.2%;
-    width: 14.5%;
+    position: relative;
+    width: 33.3%;
+    height: 100%;
+    padding: 2%;
+    margin: 1%;
+    margin-top: 0%;
 }
-#backpack {
-    left: 52.5%;
+#Backpack {
+    margin-left: 0;
 }
-#shield {
-    left: 67.75%;
-}
-#helmet {
-    left: 83%;
+
+#Helmet {
+    margin-right: 0;
 }
 
 .items {
@@ -153,14 +175,15 @@ export default defineComponent({
 
 .Item {
     position: relative;
-    width: 31%;
-    padding: 1%;
+    width: 31.33%;
+    margin: 1%;
 }
 
 .itemImg {
     background-size: cover;
     background-repeat: no-repeat;
     width: 100%;
+    padding: 10%;
 }
 
 .itemNumber {

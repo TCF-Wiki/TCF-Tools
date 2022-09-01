@@ -29,7 +29,7 @@ export default defineComponent({
             if (newPage != NotFound) {
                 var name = this.currentPath.replace('/', '') || '';
                 if (name == '') name = 'Home';
-                document.title = name;
+                document.title = name + ' | TC:F Wiki';
             } else {
                 document.title = '404 - Not Found';
             }
