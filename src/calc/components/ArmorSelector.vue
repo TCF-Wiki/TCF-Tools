@@ -1,6 +1,8 @@
 <template>
-    <button class="button" type="button" @click.prevent="showModal = true"> Select Armor </button>
-
+    <div class="container"> 
+        <button class="button" type="button" @click.prevent="showModal = true"> Select Armor </button>
+        <p> Selected: {{ armorName(selectedArmor.selected) }}</p>
+    </div>
     <section class="selection-list" v-show="showModal">
         <button class="close" @click.prevent="showModal = false"> &times; </button>
         <h2> Armor Selector </h2>
@@ -77,6 +79,12 @@ export default {
 .armor-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem
 }
 
 .armor-selector {

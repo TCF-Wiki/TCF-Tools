@@ -8,6 +8,7 @@ import Loadout from './loadout/PageLoadout.vue';
 import Map from './map/PageMap.vue';
 import NotFound from './Page404.vue';
 
+
 const routes = {
     '/': Home,
     '/about': Home,

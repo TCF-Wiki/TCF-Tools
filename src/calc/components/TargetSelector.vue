@@ -1,5 +1,8 @@
 <template>
-    <button class="button" type="button" @click.prevent="showTargetModal = true"> Select Target </button>
+    <div class="container">
+        <button class="button" type="button" @click.prevent="showTargetModal = true"> Select Target </button>
+        <p> Selected: {{ creatureNames[selectedTarget.selected]}}</p> 
+    </div>
     <section class="selection-list" v-show="showTargetModal">
         <button class="close" 
         @click.prevent="showTargetModal = false"> 
@@ -73,4 +76,9 @@ export default {
     transform: scale(1.05);
 }
 
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem
+}
 </style>

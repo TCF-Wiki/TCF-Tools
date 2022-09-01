@@ -292,7 +292,7 @@ ul {
 }
 
 .page-content {
-    margin-left: 10rem;
+    margin-left: 10vw;
     background-color: var(--background-body-color);
 }
 

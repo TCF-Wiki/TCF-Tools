@@ -8,7 +8,7 @@ body {
   position: absolute;
   width: 100vw;
 
-  background-image: url('https://cdn.discordapp.com/attachments/994517357512904807/1014653866131861504/border_left.png');
+  background-image: url('/shared-images/border_left.png');
   background-color: var(--background-menu-color);
   background-attachment: scroll;
   background-position: top left;
@@ -48,9 +48,6 @@ a {
 
   border: 3px solid var(--button-accent-color);
   border-radius: 2px;
-  -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
-  -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
-  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
   cursor: pointer;
   transition: all .2s ease-in-out;
 }

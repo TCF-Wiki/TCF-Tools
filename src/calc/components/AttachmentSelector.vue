@@ -1,6 +1,12 @@
 <template>
     <button class="button" type="button" @click.prevent="showModal = true"> Select Attachments </button>
     <p> Stats modified by <br> an attachment will<br>  be <span style="text-decoration: underline"> underlined </span> </p> 
+    <div class="attachment-list"> 
+        <p> Selected: </p>
+        <p v-for="attachment in selectedAttachments.list[weapon]" > {{ attachmentData[attachment]['IGN'] }} ({{attachmentData[attachment]['rarity']}})</p>
+        <p v-if="!selectedAttachments.list[weapon] || selectedAttachments.list[weapon].length==0"> None </p>
+
+    </div>
     <section class="selection-list" v-show="showModal">
         <button class="close" @click.prevent="showModal = false"> &times; </button>
         <h2> Attachment Selector </h2>
@@ -14,8 +20,9 @@
                 @click="selectedAttachments.toggleSelected(weapon, attachment, key)">
                      {{  attachmentData[attachment]['IGN'] }} ({{attachmentData[attachment]['rarity']}})
                 </p>
-
-                
+            </div>
+            <div v-if="getAttachments(weapon).length == 0">
+                <p class="center"> This weapon has no attachments available. </p>
             </div>
         </div>
     </section>
@@ -41,6 +48,9 @@ export default {
     methods: {
         groupAttachments(weapon) {
             return attachment.groupAttachments(weapon)
+        },
+        getAttachments(weapon) {
+            return attachment.getAttachments(weapon)
         },
         colourClassGiver(attachment) {
             if (selectedAttachments.list[this.weapon]) {
@@ -75,7 +85,8 @@ p, span {
 }
 .attachment-container {
     display: grid;
-    grid-template-columns: 1fr 1fr
+    grid-template-columns: 1fr 1fr;
+    margin-top: 1rem;
 }
 
 .attachment-selector {
@@ -94,7 +105,12 @@ p, span {
     transform: scale(1.05);
 }
 
+.center {
+    text-align: center;
+    transform: translateX(50%)
+}
 
-
-
+.attachment-list {
+    padding-top: 1rem;
+}
 </style>

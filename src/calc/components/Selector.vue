@@ -1,11 +1,10 @@
 <template>
     <section>
+        <div> <h1> Options </h1></div>
         <div> 
             <WeaponSelector />
             <ArmorSelector />
             <TargetSelector />
-        </div>
-        <div>
             <AccuracySelector />
             <DistanceSelector />
         </div>
@@ -18,6 +17,7 @@ import WeaponSelector from './WeaponSelector.vue';
 import TargetSelector from './TargetSelector.vue';
 import AccuracySelector from './AccuracySelector.vue';
 import DistanceSelector from './DistanceSelector.vue';
+
 export default {
     components : {
         ArmorSelector,
@@ -43,6 +43,10 @@ div {
     display: flex;
     gap: 2rem;
     flex-wrap: wrap;
+}
+
+h1 {
+    font-size: 3.5rem;
 }
 </style>
 

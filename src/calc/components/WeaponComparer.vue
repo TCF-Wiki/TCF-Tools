@@ -334,6 +334,9 @@ export default {
     color: var(--text-color-body-white);
 }
 
+.flex-item p:nth-child(even) { 
+    background-color: var(--background-stripe-color); 
+}
 .highest-value {
     color: green !important;
 }

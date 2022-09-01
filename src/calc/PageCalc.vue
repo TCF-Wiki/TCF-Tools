@@ -2,15 +2,18 @@
 import AllSelector from './components/Selector.vue';
 import WeaponComparer from './components/WeaponComparer.vue';
 import { penetrationChart, falloffChart } from './charts'
+import AccuracySelector from './components/AccuracySelector.vue';
+import DistanceSelector from './components/DistanceSelector.vue';
 export default {
   components: {
     AllSelector,
     WeaponComparer,
+    AccuracySelector,
+    DistanceSelector
   },
   mounted() {
-    console.log('this file is run!')
-  penetrationChart()
-  falloffChart()
+    penetrationChart()
+    falloffChart()
   }
 };
 </script>
@@ -21,8 +24,10 @@ export default {
       <div class="header">
         <h1> Weapon Calculator </h1>
       </div>
-      <AllSelector />
       <WeaponComparer />
+    </section>
+    <section class="selectors">
+      <AllSelector />
     </section>
     <section>
       <div class="header">
@@ -60,9 +65,6 @@ main {
   border: 1px solid #121C25;
   background-color: var(--background-body-color);
   gap: 2rem;
-  -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
-  -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
-  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
 }
 
 h1 {
@@ -94,6 +96,20 @@ h1 {
   flex-direction: column;
   gap: 1rem;
   padding-left: 2rem;
+}
 
+.selectors {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.inner-selector-container {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-left: 2rem;
 }
 </style>

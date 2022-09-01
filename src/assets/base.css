@@ -19,6 +19,14 @@
   --background-menu-color: #121C25;
   --background-dark-color: #121C25F2;
   --background-date-color: #121C2580;
+  --background-stripe-color: #23313c;
+
+  --rarity-color-common: #dfe3e8;
+  --rarity-color-uncommon: #4cb31b;
+  --rarity-color-rare: #1da7ec;
+  --rarity-color-epic: #4f0e8b;
+  --rarity-color-exotic: #ee3355;
+  --rarity-color-legendary: #ff820d;
 }
 
 

@@ -1,5 +1,8 @@
 <template>
-    <button class="button" type="button" @click.prevent="showWeaponModal = true"> Select Weapons </button>
+    <div class="container">
+        <button class="button" type="button" @click.prevent="showWeaponModal = true"> Select Weapons </button>
+        <p> Selected: <span v-for="weapon in selectedWeapons.list"> {{ weaponData[weapon]['inGameName'] }}<br></span> </p>
+    </div>
     <section class="selection-list" v-show="showWeaponModal">
         <button class="close" @click.prevent="showWeaponModal = false"> &times; </button>
         <h2> Weapon Selector </h2>
@@ -75,5 +78,9 @@ export default {
     transform: scale(1.05);
 }
 
-
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem
+}
 </style>
