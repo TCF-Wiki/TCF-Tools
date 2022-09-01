@@ -1,7 +1,8 @@
 <template>
     <section>
-        <div> <h1> Options </h1></div>
         <div> 
+            <h2> Options </h2>
+
             <WeaponSelector />
             <ArmorSelector />
             <TargetSelector />
@@ -31,22 +32,25 @@ export default {
 
 <style scoped> 
 section {
-    padding-left: 2rem;
     display: flex;
     gap: 2rem;
     flex-wrap: wrap;
-    flex-direction: column;
-    margin-bottom: 2rem
+    flex-direction: row;
+    margin-bottom: 2rem;
+
+    padding: .5rem 2rem 2rem 2rem;
 }
 
 div {
     display: flex;
     gap: 2rem;
     flex-wrap: wrap;
+    flex-direction: column;
 }
 
-h1 {
-    font-size: 3.5rem;
+h2 {
+    font-size: 2rem;
+    line-height: 1.2;
 }
 </style>
 

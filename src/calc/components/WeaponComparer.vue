@@ -305,9 +305,6 @@ export default {
     flex: none;
     background-color: var(--background-body-color);
     position: relative;
-    max-width: 100vw;
-    overflow-x: auto;
-
 }
 
 
@@ -318,6 +315,8 @@ export default {
     flex: none;
     height: fit-content;
 
+    max-width: 50vw;
+    overflow-x: auto;
 }
 
 .flex-item {

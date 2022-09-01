@@ -24,10 +24,13 @@ export default {
       <div class="header">
         <h1> Weapon Calculator </h1>
       </div>
-      <WeaponComparer />
+      <div class="main-container">
+        <AllSelector />
+        <WeaponComparer />
+      </div>
     </section>
     <section class="selectors">
-      <AllSelector />
+      
     </section>
     <section>
       <div class="header">
@@ -111,5 +114,10 @@ h1 {
   gap: 1rem;
   flex-wrap: wrap;
   padding-left: 2rem;
+}
+
+.main-container {
+  display: flex;
+  max-width: 100vw;
 }
 </style>
