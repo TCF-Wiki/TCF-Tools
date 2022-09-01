@@ -2,6 +2,7 @@
 import {defineComponent} from 'vue';
 
 import Home from './home/PageHome.vue';
+import About from './about/PageAbout.vue';
 // @ts-ignore
 import Calc from './calc/PageCalc.vue';
 import Loadout from './loadout/PageLoadout.vue';
@@ -10,7 +11,7 @@ import NotFound from './Page404.vue';
 
 const routes = {
     '/': Home,
-    '/about': Home,
+    '/about': About,
     '/calculator': Calc,
     '/loadout': Loadout,
     '/map': Map,
@@ -38,7 +39,7 @@ export default defineComponent({
                 var name = names[this.currentPath];
                 document.title = name + ' | TC:F Wiki';
             } else {
-                document.title = '404 - Not Found';
+                document.title = '404 - Not Found | TC:F Wiki';
             }
             return newPage;
         },

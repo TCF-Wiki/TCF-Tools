@@ -2,8 +2,8 @@
     <div class="loadoutPage">
         <h1 class="title">The Cycle: Frontier - Random Loadout Generator</h1>
         <div class="buttons">
-            <button class="button loadoutBtn" @click.prevent="RandomLoadout()">Generate new loadout</button>
-            <button class="button loadoutBtn" @click.prevent="ShareLoadout(true)">Share loadout</button>
+            <button class="button loadoutBtn" @click.prevent="RandomLoadout()">Generate</button>
+            <button class="button loadoutBtn" @click.prevent="ShareLoadout(true)">Share</button>
             <span class="popup" id="sharePopup">Link copied to clipboard</span>
         </div>
         <div class="loadout">
@@ -69,6 +69,7 @@ export default defineComponent({
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    background-color: var(--background-body-color);
 }
 .title {
     width: 100%;
@@ -85,13 +86,13 @@ export default defineComponent({
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin: 10px;
+    margin: 2rem;
 }
 
 .loadoutBtn {
-    width: 15vw;
+    min-width: 15%;
     height: 100%;
-    margin: 10px;
+    margin: 2rem;
 }
 
 .loadout {

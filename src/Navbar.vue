@@ -1,11 +1,11 @@
 <template>
-    <div class="nav-menu"> 
-        <font-awesome-icon width="4rem" icon="fa-solid fa-bars" @click.prevent="showMenu()"></font-awesome-icon> 
-        <div class="nav-content" :class="showMobileMenu ? 'open-menu' : 'closed-menu'"> 
-
-            <a class="logo" href="https://thecyclefrontier.wiki/wiki/Main_Page" target="_blank"><img src="/shared-images/wiki_logo_bar.png"></a>
+    <div class="nav-menu">
+        <font-awesome-icon width="4rem" icon="fa-solid fa-bars" @click.prevent="showMenu()"></font-awesome-icon>
+        <div class="nav-content" :class="showMobileMenu ? 'open-menu' : 'closed-menu'">
+            <a class="logo" href="https://thecyclefrontier.wiki/wiki/Main_Page" target="_blank"><img src="/shared-images/wiki_logo_bar.png" /></a>
             <div class="nav-items">
-                <a href="/"> Home </a> 
+                <a href="/"> Home </a>
+                <a href="/about"> About us </a>
                 <a href="https://thecyclefrontier.wiki/wiki/Main_Page" target="_blank"> Official Wiki </a>
                 <a href="/map"> Interactive Map </a>
                 <a href="/calculator"> Weapon Calculator </a>
@@ -17,68 +17,70 @@
 </template>
 
 <script>
-    export default {
+export default {
     data() {
         return {
             showMobileMenu: false,
-        }
+        };
     },
     methods: {
         showMenu() {
             this.showMobileMenu = !this.showMobileMenu;
         },
     },
-}
+};
 </script>
 
 <style scoped>
-    .logo {
-        width: 10%
-    }
-    .nav-menu {
-        background-color: var(--background-menu-color);
-        color: var(--text-color-menu-white);
-        z-index: 1;
-    }
-    .nav-content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .nav-items {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        list-style: none;
-        margin: 0;
-    }
+.logo {
+    width: 10%;
+}
+.nav-menu {
+    margin-left: 10vw;
+    background-color: var(--background-menu-color);
+    color: var(--text-color-menu-white);
+    z-index: 1;
+}
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.nav-items {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+}
 
-    .nav-items a {
-        padding: 2rem 2.5rem;
-        width: fit-content;
-        height: 100%;
-        transition: all .1s linear;
-        font-size: 1rem;
-        text-transform: uppercase;
-        word-wrap: break-word;
-        cursor: pointer;
-    }
+.nav-items a {
+    padding: 1rem 1.5rem;
+    width: fit-content;
+    height: 100%;
+    transition: all 0.1s linear;
+    font-size: 1rem;
+    text-transform: uppercase;
+    word-wrap: break-word;
+    cursor: pointer;
+}
 
-    .nav-items a:hover {
-        background-color: var(--background-button-color);
-        color: var(--link-body-color)
-    }
+.nav-items a:hover {
+    background-color: var(--background-button-color);
+    color: var(--link-body-color);
+}
 
-    .nav-menu svg {
-        display: none;
-    }
-    /* Mobile version - hidden hamburger menu */
-    @media screen and (max-width: 900px) {
+.nav-menu svg {
+    display: none;
+}
+/* Mobile version - hidden hamburger menu */
+@media screen and (max-width: 900px) {
     .nav-menu {
         padding: 1rem 0;
         position: absolute;
         width: 100vw;
-        border-bottom: 2px solid var(--background-body-color)
+        margin-left: 0;
+        border-bottom: 2px solid var(--background-body-color);
     }
     .open-menu {
         opacity: 1;
@@ -94,7 +96,7 @@
         flex-direction: column;
         z-index: 100;
         position: relative;
-        transition: all .5s linear;
+        transition: all 0.5s linear;
         justify-content: center;
     }
     .nav-items {
@@ -109,10 +111,9 @@
         margin-left: auto;
         padding: 0 1rem 1rem 0;
         font-size: 2rem;
-        
     }
     .logo {
         width: 100%;
     }
 }
-    </style>
+</style>

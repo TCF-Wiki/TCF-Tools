@@ -13,17 +13,21 @@ body {
     background-position: top left;
     background-repeat: repeat-y;
     background-attachment: scroll;
-
     overflow-x: hidden;
 }
 
 main {
     margin-left: 10vw;
     width: 90vw;
+    min-height: 55vh;
 }
 @media screen and (max-width: 900px) {
     body {
         background: var(--background-body-color);
+    }
+    main {
+        margin-left: 0;
+        margin-top: 7.5rem;
     }
 }
 

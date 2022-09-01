@@ -2,9 +2,9 @@
     <footer>
         <div class="footerExtras">
             <section class="aboutAndSocial">
-                <h2>TCF: Wiki Calculator</h2>
-                <p>The purpose of this website is to be able to easily compare weapons in The Cycle: Frontier.</p>
-                <p> This is not an official website. The website UI is based on the <a href="https://thecycle.game"> official website</a>, with permission.</p> 
+                <h2>TCF: Wiki Applications</h2>
+                <p>The purpose of this website is to help you find and use all the information you need about The Cycle: Frontier.</p>
+                <p>This is not an official website. The website UI is based on the <a href="https://thecycle.game"> official website</a>, with permission.</p>
                 <ul class="footerSocial">
                     <li>
                         <a href="https://twitter.com/TCFWiki">
@@ -31,9 +31,6 @@
                 </ul>
                 <!-- .aboutAndSocial -->
             </section>
-
-
-
             <section class="links">
                 <h2>Links</h2>
                 <ul>
@@ -51,8 +48,7 @@
                     </li>
                 </ul>
             </section>
-
-    </div>
+        </div>
         <div class="footerMenu">
             <ul>
                 <li><a href="">Home</a></li>
@@ -66,16 +62,13 @@
     </footer>
 </template>
 
-
-
 <style scoped>
-
 * {
     flex: 1 0 auto;
-    
 }
 
-p, span {
+p,
+span {
     color: var(--text-color-footer-gray);
 }
 hr {
@@ -88,13 +81,14 @@ footer {
 }
 
 @media screen and (max-width: 900px) {
-  footer {
-    margin-left: 0;
-  }
+    footer {
+        margin-left: 0;
+    }
 }
 
 h1,
 footer {
+    margin-top: 2rem;
     flex-grow: 0;
     background: var(--background-menu-color);
 }
@@ -104,12 +98,10 @@ h1 {
     padding: 0.5rem;
 }
 
-
 .footerExtras {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    padding: clamp(1rem, 4vw, 3rem);
     gap: clamp(1.5rem, 4vw, 3rem);
 }
 
@@ -128,13 +120,12 @@ footer a {
     color: var(--link-footer-color);
 }
 
-
 footer .links {
     flex-grow: 0;
 }
 
 .aboutAndSocial {
-    width: 25vw;
+    width: 30vw;
     min-width: 18em;
     max-width: 24em;
 }
