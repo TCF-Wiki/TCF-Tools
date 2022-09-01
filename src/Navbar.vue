@@ -1,9 +1,9 @@
 <template>
     <div class="nav-menu"> 
-        <font-awesome-icon width="4rem" icon="fa-solid fa-bars" @click="showMenu()"></font-awesome-icon> 
+        <font-awesome-icon width="4rem" icon="fa-solid fa-bars" @click.prevent="showMenu()"></font-awesome-icon> 
         <div class="nav-content" :class="showMobileMenu ? 'open-menu' : 'closed-menu'"> 
 
-            <a class="logo" href="https://thecyclefrontier.wiki/wiki/Main_Page" target="_blank"><img src="../public/shared-images/wiki_logo_bar.png"></a>
+            <a class="logo" href="https://thecyclefrontier.wiki/wiki/Main_Page" target="_blank"><img src="/shared-images/wiki_logo_bar.png"></a>
             <div class="nav-items">
                 <a href="/"> Home </a> 
                 <a href="https://thecyclefrontier.wiki/wiki/Main_Page" target="_blank"> Official Wiki </a>
@@ -39,9 +39,6 @@
         background-color: var(--background-menu-color);
         color: var(--text-color-menu-white);
         z-index: 1;
-        -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
-  -moz-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
-  box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
     }
     .nav-content {
         display: flex;
@@ -76,11 +73,11 @@
         display: none;
     }
     /* Mobile version - hidden hamburger menu */
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 900px) {
     .nav-menu {
         padding: 1rem 0;
         position: absolute;
-        width: 100%;
+        width: 100vw;
         border-bottom: 2px solid var(--background-body-color)
     }
     .open-menu {
@@ -91,6 +88,7 @@
         opacity: 0;
         height: 0;
         padding: 0;
+        pointer-events: none;
     }
     .nav-content {
         flex-direction: column;
@@ -110,6 +108,7 @@
         display: block;
         margin-left: auto;
         padding: 0 1rem 1rem 0;
+        font-size: 2rem;
         
     }
     .logo {

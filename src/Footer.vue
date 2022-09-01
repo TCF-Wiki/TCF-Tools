@@ -85,9 +85,12 @@ hr {
 footer {
     max-width: 100%;
     margin-left: 10vw;
-    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
-  -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
-  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+}
+
+@media screen and (max-width: 900px) {
+  footer {
+    margin-left: 0;
+  }
 }
 
 h1,

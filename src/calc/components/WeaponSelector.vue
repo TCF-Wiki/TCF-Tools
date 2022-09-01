@@ -6,7 +6,7 @@
         <div class="weapon-container">
             <div v-for="weapon in sortedData" class="weapon-selector" :class="{active: selectedWeapons.list.includes(weapon[1])}" @click="selectedWeapons.toggleSelected(weapon[1])">
                 <img :src=" 'calc-images/' + weapon[0] + '.png' " class="weapon-image" > 
-                <span> {{ weapon[0] }} </span> 
+                <span class="weapon-name"> {{ weapon[0] }} </span> 
             </div>
         </div>
     </section>
@@ -56,7 +56,7 @@ export default {
 <style scoped>
 
 .weapon-image {
-    width: 10em
+    width: 10rem
 }
 
 .weapon-container {
@@ -65,6 +65,17 @@ export default {
 }
 
 
+@media screen  and (max-width: 900px){
+    .weapon-image {
+        display: none;
+    }
+    .weapon-name {
+        font-size: .8rem;
+    }
+    .weapon-container {
+        grid-template-columns: 1fr 1fr
+    }
+}
 .weapon-selector {
     margin: .2em;
     text-align: center;
@@ -75,5 +86,9 @@ export default {
     transform: scale(1.05);
 }
 
-
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem
+}
 </style>

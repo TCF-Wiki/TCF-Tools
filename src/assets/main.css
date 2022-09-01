@@ -7,8 +7,7 @@ body {
 body {
     position: absolute;
     width: 100vw;
-
-    background-image: url('https://cdn.discordapp.com/attachments/994517357512904807/1014653866131861504/border_left.png');
+    background-image: url('/shared-images/border_left.png');
     background-color: var(--background-menu-color);
     background-attachment: scroll;
     background-position: top left;
@@ -21,6 +20,11 @@ body {
 main {
     margin-left: 10vw;
     width: 90vw;
+}
+@media screen and (max-width: 900px) {
+    body {
+        background: var(--background-body-color);
+    }
 }
 
 h1,
@@ -51,14 +55,8 @@ a {
     line-height: 1.75rem;
     letter-spacing: 0.05rem;
     white-space: nowrap;
-
-    padding: 0.75rem;
-
     border: 3px solid var(--button-accent-color);
     border-radius: 2px;
-    -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
     cursor: pointer;
     transition: all 0.2s ease-in-out;
 }
@@ -88,13 +86,14 @@ a {
     -moz-transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    width: auto;
-    height: auto;
+    width: clamp(30%, 60%, 90%);
+    height: clamp(40%, 80%, 100%);
     padding: 2em;
     background-color: var(--background-menu-color);
     color: var(--text-color-footer-gray);
     z-index: 200;
     text-align: center;
+    overflow: auto;
 }
 
 .close {

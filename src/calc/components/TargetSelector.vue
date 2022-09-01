@@ -1,5 +1,8 @@
 <template>
-    <button class="button" type="button" @click.prevent="showTargetModal = true"> Select Target </button>
+    <div class="container">
+        <button class="button" type="button" @click.prevent="showTargetModal = true"> Select Target </button>
+        <p> Selected: {{ creatureNames[selectedTarget.selected]}}</p> 
+    </div>
     <section class="selection-list" v-show="showTargetModal">
         <button class="close" 
         @click.prevent="showTargetModal = false"> 
@@ -51,11 +54,9 @@ export default {
 
 <style scoped>
 .target-image {
-    width: 10em
+    width: 10rem;
+    margin: auto;
 }
-
-
-
 
 .target-container {
     display: grid;
@@ -73,4 +74,21 @@ export default {
     transform: scale(1.05);
 }
 
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem
+}
+
+@media screen  and (max-width: 900px){
+    .target-image {
+        display: none;
+    }
+    .target-name {
+        font-size: .8rem;
+    }
+    .target-container {
+        grid-template-columns: 1fr 1fr
+    }
+}
 </style>

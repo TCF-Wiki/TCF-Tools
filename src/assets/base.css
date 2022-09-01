@@ -13,12 +13,19 @@
     --button-body-color: #fec350;
     --button-accent-color: #f0a346;
     --minor-accent-color: #79c6f2;
-
     --background-body-color: #1b262e;
     --background-button-color: #2b3b42;
     --background-menu-color: #121c25;
     --background-dark-color: #121c25f2;
     --background-date-color: #121c2580;
+    --background-stripe-color: #23313c;
+
+    --rarity-color-common: #dfe3e8;
+    --rarity-color-uncommon: #4cb31b;
+    --rarity-color-rare: #1da7ec;
+    --rarity-color-epic: #4f0e8b;
+    --rarity-color-exotic: #ee3355;
+    --rarity-color-legendary: #ff820d;
 }
 
 @font-face {

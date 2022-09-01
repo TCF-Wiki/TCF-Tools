@@ -1,6 +1,8 @@
 <template>
-    <button class="button" type="button" @click.prevent="showModal = true"> Select Armor </button>
-
+    <div class="container"> 
+        <button class="button" type="button" @click.prevent="showModal = true"> Select Armor </button>
+        <p> Selected: {{ armorName(selectedArmor.selected) }}</p>
+    </div>
     <section class="selection-list" v-show="showModal">
         <button class="close" @click.prevent="showModal = false"> &times; </button>
         <h2> Armor Selector </h2>
@@ -79,6 +81,12 @@ export default {
     grid-template-columns: 1fr 1fr 1fr 
 }
 
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem
+}
+
 .armor-selector {
     margin: .2em;
     text-align: center;
@@ -89,5 +97,15 @@ export default {
     transform: scale(1.05);
 }
 
-
+@media screen  and (max-width: 900px){
+    .armor-image {
+        display: none;
+    }
+    .armor-name {
+        font-size: .8rem;
+    }
+    .armor-container {
+        grid-template-columns: 1fr 1fr
+    }
+}
 </style>

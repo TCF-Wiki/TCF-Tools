@@ -1,93 +1,133 @@
 <script>
 import AllSelector from './components/Selector.vue';
 import WeaponComparer from './components/WeaponComparer.vue';
-import {penetrationChart, falloffChart} from './charts';
+import { penetrationChart, falloffChart } from './charts'
+import AccuracySelector from './components/AccuracySelector.vue';
+import DistanceSelector from './components/DistanceSelector.vue';
 export default {
-    components: {
-        AllSelector,
-        WeaponComparer,
-    },
-    mounted() {
-        console.log('this file is run!');
-        penetrationChart();
-        falloffChart();
-    },
+  components: {
+    AllSelector,
+    WeaponComparer,
+    AccuracySelector,
+    DistanceSelector
+  },
+  mounted() {
+    penetrationChart()
+    falloffChart()
+  }
 };
 </script>
 
 <template>
-    <div class="calcPage">
-        <section>
-            <div class="header">
-                <h1>Weapon Calculator</h1>
-            </div>
-            <AllSelector />
-            <WeaponComparer />
-        </section>
-        <section>
-            <div class="header">
-                <h1>Charts</h1>
-                <p>The following charts show the detailed stats above in a visual way. More charts will be added in the future.</p>
-            </div>
-            <div class="outer-chart-container">
-                <div class="chart-container">
-                    <h2>Penetration Chart</h2>
-                    <div class="inner-chart-container">
-                        <div id="penChart">CHART HERE!</div>
-                    </div>
-                </div>
+  <main>  
+    <section> 
+      <div class="header">
+        <h1> Weapon Calculator </h1>
+      </div>
+      <div class="main-container">
+        <AllSelector />
+        <WeaponComparer />
+      </div>
+    </section>
+    <section>
+      <div class="header">
+        <h1> Charts </h1>
+        <p> The following charts show the detailed stats above in a visual way. More charts will be added in the future.  </p>
+      </div>
+      <div class="outer-chart-container">
+        <div class="chart-container">
+          <h2> Penetration Chart </h2> 
+          <div class="inner-chart-container">
+            <div id="penChart"> CHART HERE!</div>
+          </div>
+        </div>
 
-                <div class="chart-container">
-                    <h2>Falloff Chart</h2>
-                    <div class="inner-chart-container">
-                        <div id="falloffChart">Chart HERE!</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
+        <div class="chart-container">
+          <h2> Falloff Chart </h2>
+          <div class="inner-chart-container">
+            <div id="falloffChart"> Chart HERE! </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+    
+
+    </main>
+
 </template>
 
 <style scoped>
-.calcPage {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid #121c25;
-    background-color: var(--background-body-color);
-    gap: 2rem;
-    -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+main {
+  margin-left: 10vw;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #121C25;
+  background-color: var(--background-body-color);
+  gap: 2rem;
+}
+
+@media screen and (max-width: 900px) {
+    main {
+        margin-left: 0;
+    }
 }
 
 h1 {
-    font-size: 3rem;
+  font-size: 3rem;
 }
 
 .outer-chart-container {
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-    flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .chart-container {
-    position: relative;
-    width: 30rem;
-    height: 30rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding-left: 2rem;
+  position: relative;
+  width: 30rem;
+  height: 30rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-left: 2rem;
 }
 
 .header {
-    position: relative;
+  position: relative;
 
-    width: 40vw;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding-left: 2rem;
+  width: 40vw;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-left: 2rem;
 }
+
+.selectors {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.inner-selector-container {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-left: 2rem;
+}
+
+.main-container {
+  display: flex;
+  max-width: 100vw;
+}
+
+@media screen and (max-width: 900px) {
+  .main-container {
+    flex-direction: column;
+  }
+}
+
 </style>
