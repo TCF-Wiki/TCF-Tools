@@ -8,13 +8,19 @@ import Loadout from './loadout/PageLoadout.vue';
 import Map from './map/PageMap.vue';
 import NotFound from './Page404.vue';
 
-
 const routes = {
     '/': Home,
     '/about': Home,
     '/calculator': Calc,
     '/loadout': Loadout,
     '/map': Map,
+};
+const names = {
+    '/': 'Apps',
+    '/about': 'About',
+    '/calculator': 'Weapon Calculator',
+    '/loadout': 'Loadout Generator',
+    '/map': 'Interactive Map',
 };
 
 export default defineComponent({
@@ -28,8 +34,8 @@ export default defineComponent({
             // @ts-expect-error
             var newPage = routes[this.currentPath || '/'] || NotFound;
             if (newPage != NotFound) {
-                var name = this.currentPath.replace('/', '') || '';
-                if (name == '') name = 'Home';
+                // @ts-expect-error
+                var name = names[this.currentPath];
                 document.title = name + ' | TC:F Wiki';
             } else {
                 document.title = '404 - Not Found';
