@@ -81,4 +81,16 @@ export default {
     flex-direction: column;
     gap: 1rem
 }
+
+@media screen  and (max-width: 900px){
+    .target-image {
+        display: none;
+    }
+    .target-name {
+        font-size: .8rem;
+    }
+    .target-container {
+        grid-template-columns: 1fr 1fr
+    }
+}
 </style>

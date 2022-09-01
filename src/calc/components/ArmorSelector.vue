@@ -97,5 +97,15 @@ export default {
     transform: scale(1.05);
 }
 
-
+@media screen  and (max-width: 900px){
+    .armor-image {
+        display: none;
+    }
+    .armor-name {
+        font-size: .8rem;
+    }
+    .armor-container {
+        grid-template-columns: 1fr 1fr
+    }
+}
 </style>

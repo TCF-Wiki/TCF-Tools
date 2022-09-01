@@ -18,7 +18,11 @@ body {
   overflow-x: hidden;
 }
 
-
+@media screen  and (max-width: 900px){
+  body {
+    background: var(--background-body-color);
+  }
+}
 
 h1, h2, h3, h4, h5, h6 {
   font-family: Refinery, ui-sans, system-ui, Arial, Helvetica, sans-serif;
@@ -78,13 +82,14 @@ a {
   -moz-transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  width: auto;
-  height: auto;
+  width: clamp(30%, 60%, 90%);
+  height: clamp(40%, 80%, 100%);
   padding: 2em;
   background-color: var(--background-menu-color);
   color: var(--text-color-footer-gray);
   z-index: 200;
   text-align: center;
+  overflow: auto
 }
 
 

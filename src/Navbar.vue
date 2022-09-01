@@ -1,6 +1,6 @@
 <template>
     <div class="nav-menu"> 
-        <font-awesome-icon width="4rem" icon="fa-solid fa-bars" @click="showMenu()"></font-awesome-icon> 
+        <font-awesome-icon width="4rem" icon="fa-solid fa-bars" @click.prevent="showMenu()"></font-awesome-icon> 
         <div class="nav-content" :class="showMobileMenu ? 'open-menu' : 'closed-menu'"> 
 
             <a class="logo" href="https://thecyclefrontier.wiki/wiki/Main_Page" target="_blank"><img src="/shared-images/wiki_logo_bar.png"></a>
