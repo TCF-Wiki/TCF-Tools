@@ -18,11 +18,10 @@ import LocationSelector from './components/LocationSelector.vue';
 import {defineComponent, watch} from 'vue';
 import L, {Map, type TileLayer} from 'leaflet';
 import {selectedMap, selectedLocations} from './store';
-import {getMapData} from './data';
+import {mapData as mData} from './data';
 
 import {map1TileLayer, map2TileLayer, map3TileLayer, bounds, brightsandsColor, crescentfallsColor} from './mapConstants';
-import { addLeafletScript, addLeafletStyles} from '../scriptLoader'
-
+import {faFeatherPointed} from '@fortawesome/free-solid-svg-icons';
 
 import layerGroups from './layerGroups';
 
@@ -36,14 +35,11 @@ export default defineComponent({
             selectedMap,
             selectedLocations,
             savedMarkers: [] as any,
-            mapData: null as null | any
         };
     },
-    async mounted() {
-        addLeafletScript()
-        addLeafletStyles()
+    mounted() {
         // this is the main logic of the map.
-        this.mapData = await getMapData()
+        const mapData = mData;
 
         // create our map, mounting it on the '#map' element
         let map = L.map('map', {
