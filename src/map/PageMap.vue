@@ -22,6 +22,8 @@ import {mapData as mData} from './data';
 import {map1TileLayer, map2TileLayer, map3TileLayer, bounds, brightsandsColor, crescentfallsColor} from './mapConstants';
 import {faFeatherPointed} from '@fortawesome/free-solid-svg-icons';
 
+import layerGroups from './layerGroups';
+
 export default defineComponent({
     components: {
         MapSelector,
@@ -32,10 +34,11 @@ export default defineComponent({
         return {
             selectedMap,
             selectedLocations,
-            savedMarkers: {} as any,
+            savedMarkers: [] as any,
         };
     },
     mounted() {
+        console.log(layerGroups);
         // this is the main logic of the map.
         const mapData = mData;
 
@@ -50,13 +53,13 @@ export default defineComponent({
         map.fitBounds(bounds);
         map.setMaxBounds(bounds);
 
-        iniateMapToMapNumber(selectedMap.map).addTo(map);
+        initiateMapToMapNumber(selectedMap.map).addTo(map);
 
         // we must keep our map variable to this file. We musn't mutate it in weird ways or set it to other variables, etc. That is why this is all kept to this file.
         this.$watch(
             'selectedMap',
             () => {
-                iniateMapToMapNumber(selectedMap.map).addTo(map);
+                initiateMapToMapNumber(selectedMap.map).addTo(map);
             },
             {deep: true}
         );
@@ -70,7 +73,7 @@ export default defineComponent({
             {deep: true}
         );
 
-        function iniateMapToMapNumber(mapNumber: number): TileLayer {
+        function initiateMapToMapNumber(mapNumber: number): TileLayer {
             // this function initialises the map to a specified map number.
             if (mapNumber == 1) {
                 document.getElementById('map')!.style.backgroundColor = brightsandsColor;
@@ -105,27 +108,26 @@ export default defineComponent({
         }
 
         let VM = this;
+        function removeAllMarkers(): void {
+            for (let group in layerGroups[VM.selectedMap.map]) {
+                layerGroups[VM.selectedMap.map][group].removeFrom(map);
+            }
+        }
         function removeUnselectedMarkers(): void {
+            console.log(VM.savedMarkers);
             for (let locationType in VM.savedMarkers) {
-                console.log(VM.savedMarkers[locationType]);
-                map.removeLayer(VM.savedMarkers[locationType]);
+                if (selectedLocations.list.includes(VM.savedMarkers[locationType])) continue;
+                layerGroups[VM.selectedMap.map][VM.savedMarkers[locationType]].removeFrom(map);
+                delete VM.savedMarkers[locationType];
             }
         }
 
         function placeMarkersForSelectedLocations(): void {
-            let mapMarkers = {} as any;
+            let mapMarkers = [] as any;
             // this function places the markers for each location. Hurray!
             for (let locationType in selectedLocations.list) {
-                mapMarkers[selectedLocations.list[locationType]] = [];
-                let locations = mapData['locations'][selectedMap.map][selectedLocations.list[locationType]];
-
-                for (let point in locations) {
-                    let pointData = locations[point];
-                    let marker = L.marker(pointData['location']).bindPopup(pointData['category']);
-                    mapMarkers[selectedLocations.list[locationType]].push(marker);
-                }
-
-                let layerGroup = L.layerGroup(mapMarkers[selectedLocations.list[locationType]]).addTo(map);
+                layerGroups[VM.selectedMap.map][selectedLocations.list[locationType]].addTo(map);
+                mapMarkers.push(selectedLocations.list[locationType]);
             }
             VM.savedMarkers = mapMarkers;
         }
