@@ -41,7 +41,7 @@ function createGroups(map: string, locationType: string, locationData: any) {
     });
     for (let location in locationData) {
         let m = new Marker(locationData[location]['location']);
-        m.bindPopup(locationData[location]['rawName']);
+        m.bindPopup(locationData[location]['rawName'] + ' - [' + locationData[location]['location'][0] + ', ' + locationData[location]['location'][1] + ']');
         m.options.title = locationData[location]['rawName'];
         locationGroup.addLayer(m);
     }

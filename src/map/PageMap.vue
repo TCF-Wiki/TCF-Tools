@@ -129,11 +129,12 @@ export default defineComponent({
         }
 
         function placeMarkersForSelectedLocations(): void {
-            //console.log('Placing markers for selected locations');
+            console.log('Placing markers for selected locations');
             let mapMarkers = [] as any;
             // this function places the markers for each location. Hurray!
             for (let locationType in selectedLocations.list) {
                 let layers = layerGroups[VM.selectedMap.map][selectedLocations.list[locationType]];
+                console.log(layers);
                 if (layers) layers.addTo(map);
                 mapMarkers.push(selectedLocations.list[locationType]);
             }
