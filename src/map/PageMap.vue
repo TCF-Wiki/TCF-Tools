@@ -2,16 +2,17 @@
     <div class="page-content">
         <div class="options">
             <MapSelector />
-            <SelectedLocationList />
             <LocationSelector />
         </div>
         <div id="map"></div>
     </div>
 </template>
 
+<style src="./MarkerCluster.css" />
+<style src="./MarkerCluster.Default.css" />
+
 <script lang="ts">
 import MapSelector from './components/MapSelector.vue';
-import SelectedLocationList from './components/SelectedLocationList.vue';
 import LocationSelector from './components/LocationSelector.vue';
 
 import {defineComponent, watch} from 'vue';
@@ -28,7 +29,6 @@ export default defineComponent({
     components: {
         MapSelector,
         LocationSelector,
-        SelectedLocationList,
     },
     data() {
         return {
@@ -110,7 +110,7 @@ export default defineComponent({
 
         let VM = this;
         function removeAllMarkers(): void {
-            console.log('Removing all markers');
+            //console.log('Removing all markers');
             for (let oldMap in layerGroups) {
                 for (let group in layerGroups[oldMap]) {
                     let layers = layerGroups[oldMap][group];
@@ -119,7 +119,7 @@ export default defineComponent({
             }
         }
         function removeUnselectedMarkers(): void {
-            console.log('Removing unselected markers');
+            //console.log('Removing unselected markers');
             for (let locationType in VM.savedMarkers) {
                 if (selectedLocations.list.includes(VM.savedMarkers[locationType])) continue;
                 let layers = layerGroups[VM.selectedMap.map][VM.savedMarkers[locationType]];
@@ -129,7 +129,7 @@ export default defineComponent({
         }
 
         function placeMarkersForSelectedLocations(): void {
-            console.log('Placing markers for selected locations');
+            //console.log('Placing markers for selected locations');
             let mapMarkers = [] as any;
             // this function places the markers for each location. Hurray!
             for (let locationType in selectedLocations.list) {
