@@ -40,7 +40,7 @@ export default defineComponent({
         };
     },
     async mounted() {
-        addLeafletScript()
+        //addLeafletScript()
         addLeafletStyles()
         // this is the main logic of the map.
         this.mapData = await getMapData()
