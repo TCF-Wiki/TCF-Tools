@@ -5,6 +5,9 @@ export async function getMapData() {
     const response = await fetch('https://raw.githubusercontent.com/Stevnbak/TCF-Information/main/mapData.json', {});
     const json = await response.json();
 
+    console.log('fetched!')
+    console.trace()
+    
     mapData = json;
     return json;
 }
