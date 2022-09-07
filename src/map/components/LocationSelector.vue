@@ -1,6 +1,12 @@
 <template>
     <div>
         <p v-for="(value, key) in mapData['locations'][selectedMap.map]" @click="selectedLocations.locationSwitch(key.toString())">
+            <button class="button locationBtn" :class="selectedLocations.list.includes(key.toString()) ? 'selected' : 'not-selected' && key.toString() != 'other' ? '' : 'hidden'">{{ key }}</button>
+        </p>
+    </div>
+    <div>
+        <p>Other</p>
+        <p v-for="(value, key) in mapData['locations'][selectedMap.map]['other']" @click="selectedLocations.locationSwitch(key.toString())">
             <button class="button locationBtn" :class="selectedLocations.list.includes(key.toString()) ? 'selected' : 'not-selected'">{{ key }}</button>
         </p>
     </div>
@@ -14,6 +20,9 @@
 
 .selected {
     background-color: #eaff00;
+}
+.hidden {
+    display: none;
 }
 </style>
 
