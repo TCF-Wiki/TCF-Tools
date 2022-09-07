@@ -1,5 +1,5 @@
 <template>
-    <footer>
+    <div class="footer">
         <div class="footerExtras">
             <section class="aboutAndSocial">
                 <h2>TCF: Wiki Applications</h2>
@@ -59,7 +59,7 @@
             </ul>
             <span>&copy; 2022 The Cycle: Frontier Wiki </span>
         </div>
-    </footer>
+    </div>
 </template>
 
 <style scoped>
@@ -75,20 +75,19 @@ hr {
     display: none;
 }
 
-footer {
+.footer {
     max-width: 100%;
     margin-left: 10vw;
 }
 
 @media screen and (max-width: 900px) {
-    footer {
-        margin-left: 0;
-    }
+    .footer {
+    margin-left: 0;
+  }
 }
 
 h1,
-footer {
-    margin-top: 2rem;
+.footer {
     flex-grow: 0;
     background: var(--background-menu-color);
 }
@@ -110,17 +109,18 @@ h1 {
     font-size: clamp(1.25em, 2.5vw, 1.5em);
 }
 
-footer ul {
+.footer ul {
     list-style: none;
     padding: 0;
 }
 
-footer a {
+.footer a {
     text-decoration: none;
     color: var(--link-footer-color);
 }
 
-footer .links {
+
+.footer .links {
     flex-grow: 0;
 }
 
@@ -183,8 +183,8 @@ footer .links {
 }
 
 @media (max-width: 40em) {
-    body > footer,
-    body > footer p {
+    body > .footer,
+    body > .footer p {
         text-align: center;
     }
     .footerExtras section:first-child,

@@ -21,6 +21,7 @@ main {
     width: 90vw;
     min-height: 55vh;
 }
+
 @media screen and (max-width: 900px) {
     body {
         background: var(--background-body-color);
@@ -30,6 +31,7 @@ main {
         margin-top: 7.5rem;
     }
 }
+
 
 h1,
 h2,
@@ -156,4 +158,11 @@ input[type='range']:hover::-moz-range-thumb {
 
 input[type='range']:hover::-webkit-slider-thumb {
     background: var(--button-accent-color);
+}
+
+
+#map { 
+    height: 50rem;
+    width: 50rem;
+    background-color: var(--background-stripe-color);
 }

@@ -13,7 +13,9 @@
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "@fortawesome/vue-fontawesome": "^3.0.1",
+    "@types/leaflet": "^1.7.11",
     "install": "^0.13.0",
+    "leaflet": "^1.8.0",
     "npm": "^8.18.0",
     "vue": "^3.2.37",
     "vue-router": "^4.1.5"

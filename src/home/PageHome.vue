@@ -9,7 +9,7 @@
             frequently raided by other ambitious Prospectors.
             <br />
             <br />
-            The Cycle: Frontier Wiki brings you the player up to date information for The Cycle: Frontier Get the most up to date information from the official Wiki Enhance your gaming experience with our websites and apps All for free without any
+            The Cycle: Frontier Wiki brings you the player up to date information for The Cycle: Frontier. Enhance your gaming experience with our websites and apps. All for free without any
             ads!
         </div>
         <div class="navigation">
