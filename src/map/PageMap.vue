@@ -38,7 +38,6 @@ export default defineComponent({
         };
     },
     mounted() {
-        console.log(layerGroups);
         // this is the main logic of the map.
         const mapData = mData;
 
@@ -59,6 +58,8 @@ export default defineComponent({
         this.$watch(
             'selectedMap',
             () => {
+                removeAllMarkers();
+                placeMarkersForSelectedLocations();
                 initiateMapToMapNumber(selectedMap.map).addTo(map);
             },
             {deep: true}
@@ -109,24 +110,31 @@ export default defineComponent({
 
         let VM = this;
         function removeAllMarkers(): void {
-            for (let group in layerGroups[VM.selectedMap.map]) {
-                layerGroups[VM.selectedMap.map][group].removeFrom(map);
+            console.log('Removing all markers');
+            for (let oldMap in layerGroups) {
+                for (let group in layerGroups[oldMap]) {
+                    let layers = layerGroups[oldMap][group];
+                    if (layers) layers.removeFrom(map);
+                }
             }
         }
         function removeUnselectedMarkers(): void {
-            console.log(VM.savedMarkers);
+            console.log('Removing unselected markers');
             for (let locationType in VM.savedMarkers) {
                 if (selectedLocations.list.includes(VM.savedMarkers[locationType])) continue;
-                layerGroups[VM.selectedMap.map][VM.savedMarkers[locationType]].removeFrom(map);
+                let layers = layerGroups[VM.selectedMap.map][VM.savedMarkers[locationType]];
+                if (layers) layers.removeFrom(map);
                 delete VM.savedMarkers[locationType];
             }
         }
 
         function placeMarkersForSelectedLocations(): void {
+            console.log('Placing markers for selected locations');
             let mapMarkers = [] as any;
             // this function places the markers for each location. Hurray!
             for (let locationType in selectedLocations.list) {
-                layerGroups[VM.selectedMap.map][selectedLocations.list[locationType]].addTo(map);
+                let layers = layerGroups[VM.selectedMap.map][selectedLocations.list[locationType]];
+                if (layers) layers.addTo(map);
                 mapMarkers.push(selectedLocations.list[locationType]);
             }
             VM.savedMarkers = mapMarkers;
