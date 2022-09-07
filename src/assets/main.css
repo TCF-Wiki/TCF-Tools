@@ -32,7 +32,6 @@ main {
     }
 }
 
-
 h1,
 h2,
 h3,
@@ -158,11 +157,4 @@ input[type='range']:hover::-moz-range-thumb {
 
 input[type='range']:hover::-webkit-slider-thumb {
     background: var(--button-accent-color);
-}
-
-
-#map { 
-    height: 50rem;
-    width: 50rem;
-    background-color: var(--background-stripe-color);
 }

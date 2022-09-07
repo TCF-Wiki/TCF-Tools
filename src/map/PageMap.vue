@@ -1,12 +1,11 @@
 <template>
     <div class="page-content">
         <div class="options">
-            <MapSelector /> 
+            <MapSelector />
             <SelectedLocationList />
             <LocationSelector />
         </div>
         <div id="map"></div>
-
     </div>
 </template>
 
@@ -15,122 +14,133 @@ import MapSelector from './components/MapSelector.vue';
 import SelectedLocationList from './components/SelectedLocationList.vue';
 import LocationSelector from './components/LocationSelector.vue';
 
-import { defineComponent, watch } from 'vue';
-import L, { Map, type TileLayer } from 'leaflet';
-import { selectedMap, selectedLocations } from './store'
-import { mapData as mData } from './data'
+import {defineComponent, watch} from 'vue';
+import L, {Map, type TileLayer} from 'leaflet';
+import {selectedMap, selectedLocations} from './store';
+import {mapData as mData} from './data';
 
-import { map1TileLayer, map2TileLayer, map3TileLayer, bounds } from './mapConstants';
-import { faFeatherPointed } from '@fortawesome/free-solid-svg-icons';
+import {map1TileLayer, map2TileLayer, map3TileLayer, bounds, brightsandsColor, crescentfallsColor} from './mapConstants';
+import {faFeatherPointed} from '@fortawesome/free-solid-svg-icons';
 
 export default defineComponent({
     components: {
-    MapSelector,
-    LocationSelector,
-    SelectedLocationList
-},
+        MapSelector,
+        LocationSelector,
+        SelectedLocationList,
+    },
     data() {
         return {
             selectedMap,
             selectedLocations,
-            savedMarkers: {} as any
-        }
+            savedMarkers: {} as any,
+        };
     },
     mounted() {
         // this is the main logic of the map.
-        const mapData = mData
+        const mapData = mData;
 
         // create our map, mounting it on the '#map' element
-        let map = L.map('map',{
+        let map = L.map('map', {
             crs: L.CRS.Simple,
             minZoom: 1,
-            maxZoom: 5
-        }).setView([-128, 256],1);
+            maxZoom: 5,
+        }).setView([-128, 128], 1);
 
-        map.zoomControl.setPosition('topright')
-        map.fitBounds(bounds)
+        map.zoomControl.setPosition('topright');
+        map.fitBounds(bounds);
+        map.setMaxBounds(bounds);
 
-        iniateMapToMapNumber(selectedMap.map).addTo(map)
+        iniateMapToMapNumber(selectedMap.map).addTo(map);
 
         // we must keep our map variable to this file. We musn't mutate it in weird ways or set it to other variables, etc. That is why this is all kept to this file.
-        this.$watch('selectedMap', () => {
-            iniateMapToMapNumber(selectedMap.map).addTo(map)
-            }, { deep: true }
-        ) 
+        this.$watch(
+            'selectedMap',
+            () => {
+                iniateMapToMapNumber(selectedMap.map).addTo(map);
+            },
+            {deep: true}
+        );
 
-        this.$watch('selectedLocations', () => {
+        this.$watch(
+            'selectedLocations',
+            () => {
+                removeUnselectedMarkers();
+                placeMarkersForSelectedLocations();
+            },
+            {deep: true}
+        );
 
-            removeUnselectedMarkers()
-            placeMarkersForSelectedLocations()
-            }, { deep: true}
-        ) 
-
-        function iniateMapToMapNumber(mapNumber: number) : TileLayer {
+        function iniateMapToMapNumber(mapNumber: number): TileLayer {
             // this function initialises the map to a specified map number.
             if (mapNumber == 1) {
+                document.getElementById('map')!.style.backgroundColor = brightsandsColor;
                 if (map.hasLayer(map2TileLayer)) {
-                    map.removeLayer(map2TileLayer)
+                    map.removeLayer(map2TileLayer);
                 }
                 if (map.hasLayer(map3TileLayer)) {
-                    map.removeLayer(map3TileLayer)
+                    map.removeLayer(map3TileLayer);
                 }
-                return map1TileLayer
+                return map1TileLayer;
             } else if (mapNumber == 2) {
+                document.getElementById('map')!.style.backgroundColor = crescentfallsColor;
                 if (map.hasLayer(map1TileLayer)) {
-                    map.removeLayer(map1TileLayer)
+                    map.removeLayer(map1TileLayer);
                 }
                 if (map.hasLayer(map3TileLayer)) {
-                    map.removeLayer(map3TileLayer)
+                    map.removeLayer(map3TileLayer);
                 }
-                return map2TileLayer
+                return map2TileLayer;
             } else if (mapNumber == 3) {
+                document.getElementById('map')!.style.backgroundColor = brightsandsColor;
                 if (map.hasLayer(map1TileLayer)) {
-                    map.removeLayer(map1TileLayer)
+                    map.removeLayer(map1TileLayer);
                 }
                 if (map.hasLayer(map2TileLayer)) {
-                    map.removeLayer(map2TileLayer)
+                    map.removeLayer(map2TileLayer);
                 }
-                return map3TileLayer
+                return map3TileLayer;
             } else {
                 return map1TileLayer;
-            } 
+            }
         }
 
         let VM = this;
-        function removeUnselectedMarkers() : void {
-            
+        function removeUnselectedMarkers(): void {
             for (let locationType in VM.savedMarkers) {
-                console.log(VM.savedMarkers[locationType])
-                map.removeLayer(VM.savedMarkers[locationType])
+                console.log(VM.savedMarkers[locationType]);
+                map.removeLayer(VM.savedMarkers[locationType]);
             }
         }
 
-        function placeMarkersForSelectedLocations() : void {
-            let mapMarkers = {} as any
+        function placeMarkersForSelectedLocations(): void {
+            let mapMarkers = {} as any;
             // this function places the markers for each location. Hurray!
             for (let locationType in selectedLocations.list) {
-                mapMarkers[selectedLocations.list[locationType]] = []
-                let locations = mapData['locations'][selectedMap.map][selectedLocations.list[locationType]]
-                
+                mapMarkers[selectedLocations.list[locationType]] = [];
+                let locations = mapData['locations'][selectedMap.map][selectedLocations.list[locationType]];
+
                 for (let point in locations) {
-                    let pointData = locations[point]
-                    let marker = L.marker(pointData['location'])
-                        .bindPopup(pointData['category'])
-                        mapMarkers[selectedLocations.list[locationType]].push(marker)
+                    let pointData = locations[point];
+                    let marker = L.marker(pointData['location']).bindPopup(pointData['category']);
+                    mapMarkers[selectedLocations.list[locationType]].push(marker);
                 }
 
-                let layerGroup = L.layerGroup(mapMarkers[selectedLocations.list[locationType]]).addTo(map)
+                let layerGroup = L.layerGroup(mapMarkers[selectedLocations.list[locationType]]).addTo(map);
             }
-            VM.savedMarkers = mapMarkers
+            VM.savedMarkers = mapMarkers;
         }
-    }
-})
-
+    },
+});
 </script>
 
 <style scoped>
 .page-content {
-    padding-left: 1rem
+    padding-left: 1rem;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
 .options {
@@ -138,4 +148,8 @@ export default defineComponent({
     gap: 1rem;
 }
 
+#map {
+    height: 50rem;
+    width: 50rem;
+}
 </style>
