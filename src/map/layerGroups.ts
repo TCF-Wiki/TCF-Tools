@@ -1,7 +1,7 @@
 import L, {LayerGroup, Marker} from 'leaflet';
 import 'leaflet.markercluster';
 import {getMapData} from './data';
-let mapData = await getMapData()
+let mapData = await getMapData();
 var layerGroups: any = {};
 
 for (var map in mapData['locations']) {

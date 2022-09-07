@@ -1,12 +1,12 @@
 <template>
     <div>
-        <p  v-if="mapData" v-for="(value, key) in mapData['locations'][selectedMap.map]" @click="selectedLocations.locationSwitch(key.toString())">
+        <p v-if="mapData" v-for="(value, key) in mapData['locations'][selectedMap.map]" @click="selectedLocations.locationSwitch(key.toString())">
             <button class="button locationBtn" :class="selectedLocations.list.includes(key.toString()) ? 'selected' : 'not-selected' && key.toString() != 'other' ? '' : 'hidden'">{{ key }}</button>
         </p>
     </div>
     <div>
         <p>Other</p>
-        <p  v-if="mapData" v-for="(value, key) in mapData['locations'][selectedMap.map]['other']" @click="selectedLocations.locationSwitch(key.toString())">
+        <p v-if="mapData" v-for="(value, key) in mapData['locations'][selectedMap.map]['other']" @click="selectedLocations.locationSwitch(key.toString())">
             <button class="button locationBtn" :class="selectedLocations.list.includes(key.toString()) ? 'selected' : 'not-selected'">{{ key }}</button>
         </p>
     </div>
@@ -39,7 +39,7 @@ export default defineComponent({
         };
     },
     async mounted() {
-        this.mapData = await getMapData()
-    }
+        this.mapData = await getMapData();
+    },
 });
 </script>
