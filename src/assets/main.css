@@ -158,3 +158,27 @@ input[type='range']:hover::-moz-range-thumb {
 input[type='range']:hover::-webkit-slider-thumb {
     background: var(--button-accent-color);
 }
+#loading {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    width: 120px;
+    height: 120px;
+    margin: -76px 0 0 -76px;
+    border: 1rem solid var(--text-color-menu-white);
+    border-radius: 50%;
+    border-top: 1rem solid var(--minor-accent-color);
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 1.5s linear infinite;
+}
+
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

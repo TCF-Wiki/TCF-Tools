@@ -2,12 +2,17 @@ let mapData: any = null;
 
 export async function getMapData() {
     if (mapData) return mapData;
+    console.log('Started loading!')
+    const loader = document.getElementById('loading')
+    if (loader) {
+        loader.style.display = 'block'
+    }
     const response = await fetch('https://raw.githubusercontent.com/Stevnbak/TCF-Information/main/mapData.json', {});
     const json = await response.json();
 
-    console.log('fetched!')
-    console.trace()
-    
+    if (loader) {
+        loader.style.display = 'none'
+    }
     mapData = json;
     return json;
 }

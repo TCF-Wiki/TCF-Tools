@@ -11,5 +11,15 @@
         <nav></nav>
         <main></main>
         <footer></footer>
+        <div id="loading" aria-hidden="true"></div>
+
+        <script> 
+            const loader = document.getElementById('loading')
+            window.addEventListener('load',  (e) => {
+                if (loader) {
+                    loader.style.display = 'none'
+                }
+            } )
+        </script>
     </body>
 </html>
