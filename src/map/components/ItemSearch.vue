@@ -2,7 +2,7 @@
 <div>
     <form id="search" role="search" autocomplete="off">
         <label for="search-input">Search this site</label>
-        <input @input="matchInputs" type="text" id="search-input" spellcheck="false" v-model="searchInput">
+        <input @input="matchInputs" type="text" id="search-input" spellcheck="false" v-model="searchInput" :class=" shake ?  'apply-shake' : null ">
         <input value="Submit" type="submit" @click.prevent="addToSearchedList">
     </form>
     <div class="autocomplete"> 
@@ -12,9 +12,14 @@
     </div> 
     <div> 
         <p> Selectected Items: </p>
-        <p v-for="item in selectedItems.list" @click="selectedItems.removeItem(item)"> {{ items[item]['name'] }} </p>
+        <p v-for="item in selectedItems.list" @click="selectedItems.removeItem(item)"> 
+            <span v-if="selectedItems.list.length > 0" :style="'color: ' + colourClassGiver(item)">
+                {{ items[item] ? items[item]['name'] : null }}
+            </span>  
+        </p>
     </div>
 </div>
+
 </template>
 
 <script lang="ts">
@@ -31,7 +36,9 @@ export default defineComponent({
         data: {} as any,
         items: {} as any,
         searchTerms: [] as string[],
-        lowerCaseSearchTerms: [] as string[]
+        lowerCaseSearchTerms: [] as string[],
+        shake: false as boolean
+
     }
   },
   methods: {
@@ -56,7 +63,11 @@ export default defineComponent({
     addToSearchedList() {
         const input = this.searchInput.toLowerCase();
         if (!this.lowerCaseSearchTerms.includes(input)) {
-            return;
+            console.log('Hit!')
+            this.shake = true;
+            setTimeout(() => {
+                this.shake = false;
+            }, 820)
         }
 
         for (let item in this.items) {
@@ -72,6 +83,14 @@ export default defineComponent({
         if (document.querySelector('#search-input') === document.activeElement) return true
 
         return false
+    },
+    colourClassGiver(item: string) {
+        const itemData = this.items[item]
+        if (!itemData) return '';
+        if (itemData['rarity']) {
+            console.log(`var(--rarity-color-${itemData['rarity'].toLowerCase()})`)
+            return `var(--rarity-color-${itemData['rarity'].toLowerCase()})`
+        }
     }
   },
   async mounted() {
@@ -94,12 +113,18 @@ export default defineComponent({
 </script>
 
 <style scoped>
+form {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem
+}
 .autocomplete {
     position: absolute;
     width: 18rem;
     transform: translateY(3px);
     max-height: 40%;
     overflow-y: auto;
+    z-index: 1;
 }
 
 .autocomplete-item {
@@ -108,4 +133,32 @@ export default defineComponent({
     cursor: pointer;
     color: var(--button-text-color);
 }
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+.apply-shake {
+  animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
 </style>

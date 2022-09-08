@@ -4,6 +4,7 @@
             <LocationSelector />
         </div>
         <div class="right">
+            <ItemSearch />
             <MapSelector />
             <div id="map"></div>
         </div>
@@ -16,6 +17,7 @@
 <script lang="ts">
 import MapSelector from './components/MapSelector.vue';
 import LocationSelector from './components/LocationSelector.vue';
+import ItemSearch from './components/ItemSearch.vue';
 
 import {defineComponent, watch} from 'vue';
 import L, {Map, type TileLayer} from 'leaflet';
@@ -31,6 +33,7 @@ export default defineComponent({
     components: {
         MapSelector,
         LocationSelector,
+        ItemSearch
     },
     data() {
         return {
@@ -183,5 +186,11 @@ export default defineComponent({
 #map {
     padding-bottom: 75%;
     width: 75%;
+}
+
+.selectors {
+    display: flex;
+    gap: 2rem;
+    flex-direction: column;
 }
 </style>
