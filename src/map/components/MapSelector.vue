@@ -1,18 +1,18 @@
 <template>
-    <div>
+    <div class="map-selector">
         <h2>Map Selector</h2>
-        <div class="map-selector">
-            <div class="button-content" @click="selectedMap.changeSelected(1)">
-                <p :class="selectedMap.map == 1 ? 'selected-map' : 'not-selected-map'">Bright Sands</p>
+        <div class="map-buttons">
+            <div class="button-content" :class="selectedMap.map == 1 ? 'selected-map' : 'not-selected-map'" @click="selectedMap.changeSelected(1)">
                 <p>Map 1</p>
+                <p>Bright Sands</p>
             </div>
-            <div class="button-content" @click="selectedMap.changeSelected(2)">
-                <p :class="selectedMap.map == 2 ? 'selected-map' : 'not-selected-map'">Crescent Falls</p>
+            <div class="button-content" :class="selectedMap.map == 2 ? 'selected-map' : 'not-selected-map'" @click="selectedMap.changeSelected(2)">
                 <p>Map 2</p>
+                <p>Crescent Falls -</p>
             </div>
-            <div class="button-content" @click="selectedMap.changeSelected(3)">
-                <p :class="selectedMap.map == 3 ? 'selected-map' : 'not-selected-map'" class="disabled">Tharis Island</p>
+            <div class="button-content disabled" :class="selectedMap.map == 3 ? 'selected-map' : 'not-selected-map'" @click="selectedMap.changeSelected(3)">
                 <p>Map 3</p>
+                <p>Tharis Island -</p>
             </div>
         </div>
     </div>
@@ -30,27 +30,41 @@ export default defineComponent({
 </script>
 <style scoped>
 .map-selector {
-    background-color: var(--background-button-color);
-    width: 18rem;
-    padding: 1rem;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 75%;
+    height: 100%;
+}
+.map-buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
     justify-content: space-between;
-    gap: 0.7rem;
+    gap: 1.25rem;
 }
 
 .button-content {
+    background-color: var(--background-button-color);
+    width: 33%;
     display: flex;
     justify-content: space-between;
-    gap: auto;
     cursor: pointer;
+    padding: 1rem;
+    border: 0.1rem solid var(--button-accent-color);
     transition: all 0.2s ease-in-out;
 }
 
 .button-content:hover {
     color: var(--link-footer-color);
 }
-
+.selected-map {
+    border-color: var(--rarity-color-uncommon);
+}
+.not-selected-map {
+    border-color: var(--rarity-color-exotic);
+}
 .selected-map::after {
     content: '✔';
     color: green;
@@ -61,6 +75,7 @@ export default defineComponent({
 }
 
 .disabled {
+    border-color: var(--rarity-color-common);
     text-decoration: line-through;
 }
 </style>

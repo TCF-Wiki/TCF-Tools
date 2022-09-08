@@ -1,10 +1,12 @@
 <template>
     <div class="page-content">
-        <div class="options">
-            <MapSelector />
+        <div class="left">
             <LocationSelector />
         </div>
-        <div id="map"></div>
+        <div class="right">
+            <MapSelector />
+            <div id="map"></div>
+        </div>
     </div>
 </template>
 
@@ -151,21 +153,35 @@ export default defineComponent({
 
 <style scoped>
 .page-content {
-    padding-left: 1rem;
     display: flex;
     flex-direction: row;
     height: 100%;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
+    margin-right: 1.5vw;
+    max-width: 100%;
 }
 
-.options {
+.left {
     display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     gap: 1rem;
+    width: 40%;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 55%;
 }
 
 #map {
-    height: 50rem;
-    width: 50rem;
+    padding-bottom: 75%;
+    width: 75%;
 }
 </style>
