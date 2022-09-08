@@ -45,11 +45,6 @@ export default defineComponent({
         },
     },
     mounted() {
-        /*console.log('Pathname: ' + window.location.pathname);
-        console.log('Hostname: ' + window.location.hostname);
-        console.log('Hash: ' + window.location.hash);
-        console.log('Href: ' + window.location.href);
-        console.log('Origin: ' + window.location.origin);*/
         window.addEventListener('hashchange', () => {
             this.currentPath = window.location.pathname;
         });

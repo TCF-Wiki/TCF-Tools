@@ -23,8 +23,8 @@ import {getMapData} from './data';
 import {map1TileLayer, map2TileLayer, map3TileLayer, bounds, brightsandsColor, crescentfallsColor} from './mapConstants';
 import {addLeafletScript, addLeafletStyles} from '../scriptLoader';
 
-import layerGroups from './layerGroups';
-
+import {updateLayerGroups, getLayerGroups} from './layerGroups';
+var layerGroups: any;
 export default defineComponent({
     components: {
         MapSelector,
@@ -44,6 +44,9 @@ export default defineComponent({
         // this is the main logic of the map.
         this.mapData = await getMapData();
 
+        //Update layer groups
+        await updateLayerGroups();
+        layerGroups = getLayerGroups();
         // create our map, mounting it on the '#map' element
         let map = L.map('map', {
             crs: L.CRS.Simple,
@@ -137,7 +140,6 @@ export default defineComponent({
             // this function places the markers for each location. Hurray!
             for (let locationType in selectedLocations.list) {
                 let layers = layerGroups[VM.selectedMap.map][selectedLocations.list[locationType]];
-                console.log(layers);
                 if (layers) layers.addTo(map);
                 mapMarkers.push(selectedLocations.list[locationType]);
             }
