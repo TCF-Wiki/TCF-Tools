@@ -19,3 +19,19 @@ export const selectedLocations = reactive({
         else this.list.push(locationName);
     },
 });
+
+export const selectedItems = reactive({
+    list: [] as string[],
+    addItem(item: string) {
+        if (!this.list.includes(item)) {
+            this.list.push(item)
+        }
+    },
+    removeItem(item: string) {
+        if (this.list.includes(item)) delete this.list[this.list.indexOf(item)]; 
+    },
+    toggleItem: function(item : string) {
+        if (this.list.includes(item)) delete this.list[this.list.indexOf(item)];
+        else this.list.push(item);
+    }
+});
