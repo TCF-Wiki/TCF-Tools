@@ -14,12 +14,20 @@ body {
     background-repeat: repeat-y;
     background-attachment: scroll;
     overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+footer {
+    width: 100%;
 }
 
 main {
     margin-left: 10vw;
-    width: 90vw;
-    min-height: 55vh;
+    width: 100%;
+    /*min-height: 70vh;*/
 }
 
 @media screen and (max-width: 900px) {
@@ -174,11 +182,19 @@ input[type='range']:hover::-webkit-slider-thumb {
 }
 
 @-webkit-keyframes spin {
-    0% { -webkit-transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(360deg); }
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

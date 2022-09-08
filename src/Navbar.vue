@@ -51,7 +51,7 @@ export default {
     justify-content: center;
     align-items: center;
     list-style: none;
-    margin: 0;
+    margin-right: 1rem;
 }
 
 .nav-items a {
@@ -63,6 +63,7 @@ export default {
     text-transform: uppercase;
     word-wrap: break-word;
     cursor: pointer;
+    margin: 0.25rem;
 }
 
 .nav-items a:hover {

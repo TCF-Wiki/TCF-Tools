@@ -82,8 +82,8 @@ hr {
 
 @media screen and (max-width: 900px) {
     .footer {
-    margin-left: 0;
-  }
+        margin-left: 0;
+    }
 }
 
 h1,
@@ -118,7 +118,6 @@ h1 {
     text-decoration: none;
     color: var(--link-footer-color);
 }
-
 
 .footer .links {
     flex-grow: 0;
