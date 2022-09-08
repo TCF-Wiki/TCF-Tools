@@ -14,12 +14,15 @@
 
 <style scoped>
 .locationBtn {
+    background-color: var(--rarity-color-common);
+    border-color: #b0b3b6;
     width: 100%;
     margin-bottom: 0.2rem;
 }
 
 .selected {
-    background-color: #eaff00;
+    background-color: var(--rarity-color-uncommon);
+    border-color: #398e11;
 }
 .hidden {
     display: none;
