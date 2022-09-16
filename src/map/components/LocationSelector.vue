@@ -1,14 +1,16 @@
 <template>
-    <div>
-        <p v-if="mapData" v-for="(value, key) in mapData['locations'][selectedMap.map]" @click="selectedLocations.locationSwitch(key.toString())">
-            <button class="button locationBtn" :class="selectedLocations.list.includes(key.toString()) ? 'selected' : 'not-selected' && key.toString() != 'other' ? '' : 'hidden'">{{ key }}</button>
-        </p>
+    <div class="button-container">
+        <div v-if="mapData" v-for="(value, key) in mapData['locations'][selectedMap.map]" @click="selectedLocations.locationSwitch(key.toString())">
+            <div v-if="key.toString() != 'other'">
+                <button class="button locationBtn" :class="selectedLocations.list.includes(key.toString()) ? 'selected' : 'not-selected' && key.toString() != 'other' ? '' : ''">{{ key }}</button>
+            </div>
+        </div>
     </div>
-    <div>
-        <p>Other</p>
-        <p v-if="mapData" v-for="(value, key) in mapData['locations'][selectedMap.map]['other']" @click="selectedLocations.locationSwitch(key.toString())">
+    <h2> Other </h2>
+    <div class="button-container">
+        <div v-if="mapData" v-for="(value, key) in mapData['locations'][selectedMap.map]['other']" @click="selectedLocations.locationSwitch(key.toString())">
             <button class="button locationBtn" :class="selectedLocations.list.includes(key.toString()) ? 'selected' : 'not-selected'">{{ key }}</button>
-        </p>
+        </div>
     </div>
 </template>
 
@@ -17,7 +19,7 @@
     background-color: var(--rarity-color-common);
     border-color: #b0b3b6;
     width: 100%;
-    margin-bottom: 0.2rem;
+    font-size: .8rem;
 }
 
 .selected {
@@ -26,6 +28,18 @@
 }
 .hidden {
     display: none;
+}
+
+.button-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: .2rem
+}
+
+@media screen  and (max-width: 900px){
+    .button-container {
+        grid-template-columns: 1fr 1fr
+    }
 }
 </style>
 
