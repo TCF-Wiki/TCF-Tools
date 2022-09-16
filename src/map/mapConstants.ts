@@ -52,5 +52,10 @@ export const locationNames = {
     "Evac": "Evac Location",
     "LaserDrill": "Laser Drill",
     "Uplink": "Uplink",
-    "missionItem": "Mission Item"
+    "missionItem": "Mission Item",
+    "OilPump": "Oil Well"
 }
+
+
+
+
