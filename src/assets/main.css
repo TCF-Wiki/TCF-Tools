@@ -201,6 +201,7 @@ input[type='range']:hover::-webkit-slider-thumb {
 
 .leaflet-popup-content {
     max-height: 50vh;
+    width: 40vw;
     overflow: auto;
     background-color: var(--background-menu-color);
     color: var(--text-color-menu-white);
@@ -209,6 +210,20 @@ input[type='range']:hover::-webkit-slider-thumb {
 .leaflet-popup-content-wrapper, .leaflet-popup-tip {
     background-color: var(--background-menu-color) !important;
     border: none !important;
+}
+
+.marker {
+    -webkit-filter: 
+        drop-shadow(2px 2px 0 var(--rarity-color-exotic)) 
+        drop-shadow(-1px -1px 0 var(--rarity-color-exotic));
+    filter:
+        drop-shadow(2px 2px 0 var(--rarity-color-exotic)) 
+        drop-shadow(-1px -1px 0 var(--rarity-color-exotic));
+}
+
+.item-image {
+    width: 1rem;
+    display: inline-block;
 }
 
 .common {

@@ -27,7 +27,7 @@ export async function updateLocationLayerGroups() {
         var locationGroup = L.markerClusterGroup({
             showCoverageOnHover: false,
             spiderfyOnMaxZoom: false,
-            disableClusteringAtZoom: 5,
+            disableClusteringAtZoom: -10,
             iconCreateFunction: function (cluster) {
                 let childCount = cluster.getChildCount();
 
@@ -45,8 +45,18 @@ export async function updateLocationLayerGroups() {
                 return new L.DivIcon({html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster' + c, iconSize: new L.Point(20, 20)});
             },
         });
+        console.log(locationType)
+        let LocationMarker = L.icon({
+            iconUrl: `map-images/marker-icons/${locationType}.png`,
+            iconSize: [30,30],
+            className: 'marker',
+        })
         for (let location in locationData) {
-            let m = new Marker(locationData[location]['location']);
+            let m = new Marker(locationData[location]['location'], 
+            {
+                riseOnHover: true,
+                icon: LocationMarker
+            });
             locationGroup.addLayer(m);
             m.bindPopup('Placeholder!');
             m.on('click',createMarkerPopup)
@@ -93,10 +103,20 @@ export async function updateItemLayerGroups() {
                 return new L.DivIcon({html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster' + c, iconSize: new L.Point(20, 20)});
             },
         });
+        let ItemMarker = L.icon({
+            iconUrl: `map-images/item-images/${mapData['descriptions'][item]['name'].replaceAll(' ','_')}.png`,
+            iconSize: [25,25],
+            className: 'marker',
+        })
         for (let location in locationData) {
-            let m = new Marker(locationData[location]['location']);
+            let m = new Marker(locationData[location]['location'],
+            {
+                riseOnHover: true,
+                icon: ItemMarker
+            });
             m.bindPopup('Placeholder!');
             m.on('click',createMarkerPopup)
+
 
             /* @ts-expect-error */
             m.data = locationData[location]['lootPool']
@@ -110,7 +130,7 @@ export async function updateItemLayerGroups() {
 function createMarkerPopup(e: LeafletEvent) : void | LeafletEventHandlerFn {
     let popup = e.target.getPopup()
     let data = mapData['lootPools'][e.target.data]['items']
-
+    let itemData = mapData['descriptions']
     // creates a <section> element, <table> element and a <tbody> element
     const section = document.createElement('section')
     const table = document.createElement('table')
@@ -135,7 +155,7 @@ function createMarkerPopup(e: LeafletEvent) : void | LeafletEventHandlerFn {
             const cell = document.createElement('td')
             let text;
             if (parseInt(x) === 0) {
-                text = mapData['descriptions'][cellData[x]]['name'] ?? 'Something went wrong'
+                text = itemData[cellData[x]]['name'] ?? 'Something went wrong'
             } else {
                 let percent : number | string = roundToThree(cellData[x]);
                 if (percent === 0) {
@@ -145,10 +165,16 @@ function createMarkerPopup(e: LeafletEvent) : void | LeafletEventHandlerFn {
             }
             const cellText = document.createTextNode(text)
             if (parseInt(x) === 0) {
-                cell.classList.add(mapData['descriptions'][cellData[x]]['rarity'].toLowerCase())    
+                cell.classList.add(itemData[cellData[x]]['rarity'].toLowerCase())    
             }
 
             
+            if (parseInt(x) === 0) {
+                const img = document.createElement('img')
+                img.src = `map-images/item-images/${itemData[cellData[x]]['name'].replaceAll(' ','_')}.png`
+                img.classList.add('item-image')
+                cell.appendChild(img)
+            }
             cell.appendChild(cellText);
             row.appendChild(cell);
         }

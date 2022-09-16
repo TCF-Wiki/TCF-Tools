@@ -144,7 +144,7 @@ form {
     transform: translateY(3px);
     max-height: 40%;
     overflow-y: auto;
-    z-index: 1;
+    z-index: 0;
 }
 
 .autocomplete-item {

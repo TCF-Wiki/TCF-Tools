@@ -1,7 +1,7 @@
 <template>
     <div class="button-container">
-        <div v-if="mapData" v-for="(value, key) in mapData['locations'][selectedMap.map]" @click="selectedLocations.locationSwitch(key.toString())">
-            <div v-if="key.toString() != 'other'">
+        <div v-if="mapData" v-for="(value, key) in getLocations()" @click="selectedLocations.locationSwitch(key.toString())">
+            <div>
                 <button class="button locationBtn" :class="selectedLocations.list.includes(key.toString()) ? 'selected' : 'not-selected' && key.toString() != 'other' ? '' : ''">{{ key }}</button>
             </div>
         </div>
@@ -58,5 +58,20 @@ export default defineComponent({
     async mounted() {
         this.mapData = await getMapData();
     },
+    methods: {
+        getLocations() {
+            let data = {...this.mapData['locations'][selectedMap.map]}
+            delete data['VelteciteMineral']
+            delete data['FocusCrystalMineral']
+            delete data['TitanMineral'] 
+            delete data['NickelMineral']
+            delete data['WaterPlant']
+            delete data['IvyPlant']
+            delete data['DesertPlant']
+            delete data['Brightcap']
+            delete data['other']
+            return data
+        }
+    }
 });
 </script>
