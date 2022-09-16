@@ -20,7 +20,6 @@ export default defineComponent({
 .toggleBtn {
     background-color: var(--rarity-color-common);
     border-color: #b0b3b6;
-    width: 100%;
     font-size: .8rem;
 }
 

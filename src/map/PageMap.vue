@@ -261,6 +261,9 @@ export default defineComponent({
                 map.addLayer(mapTwoTierFour)
                 map.addLayer(mapTwoTierFive)
             }
+            if (selectedMap.map == 3) {
+                // ...
+            }
         }
 
         function removeItemTiers() {
@@ -300,7 +303,7 @@ export default defineComponent({
 
 .left {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 1rem;
