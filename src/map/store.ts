@@ -35,3 +35,10 @@ export const selectedItems = reactive({
         else this.list.push(item);
     }
 });
+
+export const selectedTier = reactive({
+    on: false as boolean,
+    toggle() {
+        this.on = !this.on
+    }
+})

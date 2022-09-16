@@ -1,0 +1,32 @@
+<template>
+<button class="button toggleBtn" @click="selectedTier.toggle" :class="{on: selectedTier.on}"> Toggle Loot Tiers </button>
+{{selectedTier.on}}
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+import { selectedTier } from '../store';
+export default defineComponent({
+    data() {
+        return {
+            selectedTier
+        }
+    }
+})
+</script> 
+
+<style scoped>
+.toggleBtn {
+    background-color: var(--rarity-color-common);
+    border-color: #b0b3b6;
+    width: 100%;
+    font-size: .8rem;
+}
+
+.on {
+    background-color: var(--rarity-color-uncommon);
+    border-color: #398e11;
+}
+
+</style>

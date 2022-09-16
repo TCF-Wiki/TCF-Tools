@@ -26,3 +26,31 @@ export const map1TileLayer: TileLayer = L.tileLayer('map-images/1/{z}/{x}/{y}.pn
 export const map2TileLayer: TileLayer = L.tileLayer('map-images/2/{z}/{x}/{y}.png', tileLayerOptions);
 
 export const map3TileLayer: TileLayer = L.tileLayer('map-images/3/{z}/{x}/{y}.png', tileLayerOptions);
+
+export const locationNames = {
+    "HiddenStash": 'Hidden Stash',
+    "Locker": 'Locker',
+    "AmmoContainer": 'Ammo Container',
+    "AbilityBox": 'Ability Box',
+    "WeaponCrate": 'Military Crate',
+    "Luggage": 'Luggage',
+    "MedCase": 'Med Case',
+    "Safe": 'Safe',
+    "SuitCase": 'Suit Case',
+    "Jacket": 'Jacket',
+    "OrganicsBox": 'Cooler',
+    "GenericContainer": 'Generic Container',
+    "KorolevContainer": 'Dumpster',
+    "FactoryContainer": 'Industrial Container',
+    "FilingCabinet": "Osiris Filing Cabinet",
+
+    "keyDoor": "Key Door",
+    "NoiseTrap_Birds": "Noise Birds",
+    "AIFriendly_SpawnLocation": "Leafman",
+    "Meteor": "Meteor Location",
+    "HealingPlant": "Healing Plant",
+    "Evac": "Evac Location",
+    "LaserDrill": "Laser Drill",
+    "Uplink": "Uplink",
+    "missionItem": "Mission Item"
+}

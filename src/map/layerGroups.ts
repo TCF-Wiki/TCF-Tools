@@ -45,7 +45,6 @@ export async function updateLocationLayerGroups() {
                 return new L.DivIcon({html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster' + c, iconSize: new L.Point(20, 20)});
             },
         });
-        console.log(locationType)
         let LocationMarker = L.icon({
             iconUrl: `map-images/marker-icons/${locationType}.png`,
             iconSize: [30,30],

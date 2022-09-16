@@ -19,6 +19,7 @@
                 </template>
             </Modal>
             <ItemSearch />
+            <TierToggler />
 
         </div>
         <div class="right">
@@ -35,12 +36,13 @@
 import MapSelector from './components/MapSelector.vue';
 import LocationSelector from './components/LocationSelector.vue';
 import ItemSearch from './components/ItemSearch.vue';
+import TierToggler from './components/TierToggler.vue'
 import Modal from '../Modal.vue';
 
 import {defineComponent, watch} from 'vue';
 import L, {Map, type TileLayer} from 'leaflet';
-import {selectedMap, selectedLocations, selectedItems } from './store';
-import {getMapData} from './data';
+import {selectedMap, selectedLocations, selectedItems, selectedTier } from './store';
+import {getMapData,getTierData} from './data';
 
 import {map1TileLayer, map2TileLayer, map3TileLayer, bounds, brightsandsColor, crescentfallsColor} from './mapConstants';
 import {addLeafletScript, addLeafletStyles} from '../scriptLoader';
@@ -53,6 +55,7 @@ export default defineComponent({
         MapSelector,
         LocationSelector,
         ItemSearch,
+        TierToggler,
         Modal
     },
     data() {
@@ -60,9 +63,11 @@ export default defineComponent({
             selectedMap,
             selectedLocations,
             selectedItems,
+            selectedTier,
             savedLocationMarkers: [] as any,
             savedItemMarkers: [] as any,
             mapData: null as null | any,
+            tierData: null as null | any,
             isModalVisible: false as boolean
         };
     },
@@ -71,7 +76,7 @@ export default defineComponent({
         addLeafletStyles();
         // this is the main logic of the map.
         this.mapData = await getMapData();
-
+        this.tierData = await getTierData()
         //Update layer groups
         await updateLocationLayerGroups();
         locationLayerGroups = getLocationLayerGroups();
@@ -95,6 +100,10 @@ export default defineComponent({
         this.$watch(
             'selectedMap',
             () => {
+                removeItemTiers();
+                if (selectedTier.on) {
+                    placeItemTiers();
+                }
                 removeAllMarkers();
                 placeMarkersForSelectedLocations();
                 placeMarkersForSelectedItems();
@@ -108,6 +117,7 @@ export default defineComponent({
             () => {
                 removeUnselectedLocationMarkers();
                 placeMarkersForSelectedLocations();
+
             },
             {deep: true}
         );
@@ -115,9 +125,20 @@ export default defineComponent({
         this.$watch(
             'selectedItems',
             () => {
-                console.log('Triggered!')
                 removeUnselectedItemMarkers();
                 placeMarkersForSelectedItems();
+            },
+            {deep: true}
+        )
+
+        this.$watch(
+            'selectedTier',
+            () => {
+                if (selectedTier.on) {
+                    placeItemTiers();
+                } else {
+                    removeItemTiers()
+                }
             },
             {deep: true}
         )
@@ -200,7 +221,6 @@ export default defineComponent({
                 mapMarkers.push(selectedLocations.list[locationType]);
             }
             VM.savedLocationMarkers = mapMarkers;
-            console.log(VM.savedItemMarkers)
 
         }
 
@@ -212,7 +232,48 @@ export default defineComponent({
                 mapMarkers.push(selectedItems.list[item]);
             }
             VM.savedItemMarkers = mapMarkers
-            console.log(VM.savedItemMarkers)
+        }
+
+        const tierOneOptions = {color: '#dfe3e8', weight: 0, fillOpacity: 0.2};
+        const tierTwoOptions = {color: '#4cb31b', weight: 0, fillOpacity: 0.4};
+        const tierThreeOptions = {color: '#1da7ec', weight: 0, fillOpacity: 0.4};
+        const tierFourOptions = {color: '#4f0e8b', weight: 0, fillOpacity: 0.4};
+        const tierFiveOptions = {color: '#ff0984', weight: 0, fillOpacity: 0.4};
+
+        const mapOneTierOne = L.polygon(this.tierData['1']['1'], tierOneOptions);
+        const mapOneTierTwo = L.polygon(this.tierData['1']['2'], tierTwoOptions);
+        const mapOneTierThree = L.polygon(this.tierData['1']['3'], tierThreeOptions);
+        const mapOneTierFour = L.polygon(this.tierData['1']['4'], tierFourOptions);
+
+        const mapTwoTierThree = L.polygon(this.tierData['2']['3'], tierThreeOptions);
+        const mapTwoTierFour = L.polygon(this.tierData['2']['4'], tierFourOptions)
+        const mapTwoTierFive = L.polygon(this.tierData['2']['5'], tierFiveOptions)
+
+        function placeItemTiers() {
+            if (selectedMap.map == 1) {
+                map.addLayer(mapOneTierOne)
+                map.addLayer(mapOneTierTwo)
+                map.addLayer(mapOneTierThree)
+                map.addLayer(mapOneTierFour)
+            }   
+            if (selectedMap.map == 2) {
+                map.addLayer(mapTwoTierThree)
+                map.addLayer(mapTwoTierFour)
+                map.addLayer(mapTwoTierFive)
+            }
+        }
+
+        function removeItemTiers() {
+            // map one
+            map.removeLayer(mapOneTierOne)
+            map.removeLayer(mapOneTierTwo)
+            map.removeLayer(mapOneTierThree)
+            map.removeLayer(mapOneTierFour)
+            // map two
+            map.removeLayer(mapTwoTierThree)
+            map.removeLayer(mapTwoTierFour)
+            map.removeLayer(mapTwoTierFive)
+            //map three ...
         }
     },
     methods: {

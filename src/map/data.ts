@@ -19,3 +19,10 @@ export async function getMapData() {
     mapData = json;
     return json;
 }
+
+export async function getTierData() {
+    const response = await fetch('./tiers.json')
+    const json = await response.json();
+    
+    return json;
+}

@@ -66,7 +66,6 @@ export default defineComponent({
         addToSearchedList() {
             const input = this.searchInput.toLowerCase();
             if (!this.lowerCaseSearchTerms.includes(input)) {
-                console.log('Hit!')
                 this.shake = true;
                 setTimeout(() => {
                     this.shake = false;
