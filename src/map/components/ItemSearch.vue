@@ -16,7 +16,7 @@
         <div class="item-list">
             <p> Selectected Items: </p>
             <p v-for="item in selectedItems.list" @click="selectedItems.removeItem(item)">
-                <span v-if="selectedItems.list.length > 0" :style="'color: ' + colourClassGiver(item)">
+                <span v-if="selectedItems.list.length > 0" :class="colourClassGiver(item)">
                     {{ items[item] ? items[item]['name'] : null }}
                 </span>
             </p>
@@ -90,7 +90,7 @@ export default defineComponent({
             const itemData = this.items[item]
             if (!itemData) return '';
             if (itemData['rarity']) {
-                return `var(--rarity-color-${itemData['rarity'].toLowerCase()})`
+                return itemData['rarity'].toLowerCase()
             }
         },
         itemImage(itemName: string): string {

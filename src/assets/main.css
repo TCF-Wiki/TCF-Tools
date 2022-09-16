@@ -198,3 +198,41 @@ input[type='range']:hover::-webkit-slider-thumb {
         transform: rotate(360deg);
     }
 }
+
+.leaflet-popup-content {
+    max-height: 50vh;
+    overflow: auto;
+    background-color: var(--background-menu-color);
+    color: var(--text-color-menu-white);
+}
+
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+    background-color: var(--background-menu-color) !important;
+    border: none !important;
+}
+
+.common {
+    color: var(--rarity-color-common)
+}
+
+.uncommon {
+    color: var(--rarity-color-uncommon)
+}
+
+.rare {
+    color: var(--rarity-color-rare)
+}
+
+.epic {
+    /* This color is hard to read on dark backgrounds, so we change it a little bit. */
+    color: var(--rarity-color-epic);
+    filter: brightness(250%)
+}
+
+.exotic {
+    color: var(--rarity-color-exotic)
+}
+
+.legendary {
+    color: var(--rarity-color-legendary)
+}

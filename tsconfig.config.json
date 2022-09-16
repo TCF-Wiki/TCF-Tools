@@ -6,6 +6,6 @@
     "types": ["node"],
     "target": "es2017",
     "module": "esnext",
-    "allowJs": true
+    "allowJs": true,
   }
 }

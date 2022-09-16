@@ -243,7 +243,7 @@ export default defineComponent({
     align-items: center;
     justify-content: center;
     gap: 1rem;
-    width: 40%;
+    width: 20%;
 }
 
 .right {
@@ -252,7 +252,7 @@ export default defineComponent({
     align-items: center;
     justify-content: center;
     gap: 1rem;
-    width: 55%;
+    width: 60%;
 }
 
 #map {
