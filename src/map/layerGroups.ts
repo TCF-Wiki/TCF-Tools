@@ -27,7 +27,7 @@ export async function updateLocationLayerGroups() {
         var locationGroup = L.markerClusterGroup({
             showCoverageOnHover: false,
             spiderfyOnMaxZoom: false,
-            disableClusteringAtZoom: -10,
+            disableClusteringAtZoom: 5,
             iconCreateFunction: function (cluster) {
                 let childCount = cluster.getChildCount();
 
