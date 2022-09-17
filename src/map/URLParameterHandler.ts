@@ -7,7 +7,7 @@ export async function loadInitialStore() {
     const params = (new URL(document.location.toString())).searchParams
 
     // clear out the url bar
-    window.history.pushState({}, document.title, '/');
+    window.history.pushState({}, document.title, '/map');
 
     // update our selected map if it is present
     let map : string | number | null= params.get('map')
