@@ -1,4 +1,5 @@
 import L from 'leaflet'
+
 function mapLabel(text: string, y : number, x : number) {
     let content = '<span class="map-label-text">' + text + '</span>';
 
@@ -46,14 +47,14 @@ export const mapTwoLabels = [
     mapLabel('Hay Fields', -74.947, 33.493),
     mapLabel('Nutrion Farms Processing', -184.697, 71.740),
     mapLabel('Jungle Thermal Ponds', -102.973, 78.121),
-    mapLabel('Nutrion Farms Warehouse', 38.202, 69.491),
+    mapLabel('Nutrion Farms Warehouse', -37.534, 69.624),
     mapLabel('Geothermal Plant', -192.610, 140.560),
     mapLabel('Root Rock Tunnel', -165.944, 197.986),
     mapLabel('Lakeside Building', -144.948, 165.990),
     mapLabel('Skeleton', -124.972, 205.867),
     mapLabel('Skeleton Observation Site', -115.598, 226.368),
     mapLabel('Oasis', -72.598, 202.243),
-    mapLabel('Pinnacle Labs', 33.474, 206.24),
+    mapLabel('Pinnacle Labs', -33.202, 206.090),
     mapLabel('Osiris Wildlife Preserve', -107.487, 160.935),
     mapLabel('Starport Admin', -89.972, 146.745),
     mapLabel('Pumpkin Fields', -42.84, 110.996),

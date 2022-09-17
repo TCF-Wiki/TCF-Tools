@@ -1,6 +1,7 @@
 import { roundToThree } from '@/calc/utils';
 import L, {LayerGroup, Marker, type Content, type LeafletEvent, type LeafletEventHandlerFn} from 'leaflet';
 import 'leaflet.markercluster';
+import 'leaflet-responsive-popup';
 import {getMapData} from './data';
 import { specialLocations } from './mapConstants';
 import { createLootPopup, createSpecialPopup } from './popup'

@@ -87,16 +87,17 @@ export default defineComponent({
         map.setMaxBounds(bounds);
 
         initiateMapToMapNumber(selectedMap.map).addTo(map);
+        addMapLabels()
 
         // utility function used for development. Uncomment it when you need it.
-        // map.on('click', function(e) {
-		// 	let coords = e.latlng,
-		// 	popup = L.popup()
-		// 		.setLatLng(coords)
-		// 		.setContent('<p>' + coords + '</p>')
-		// 		.openOn(map);
-        //     navigator.clipboard.writeText(coords.toString())                
-		// });
+        map.on('click', function(e) {
+			let coords = e.latlng,
+			popup = L.popup()
+				.setLatLng(coords)
+				.setContent('<p>' + coords + '</p>')
+				.openOn(map);
+            navigator.clipboard.writeText(coords.toString())                
+		});
 
         // we must keep our map variable to this file. We musn't mutate it in weird ways or set it to other variables, etc. That is why this is all kept to this file.
         this.$watch(
@@ -110,6 +111,7 @@ export default defineComponent({
                 placeMarkersForSelectedLocations();
                 placeMarkersForSelectedItems();
                 initiateMapToMapNumber(selectedMap.map).addTo(map);
+                addMapLabels()
             },
             {deep: true}
         );
@@ -155,9 +157,7 @@ export default defineComponent({
                 if (map.hasLayer(map3TileLayer)) {
                     map.removeLayer(map3TileLayer);
                 }
-                toggleMapOneLabels()
-                toggleMapTwoLabels()
-                toggleMapThreeLabels()
+
                 return map1TileLayer;
             } else if (mapNumber == 2) {
                 document.getElementById('map')!.style.backgroundColor = crescentfallsColor;
@@ -167,9 +167,6 @@ export default defineComponent({
                 if (map.hasLayer(map3TileLayer)) {
                     map.removeLayer(map3TileLayer);
                 }
-                toggleMapOneLabels()
-                toggleMapTwoLabels()
-                toggleMapThreeLabels()
                 return map2TileLayer;
             } else if (mapNumber == 3) {
                 document.getElementById('map')!.style.backgroundColor = brightsandsColor;
@@ -179,13 +176,16 @@ export default defineComponent({
                 if (map.hasLayer(map2TileLayer)) {
                     map.removeLayer(map2TileLayer);
                 }
-                toggleMapOneLabels()
-                toggleMapTwoLabels()
-                toggleMapThreeLabels()
                 return map3TileLayer;
             } else {
                 return map1TileLayer;
             }
+        }
+
+        function addMapLabels() {
+            toggleMapOneLabels()
+            toggleMapTwoLabels()
+            toggleMapThreeLabels()
         }
 
         let VM = this;

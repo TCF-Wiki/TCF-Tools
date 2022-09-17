@@ -6,7 +6,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=0.5" />
         <script type="module" src="/src/main.ts"></script>
         <script src="./canvasjs.min.js"></script>
-        <script src="https://unpkg.com/leaflet-responsive-popup@1.0.0/leaflet.responsive.popup.js"></script>
     </head>
     <body>
         <nav></nav>
@@ -22,5 +21,19 @@
                 }
             } )
         </script>
+
+        <script>
+            window.addEventListener('load', (e) => {
+                document.body.classList.add('loaded');
+            });
+        </script>
+        <style>
+            body {
+                opacity: 0;
+            }
+            body.loaded {
+                opacity: 1;
+            }
+        </style>
     </body>
 </html>
