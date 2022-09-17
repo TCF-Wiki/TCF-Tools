@@ -1,18 +1,17 @@
 <template>
     <div class="map-selector">
-        <h2>Map Selector</h2>
         <div class="map-buttons">
             <div class="button-content" :class="selectedMap.map == 1 ? 'selected-map' : 'not-selected-map'" @click="selectedMap.changeSelected(1)">
                 <p>Map 1</p>
-                <p>Bright Sands</p>
+                <p>Bright Sands </p>
             </div>
             <div class="button-content" :class="selectedMap.map == 2 ? 'selected-map' : 'not-selected-map'" @click="selectedMap.changeSelected(2)">
                 <p>Map 2</p>
-                <p>Crescent Falls -</p>
+                <p>Crescent Falls </p>
             </div>
             <div class="button-content disabled" :class="selectedMap.map == 3 ? 'selected-map' : 'not-selected-map'" @click="selectedMap.changeSelected(3)">
                 <p>Map 3</p>
-                <p>Tharis Island -</p>
+                <p>Tharis Island </p>
             </div>
         </div>
     </div>
@@ -67,11 +66,11 @@ export default defineComponent({
 }
 .selected-map::after {
     content: '✔';
-    color: green;
+    color: var(--rarity-color-uncommon);
 }
 .not-selected-map::after {
     content: '✖';
-    color: red;
+    color: var(--rarity-color-exotic);
 }
 
 .disabled {

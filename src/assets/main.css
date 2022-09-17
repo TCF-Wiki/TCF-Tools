@@ -22,12 +22,15 @@ body {
 
 footer {
     width: 100%;
+    margin-top: 3rem
 }
 
 main {
     margin-left: 10vw;
     width: 90vw;
     /*min-height: 70vh;*/
+    background-color: var(--background-content-color);
+    padding: 1rem
 }
 
 @media screen and (max-width: 900px) {
@@ -48,15 +51,23 @@ h5,
 h6 {
     font-family: Refinery, ui-sans, system-ui, Arial, Helvetica, sans-serif;
     text-transform: uppercase;
-    color: var(--text-color-body-gray);
+    color: var(--text-color-body-white);
+    font-weight: 300;
+
 }
 
 h2 {
     font-size: 2rem;
+    font-weight: 300;
 }
+
 
 a {
     color: var(--link-footer-color);
+}
+
+button {
+    cursor: pointer;
 }
 
 .button {
@@ -240,8 +251,7 @@ input[type='range']:hover::-webkit-slider-thumb {
 
 .epic {
     /* This color is hard to read on dark backgrounds, so we change it a little bit. */
-    color: var(--rarity-color-epic);
-    filter: brightness(250%)
+    color: #733aa8;
 }
 
 .exotic {
@@ -261,15 +271,73 @@ input[type='range']:hover::-webkit-slider-thumb {
 .map-label-text {
     z-index: 20!important;
 	color: var(--text-color-menu-white);
-    font-family: 'Rajdhani', sans-serif;
-    text-transform: uppercase;
     letter-spacing: .2ch;
-    font-size: .6rem;
 	text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: .7rem;
+    font-weight: 300;
 }
 
 .leaflet-tooltip {
-    border: none !important;
     background-color: transparent !important;
-    padding: none !important;
+    border: none !important;
+    padding: 1px !important;
+    box-shadow: none !important;
+}
+
+
+@keyframes shake {
+
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+
+.apply-shake {
+    animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes bounce {
+
+    10%,
+    90% {
+        transform: translate3d(0, -1px, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(0, 2px, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(0, -4px, 0);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(0, 4px, 0);
+    }
+}
+
+.apply-bounce {
+    animation: bounce 0.82s cubic-bezier(0.4, 0, 0.2, 1) both;
 }

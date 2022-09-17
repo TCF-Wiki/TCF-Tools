@@ -2,7 +2,8 @@ import { roundToThree } from '@/calc/utils';
 import L, {LayerGroup, Marker, type Content, type LeafletEvent, type LeafletEventHandlerFn} from 'leaflet';
 import 'leaflet.markercluster';
 import {getMapData} from './data';
-
+import { specialLocations } from './mapConstants';
+import { createLootPopup, createSpecialPopup } from './popup'
 let locationLayerGroups: any = {};
 
 export function getLocationLayerGroups(): any {
@@ -24,44 +25,45 @@ export async function updateLocationLayerGroups() {
         }
     }
     function createGroups(map: string, locationType: string, locationData: any) {
-        var locationGroup = L.markerClusterGroup({
-            showCoverageOnHover: false,
-            spiderfyOnMaxZoom: false,
-            disableClusteringAtZoom: 5,
-            iconCreateFunction: function (cluster) {
-                let childCount = cluster.getChildCount();
-
-                let c = ' marker-cluster-';
-                if (childCount < 5) {
-                    c += 'uncommon';
-                } else if (childCount < 15) {
-                    c += 'rare';
-                } else if (childCount < 45) {
-                    c += 'epic';
-                } else {
-                    c += 'legendary';
-                }
-
-                return new L.DivIcon({html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster' + c, iconSize: new L.Point(20, 20)});
-            },
-        });
+        // our layer group for our markers.
+        let locationGroup = L.layerGroup();
+        // the icon that will be used for this group
         let LocationMarker = L.icon({
             iconUrl: `map-images/marker-icons/${locationType}.png`,
-            iconSize: [30,30],
+            iconSize: [20,20],
             className: 'marker',
         })
+        // add each location to the group
         for (let location in locationData) {
+            // create the marker for it at the location, and add it to the group
             let m = new Marker(locationData[location]['location'], 
             {
                 riseOnHover: true,
                 icon: LocationMarker
             });
             locationGroup.addLayer(m);
-            m.bindPopup('Placeholder!');
+            //create a popup that only runs the code once the marker is clicked
+            // @ts-expect-error the error from this line can be ignored - it runs as expected.
+            let popup = L.responsivePopup().setContent('Placeholder');
+            m.bindPopup(popup);
             m.on('click',createMarkerPopup)
+
+            // set some data we use in the popup
             /* @ts-expect-error */
             m.data = locationData[location]['lootPool']
+            /* @ts-expect-error */
+            m.type = locationType
+            
+            // some locations need to be able to be uniquely identified
+            let rawName = locationData[location]['rawName']
+            if (rawName) {
+                if (rawName.includes('KeyCard')) {
+                    /* @ts-expect-error */
+                    m.rawName = rawName
+                }
+            }
         }
+        // add it to our main group object
         locationLayerGroups[map][locationType] = locationGroup;
     }
 }
@@ -128,64 +130,23 @@ export async function updateItemLayerGroups() {
 
 function createMarkerPopup(e: LeafletEvent) : void | LeafletEventHandlerFn {
     let popup = e.target.getPopup()
-    let data = mapData['lootPools'][e.target.data]['items']
-    let itemData = mapData['descriptions']
-    // creates a <section> element, <table> element and a <tbody> element
-    const section = document.createElement('section')
-    const table = document.createElement('table')
-    const tableBody = document.createElement('tbody')
+    let type = e.target.type ?? null
+    let rawName = e.target.rawName ?? null
+    let data = e.target.data;
 
-    // create the header 
-    const header = document.createElement('h2')
-    const headerText = document.createTextNode('Tier ' + mapData['lootPools'][e.target.data]['tier'] + ' Spawn')
-    header.appendChild(headerText)
-
-    // creating all cells
-    for (let item in data) {
-        let cellData = [item, data[item]]
-
-        // creates a table row
-        const row = document.createElement('tr')
-
-        for (let x in cellData) {
-            // Create a <td> element and a text node, make the text
-            // node the contents of the <td>, and put the <td> at
-            // the end of the table row
-            const cell = document.createElement('td')
-            let text;
-            if (parseInt(x) === 0) {
-                text = itemData[cellData[x]]['name'] ?? 'Something went wrong'
-            } else {
-                let percent : number | string = roundToThree(cellData[x]);
-                if (percent === 0) {
-                    percent = '< 0.001'
-                }
-                text = percent + '%'
-            }
-            const cellText = document.createTextNode(text)
-            if (parseInt(x) === 0) {
-                cell.classList.add(itemData[cellData[x]]['rarity'].toLowerCase())    
-            }
-
-            
-            if (parseInt(x) === 0) {
-                const img = document.createElement('img')
-                img.src = `map-images/item-images/${itemData[cellData[x]]['name'].replaceAll(' ','_')}.png`
-                img.classList.add('item-image')
-                cell.appendChild(img)
-            }
-            cell.appendChild(cellText);
-            row.appendChild(cell);
+    if (type) {
+        if (specialLocations.includes(type)) {
+            const content = createSpecialPopup(type, rawName)
+            popup.setContent(content)
+        } else {
+            const content = createLootPopup(data)
+            popup.setContent(content)
         }
-
-        tableBody.appendChild(row);
+    } else {
+        const content = createLootPopup(data)
+        popup.setContent(content)
     }
-
-    // put the <tbody> in the <table>
-    table.appendChild(tableBody);
-    
-    section.appendChild(header)
-    section.appendChild(table)
-    popup.setContent(section)
-    
 }
+
+
+

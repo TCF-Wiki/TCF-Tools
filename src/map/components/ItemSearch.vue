@@ -1,10 +1,33 @@
 <template>
     <div>
         <form id="search" role="search" autocomplete="off">
-            <label for="search-input">Search for items</label>
-            <input @input="matchInputs" type="text" id="search-input" spellcheck="false" v-model="searchInput"
-                :class=" shake ?  'apply-shake' : null " placeholder="Item...">
-            <input value="Search" type="submit" @click.prevent="addToSearchedList">
+            <label for="search-input"><h2> Search for items </h2></label>
+            <div 
+                class="search-container"
+            > 
+                <input 
+                    @input="matchInputs" 
+                    type="text" 
+                    id="search-input" 
+                    spellcheck="false" 
+                    v-model="searchInput"
+                    :class=" shake ?  'apply-shake' : null " 
+                    placeholder="Item..."
+                    aria-label="Input item you want to search"
+                >
+                <button 
+                    type="reset" 
+                    @click="searchInput=''"
+                    aria-label="Clear item input"
+                > ✖ 
+                </button> 
+            </div>
+            <button 
+                type="submit" 
+                @click.prevent="addToSearchedList"
+                aria-label="Submit item search"
+            > Search
+            </button>
         </form>
         <div class="autocomplete">
             <p v-for="item in matchingItems" class="autocomplete-item" @click="setSearchItem(item)"
@@ -14,12 +37,14 @@
             </p>
         </div>
         <div class="item-list">
-            <p> Selectected Items: </p>
-            <p v-for="item in selectedItems.list" @click="selectedItems.removeItem(item)">
-                <span v-if="selectedItems.list.length > 0" :class="colourClassGiver(item)">
-                    {{ items[item] ? items[item]['name'] : null }}
-                </span>
-            </p>
+            <p> Selected Items: </p>
+            <div class="item-container">
+                <p v-for="item in selectedItems.list" @click="selectedItems.removeItem(item)">
+                    <span v-if="selectedItems.list.length > 0" :class="colourClassGiver(item)">
+                        {{ items[item] ? items[item]['name'] : null  }} 
+                    </span>
+                </p>
+            </div>
         </div>
     </div>
 
@@ -75,6 +100,7 @@ export default defineComponent({
             for (let item in this.items) {
                 if (this.items[item]['name'].toLowerCase() == input) {
                     selectedItems.addItem(item)
+                    this.searchInput = '';
                     break;
                 }
             }
@@ -137,9 +163,14 @@ form {
     gap: 1rem
 }
 
+.search-container {
+    display: grid;
+    grid-template-columns: 9fr 1fr;
+    gap: 1rem
+}
 .autocomplete {
     position: absolute;
-    width: 20rem;
+    width: 21rem;
     transform: translateY(3px);
     max-height: 40%;
     overflow-y: auto;
@@ -154,6 +185,7 @@ form {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    z-index: 1;
 }
 
 .autocomplete-item span {
@@ -196,5 +228,19 @@ form {
 
 .item-list {
     margin-top: 2rem;
+}
+
+.item-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+svg {
+    display: inline-block;
+}
+
+button[type=reset] {
+    color: var(--rarity-color-exotic);
+    font-weight: bold;
 }
 </style>

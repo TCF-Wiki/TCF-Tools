@@ -1,26 +1,11 @@
 <template>
     <div class="page-content">
         <div class="left">
-            <button type="button" class="button" @click="showModal">Open Modal </button>
-            <Modal
-                v-show="isModalVisible"
-                @close="closeModal"
-                >
-                <template v-slot:header>
-                    <h2> Select Locations </h2>
-                </template>
-
-                <template v-slot:body>
-                    <LocationSelector />
-                </template>
-
-                <template v-slot:footer2>
-                    This is a new modal footer.
-                </template>
-            </Modal>
             <ItemSearch />
+            <LocationSelector />
             <TierToggler />
-
+            <ClearSearch />
+            <ShareLink />
         </div>
         <div class="right">
             <MapSelector />
@@ -37,7 +22,8 @@ import MapSelector from './components/MapSelector.vue';
 import LocationSelector from './components/LocationSelector.vue';
 import ItemSearch from './components/ItemSearch.vue';
 import TierToggler from './components/TierToggler.vue'
-import Modal from '../Modal.vue';
+import ClearSearch from './components/ClearSearch.vue';
+import ShareLink from './components/ShareLink.vue'
 
 import {defineComponent, watch} from 'vue';
 import L, {Map, type TileLayer} from 'leaflet';
@@ -45,9 +31,11 @@ import {selectedMap, selectedLocations, selectedItems, selectedTier } from './st
 import {getMapData,getTierData} from './data';
 
 import {map1TileLayer, map2TileLayer, map3TileLayer, bounds, brightsandsColor, crescentfallsColor} from './mapConstants';
-import {addLeafletScript, addLeafletStyles} from '../scriptLoader';
+import {addLeafletStyles, addResponsivePopupScript, addResponsivePopupStyles} from '../scriptLoader';
+import { mapOneLabels, mapTwoLabels, mapThreeLabels } from './labels'
 
 import { updateLocationLayerGroups, getLocationLayerGroups, updateItemLayerGroups, getItemLayerGroups } from './layerGroups';
+import { loadInitialStore } from './URLParameterHandler';
 let locationLayerGroups: any;
 let itemLayerGroups: any;
 export default defineComponent({
@@ -56,7 +44,8 @@ export default defineComponent({
         LocationSelector,
         ItemSearch,
         TierToggler,
-        Modal
+        ClearSearch,
+        ShareLink
     },
     data() {
         return {
@@ -72,8 +61,9 @@ export default defineComponent({
         };
     },
     async mounted() {
-        //addLeafletScript()
         addLeafletStyles();
+        addResponsivePopupScript()
+        addResponsivePopupStyles()
         // this is the main logic of the map.
         this.mapData = await getMapData();
         this.tierData = await getTierData()
@@ -83,6 +73,8 @@ export default defineComponent({
 
         await updateItemLayerGroups();
         itemLayerGroups = getItemLayerGroups()
+
+        loadInitialStore()
         // create our map, mounting it on the '#map' element
         let map = L.map('map', {
             crs: L.CRS.Simple,
@@ -95,8 +87,17 @@ export default defineComponent({
         map.setMaxBounds(bounds);
 
         initiateMapToMapNumber(selectedMap.map).addTo(map);
-        
-        map1Labels() 
+
+        // utility function used for development. Uncomment it when you need it.
+        // map.on('click', function(e) {
+		// 	let coords = e.latlng,
+		// 	popup = L.popup()
+		// 		.setLatLng(coords)
+		// 		.setContent('<p>' + coords + '</p>')
+		// 		.openOn(map);
+        //     navigator.clipboard.writeText(coords.toString())                
+		// });
+
         // we must keep our map variable to this file. We musn't mutate it in weird ways or set it to other variables, etc. That is why this is all kept to this file.
         this.$watch(
             'selectedMap',
@@ -109,7 +110,6 @@ export default defineComponent({
                 placeMarkersForSelectedLocations();
                 placeMarkersForSelectedItems();
                 initiateMapToMapNumber(selectedMap.map).addTo(map);
-                map1Labels()
             },
             {deep: true}
         );
@@ -155,6 +155,9 @@ export default defineComponent({
                 if (map.hasLayer(map3TileLayer)) {
                     map.removeLayer(map3TileLayer);
                 }
+                toggleMapOneLabels()
+                toggleMapTwoLabels()
+                toggleMapThreeLabels()
                 return map1TileLayer;
             } else if (mapNumber == 2) {
                 document.getElementById('map')!.style.backgroundColor = crescentfallsColor;
@@ -164,6 +167,9 @@ export default defineComponent({
                 if (map.hasLayer(map3TileLayer)) {
                     map.removeLayer(map3TileLayer);
                 }
+                toggleMapOneLabels()
+                toggleMapTwoLabels()
+                toggleMapThreeLabels()
                 return map2TileLayer;
             } else if (mapNumber == 3) {
                 document.getElementById('map')!.style.backgroundColor = brightsandsColor;
@@ -173,6 +179,9 @@ export default defineComponent({
                 if (map.hasLayer(map2TileLayer)) {
                     map.removeLayer(map2TileLayer);
                 }
+                toggleMapOneLabels()
+                toggleMapTwoLabels()
+                toggleMapThreeLabels()
                 return map3TileLayer;
             } else {
                 return map1TileLayer;
@@ -252,7 +261,8 @@ export default defineComponent({
         const mapTwoTierFive = L.polygon(this.tierData['2']['5'], tierFiveOptions)
 
         function placeItemTiers() {
-            if (selectedMap.map == 1) {
+            if (selectedTier.on) {
+                if (selectedMap.map == 1) {
                 map.addLayer(mapOneTierOne)
                 map.addLayer(mapOneTierTwo)
                 map.addLayer(mapOneTierThree)
@@ -265,6 +275,7 @@ export default defineComponent({
             }
             if (selectedMap.map == 3) {
                 // ...
+            }
             }
         }
 
@@ -281,81 +292,48 @@ export default defineComponent({
             //map three ...
         }
 
-        function mapLabel(text: string, y : number, x : number) {
-            let content = '<span class="map-label-text">' + text + '</span>';
 
-            const locationIcon = L.divIcon({
-            className: 'fa fa-circle',
-            });
-
-            let marker = L.marker([y, x], {icon: locationIcon, opacity: 0});
-
-            marker.bindTooltip(content, {direction: 'center', permanent: true, className: 'map-label', offset: [0, 12]}).addTo(map);
+        
+        function toggleMapOneLabels() {
+            if (selectedMap.map == 1) {
+                for (let label in mapOneLabels) {
+                    mapOneLabels[label].addTo(map)
+                }
+            } else {
+                for (let label in mapOneLabels) {
+                    mapOneLabels[label].removeFrom(map)
+                }
+            }    
         }
-
-        function map1Labels() {
-            mapLabel('Base Camp', -138.940337, 125.702529);
-            mapLabel('Science Campus',  -191.954086, 193.220039);
-            mapLabel('Waterfall Labs', -52.919844, 188.220558);
-            mapLabel('Dig Site', -55.920623, 120.699287);
-            mapLabel('Crashed Ship', -70.924514, 67.685538);
-            mapLabel('Jungle Camp', -67.6188312285434,36.24883521333987);
-            mapLabel('Water Facility', -202.12876256743502,125.38303089749877);
-            mapLabel('Swamp Camp', -194.24505731976458,69.6269617459539);
-            mapLabel('East Collection Point', -114.87716864884747,180.76109612555175);
-            mapLabel('Comms Tower', -119.74426036047082,58.63039480137322);
-            mapLabel('North Uplink', -105.8744099435998,135.7591956841589);
-            mapLabel('South East Uplink', -166.3778008521334,167.25407675331044);
-            mapLabel('Vaccine Labs', -135.49906510544383,200.78641490926924);
-            mapLabel('Lagoon', -172.6331764958313,228.51771701814613);
-            mapLabel('Woodcutter Camp', -76.99885820255027,202.76612309955863);
-            mapLabel('Lake', -75.62465516184403,173.6375061304561);
-            mapLabel('Power Plant', -145.88035648602255,82.00049043648848);
-            mapLabel('Rock Pools', -164.25676649092694,49.12113781265326);
-            mapLabel('Jungle', -52.47409115988229,63.502268268759195);
-            mapLabel('Abandoned Mine', -29.362332945071117,160.88315350662089);
-            mapLabel('Parking Lot', -58.37655560323688,146.75122609122118);
-            mapLabel('Crashed Drill Site', -110.00161690779794,167.27023050514958);
-            mapLabel('South West Collection Point', -164.8783334355076,96.0013487003433);
-            mapLabel('Swamp', -196.49971646640512,49.24717999019127);
-            mapLabel('Waterfalls', -35.62097688818048,199.14124570868074);
-            mapLabel('East Caverns', -101.86987340608141,206.14192005885238);
+        function toggleMapTwoLabels() {
+            if (selectedMap.map == 2) {
+                for (let label in mapTwoLabels) {
+                    mapTwoLabels[label].addTo(map)
+                }
+            } else {
+                for (let label in mapTwoLabels) {
+                    mapTwoLabels[label].removeFrom(map)
+                }
+            }    
         }
-
-        map.on('click', function(e) {
-				let coords = e.latlng,
-						popup = L.popup()
-							.setLatLng(coords)
-							.setContent('<p>' + coords + '</p>')
-							.openOn(map);
-                            navigator.clipboard.writeText([coords.lat, coords.lng].toString())
-			});
-
-        function map2Labels() {
-            mapLabel('Favela', 642, 278);
-            mapLabel('Lagoon', 936, 365);
-            mapLabel('Fallen Tree', 325, 1005);
-            mapLabel('Greens Prospect', 1015, 1054);
-            mapLabel('Hay Fields', 288, 1419);
-            mapLabel('Nutrion Farms Processing', 574, 559);
-            mapLabel('Jungle Thermal Ponds', 621, 1197);
-            mapLabel('Nutrion Farms Warehouse', 517, 1757);
-            mapLabel('Geothermal Plant', 1117, 474);
-            mapLabel('Root Rock Tunnel', 1611, 660);
-            mapLabel('Lakeside Building', 1311, 874);
-            mapLabel('Skeleton', 1649, 1027);
-            mapLabel('Skeleton Observation Site', 1810, 1132);
-            mapLabel('Oasis', 1621, 1470);
-            mapLabel('Pinnacle Labs', 1649, 1788);
-            mapLabel('Osiris Wildlife Preserve', 1258, 1177);
-            mapLabel('Starport Admin', 1142, 1325);
-            mapLabel('Pumpkin Fields', 808, 1658);
-            mapLabel('Startport Landing Pad', 982, 1478);
-            mapLabel('Starport Warehouse', 1321, 1472);
-            mapLabel('Lagoon Thermal Ponds', 938, 640);
+        function toggleMapThreeLabels() {
+            // if (selectedMap.map == 3) {
+            //     for (let label in mapThreeLabels) {
+            //         mapThreeLabels[label].addTo(map)
+            //     }
+            // } else {
+            //     for (let label in mapThreeLabels) {
+            //         mapThreeLabels[label].removeFrom(map)
+            //     }
+            // }    
         }
 
 
+
+
+        placeMarkersForSelectedLocations()
+        placeMarkersForSelectedItems()
+        placeItemTiers()
     },
     methods: {
         showModal() {
@@ -382,7 +360,6 @@ export default defineComponent({
 .left {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
     gap: 1rem;
     width: 20%;

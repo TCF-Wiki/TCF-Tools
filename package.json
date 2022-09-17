@@ -17,6 +17,7 @@
     "@types/leaflet.markercluster": "^1.5.1",
     "install": "^0.13.0",
     "leaflet": "^1.8.0",
+    "leaflet-responsive-popup": "^1.0.0",
     "leaflet.markercluster": "^1.5.3",
     "npm": "^8.18.0",
     "vue": "^3.2.37",

@@ -1,55 +1,70 @@
 <template>
+    <h2> Containers </h2>
     <div class="button-container">
         <div v-if="mapData" v-for="(value, key) in getLocations()" @click="selectedLocations.locationSwitch(key.toString())">
             <div>
-                <button 
-                    class="button locationBtn" 
-                    :class="selectedLocations.list.includes(key.toString()) ? 'selected' : 'not-selected' && key.toString() != 'other' ? '' : ''"
+                <p 
+                    :class="selectedLocations.list.includes(key.toString()) ? 'selected' : 'not-selected' "
                     >
                     {{ locationNamer(key.toString()) }}
-                </button>
+
+                    <img 
+                    :src="'/map-images/marker-icons/' + key + '.png'"
+                    class="icon"
+                    />
+                </p>
             </div>
         </div>
     </div>
     <h2> Other </h2>
     <div class="button-container">
         <div v-if="mapData" v-for="(value, key) in mapData['locations'][selectedMap.map]['other']" @click="selectedLocations.locationSwitch(key.toString())">
-            <button 
-                class="button locationBtn" 
+            <p 
                 :class="selectedLocations.list.includes(key.toString()) ? 'selected' : 'not-selected'"
                 >
                 {{ locationNamer(key.toString()) }}
-            </button>
+        </p>
         </div>
     </div>
 </template>
 
 <style scoped>
-.locationBtn {
-    background-color: var(--rarity-color-common);
-    border-color: #b0b3b6;
-    width: 100%;
-    font-size: .8rem;
+p {
+    cursor: pointer;
 }
 
-.selected {
-    background-color: var(--rarity-color-uncommon);
-    border-color: #398e11;
+.selected::before {
+    content: '✔ ';
+    color: var(--rarity-color-uncommon);
 }
+.not-selected::before {
+    content: '✖ ';
+    color: var(--rarity-color-exotic);
+}
+
 .hidden {
     display: none;
 }
 
 .button-container {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: .2rem
+    grid-template-columns: 1fr 1fr;
+    gap: .6rem;
+    justify-content: left;
 }
 
 @media screen  and (max-width: 900px){
     .button-container {
-        grid-template-columns: 1fr 1fr
+        grid-template-columns: 1fr
     }
+}
+
+.icon {
+    display: inline-block;
+    margin-left: 10r;
+    width: 16px;
+    position: absolute;
+    z-index: -1;
 }
 </style>
 
