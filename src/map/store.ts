@@ -15,7 +15,7 @@ export const selectedMap = reactive({
 export const selectedLocations = reactive({
     list: ['HiddenStash', 'WeaponCrate','keyDoor','LaserDrill','Uplink'] as string[],
     locationSwitch: function (locationName: string) {
-        if (this.list.includes(locationName)) delete this.list[this.list.indexOf(locationName)];
+        if (this.list.includes(locationName)) this.list = this.list.filter( (a) => { return a !== locationName})
         else this.list.push(locationName);
     },
     add(loc : string) {
@@ -35,10 +35,13 @@ export const selectedItems = reactive({
         }
     },
     removeItem(item: string) {
-        if (this.list.includes(item)) delete this.list[this.list.indexOf(item)]; 
+        if (this.list.includes(item)) {
+            this.list = this.list.filter( (a) => { return a !== item})
+        } 
+        console.log(this.list)
     },
     toggleItem: function(item : string) {
-        if (this.list.includes(item)) delete this.list[this.list.indexOf(item)];
+        if (this.list.includes(item)) this.list = this.list.filter( (a) => { return a !== item});
         else this.list.push(item);
     },
     clear() {
