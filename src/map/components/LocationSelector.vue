@@ -16,7 +16,7 @@
             </div>
         </div>
     </div>
-    <h2> Other </h2>
+    <h2> Special Locations </h2>
     <div class="button-container">
         <div v-if="mapData" v-for="(value, key) in mapData['locations'][selectedMap.map]['other']" @click="selectedLocations.locationSwitch(key.toString())">
             <p 
