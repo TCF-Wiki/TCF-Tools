@@ -9,7 +9,7 @@
                 <p>Map 2</p>
                 <p>Crescent Falls </p>
             </div>
-            <div class="button-content disabled" :class="selectedMap.map == 3 ? 'selected-map' : 'not-selected-map'" @click="selectedMap.changeSelected(3)">
+            <div class="button-content" :class="selectedMap.map == 3 ? 'selected-map' : 'not-selected-map'" @click="selectedMap.changeSelected(3)">
                 <p>Map 3</p>
                 <p>Tharis Island </p>
             </div>
