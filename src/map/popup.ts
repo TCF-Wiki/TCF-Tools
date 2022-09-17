@@ -47,7 +47,19 @@ export function createLootPopup(type: string) {
             
             if (parseInt(x) === 0) {
                 const img = document.createElement('img')
-                img.src = `map-images/item-images/${itemData[cellData[x]]['name'].replaceAll(' ','_')}.png`
+                if (cellData[x].includes('KeyCard')) {
+                    if (cellData[x].includes('Map01')) {
+                        img.src = `map-images/item-images/Bright_Sands_Key_Card.png`
+                    } else if (cellData[x].includes('Map02')) {
+                        img.src = `map-images/item-images/Crescent_Falls_Key_Card.png`
+                    } else if (cellData[x].includes('Map03')) {
+                        img.src = `map-images/item-images/Tharis_Island_Key_Card.png`
+                    } else {
+                        img.src = `map-images/item-images/Bright_Sands_Key_Card.png`
+                    }
+                } else {
+                    img.src = `map-images/item-images/${itemData[cellData[x]]['name'].replaceAll(' ','_')}.png`
+                }
                 img.classList.add('item-image')
                 cell.appendChild(img)
             }

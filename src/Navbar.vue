@@ -4,13 +4,20 @@
         <div class="nav-content" :class="showMobileMenu ? 'open-menu' : 'closed-menu'">
             <a class="logo" href="https://thecyclefrontier.wiki/wiki/Main_Page" target="_blank"><img src="/shared-images/wiki_logo_bar.png" /></a>
             <div class="nav-items">
-                <a href="/"> Home </a>
-                <a href="/about"> About us </a>
-                <a href="https://thecyclefrontier.wiki/wiki/Main_Page" target="_blank"> Official Wiki </a>
-                <a href="/map"> Interactive Map </a>
-                <a href="/calculator"> Weapon Calculator </a>
-                <a href="https://tracker.thecyclefrontier.wiki"> Item Tracker </a>
-                <a href="/loadout"> Loadout Generator </a>
+                <div> <a href="/"> Home </a> </div>
+                <div> <a href="/about"> About us </a> </div>
+                <div> <a href="https://thecyclefrontier.wiki/wiki/Main_Page" target="_blank"> Official Wiki </a> </div>
+                <div> <a href="/map"> Interactive Map </a> </div>
+                <div> <a href="/calc"> Weapon Calculator </a> </div>
+                <div> <a href="https://tracker.thecyclefrontier.wiki"> Item Tracker </a> </div>
+                <div> <a href="/loadout"> Loadout Generator </a> </div>
+                
+                
+                
+                
+                
+                
+                
             </div>
         </div>
     </div>
@@ -36,7 +43,6 @@ export default {
     width: 10%;
 }
 .nav-menu {
-    margin-left: 10vw;
     background-color: var(--background-menu-color);
     color: var(--text-color-menu-white);
     z-index: 1;
@@ -49,25 +55,37 @@ export default {
 .nav-items {
     display: flex;
     justify-content: center;
-    align-items: center;
-    list-style: none;
     margin-right: 1rem;
+    align-items: baseline;
+    height: 4rem;
+}
+
+.nav-items div {
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+
+    transition: all 0.1s linear;
 }
 
 .nav-items a {
-    padding: 1rem 1.5rem;
+    padding: 0 1.5rem;
     width: fit-content;
-    height: 100%;
-    transition: all 0.1s linear;
+
     font-size: 1rem;
     text-transform: uppercase;
-    word-wrap: break-word;
+    text-decoration: none;
     cursor: pointer;
-    margin: 0.25rem;
 }
 
-.nav-items a:hover {
+.nav-items div:hover {
     background-color: var(--background-button-color);
+    color: var(--link-body-color);
+}
+
+.nav-items div:hover a{
     color: var(--link-body-color);
 }
 

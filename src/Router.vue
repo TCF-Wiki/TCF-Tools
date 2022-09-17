@@ -12,14 +12,14 @@ import NotFound from './Page404.vue';
 const routes = {
     '/': Home,
     '/about': About,
-    '/calculator': Calc,
+    '/calc': Calc,
     '/loadout': Loadout,
     '/map': Map,
 };
 const names = {
     '/': 'Apps',
     '/about': 'About',
-    '/calculator': 'Weapon Calculator',
+    '/calc': 'Weapon Calculator',
     '/loadout': 'Loadout Generator',
     '/map': 'Interactive Map',
 };
