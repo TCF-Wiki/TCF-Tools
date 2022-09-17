@@ -87,7 +87,10 @@ export default defineComponent({
         map.setMaxBounds(bounds);
 
         initiateMapToMapNumber(selectedMap.map).addTo(map);
-        addMapLabels()
+
+        // on first load the coordinates of the labels get messed up
+        // putting a minor timeout on it makes sure that the map has loaded by then.
+        setTimeout( () => { addMapLabels() }, 1)
 
         // utility function used for development. Uncomment it when you need it.
         map.on('click', function(e) {
