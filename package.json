@@ -17,6 +17,7 @@
     "@types/leaflet.markercluster": "^1.5.1",
     "install": "^0.13.0",
     "leaflet": "^1.8.0",
+    "leaflet-draw": "^1.0.4",
     "leaflet-responsive-popup": "^1.0.0",
     "leaflet.markercluster": "^1.5.3",
     "npm": "^8.18.0",
@@ -25,6 +26,7 @@
     "vue3-simple-typeahead": "^1.0.10"
   },
   "devDependencies": {
+    "@types/leaflet-draw": "^1.0.5",
     "@types/node": "^16.11.47",
     "@vitejs/plugin-vue": "^3.0.1",
     "@vue/tsconfig": "^0.1.3",

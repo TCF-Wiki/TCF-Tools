@@ -26,7 +26,9 @@ import ClearSearch from './components/ClearSearch.vue';
 import ShareLink from './components/ShareLink.vue'
 
 import {defineComponent, watch} from 'vue';
-import L, {Map, type TileLayer} from 'leaflet';
+import L, {Map, type LeafletEvent, type TileLayer} from 'leaflet';
+import 'leaflet-draw'
+
 import {selectedMap, selectedLocations, selectedItems, selectedTier } from './store';
 import {getMapData,getTierData} from './data';
 
@@ -78,29 +80,32 @@ export default defineComponent({
         // create our map, mounting it on the '#map' element
         let map = L.map('map', {
             crs: L.CRS.Simple,
-            minZoom: 1,
-            maxZoom: 5,
+            zoom: 1,
+            minZoom: 0,
+            maxZoom: 7,
+            maxBounds: [[1024, -1024],[-1024, 1024]],
+            zoomDelta: 0.5,
+            zoomSnap: 0.5,
+            wheelPxPerZoomLevel: 60,
+            attributionControl: false,
         }).setView([-128, 128], 1);
 
         map.zoomControl.setPosition('topright');
         map.fitBounds(bounds);
-        map.setMaxBounds(bounds);
 
         initiateMapToMapNumber(selectedMap.map).addTo(map);
 
-        // on first load the coordinates of the labels get messed up
-        // putting a minor timeout on it makes sure that the map has loaded by then.
-        setTimeout( () => { addMapLabels() }, 1)
+        addMapLabels() 
 
         // utility function used for development. Uncomment it when you need it.
-        map.on('click', function(e) {
-			let coords = e.latlng,
-			popup = L.popup()
-				.setLatLng(coords)
-				.setContent('<p>' + coords + '</p>')
-				.openOn(map);
-            navigator.clipboard.writeText(coords.toString())                
-		});
+        // map.on('click', function(e) {
+		// 	let coords = e.latlng,
+		// 	popup = L.popup()
+		// 		.setLatLng(coords)
+		// 		.setContent('<p>' + coords + '</p>')
+		// 		.openOn(map);
+        //     navigator.clipboard.writeText(coords.toString())                
+		// });
 
         // we must keep our map variable to this file. We musn't mutate it in weird ways or set it to other variables, etc. That is why this is all kept to this file.
         this.$watch(
@@ -330,8 +335,6 @@ export default defineComponent({
             //     }
             // }    
         }
-
-
 
 
         placeMarkersForSelectedLocations()

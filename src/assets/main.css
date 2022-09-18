@@ -218,9 +218,14 @@ input[type='range']:hover::-webkit-slider-thumb {
     color: var(--text-color-menu-white);
 }
 
-.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+.leaflet-popup-content-wrapper {
     background-color: var(--background-menu-color) !important;
     border: none !important;
+    padding: 1rem .5rem !important;
+}
+
+.leaflet-popup-tip {
+    display: none;
 }
 
 .marker {
@@ -341,3 +346,38 @@ input[type='range']:hover::-webkit-slider-thumb {
 .apply-bounce {
     animation: bounce 0.82s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
+
+::-webkit-scrollbar {
+	width: 7px;
+	border-top: blue;
+	border-bottom: blue;
+    cursor: pointer;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+	background: #1b262e;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+	background-color: var(--minor-accent-color);
+    border-radius: 2px;
+    cursor: pointer;
+
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+	filter:brightness(300%)
+  }
+
+  .leaflet-popup-scrolled {
+	  border-bottom: 0px;
+	  border-top: 0px;
+  }
+
+  table {
+    border-spacing: 1rem 0;
+    border-collapse: separate;
+  }

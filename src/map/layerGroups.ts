@@ -130,11 +130,12 @@ export async function updateItemLayerGroups() {
 }
 
 function createMarkerPopup(e: LeafletEvent) : void | LeafletEventHandlerFn {
+
     let popup = e.target.getPopup()
     let type = e.target.type ?? null
     let rawName = e.target.rawName ?? null
     let data = e.target.data;
-
+    
     if (type) {
         if (specialLocations.includes(type)) {
             const content = createSpecialPopup(type, rawName)

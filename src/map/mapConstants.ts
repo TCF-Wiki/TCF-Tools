@@ -15,7 +15,7 @@ export const scaleFactor: number = 2048 / 1400;
 const tileLayerOptions: TileLayerOptions = {
     minZoom: 0,
     minNativeZoom: 0,
-    maxZoom: 5,
+    maxZoom: 7,
     maxNativeZoom: 5,
     tileSize: 256,
     noWrap: true,
@@ -30,8 +30,8 @@ export const map3TileLayer: TileLayer = L.tileLayer('map-images/3/{z}/{x}/{y}.pn
 export const locationNames : any = {
     "HiddenStash": 'Hidden Stash',
     "Locker": 'Locker',
-    "AmmoContainer": 'Ammo Container',
-    "AbilityBox": 'Ability Box',
+    "AmmoContainer": 'Ammo Box',
+    "AbilityBox": 'Consumable Box',
     "WeaponCrate": 'Military Crate',
     "Luggage": 'Luggage',
     "MedCase": 'Med Case',
@@ -40,8 +40,8 @@ export const locationNames : any = {
     "Jacket": 'Jacket',
     "OrganicsBox": 'Cooler',
     "GenericContainer": 'Generic Container',
-    "KorolevContainer": 'Dumpster',
-    "FactoryContainer": 'Industrial Container',
+    "KorolevContainer": 'Industrial Container',
+    "FactoryContainer": 'Dumpster',
     "FilingCabinet": "Osiris Filing Cabinet",
 
     "keyDoor": "Key Door",

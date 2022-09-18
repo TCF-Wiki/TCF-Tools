@@ -4,7 +4,6 @@
             <section class="aboutAndSocial">
                 <h2>TCF: Wiki Applications</h2>
                 <p>The purpose of this website is to help you find and use all the information you need about The Cycle: Frontier.</p>
-                <p>This is not an official website. The website UI is based on the <a href="https://thecycle.game"> official website</a>, with permission.</p>
                 <ul class="footerSocial">
                     <li>
                         <a href="https://twitter.com/TCFWiki">
@@ -51,11 +50,11 @@
         </div>
         <div class="footerMenu">
             <ul>
-                <li><a href="">Home</a></li>
-                <li><a href="">Wiki</a></li>
-                <li><a href="">Interactive Map</a></li>
-                <li><a href="">Item Tracker</a></li>
-                <li><a href="">Weapon Calculator</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://thecyclefrontier.wiki/wiki/Main_Page" target="_blank"> Official Wiki </a></li>
+                <li><a href="/map">Interactive Map</a></li>
+                <li><a href="https://tracker.thecyclefrontier.wiki"> Item Tracker </a></li>
+                <li><a href="/calc">Weapon Calculator</a></li>
             </ul>
             <span>&copy; 2022 The Cycle: Frontier Wiki </span>
         </div>
@@ -205,5 +204,11 @@ h1 {
     .footerMenu li:last-child {
         margin-right: 0;
     }
+}
+a {
+    transition: all .2s ease-in
+}
+a:hover {
+    color: var(--minor-accent-color)
 }
 </style>

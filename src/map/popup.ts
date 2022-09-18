@@ -5,8 +5,19 @@ const mapData = await getMapData()
 
 export function createLootPopup(type: string) {
     let itemData = mapData['descriptions']
-    let data = mapData['lootPools'][type]['items']
 
+    let data;
+    if (mapData['lootPools'][type]) {
+        data = mapData['lootPools'][type]['items']
+    } else {
+        const section = document.createElement('section')
+        const par = document.createElement('p')
+        const parText = document.createTextNode('Uh oh! This location is missing its loot. Please let us know through Discord.')
+        
+        par.appendChild(parText)
+        section.appendChild(par)
+        return section
+    }
     // creates a <section> element, <table> element and a <tbody> element
     const section = document.createElement('section')
     const table = document.createElement('table')
@@ -35,7 +46,7 @@ export function createLootPopup(type: string) {
             } else {
                 let percent : number | string = roundToThree(cellData[x]);
                 if (percent === 0) {
-                    percent = '< 0.001'
+                    percent = '<0.001'
                 }
                 text = percent + '%'
             }
