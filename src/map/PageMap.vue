@@ -95,7 +95,10 @@ export default defineComponent({
 
         initiateMapToMapNumber(selectedMap.map).addTo(map);
 
-        addMapLabels() 
+        // by adding it 5 seconds later it avoids a nasty bug where the coordinates are not loaded properly yet. 
+        // so the labels are misplaced
+        // have to find a better solution in the future
+        setTimeout( () => {addMapLabels() }, 5 )
 
         // utility function used for development. Uncomment it when you need it.
         // map.on('click', function(e) {

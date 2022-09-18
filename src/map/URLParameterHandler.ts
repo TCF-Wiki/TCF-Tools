@@ -14,7 +14,7 @@ export async function loadInitialStore() {
     if (map) {
         map = parseInt(map)
         if (map == 1 || map == 2 || map == 3) {
-            selectedMap.changeSelected(map)
+            selectedMap.set(map)
         }
     } 
 
@@ -36,16 +36,20 @@ export async function loadInitialStore() {
         itemData = itemData['descriptions']
 
         // find the item that matches
+
+        let itemList = [];
         for (let item in items) {
             for (let i in itemData) {
                 if (itemData[i]['name'].toLowerCase() == items[item].split('_').join(' ').toLowerCase()) {
                     //and add it to our store
                     let toAdd = i.split('_').join(' ')
-                    selectedItems.addItem(toAdd)
+                    itemList.push(toAdd)
                     break;
                 }
             }
-            
+        }
+        if (itemList) {
+            selectedItems.set(itemList)
         }
     }
 
@@ -55,12 +59,16 @@ export async function loadInitialStore() {
         // first we clear any default locations
         selectedLocations.clear()
 
+        let locationList = []
         for (let loc in locations) {
             // we make sure each location exists
             if (Object.keys(locationNames).includes(locations[loc])) {
                 // then we add it to our list of locations
-                selectedLocations.add(locations[loc])
+                locationList.push(locations[loc])
             }
+        }
+        if (locationList) {
+            selectedLocations.set(locationList)
         }
     } 
 }

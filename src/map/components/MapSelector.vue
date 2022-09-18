@@ -1,15 +1,15 @@
 <template>
     <div class="map-selector">
         <div class="map-buttons">
-            <div class="button-content" :class="selectedMap.map == 1 ? 'selected-map' : 'not-selected-map'" @click="selectedMap.changeSelected(1)">
+            <div class="button-content" :class="selectedMap.map == 1 ? 'selected-map' : 'not-selected-map'" @click="selectedMap.set(1)">
                 <p>Map 1</p>
                 <p>Bright Sands </p>
             </div>
-            <div class="button-content" :class="selectedMap.map == 2 ? 'selected-map' : 'not-selected-map'" @click="selectedMap.changeSelected(2)">
+            <div class="button-content" :class="selectedMap.map == 2 ? 'selected-map' : 'not-selected-map'" @click="selectedMap.set(2)">
                 <p>Map 2</p>
                 <p>Crescent Falls </p>
             </div>
-            <div class="button-content" :class="selectedMap.map == 3 ? 'selected-map' : 'not-selected-map'" @click="selectedMap.changeSelected(3)">
+            <div class="button-content" :class="selectedMap.map == 3 ? 'selected-map' : 'not-selected-map'" @click="selectedMap.set(3)">
                 <p>Map 3</p>
                 <p>Tharis Island </p>
             </div>

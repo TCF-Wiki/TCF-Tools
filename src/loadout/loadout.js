@@ -160,6 +160,7 @@ export function ShareLoadout(clipboard = false) {
         window.history.replaceState({}, document.title, '/loadout');
     }
 }
+
 function delay(time) {
     return new Promise((resolve) => setTimeout(resolve, time));
 }
