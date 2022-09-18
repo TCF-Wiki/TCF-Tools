@@ -15,7 +15,7 @@
         :aria-label="'Toggle ' + locationNamer(key.toString())">
             <div>
                 <p 
-                    :class="selectedLocations.list.includes(key.toString()) ? 'selected' : 'not-selected' "
+                    :class="selectedLocations.get().includes(key.toString()) ? 'selected' : 'not-selected' "
                     >
                     {{ locationNamer(key.toString()) }}
 
@@ -39,10 +39,10 @@
         </button>
     </div>
     <div class="button-container">
-        <div v-if="mapData" v-for="(value, key) in mapData['locations'][selectedMap.map]['other']" @click="selectedLocations.toggle(key.toString())"
+        <div v-if="mapData" v-for="(value, key) in mapData['locations'][selectedMap.get()]['other']" @click="selectedLocations.toggle(key.toString())"
         :aria-label="'Toggle ' + locationNamer(key.toString())">
             <p 
-                :class="selectedLocations.list.includes(key.toString()) ? 'selected' : 'not-selected'"
+                :class="selectedLocations.get().includes(key.toString()) ? 'selected' : 'not-selected'"
                 >
                 {{ locationNamer(key.toString()) }}
         </p>
@@ -71,7 +71,7 @@ export default defineComponent({
     },
     methods: {
         getLocations() {
-            let data = {...this.mapData['locations'][selectedMap.map]}
+            let data = {...this.mapData['locations'][selectedMap.get()]}
             delete data['VelteciteMineral']
             delete data['FocusCrystalMineral']
             delete data['TitanMineral'] 
@@ -109,7 +109,7 @@ export default defineComponent({
         },
         disableAllContainers() : void {
             // disables all containers
-            let oldLocations = selectedLocations.list
+            let oldLocations = selectedLocations.get()
             let newLocations : string[] = [];
 
             for (let loc in oldLocations) {
@@ -122,7 +122,7 @@ export default defineComponent({
         },
         enableAllSpecial() : void {
             // enables all special locations
-            let nameList = Object.keys(this.mapData['locations'][selectedMap.map]['other'])
+            let nameList = Object.keys(this.mapData['locations'][selectedMap.get()]['other'])
             let newLocations : string[] = []
 
             if (nameList) {
@@ -134,7 +134,7 @@ export default defineComponent({
         },
         disableAllSpecial() : void {
             // disables all special locations
-            let oldLocations = selectedLocations.list
+            let oldLocations = selectedLocations.get()
             let newLocations : string[] = [];
 
             for (let loc in oldLocations) {

@@ -93,7 +93,7 @@ export default defineComponent({
         map.zoomControl.setPosition('topright');
         map.fitBounds(bounds);
 
-        initiateMapToMapNumber(selectedMap.map).addTo(map);
+        initiateMapToMapNumber(selectedMap.get()).addTo(map);
 
         // by adding it 5 seconds later it avoids a nasty bug where the coordinates are not loaded properly yet. 
         // so the labels are misplaced
@@ -115,13 +115,13 @@ export default defineComponent({
             'selectedMap',
             () => {
                 removeItemTiers();
-                if (selectedTier.on) {
+                if (selectedTier.get()) {
                     placeItemTiers();
                 }
                 removeAllMarkers();
                 placeMarkersForSelectedLocations();
                 placeMarkersForSelectedItems();
-                initiateMapToMapNumber(selectedMap.map).addTo(map);
+                initiateMapToMapNumber(selectedMap.get()).addTo(map);
                 addMapLabels()
             },
             {deep: true}
@@ -149,7 +149,7 @@ export default defineComponent({
         this.$watch(
             'selectedTier',
             () => {
-                if (selectedTier.on) {
+                if (selectedTier.get()) {
                     placeItemTiers();
                 } else {
                     removeItemTiers()
@@ -218,8 +218,8 @@ export default defineComponent({
         function removeUnselectedLocationMarkers(): void {
             //console.log('Removing unselected markers');
             for (let locationType in VM.savedLocationMarkers) {
-                if (selectedLocations.list.includes(VM.savedLocationMarkers[locationType])) continue;
-                let layers = locationLayerGroups[VM.selectedMap.map][VM.savedLocationMarkers[locationType]];
+                if (selectedLocations.get().includes(VM.savedLocationMarkers[locationType])) continue;
+                let layers = locationLayerGroups[VM.selectedMap.get()][VM.savedLocationMarkers[locationType]];
                 if (layers) layers.removeFrom(map);
                 delete VM.savedLocationMarkers[locationType];
             }
@@ -227,8 +227,8 @@ export default defineComponent({
 
         function removeUnselectedItemMarkers(): void {
             for (let item in VM.savedItemMarkers) {
-                if (selectedItems.list.includes(VM.savedItemMarkers[item])) continue;
-                let layers = itemLayerGroups[VM.selectedMap.map][VM.savedItemMarkers[item]];
+                if (selectedItems.get().includes(VM.savedItemMarkers[item])) continue;
+                let layers = itemLayerGroups[VM.selectedMap.get()][VM.savedItemMarkers[item]];
                 if (layers) layers.removeFrom(map);
                 delete VM.savedItemMarkers[item];
             }
@@ -237,10 +237,10 @@ export default defineComponent({
         function placeMarkersForSelectedLocations(): void {
             let mapMarkers = [] as any;
             // this function places the markers for each location. Hurray!
-            for (let locationType in selectedLocations.list) {
-                let layers = locationLayerGroups[VM.selectedMap.map][selectedLocations.list[locationType]];
+            for (let locationType in selectedLocations.get()) {
+                let layers = locationLayerGroups[VM.selectedMap.get()][selectedLocations.get()[locationType]];
                 if (layers) layers.addTo(map);
-                mapMarkers.push(selectedLocations.list[locationType]);
+                mapMarkers.push(selectedLocations.get()[locationType]);
             }
             VM.savedLocationMarkers = mapMarkers;
 
@@ -248,10 +248,10 @@ export default defineComponent({
 
         function placeMarkersForSelectedItems() : void {
             let mapMarkers = [] as any;
-            for (let item in selectedItems.list) {
-                let layers = itemLayerGroups[VM.selectedMap.map][selectedItems.list[item]];
+            for (let item in selectedItems.get()) {
+                let layers = itemLayerGroups[VM.selectedMap.get()][selectedItems.get()[item]];
                 if (layers) layers.addTo(map);
-                mapMarkers.push(selectedItems.list[item]);
+                mapMarkers.push(selectedItems.get()[item]);
             }
             VM.savedItemMarkers = mapMarkers
         }
@@ -272,19 +272,19 @@ export default defineComponent({
         const mapTwoTierFive = L.polygon(this.tierData['2']['5'], tierFiveOptions)
 
         function placeItemTiers() {
-            if (selectedTier.on) {
-                if (selectedMap.map == 1) {
+            if (selectedTier.get()) {
+                if (selectedMap.get() == 1) {
                 map.addLayer(mapOneTierOne)
                 map.addLayer(mapOneTierTwo)
                 map.addLayer(mapOneTierThree)
                 map.addLayer(mapOneTierFour)
             }   
-            if (selectedMap.map == 2) {
+            if (selectedMap.get() == 2) {
                 map.addLayer(mapTwoTierThree)
                 map.addLayer(mapTwoTierFour)
                 map.addLayer(mapTwoTierFive)
             }
-            if (selectedMap.map == 3) {
+            if (selectedMap.get() == 3) {
                 // ...
             }
             }
@@ -306,7 +306,7 @@ export default defineComponent({
 
         
         function toggleMapOneLabels() {
-            if (selectedMap.map == 1) {
+            if (selectedMap.get() == 1) {
                 for (let label in mapOneLabels) {
                     mapOneLabels[label].addTo(map)
                 }
@@ -317,7 +317,7 @@ export default defineComponent({
             }    
         }
         function toggleMapTwoLabels() {
-            if (selectedMap.map == 2) {
+            if (selectedMap.get() == 2) {
                 for (let label in mapTwoLabels) {
                     mapTwoLabels[label].addTo(map)
                 }
@@ -328,7 +328,7 @@ export default defineComponent({
             }    
         }
         function toggleMapThreeLabels() {
-            // if (selectedMap.map == 3) {
+            // if (selectedMap.get() == 3) {
             //     for (let label in mapThreeLabels) {
             //         mapThreeLabels[label].addTo(map)
             //     }

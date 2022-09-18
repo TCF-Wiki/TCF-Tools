@@ -78,19 +78,19 @@ export function getShareLink() : string {
     let resultString = ''
 
     // map
-    resultString += `?map=${selectedMap.map}`
+    resultString += `?map=${selectedMap.get()}`
 
     // tier overlay
-    resultString += `&tier=${selectedTier.on}`
+    resultString += `&tier=${selectedTier.get()}`
 
     // items
-    for (let item in selectedItems.list) {
-        resultString += `&item=${selectedItems.list[item]}`
+    for (let item in selectedItems.get()) {
+        resultString += `&item=${selectedItems.get()[item]}`
     }
 
     // locations
-    for (let loc in selectedLocations.list) {
-        resultString += `&loc=${selectedLocations.list[loc]}`
+    for (let loc in selectedLocations.get()) {
+        resultString += `&loc=${selectedLocations.get()[loc]}`
     }
     
     return resultString
