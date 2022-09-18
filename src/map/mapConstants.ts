@@ -69,6 +69,36 @@ export const specialLocations = [
     'Uplink'
 ]
 
+// alphabetical list of real container names
+export const alphabeticalContainers = {
+    "AmmoContainer": 'Ammo Box',
+    "AbilityBox": 'Consumable Box',
+    "OrganicsBox": 'Cooler',
+    "FactoryContainer": 'Dumpster',
+    "HiddenStash": 'Hidden Stash',
+    "KorolevContainer": 'Industrial Container',
+    "Jacket": 'Jacket',
+    "Locker": 'Locker',
+    "Luggage": 'Luggage',
+    "MedCase": 'Med Case',
+    "WeaponCrate": 'Military Crate',
+    "Safe": 'Safe',
+    "SuitCase": 'Suit Case',
+    "FilingCabinet": "Osiris Filing Cabinet",
+}
+// alphabetical list of real special location names
+export const alphabeticalSpecialLocations = {
+    "Evac": "Evac Location",
+    "HealingPlant": "Healing Plant",
+    "keyDoor": "Key Door",
+    "LaserDrill": "Laser Drill",
+    "AIFriendly_SpawnLocation": "Leafman",
+    "Meteor": "Meteor Location",
+    "missionItem": "Mission Item",
+    "NoiseTrap_Birds": "Noise Birds",
+    "OilPump": "Oil Well",
+    "Uplink": "Uplink",
+}
 
 
 export const specialDescriptions : any = {

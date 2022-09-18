@@ -11,18 +11,15 @@
         </button>
     </div>
     <div class="button-container">
-        <div v-if="mapData" v-for="(value, key) in getLocations()" @click="selectedLocations.toggle(key.toString())"
-        :aria-label="'Toggle ' + locationNamer(key.toString())">
+        <div v-if="mapData" 
+        v-for="value in orderedContainers" 
+        @click="notFoundContainers.includes(value) ? null : selectedLocations.toggle(value)"
+        :aria-label="'Toggle ' + locationNamer(value)">
             <div>
                 <p 
-                    :class="selectedLocations.get().includes(key.toString()) ? 'selected' : 'not-selected' "
+                    :class="containerClassGiver(value)"
                     >
-                    {{ locationNamer(key.toString()) }}
-
-                    <img 
-                    :src="'/map-images/marker-icons/' + key + '.png'"
-                    class="icon"
-                    />
+                    {{ locationNamer(value) }}
                 </p>
             </div>
         </div>
@@ -39,12 +36,16 @@
         </button>
     </div>
     <div class="button-container">
-        <div v-if="mapData" v-for="(value, key) in mapData['locations'][selectedMap.get()]['other']" @click="selectedLocations.toggle(key.toString())"
-        :aria-label="'Toggle ' + locationNamer(key.toString())">
+        <div v-if="mapData" 
+            v-for="value in orderedSpecialLocations" 
+            @click="notFoundSpecialLocations.includes(value) ? null : selectedLocations.toggle(value)"
+            :aria-label="'Toggle ' + locationNamer(value)">
             <p 
-                :class="selectedLocations.get().includes(key.toString()) ? 'selected' : 'not-selected'"
+                :class="specialLocationClassGiver(value)"
+                    
                 >
-                {{ locationNamer(key.toString()) }}
+
+                {{ locationNamer(value) }}
         </p>
         </div>
     </div>
@@ -53,24 +54,51 @@
 
 
 <script lang="ts">
-import {defineComponent} from 'vue';
-import {getMapData} from '../data';
-import {selectedLocations, selectedMap} from '../store';
-import { locationNames, specialLocations } from '../mapConstants'
+import { defineComponent } from 'vue';
+import { getMapData } from '../data';
+import { selectedLocations, selectedMap } from '../store';
+import { locationNames, specialLocations, alphabeticalContainers, alphabeticalSpecialLocations } from '../mapConstants'
 export default defineComponent({
     data() {
         return {
             mapData: null as null | any,
             selectedLocations,
             selectedMap,
-
+            containers: [] as string[],
+            specialLocations: [] as string[],
+            orderedContainers: [] as string[],
+            orderedSpecialLocations: [] as string[],
+            notFoundContainers: [] as string[],
+            notFoundSpecialLocations: [] as string[],
         };
     },
     async mounted() {
+        // load map data and other misc data
         this.mapData = await getMapData();
+        this.containers = await this.getLocations()
+        this.specialLocations = Object.keys(this.mapData['locations'][selectedMap.get()]['other'])
+
+        // create our initial list of locations, properly ordered
+        this.orderContainers()
+        this.orderSpecialLocations()
+
+        // whenever our map changes update our list locations
+        this.$watch(
+            'selectedMap',
+            async () => {
+                this.containers = await this.getLocations()
+                this.specialLocations = Object.keys(this.mapData['locations'][selectedMap.get()]['other'])
+
+                this.orderContainers()
+                this.orderSpecialLocations()
+            },
+            {deep: true}
+        );
     },
     methods: {
-        getLocations() {
+        async getLocations() {
+            // returns a list of our location data used for display. 
+            // We remove the keys we do not want people to be able to search for.
             let data = {...this.mapData['locations'][selectedMap.get()]}
             delete data['VelteciteMineral']
             delete data['FocusCrystalMineral']
@@ -89,16 +117,55 @@ export default defineComponent({
             delete data['LootSpawnPoint_HDD']
             delete data['Special_LootPoint']
             delete data['LootPoint']
+            delete data['GenericContainer']
             delete data['other']
-            return data
+            return Object.keys(data)
         },
         locationNamer(key: string) {
             /* @ts-ignore */
             return locationNames[key]
         },
+        orderContainers() {
+            // order our list of containers on this map alphabetically
+            let containerNames = this.containers;
+            let ordered = alphabeticalContainers;
+
+
+            let orderedList : string[] = [];
+            let notFoundOnThisMap : string[] = []
+            for (let cont in ordered) {
+                if (containerNames.includes(cont)) {
+                    orderedList.push(cont)
+                } else {
+                    // update our display to show if this map does not have this search available
+                    orderedList.push(cont)
+                    notFoundOnThisMap.push(cont)
+                }
+            }
+            this.orderedContainers = orderedList;
+            this.notFoundContainers = notFoundOnThisMap;
+        },
+        orderSpecialLocations() {
+            let specialNames = this.specialLocations;
+            let ordered = alphabeticalSpecialLocations;
+
+
+            let orderedList : string[] = [] 
+            let notFoundOnThisMap : string[] = []
+            for (let cont in ordered) {
+                if (specialNames.includes(cont)) {
+                    orderedList.push(cont)
+                } else {
+                    orderedList.push(cont)
+                    notFoundOnThisMap.push(cont)
+                }
+            }
+            this.orderedSpecialLocations = orderedList;
+            this.notFoundSpecialLocations = notFoundOnThisMap;
+        },
         enableAllContainers() : void {
             // enables all containers
-            let nameList = Object.keys(this.getLocations())
+            let nameList = Object.keys(this.containers)
             let newLocations : string[] = [];
 
             for (let cont in nameList) {
@@ -144,6 +211,38 @@ export default defineComponent({
             } 
 
             selectedLocations.set(newLocations)
+        },
+        containerClassGiver(location: string) : string {
+            // returns a list of classes this location should have
+
+            let classList = ''
+            if (selectedLocations.get().includes(location)) {
+                classList += 'selected '
+            } else {
+                classList += 'not-selected '
+            }
+
+            if (this.notFoundContainers.includes(location)) {
+                classList += 'not-found'
+            }
+            
+            return classList
+        },
+        specialLocationClassGiver(location: string) : string {
+            // returns a list of classes this location should have
+
+            let classList = ''
+            if (selectedLocations.get().includes(location)) {
+                classList += 'selected '
+            } else {
+                classList += 'not-selected '
+            }
+
+            if (this.notFoundSpecialLocations.includes(location)) {
+                classList += 'not-found'
+            }
+            
+            return classList
         }
     }
 });
@@ -163,6 +262,16 @@ export default defineComponent({
         content: '✖ ';
         color: var(--rarity-color-exotic);
     }
+
+    .not-found {
+        text-decoration-line: line-through;
+    }
+
+    .not-found::before {
+        content: '? ';
+        color: var(--rarity-color-rare);
+        font-weight: bold;
+    }
     
     .hidden {
         display: none;
@@ -181,11 +290,5 @@ export default defineComponent({
         }
     }
     
-    .icon {
-        display: inline-block;
-        margin-left: 10r;
-        width: 16px;
-        position: absolute;
-        z-index: -1;
-    }
+
     </style>
