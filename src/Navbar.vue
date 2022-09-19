@@ -11,13 +11,6 @@
                 <div> <a href="/calc"> Weapon Calculator </a> </div>
                 <div> <a href="https://tracker.thecyclefrontier.wiki"> Item Tracker </a> </div>
                 <div> <a href="/loadout"> Loadout Generator </a> </div>
-                
-                
-                
-                
-                
-                
-                
             </div>
         </div>
     </div>
@@ -68,6 +61,7 @@ export default {
     height: 100%;
 
     transition: all 0.1s linear;
+    cursor: pointer;
 }
 
 .nav-items a {
@@ -77,7 +71,6 @@ export default {
     font-size: 1rem;
     text-transform: uppercase;
     text-decoration: none;
-    cursor: pointer;
 }
 
 .nav-items div:hover {

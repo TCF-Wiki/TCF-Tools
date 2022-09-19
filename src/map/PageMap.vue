@@ -3,9 +3,11 @@
         <div class="left">
             <ItemSearch />
             <LocationSelector />
+            <h2> Misc</h2> 
             <TierToggler />
             <ClearSearch />
             <ShareLink />
+            <ColorSelector />
         </div>
         <div class="right">
             <MapSelector />
@@ -24,8 +26,9 @@ import ItemSearch from './components/ItemSearch.vue';
 import TierToggler from './components/TierToggler.vue'
 import ClearSearch from './components/ClearSearch.vue';
 import ShareLink from './components/ShareLink.vue'
+import ColorSelector from './components/ColorSelector.vue';
 
-import {defineComponent, watch} from 'vue';
+import {defineComponent} from 'vue';
 import L, {Map, type LeafletEvent, type TileLayer} from 'leaflet';
 import 'leaflet-draw'
 
@@ -47,7 +50,8 @@ export default defineComponent({
         ItemSearch,
         TierToggler,
         ClearSearch,
-        ShareLink
+        ShareLink,
+        ColorSelector
     },
     data() {
         return {
@@ -81,7 +85,7 @@ export default defineComponent({
         let map = L.map('map', {
             crs: L.CRS.Simple,
             zoom: 1,
-            minZoom: 0,
+            minZoom: 1,
             maxZoom: 7,
             maxBounds: [[1024, -1024],[-1024, 1024]],
             zoomDelta: 0.5,
@@ -360,32 +364,28 @@ export default defineComponent({
     display: flex;
     flex-direction: row;
     height: 100%;
-    justify-content: space-between;
-    align-items: center;
     margin-right: 1.5vw;
     max-width: 100%;
+    gap: 12rem
 }
 
 .left {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     gap: 1rem;
-    width: 20%;
+    width: 30%;
 }
 
 .right {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    gap: 1rem;
-    width: 60%;
+    width: 100%;
 }
 
 #map {
-    padding-bottom: 75%;
-    width: 75%;
+    width: 80%;
+    padding-bottom: 80%;
     z-index: 0;
 }
 

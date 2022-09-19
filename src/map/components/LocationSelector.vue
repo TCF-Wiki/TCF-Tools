@@ -14,7 +14,8 @@
         <div v-if="mapData" 
         v-for="value in orderedContainers" 
         @click="notFoundContainers.includes(value) ? null : selectedLocations.toggle(value)"
-        :aria-label="'Toggle ' + locationNamer(value)">
+        :aria-label="'Toggle ' + locationNamer(value)"
+        role="button">
             <div>
                 <p 
                     :class="containerClassGiver(value)"
@@ -39,7 +40,8 @@
         <div v-if="mapData" 
             v-for="value in orderedSpecialLocations" 
             @click="notFoundSpecialLocations.includes(value) ? null : selectedLocations.toggle(value)"
-            :aria-label="'Toggle ' + locationNamer(value)">
+            :aria-label="'Toggle ' + locationNamer(value)"
+            role="button">
             <p 
                 :class="specialLocationClassGiver(value)"
                     

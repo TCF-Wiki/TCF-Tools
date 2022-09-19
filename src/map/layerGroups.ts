@@ -31,7 +31,7 @@ export async function updateLocationLayerGroups() {
         // the icon that will be used for this group
         let LocationMarker = L.icon({
             iconUrl: `map-images/marker-icons/${locationType}.png`,
-            iconSize: [20,20],
+            iconSize: [25,25],
             className: 'marker',
         })
         // add each location to the group

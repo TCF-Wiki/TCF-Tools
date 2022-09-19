@@ -234,7 +234,8 @@ input[type='range']:hover::-webkit-slider-thumb {
         drop-shadow(-1px -1px 0 var(--rarity-color-exotic));
     filter:
         drop-shadow(2px 2px 0 var(--rarity-color-exotic)) 
-        drop-shadow(-1px -1px 0 var(--rarity-color-exotic));
+        drop-shadow(-1px -1px 0 var(--rarity-color-exotic))
+        contrast(1.5);
 }
 
 .item-image {
@@ -377,7 +378,7 @@ input[type='range']:hover::-webkit-slider-thumb {
 	  border-top: 0px;
   }
 
-  table {
+  .leaflet-popup-content table {
     border-spacing: 1rem 0;
     border-collapse: separate;
   }

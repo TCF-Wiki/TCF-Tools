@@ -1,15 +1,18 @@
 <template>
     <div class="map-selector">
         <div class="map-buttons">
-            <div class="button-content" :class="selectedMap.get() == 1 ? 'selected-map' : 'not-selected-map'" @click="selectedMap.set(1)">
+            <div class="button-content" :class="selectedMap.get() == 1 ? 'selected-map' : 'not-selected-map'" @click="selectedMap.set(1)"
+            role="button">
                 <p>Map 1</p>
                 <p>Bright Sands </p>
             </div>
-            <div class="button-content" :class="selectedMap.get() == 2 ? 'selected-map' : 'not-selected-map'" @click="selectedMap.set(2)">
+            <div class="button-content" :class="selectedMap.get() == 2 ? 'selected-map' : 'not-selected-map'" @click="selectedMap.set(2)"
+            role="button">
                 <p>Map 2</p>
                 <p>Crescent Falls </p>
             </div>
-            <div class="button-content" :class="selectedMap.get() == 3 ? 'selected-map' : 'not-selected-map'" @click="selectedMap.set(3)">
+            <div class="button-content" :class="selectedMap.get() == 3 ? 'selected-map' : 'not-selected-map'" @click="selectedMap.set(3)"
+            role="button">
                 <p>Map 3</p>
                 <p>Tharis Island </p>
             </div>
@@ -33,8 +36,8 @@ export default defineComponent({
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 75%;
     height: 100%;
+    width: 80%;
 }
 .map-buttons {
     width: 100%;
