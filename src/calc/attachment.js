@@ -98,11 +98,12 @@ export const attachment = {
             }
             if (a=='clipSize') a = "ammoInClip"
             if (a=='amountOfShots') a = "amountOfImmediateFires"
-
-            if (a=='WeaponDamageRange') {
+            if (a=='damageDirect') a = 'directDamage'
+            if (a=='damageRange') {
                 effectUsableObject['FalloffStart'] = {'value': effectList[eff]['value'] + weaponData[weapon]['FalloffStart'], 'type': effectList[eff]['type']}
                 effectUsableObject['FalloffEnd'] = {'value': effectList[eff]['value'] + weaponData[weapon]['FalloffStart'], 'type': effectList[eff]['type']}   
             }
+
             effectUsableObject[a] = {'value': effectList[eff]['value'], 'type': effectList[eff]['type']}
         }
         return effectUsableObject

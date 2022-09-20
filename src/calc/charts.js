@@ -52,7 +52,6 @@ let theme = {
 CanvasJS.addTheme('Pnoexz',theme); // You can use any name
 
 export function penetrationChart() {
-    console.log('this is run!')
     let penData = [];
     let target = targetData[selectedTarget.selected];
 
@@ -134,7 +133,7 @@ export function penetrationChart() {
     penChart.render();
 }
 
-export function falloffChart(one, two) {
+export function falloffChart() {
     let data = [];
     for (let wep in selectedWeapons.list) {
         let weapon = selectedWeapons.list[wep]
@@ -146,6 +145,7 @@ export function falloffChart(one, two) {
             let start = calculate.s(weapon, 'FalloffStart')
             let end = calculate.s(weapon, 'FalloffEnd')
             let mult = calculate.s(weapon, 'FalloffMultiplier')
+            console.log(start, end, mult)
             if (distance >= end ) {
                 weaponPoints.push({x: x, y: mult});
             } else if (distance <= start) {

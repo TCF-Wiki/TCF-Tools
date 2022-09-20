@@ -4,13 +4,13 @@
         <div class="nav-content" :class="showMobileMenu ? 'open-menu' : 'closed-menu'">
             <a class="logo" href="https://thecyclefrontier.wiki/wiki/Main_Page" target="_blank"><img src="/shared-images/wiki_logo_bar.png" /></a>
             <div class="nav-items">
-                <div> <a href="/"> Home </a> </div>
-                <div> <a href="/about"> About us </a> </div>
-                <div> <a href="https://thecyclefrontier.wiki/wiki/Main_Page" target="_blank"> Official Wiki </a> </div>
-                <div> <a href="/map"> Interactive Map </a> </div>
-                <div> <a href="/calc"> Weapon Calculator </a> </div>
-                <div> <a href="https://tracker.thecyclefrontier.wiki"> Item Tracker </a> </div>
-                <div> <a href="/loadout"> Loadout Generator </a> </div>
+                <a href="/"> Home </a> 
+                <a href="/about"> About us </a> 
+                <a href="https://thecyclefrontier.wiki/wiki/Main_Page" target="_blank"> Official Wiki </a>
+                <a href="/map"> Interactive Map </a> 
+                <a href="/calc"> Weapon Calculator </a> 
+                <a href="https://tracker.thecyclefrontier.wiki"> Item Tracker </a> 
+                <a href="/loadout"> Loadout Generator </a> 
             </div>
         </div>
     </div>
@@ -53,18 +53,16 @@ export default {
     height: 4rem;
 }
 
-.nav-items div {
+.nav-items a {
 
     display: flex;
     justify-content: center;
     flex-direction: column;
-    height: 100%;
+    height: 4rem;
 
     transition: all 0.1s linear;
     cursor: pointer;
-}
 
-.nav-items a {
     padding: 0 1.5rem;
     width: fit-content;
 
@@ -73,7 +71,9 @@ export default {
     text-decoration: none;
 }
 
-.nav-items div:hover {
+
+
+.nav-items a:hover {
     background-color: var(--background-button-color);
     color: var(--link-body-color);
 }

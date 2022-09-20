@@ -19,7 +19,7 @@ export default {
 </script>
 
 <template>
-  <main>  
+  <section>  
     <section> 
       <div class="header">
         <h1> Weapon Calculator </h1>
@@ -53,22 +53,19 @@ export default {
     </section>
     
 
-    </main>
+    </section>
 
 </template>
 
 <style scoped>
-main {
-  margin-left: 10vw;
+section {
   display: flex;
   flex-direction: column;
-  border: 1px solid #121C25;
-  background-color: var(--background-body-color);
   gap: 2rem;
 }
 
 @media screen and (max-width: 900px) {
-    main {
+  section {
         margin-left: 0;
     }
 }
@@ -96,7 +93,6 @@ h1 {
 
 .header {
   position: relative;
-
   width: 40vw;
   display: flex;
   flex-direction: column;

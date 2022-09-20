@@ -146,6 +146,7 @@ export const calculate = {
         if (effects.hasOwnProperty(stat)) {
             let effect = effects[stat]
             if (effect['type'] == 'Additive') {
+                console.log()
                 return value + effect['value']
             } 
 

@@ -94,7 +94,6 @@ export const alphabeticalSpecialLocations = {
     "LaserDrill": "Laser Drill",
     "AIFriendly_SpawnLocation": "Leafman",
     "Meteor": "Meteor Location",
-    "missionItem": "Mission Item",
     "NoiseTrap_Birds": "Noise Birds",
     "OilPump": "Oil Well",
     "Uplink": "Uplink",

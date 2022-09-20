@@ -53,7 +53,7 @@
 </template>
 
 <script> 
-import { selectedWeapons, selectedArmor, selectedTarget, selectedHSValue, selectedDistance } from '../store';
+import { selectedWeapons, selectedArmor, selectedTarget, selectedHSValue, selectedDistance, selectedAttachments } from '../store';
 import { weaponData as wepData} from '../data';
 import { watch } from 'vue';
 import { keyObject, detailedKeyObject, flippedKeys as flippedKeysData, roundToThree } from '../utils';
@@ -74,6 +74,7 @@ export default {
             selectedTarget,
             selectedHSValue,
             selectedDistance,
+            selectedAttachments,
             weaponData: wepData,
             keyNames: keyObject,
             detailedKeyNames: detailedKeyObject,
@@ -107,7 +108,7 @@ export default {
         },
         updateColourList() {
             // This function will figure out if a row should be colourable or not
-            let selectedWeaponData = [];
+            const selectedWeaponData = [];
             const colouredList = {};
 
             for (let wep in selectedWeapons.list) {
@@ -115,15 +116,15 @@ export default {
                 colouredList[selectedWeapons.list[wep]] = {}
             }
 
-            // we need to fight the highest value of each key in the data. We iterate over the first item in our guns to find which key to use
+            // we need to find the highest value of each key in the data. We iterate over the first item in our guns to find which key to use
             // then create an object which holds if it is bigger or smaller...
             for (const key in selectedWeaponData[0]) {
-                const value = selectedWeaponData[0][key];
+                const value = calculate.s(selectedWeapons.list[0],key);
                 if (typeof(value) != 'number') continue;
 
                 let colorData = []; 
-                for (const wep in selectedWeaponData) {
-                    const tempVal = selectedWeaponData[wep][key]
+                for (const wep in selectedWeapons.list) {
+                    const tempVal = calculate.s(selectedWeapons.list[wep], key)
                     if (typeof(tempVal) == 'number') {
                         colorData.push(tempVal)
                     }
@@ -250,6 +251,15 @@ export default {
     },
     watch: {
         selectedWeapons: {
+            deep: true,
+            handler() {
+                this.updateColourList();
+                this.updateDetailedStats();
+                penetrationChart()
+                falloffChart()
+            }
+        },
+        selectedAttachments: {
             deep: true,
             handler() {
                 this.updateColourList();
