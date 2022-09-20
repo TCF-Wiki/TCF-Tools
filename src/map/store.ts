@@ -7,7 +7,6 @@ export const selectedMap = reactive({
     },
     set(map: number): void {
         // this function changes the active map.
-
         // here we can disable certain maps, if needed.
         if (map === 1 || map === 2) {
             this.map = map;

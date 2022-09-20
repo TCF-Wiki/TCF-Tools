@@ -32,7 +32,7 @@ export const locationNames : any = {
     "Locker": 'Locker',
     "AmmoContainer": 'Ammo Box',
     "AbilityBox": 'Consumable Box',
-    "WeaponCrate": 'Military Crate',
+    "WeaponCrate": 'Military Box',
     "Luggage": 'Luggage',
     "MedCase": 'Med Case',
     "Safe": 'Safe',
