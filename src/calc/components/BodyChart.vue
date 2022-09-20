@@ -5,10 +5,10 @@
         <h2> Body Chart </h2>
         <p> Damage per bullet </p>
         <div id="figure">
-            <span id="head"> {{ head }}</span>
-            <span id="chest"> {{ chest }}</span>
-            <span id="hip"> {{ hip }}</span>
-            <span id="legs"> {{ legs }}</span>
+            <span id="head">{{head}}</span>
+            <span id="chest">{{chest}}</span>
+            <span id="hip">{{hip}}</span>
+            <span id="legs">{{legs}}</span>
             <span id="comment"> Spuddy &#8628; </span> 
         </div>
     </section>

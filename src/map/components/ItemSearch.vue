@@ -92,6 +92,10 @@ export default defineComponent({
             this.matchingItems = [item]
         },
         addToSearchedList() {
+            if (this.matchingItems.length == 1) {
+                this.setSearchItem(this.matchingItems[0])
+            }
+
             const input = this.searchInput.toLowerCase();
             if (!this.lowerCaseSearchTerms.includes(input)) {
                 this.shake = true;
@@ -107,7 +111,14 @@ export default defineComponent({
                     break;
                 }
             }
+            this.matchingItems = []
 
+        },
+        submitEnter() {
+            if (this.matchingItems.length == 1) {
+                this.setSearchItem(this.matchingItems[0])
+                //this.addToSearchedList()
+            }
         },
         autoCompleteShower(): boolean {
             if (document.querySelector('#search-input') === document.activeElement) return true
@@ -137,7 +148,7 @@ export default defineComponent({
 
             if (foundItem?.includes('Map03_KeyCard')) return 'Tharis_Island_Key_Card'
 
-            return item.replaceAll(' ', '_');
+            return item.replaceAll(' ', '_').replaceAll('#','%23');
         }
     },
     async mounted() {

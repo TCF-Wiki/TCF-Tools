@@ -106,7 +106,7 @@ export async function updateItemLayerGroups() {
             },
         });
         let ItemMarker = L.icon({
-            iconUrl: `map-images/item-images/${mapData['descriptions'][item]['name'].replaceAll(' ','_')}.png`,
+            iconUrl: `map-images/item-images/${mapData['descriptions'][item]['name'].replaceAll(' ','_').replaceAll('#','%23')}.png`,
             iconSize: [25,25],
             className: 'marker',
         })

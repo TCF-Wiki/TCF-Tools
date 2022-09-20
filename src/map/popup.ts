@@ -1,6 +1,7 @@
 import { keyCardInfo, specialDescriptions, specialLocations, locationNames } from './mapConstants'
 import { getMapData} from './data'
 import { roundToThree } from '@/calc/utils'
+import type { TextNode } from '@vue/compiler-core'
 const mapData = await getMapData()
 
 export function createLootPopup(type: string) {
@@ -25,7 +26,14 @@ export function createLootPopup(type: string) {
 
     // create the header 
     const header = document.createElement('h2')
-    const headerText = document.createTextNode('Tier ' + mapData['lootPools'][type]['tier'] + ' Spawn')
+    let text = ''
+    if (mapData['lootPools'][type]['tier']) {
+        text = 'Tier ' + mapData['lootPools'][type]['tier'] + ' Spawn'
+    } else {
+        text = 'Special Spawn'
+    }
+    const headerText = document.createTextNode(text)
+
     header.appendChild(headerText)
 
     // creating all cells
