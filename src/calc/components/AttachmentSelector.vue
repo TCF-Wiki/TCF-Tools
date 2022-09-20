@@ -68,7 +68,8 @@ export default {
 .button {
     margin: 2rem 0 1rem;
     font-size: smaller;
-    padding: .4rem
+    padding: .4rem;
+    width: 100%;
 }
 .attachment-image {
     width: 12em;

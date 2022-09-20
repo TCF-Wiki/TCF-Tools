@@ -145,7 +145,7 @@ export function falloffChart() {
             let start = calculate.s(weapon, 'FalloffStart')
             let end = calculate.s(weapon, 'FalloffEnd')
             let mult = calculate.s(weapon, 'FalloffMultiplier')
-            console.log(start, end, mult)
+            
             if (distance >= end ) {
                 weaponPoints.push({x: x, y: mult});
             } else if (distance <= start) {

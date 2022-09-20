@@ -47,6 +47,9 @@
             <AttachmentSelector 
             :weapon="weapon"
             />
+            <BodyChart 
+            :weapon="weapon"
+            />
         </div>
     </div>
 </section>
@@ -55,17 +58,18 @@
 <script> 
 import { selectedWeapons, selectedArmor, selectedTarget, selectedHSValue, selectedDistance, selectedAttachments } from '../store';
 import { weaponData as wepData} from '../data';
-import { watch } from 'vue';
 import { keyObject, detailedKeyObject, flippedKeys as flippedKeysData, roundToThree } from '../utils';
 import { calculate } from '../calculate';
 import { attachment } from '../attachment';
-import { penetrationChart } from '../charts';
+import { penetrationChart, falloffChart } from '../charts';
+
 import AttachmentSelector from './AttachmentSelector.vue'
-import { falloffChart } from '../charts';
+import BodyChart from './BodyChart.vue';
 
 export default {
     components : {
-        AttachmentSelector
+        AttachmentSelector,
+        BodyChart
     },
     data() {
         return {

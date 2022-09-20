@@ -125,8 +125,19 @@ export const calculate = {
         return 1 + ((hsMult - 1) * HSPercent) / 100;
     },
 
+    creatureDamageMult: function (weapon) {
+        if (selectedTarget.selected != 'PlayerDefault') {
+            const effects = attachment.getAttachmentEffects(weapon)
+            
+            if (effects['DamageEnemyMultiplier']) {
+                return effects['DamageEnemyMultiplier']['value']
+            }
+        }
+        return 1
+
+    },
     getShotModifiers: function(weapon) {
-        return this.headShotMult(weapon) * this.penetrationMultiplier(weapon) * this.falloffMultiplier(weapon);
+        return this.headShotMult(weapon) * this.penetrationMultiplier(weapon) * this.falloffMultiplier(weapon) * this.creatureDamageMult(weapon);
     },
 
     savedWeaponData: {},
@@ -146,7 +157,6 @@ export const calculate = {
         if (effects.hasOwnProperty(stat)) {
             let effect = effects[stat]
             if (effect['type'] == 'Additive') {
-                console.log()
                 return value + effect['value']
             } 
 
