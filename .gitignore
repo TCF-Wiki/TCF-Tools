@@ -27,6 +27,3 @@ coverage
 *.sln
 *.sw?
 
-# Hehe no touchy
-/public/map-images/3/
-zzzz

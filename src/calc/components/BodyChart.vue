@@ -33,10 +33,41 @@ export default defineComponent({
         }
     },
     mounted() {
-        this.head = roundToThree( (calculate.s(this.weapon, 'directDamage') + calculate.s(this.weapon, 'radialDamage') * calculate.s(this.weapon, 'amountOfImmediateFires') ) * calculate.s(this.weapon, 'weakDamageMultiplier') )
-        this.chest = roundToThree(  (calculate.s(this.weapon, 'directDamage') + calculate.s(this.weapon, 'radialDamage') * calculate.s(this.weapon, 'amountOfImmediateFires') ) * 1.0 )
-        this.hip = roundToThree(  (calculate.s(this.weapon, 'directDamage') + calculate.s(this.weapon, 'radialDamage') * calculate.s(this.weapon, 'amountOfImmediateFires') ) * 1.1 )
-        this.legs = roundToThree( (calculate.s(this.weapon, 'directDamage') + calculate.s(this.weapon, 'radialDamage') * calculate.s(this.weapon, 'amountOfImmediateFires') ) * 0.8 )
+        this.head = roundToThree( 
+            (calculate.s(this.weapon, 'directDamage') 
+            + calculate.s(this.weapon, 'radialDamage') 
+            * calculate.s(this.weapon, 'amountOfImmediateFires') ) 
+            * calculate.s(this.weapon, 'weakDamageMultiplier') 
+            * calculate.penetrationMultiplier(this.weapon)
+            * calculate.falloffMultiplier(this.weapon)
+            )
+
+        this.chest = roundToThree(  
+            (calculate.s(this.weapon, 'directDamage') 
+            + calculate.s(this.weapon, 'radialDamage') 
+            * calculate.s(this.weapon, 'amountOfImmediateFires') ) 
+            * 1.0 
+            * calculate.penetrationMultiplier(this.weapon)
+            * calculate.falloffMultiplier(this.weapon)
+            )
+
+        this.hip = roundToThree(  
+            (calculate.s(this.weapon, 'directDamage') 
+            + calculate.s(this.weapon, 'radialDamage') 
+            * calculate.s(this.weapon, 'amountOfImmediateFires') ) 
+            * 1.1            
+            * calculate.penetrationMultiplier(this.weapon)
+            * calculate.falloffMultiplier(this.weapon)
+            )
+        
+        this.legs = roundToThree( 
+            (calculate.s(this.weapon, 'directDamage') 
+            + calculate.s(this.weapon, 'radialDamage') 
+            * calculate.s(this.weapon, 'amountOfImmediateFires') ) 
+            * 0.8  
+            * calculate.penetrationMultiplier(this.weapon)
+            * calculate.falloffMultiplier(this.weapon)
+            )
     }
 
 })
