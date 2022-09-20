@@ -20,6 +20,8 @@
 import  { defineComponent } from 'vue';
 import { calculate } from '../calculate';
 import { roundToThree } from '../utils';
+
+import { selectedArmor, selectedAttachments, selectedDistance } from '../store';
 export default defineComponent({
     props: ["weapon"],
     data() {
@@ -28,12 +30,38 @@ export default defineComponent({
             head: 0,
             chest: 0,
             hip: 0,
-            legs: 0 
-
+            legs: 0,
+            selectedArmor,
+            selectedAttachments,
+            selectedDistance
         }
     },
     mounted() {
-        this.head = roundToThree( 
+        this.setValues()
+    },
+    watch: {
+        selectedArmor : {
+            deep: true,
+            handler() {
+                this.setValues()
+            }
+        },
+        selectedAttachments : {
+            deep: true,
+            handler() {
+                this.setValues()
+            }
+        },
+        selectedDistance : {
+            deep: true,
+            handler() {
+                this.setValues()
+            }
+        }
+    },
+    methods : {
+        setValues() {
+            this.head = roundToThree( 
             (calculate.s(this.weapon, 'directDamage') 
             + calculate.s(this.weapon, 'radialDamage') 
             * calculate.s(this.weapon, 'amountOfImmediateFires') ) 
@@ -68,6 +96,7 @@ export default defineComponent({
             * calculate.penetrationMultiplier(this.weapon)
             * calculate.falloffMultiplier(this.weapon)
             )
+        }
     }
 
 })
