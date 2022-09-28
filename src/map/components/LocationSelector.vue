@@ -167,7 +167,8 @@ export default defineComponent({
         },
         enableAllContainers() : void {
             // enables all containers
-            let nameList = Object.keys(this.containers)
+            let nameList = this.orderedContainers
+
             let newLocations : string[] = [];
 
             for (let cont in nameList) {
@@ -288,8 +289,11 @@ export default defineComponent({
     
     @media screen  and (max-width: 900px){
         .button-container {
-            grid-template-columns: 1fr
+            grid-template-columns: 1fr 1fr 1fr;
+            width: 100%;
+            font-size: .9rem;
         }
+
     }
     
 

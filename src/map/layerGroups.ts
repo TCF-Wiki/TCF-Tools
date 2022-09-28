@@ -1,10 +1,10 @@
-import { roundToThree } from '@/calc/utils';
+import {roundToThree} from '@/calc/utils';
 import L, {LayerGroup, Marker, type Content, type LeafletEvent, type LeafletEventHandlerFn} from 'leaflet';
 import 'leaflet.markercluster';
 import 'leaflet-responsive-popup';
 import {getMapData} from './data';
-import { specialLocations } from './mapConstants';
-import { createLootPopup, createSpecialPopup } from './popup'
+import {specialLocations} from './mapConstants';
+import {createLootPopup, createSpecialPopup} from './popup';
 let locationLayerGroups: any = {};
 
 export function getLocationLayerGroups(): any {
@@ -31,36 +31,37 @@ export async function updateLocationLayerGroups() {
         // the icon that will be used for this group
         let LocationMarker = L.icon({
             iconUrl: `map-images/marker-icons/${locationType}.png`,
-            iconSize: [25,25],
+            iconSize: [25, 25],
             className: 'marker',
-        })
+        });
         // add each location to the group
         for (let location in locationData) {
             // create the marker for it at the location, and add it to the group
-            let m = new Marker(locationData[location]['location'], 
-            {
+            let m = new Marker(locationData[location]['location'], {
                 riseOnHover: true,
-                icon: LocationMarker
+                icon: LocationMarker,
             });
             locationGroup.addLayer(m);
             //create a popup that only runs the code once the marker is clicked
             // @ts-expect-error the error from this line can be ignored - it runs as expected.
             let popup = L.responsivePopup().setContent('Placeholder');
             m.bindPopup(popup);
-            m.on('click',createMarkerPopup)
+            m.on('click', createMarkerPopup);
 
             // set some data we use in the popup
             /* @ts-expect-error */
-            m.data = locationData[location]['lootPool']
+            m.data = locationData[location]['lootPool'];
             /* @ts-expect-error */
-            m.type = locationType
-            
+            m.type = locationType;
+            /* @ts-expect-error */
+            m.location = locationData[location]['location'];
+
             // some locations need to be able to be uniquely identified
-            let rawName = locationData[location]['rawName']
+            let rawName = locationData[location]['rawName'];
             if (rawName) {
-                if (rawName.includes('KeyCard')) {
+                if (rawName.includes('KeyCard') || rawName.includes('DeadDrop')) {
                     /* @ts-expect-error */
-                    m.rawName = rawName
+                    m.rawName = rawName;
                 }
             }
         }
@@ -74,7 +75,7 @@ let itemLayerGroups: any = {};
 export function getItemLayerGroups(): any {
     return itemLayerGroups;
 }
-const mapData = await getMapData()
+const mapData = await getMapData();
 
 export async function updateItemLayerGroups() {
     for (let map in mapData['itemSpawns']) {
@@ -106,22 +107,20 @@ export async function updateItemLayerGroups() {
             },
         });
         let ItemMarker = L.icon({
-            iconUrl: `map-images/item-images/${mapData['descriptions'][item]['name'].replaceAll(' ','_').replaceAll('#','%23')}.png`,
-            iconSize: [25,25],
+            iconUrl: `map-images/item-images/${mapData['descriptions'][item]['name'].replaceAll(' ', '_').replaceAll('#', '%23')}.png`,
+            iconSize: [25, 25],
             className: 'marker',
-        })
+        });
         for (let location in locationData) {
-            let m = new Marker(locationData[location]['location'],
-            {
+            let m = new Marker(locationData[location]['location'], {
                 riseOnHover: true,
-                icon: ItemMarker
+                icon: ItemMarker,
             });
             m.bindPopup('Placeholder!');
-            m.on('click',createMarkerPopup)
-
+            m.on('click', createMarkerPopup);
 
             /* @ts-expect-error */
-            m.data = locationData[location]['lootPool']
+            m.data = locationData[location]['lootPool'];
             m.options.title = locationData[location]['lootPool'];
             locationGroup.addLayer(m);
         }
@@ -129,26 +128,23 @@ export async function updateItemLayerGroups() {
     }
 }
 
-function createMarkerPopup(e: LeafletEvent) : void | LeafletEventHandlerFn {
-
-    let popup = e.target.getPopup()
-    let type = e.target.type ?? null
-    let rawName = e.target.rawName ?? null
+function createMarkerPopup(e: LeafletEvent): void | LeafletEventHandlerFn {
+    let popup = e.target.getPopup();
+    let type = e.target.type ?? null;
+    let rawName = e.target.rawName ?? null;
     let data = e.target.data;
-    
+    let location = e.target.location;
+
     if (type) {
         if (specialLocations.includes(type)) {
-            const content = createSpecialPopup(type, rawName)
-            popup.setContent(content)
+            const content = createSpecialPopup(type, rawName, location);
+            popup.setContent(content);
         } else {
-            const content = createLootPopup(data)
-            popup.setContent(content)
+            const content = createLootPopup(data);
+            popup.setContent(content);
         }
     } else {
-        const content = createLootPopup(data)
-        popup.setContent(content)
+        const content = createLootPopup(data);
+        popup.setContent(content);
     }
 }
-
-
-

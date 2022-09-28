@@ -1,20 +1,17 @@
 <template>
     <div class="map-selector">
         <div class="map-buttons">
-            <div class="button-content" :class="selectedMap.get() == 1 ? 'selected-map' : 'not-selected-map'" @click="selectedMap.set(1)"
-            role="button">
+            <div class="button-content" :class="selectedMap.get() == 1 ? 'selected-map' : 'not-selected-map'" @click="selectedMap.set(1)" role="button">
                 <p>Map 1</p>
-                <p>Bright Sands </p>
+                <p>Bright Sands</p>
             </div>
-            <div class="button-content" :class="selectedMap.get() == 2 ? 'selected-map' : 'not-selected-map'" @click="selectedMap.set(2)"
-            role="button">
+            <div class="button-content" :class="selectedMap.get() == 2 ? 'selected-map' : 'not-selected-map'" @click="selectedMap.set(2)" role="button">
                 <p>Map 2</p>
-                <p>Crescent Falls </p>
+                <p>Crescent Falls</p>
             </div>
-            <div class="button-content" :class="selectedMap.get() == 3 ? 'selected-map' : 'not-selected-map'" @click="selectedMap.set(3)"
-            role="button">
+            <div class="button-content" :class="selectedMap.get() == 3 ? 'selected-map' : 'not-selected-map'" @click="selectedMap.set(3)" role="button">
                 <p>Map 3</p>
-                <p>Tharis Island </p>
+                <p>Tharis Island</p>
             </div>
         </div>
     </div>
@@ -37,7 +34,7 @@ export default defineComponent({
     align-items: center;
     justify-content: center;
     height: 100%;
-    width: 80%;
+    width: 100%;
 }
 .map-buttons {
     width: 100%;
@@ -79,5 +76,11 @@ export default defineComponent({
 .disabled {
     border-color: var(--rarity-color-common);
     text-decoration: line-through;
+}
+
+@media screen and (max-width: 900px) {
+    .map-buttons {
+        flex-direction: row;
+    }
 }
 </style>

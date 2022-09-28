@@ -64,7 +64,15 @@ export const mapTwoLabels = [
 ]
 
 export const mapThreeLabels = [
-    // to be filled in
+    mapLabel('Storm Pillar', -113.623258, 143.004195),
+    mapLabel('Korolev Quarry', -143.569834, 135.575359),
+    mapLabel('Korolev Island HQ', -163.803499, 153.178869),
+    mapLabel('Korolev Docks', -153.042406, 87.545987),
+    mapLabel('Cave of Stars', -124.806981, 106.61464),
+    mapLabel('Sparkling Waters', -110.573926, 177.166503),
+    mapLabel('Osiris Research Center', -92.14412, 113.964648),
+    mapLabel('Osiris Offices', -114.435211, 95.729036),
+    mapLabel('Osiris Labs', -97.91466, 159.685399),
 ]
 
 

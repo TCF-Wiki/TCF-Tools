@@ -90,7 +90,8 @@ export default {
     .nav-menu {
         padding: 1rem 0;
         position: absolute;
-        width: 100vw;
+        width: 100%;
+        left: 0;
         margin-left: 0;
         border-bottom: 2px solid var(--background-body-color);
     }

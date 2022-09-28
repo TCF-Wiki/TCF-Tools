@@ -211,4 +211,12 @@ a {
 a:hover {
     color: var(--minor-accent-color)
 }
+
+svg {
+    transition: all .2s ease-in
+
+}
+svg:hover {
+    fill: var(--minor-accent-color)
+}
 </style>
