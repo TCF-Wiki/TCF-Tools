@@ -125,6 +125,9 @@ export function createSpecialPopup(type: string, rawName: string, location: any)
                 const sec = createKeyCardPopup(keyData);
 
                 section.appendChild(sec);
+            } else if (mapData['descriptions'][rawName] != null) {
+                const sec = createKeyCardPopup(mapData['descriptions'][rawName]);
+                section.appendChild(sec);
             } else {
                 section.append('Something went wrong...');
             }
@@ -148,7 +151,7 @@ function createKeyCardPopup(data: any): HTMLElement {
     const div = document.createElement('div');
 
     const header = document.createElement('h3');
-    const headerText = document.createTextNode(data['ingame']);
+    const headerText = document.createTextNode(data['name']);
     header.appendChild(headerText);
     div.appendChild(header);
 
