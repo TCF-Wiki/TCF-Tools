@@ -14,7 +14,7 @@
         </div>
         <div class="navigation">
             <a href="/about"><img src="./images/Nav_About.png" /></a>
-            <a href="/calculator"><img src="./images/Nav_Calculator.png" /></a>
+            <a href="/calc"><img src="./images/Nav_Calculator.png" /></a>
             <a href="/map"><img src="./images/Nav_Map.png" /></a>
             <a href="https://tracker.thecyclefrontier.wiki"><img src="./images/Nav_Tracker.png" /></a>
             <a href="/loadout"><img src="./images/Nav_Loadout.png" /></a>
