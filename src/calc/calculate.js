@@ -86,7 +86,7 @@ export const calculate = {
 
         let shots = hp / ((this.s(weapon, "directDamage") + this.s(weapon, 'radialDamage') ) * Math.max(this.s(weapon, "amountOfBurst") + 1, 1) * this.s(weapon, 'amountOfImmediateFires') * this.getShotModifiers(weapon)) * Math.max(this.s(weapon, 'amountOfBurst') + 1, 1)
 
-        // adjust for small rounding errors (e.g. PDW vs exotic armor)
+        // adjust for small JS rounding errors (e.g. PDW vs exotic armor)
         let remaining = shots % Math.floor(shots)
         if (remaining < 0.000001) return Math.floor(shots)
         

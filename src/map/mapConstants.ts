@@ -31,6 +31,7 @@ export const locationNames: any = {
     HiddenStash: 'Hidden Stash',
     Locker: 'Locker',
     AmmoContainer: 'Ammo Box',
+    AlienContainer: 'Alien Vent',
     AbilityBox: 'Consumable Box',
     WeaponCrate: 'Military Box',
     Luggage: 'Luggage',
@@ -62,6 +63,7 @@ export const specialLocations = ['HealingPlant', 'LaserDrill', 'missionItem', 'k
 // alphabetical list of real container names
 export const alphabeticalContainers = {
     AmmoContainer: 'Ammo Box',
+    AlienContainer: 'Alien Vent',
     AbilityBox: 'Consumable Box',
     OrganicsBox: 'Cooler',
     FactoryContainer: 'Dumpster',
@@ -271,4 +273,9 @@ export const keyCardInfo: any = {
         description: 'A key to a public space ',
         icon: 'Community Room.png',
     },
+    Map02_KeyCard_09: {
+        name: "Overgrown Keycard",
+        rarity: "Epic",
+        description: "A round green logo is barely visible under the muck that's grown over this keycard."
+    }
 };
