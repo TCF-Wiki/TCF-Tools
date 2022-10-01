@@ -13,8 +13,8 @@ import { defineComponent } from 'vue';
 import { getShareLink } from '../URLParameterHandler'
 export default defineComponent({
     methods: {
-        getShareLink() {
-            navigator.clipboard.writeText(document.location + getShareLink())
+        async getShareLink() {
+            navigator.clipboard.writeText(document.location + await getShareLink())
 
             let el = this.$refs.shareButton as HTMLButtonElement
             el.innerText = 'Copied Succesfully!'

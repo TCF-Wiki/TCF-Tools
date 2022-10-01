@@ -73,7 +73,7 @@ export async function loadInitialStore() {
     } 
 }
 
-export function getShareLink() : string {
+export async function getShareLink() {
     // this function generates the URL parameters for use with share link
     let resultString = ''
 
@@ -83,12 +83,14 @@ export function getShareLink() : string {
     // tier overlay
     resultString += `&tier=${selectedTier.get()}`
 
-    // items
+    // locations
+    let itemData = await getMapData()
+    itemData = itemData['descriptions']
     for (let item in selectedItems.get()) {
-        resultString += `&item=${selectedItems.get()[item]}`
+        resultString += `&item=${itemData[selectedItems.get()[item]]['name']}`
     }
 
-    // locations
+
     for (let loc in selectedLocations.get()) {
         resultString += `&loc=${selectedLocations.get()[loc]}`
     }
