@@ -20,6 +20,7 @@
 import  { defineComponent } from 'vue';
 import { calculate } from '../calculate';
 import { roundToThree } from '../utils';
+import { selectedAttachments, selectedArmor } from '../store'
 export default defineComponent({
     props: ["weapon"],
     data() {
@@ -28,15 +29,37 @@ export default defineComponent({
             head: 0,
             chest: 0,
             hip: 0,
-            legs: 0 
+            legs: 0,
+            selectedAttachments,
+            selectedArmor
 
         }
     },
     mounted() {
-        this.head = roundToThree( (calculate.s(this.weapon, 'directDamage') + calculate.s(this.weapon, 'radialDamage') * calculate.s(this.weapon, 'amountOfImmediateFires') ) * calculate.s(this.weapon, 'weakDamageMultiplier') )
-        this.chest = roundToThree(  (calculate.s(this.weapon, 'directDamage') + calculate.s(this.weapon, 'radialDamage') * calculate.s(this.weapon, 'amountOfImmediateFires') ) * 1.0 )
-        this.hip = roundToThree(  (calculate.s(this.weapon, 'directDamage') + calculate.s(this.weapon, 'radialDamage') * calculate.s(this.weapon, 'amountOfImmediateFires') ) * 1.1 )
-        this.legs = roundToThree( (calculate.s(this.weapon, 'directDamage') + calculate.s(this.weapon, 'radialDamage') * calculate.s(this.weapon, 'amountOfImmediateFires') ) * 0.8 )
+        this.updateChart()
+    },
+    methods: {
+        updateChart() : void {
+            this.head = roundToThree( ( (calculate.s(this.weapon, 'directDamage') + calculate.s(this.weapon, 'radialDamage') ) * calculate.penetrationMultiplier(this.weapon) * calculate.s(this.weapon, 'amountOfImmediateFires') ) * calculate.s(this.weapon, 'weakDamageMultiplier') )
+            this.chest = roundToThree(  ( (calculate.s(this.weapon, 'directDamage') + calculate.s(this.weapon, 'radialDamage') ) * calculate.penetrationMultiplier(this.weapon) * calculate.s(this.weapon, 'amountOfImmediateFires') ) * 1.0 )
+            this.hip = roundToThree(  ( (calculate.s(this.weapon, 'directDamage') + calculate.s(this.weapon, 'radialDamage') ) * calculate.penetrationMultiplier(this.weapon) * calculate.s(this.weapon, 'amountOfImmediateFires') ) * 1.1 )
+            this.legs = roundToThree( ( (calculate.s(this.weapon, 'directDamage') + calculate.s(this.weapon, 'radialDamage') ) * calculate.penetrationMultiplier(this.weapon) * calculate.s(this.weapon, 'amountOfImmediateFires') ) * 0.8 )
+        }
+    },
+    watch: {
+        selectedAttachments: {
+            deep: true,
+            handler() {
+                this.updateChart()
+            }
+        },
+        selectedArmor : {
+            deep: true,
+            handler() {
+                this.updateChart()
+            }
+        },
+
     }
 
 })
