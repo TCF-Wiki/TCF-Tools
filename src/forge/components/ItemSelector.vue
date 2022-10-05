@@ -1,5 +1,5 @@
 <template>
-<details class="container">
+<details>
     <summary>  
         <div class="container"> 
             <div>
@@ -22,7 +22,7 @@
 
         <div class="container">
             <div>
-                <p v-for="item in validItems.ingots" @click="selectedItems.add(item)"  aria-role="button" class="selector">
+                <p v-for="item in validItems.ingots" @click="selectedItems.add(item)" role="button" class="selector">
                     {{ item }}
                 </p>
             </div>
@@ -30,7 +30,7 @@
 
             </div>
             <div>
-                <p v-for="item in validItems.perkRecipes" @click="selectedItems.add(item)"  aria-role="button" class="selector">
+                <p v-for="item in validItems.perkRecipes" @click="selectedItems.add(item)" role="button" class="selector">
                     {{ item }}
                 </p>
             </div>
@@ -72,4 +72,7 @@ export default defineComponent({
     cursor: pointer;
 }
 
+details {
+    width: 80%;
+}
 </style>

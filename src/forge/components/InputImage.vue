@@ -1,5 +1,7 @@
 <template>
-    <div class="itemImg">
+    <div class="itemImg" @click="selectedItems.remove(Object.keys(selectedItems.get())[item])"
+    aria-label="Input item. Click to remove."
+    role="button">
         <div class="contents">
             <img v-if="Object.keys(selectedItems.get())[item]" :src='`map-images/item-images/${itemData[Object.keys(selectedItems.get())[item]]["ingamename"].replaceAll(" ","_")}.png`' />
             {{ selectedItems.get()[Object.keys(selectedItems.get())[item]]}}
@@ -18,7 +20,6 @@ export default defineComponent({
             itemData: itemData
         }
     }
-
 });
 </script>
 <style scoped>
@@ -27,12 +28,12 @@ export default defineComponent({
     height: 100%;
     border-radius: 50%;
     text-align: center;
-    border: 2px solid transparent;
-    transition: border-color .2s ease-in-out
+    box-shadow: 0px 0px 0px 2px rgb(211, 74, 226);
+    transition: box-shadow .1s ease-out
 }
 
 .itemImg:hover {
-    border-color: rgb(209, 98, 221);
+    box-shadow: 0px 0px 0px 5px rgb(211, 74, 226);
 }
 
 .contents {
