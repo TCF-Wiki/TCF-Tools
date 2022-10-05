@@ -4,7 +4,7 @@
     role="button">
         <img class="bg-image" v-if="Object.keys(selectedItems.get())[item]" src="forge-images/Item_BG.png"> 
         <div class="contents">
-            <img v-if="Object.keys(selectedItems.get())[item]" :src="imageNamer()" />
+            <img v-if="Object.keys(selectedItems.get())[item]" :src="'map-images/item-images/' + imageNamer()" />
             {{ selectedItems.get()[Object.keys(selectedItems.get())[item]]}}
         </div>
     </div>
@@ -19,15 +19,10 @@ export default defineComponent({
         imageNamer(){
            const codeName = Object.keys(selectedItems.get())[this.item]
 
-           if (codeName.includes('Tactical')) return `${shieldData[codeName]['ingamename'].replaceAll(" ", "_")}.png`
-            else if (codeName.includes('Restoration')) return `${shieldData[codeName]['ingamename'].replaceAll(" ", "_")}.png`
-            else if (codeName.includes('Shield')) return `${shieldData[codeName]['ingamename'].replaceAll(" ", "_")}.png`
-
-           if (codeName.includes('Tactical')) return `${helmetData[codeName]['ingamename'].replaceAll(" ", "_")}.png`
-            else if (codeName.includes('Restoration')) return `${helmetData[codeName]['ingamename'].replaceAll(" ", "_")}.png`
-            else if (codeName.includes('Helmet')) return `${helmetData[codeName]['ingamename'].replaceAll(" ", "_")}.png`
-
-           if (codeName.includes('bag')) return `${backpackData[codeName]['ingamename'].replaceAll(" ", "_")}.png`
+            if (codeName.includes('Shield_')) return `${shieldData[codeName]['ingamename'].replaceAll(" ", "_")}.png`
+            if (codeName.includes('Helmet_')) return `${helmetData[codeName]['ingamename'].replaceAll(" ", "_")}.png`
+            if (codeName.includes('Bag_')) return `${backpackData[codeName]['ingamename'].replaceAll(" ", "_")}.png`
+            else return `${itemData[codeName]['ingamename'].replaceAll(" ", "_")}.png`
         }
     },
     data() {

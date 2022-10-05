@@ -24,13 +24,10 @@ export function getIngotItems()  {
     for (let recipe in recipes) {
         let items = recipes[recipe]['Ingredients']
         for (let item in items) {
-            console.log(item)
             ingotItems.push(item)
         }
     }
     validItems["ingots"] = [...new Set(ingotItems)]
-
-    console.log(validItems)
 }
 
 export const getPerkRecipes = () => {
