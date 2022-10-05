@@ -47,11 +47,8 @@ import {defineComponent} from 'vue';
 import InputImage from './InputImage.vue';
 import OutputImage from './OutputImage.vue';
 import ItemSelector from './ItemSelector.vue'
-
-import { getIngotItems, getPerkRecipes } from '../ValidItems';
 import ForgeButton from './ForgeButton.vue';
-getIngotItems()
-getPerkRecipes()
+
 export default defineComponent({
     components: {
     InputImage,

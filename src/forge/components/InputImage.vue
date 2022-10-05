@@ -12,13 +12,21 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
 import { selectedItems } from '../store';
-import { itemData } from '../data';
+import { itemData, shieldData, helmetData, backpackData } from '../data';
 export default defineComponent({
     props: ['item'],
+    methods: {
+        imageNamer(){
+            
+        }
+    },
     data() {
         return {
             selectedItems,
-            itemData: itemData
+            itemData: itemData,
+            shieldData: shieldData,
+            helmetData: helmetData,
+            backpackData: backpackData,
         }
     }
 });

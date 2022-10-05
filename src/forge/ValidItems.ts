@@ -14,7 +14,7 @@ export let validItems = {
 }
 
 
-import { helmetData, ingotData, shieldData } from './data'
+import { backpackData, helmetData, ingotData, shieldData } from './data'
 import { perkData } from './data'
 
 export function getIngotItems()  {
@@ -50,9 +50,11 @@ export const getPerkRecipes = () => {
 export function getGearItems() {
     const helmets = helmetData
     const shields = shieldData
+    const bags = backpackData
 
     let validHelmets: string[] = []
     let validShields: string[] = []
+    let validBags: string[] = []
 
     for (let helmet in helmets){
         let items = helmets[helmet]
@@ -70,7 +72,15 @@ export function getGearItems() {
         }
     }
 
-    validItems["gear"] = [...new Set(validHelmets), ...new Set(validShields)]
+    for (let bag in bags){
+        let items = bags[bag]
+
+        if (items['rarity'] === 'Rare' || items['rarity'] === 'Epic' || items['rarity'] === 'Exotic') {
+            validBags.push(bag)
+        }
+    }
+
+    validItems["gear"] = [...new Set(validHelmets), ...new Set(validShields), ...new Set(validBags)]
 }
 
 getIngotItems()
