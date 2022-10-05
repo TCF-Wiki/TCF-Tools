@@ -3,56 +3,62 @@
         <img aria-label="The Forge" id="forge" src="/forge-images/The_Forge_UI.png" />
         <div class="input">
             <div class="item" id="input-1">
-                <InputImage item="First" />
+                <InputImage item="0" />
             </div>
             <div class="item" id="input-2">
-                <InputImage item="Second" />
+                <InputImage item="1" />
             </div>
             <div class="item" id="input-3">
-                <InputImage item="Third" />
+                <InputImage item="2" />
             </div>
             <div class="item" id="input-4">
-                <InputImage item="Fourth" />
+                <InputImage item="3" />
             </div>
             <div class="item" id="input-5">
-                <InputImage item="Fifth" />
+                <InputImage item="4" />
             </div>
         </div>
         <div id="center">
-            <InputImage item="center" />
+            <ForgeButton item="center" />
         </div>
         <div class="output">
             <div class="item" id="output-1">
-                <InputImage item="First" />
+                <OutputImage item="First" />
             </div>
             <div class="item" id="output-2">
-                <InputImage item="Second" />
+                <OutputImage item="Second" />
             </div>
             <div class="item" id="output-3">
-                <InputImage item="Third" />
+                <OutputImage item="Third" />
             </div>
             <div class="item" id="output-4">
-                <InputImage item="Fourth" />
+                <OutputImage item="Fourth" />
             </div>
             <div class="item" id="output-5">
-                <InputImage item="Fifth" />
+                <OutputImage item="Fifth" />
             </div>
         </div>
     </div>
+    <ItemSelector />
 </template>
 
 <script lang="ts">
 import {defineComponent} from 'vue';
 import InputImage from './InputImage.vue';
+import OutputImage from './OutputImage.vue';
 import ItemSelector from './ItemSelector.vue'
 
 import { getIngotItems, getPerkRecipes } from '../ValidItems';
+import ForgeButton from './ForgeButton.vue';
 getIngotItems()
 getPerkRecipes()
 export default defineComponent({
     components: {
-        InputImage,
-    },
+    InputImage,
+    OutputImage,
+    ItemSelector,
+    ForgeButton
+},
 });
 </script>
 

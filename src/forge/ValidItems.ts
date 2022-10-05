@@ -1,4 +1,4 @@
-let validItems = {
+export let validItems = {
     "gear": [
         ""
     ],
@@ -27,7 +27,7 @@ export function getIngotItems()  {
             ingotItems.push(items[item]['m_ingredient']["RowName"])
         }
     }
-    validItems["ingots"] = ingotItems
+    validItems["ingots"] = [...new Set(ingotItems)]
 
     console.log(validItems)
 }
@@ -45,3 +45,11 @@ export const getPerkRecipes = () => {
     }
     validItems["perkRecipes"] = [...new Set(perkRecipes)]
 }
+
+export function getGearItems() {
+    
+}
+
+getIngotItems()
+getPerkRecipes()
+getGearItems()
