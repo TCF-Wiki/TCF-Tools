@@ -1,4 +1,5 @@
 <template>
+    <ItemSelector />
     <div class="container">
         <img aria-label="The Forge" id="forge" src="/forge-images/The_Forge_UI.png" />
         <div class="input">
@@ -44,9 +45,14 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
 import InputImage from './InputImage.vue';
+import ItemSelector from './ItemSelector.vue';
+
+import {getIngotItems} from '../ValidItems';
+getIngotItems();
 export default defineComponent({
     components: {
         InputImage,
+        ItemSelector,
     },
 });
 </script>
@@ -60,10 +66,10 @@ export default defineComponent({
 #forge {
     width: 100%;
 }
-
 .input {
     position: absolute;
     top: 0;
+    left: 0;
     width: 100%;
     height: 50%;
 }
@@ -87,18 +93,10 @@ export default defineComponent({
     left: 77.1%;
     top: 44%;
 }
-
-#center {
-    position: absolute;
-    width: 16%;
-    height: 17.5%;
-    top: 40%;
-    left: 41.75%;
-}
-
 .output {
     position: absolute;
     top: 50%;
+    left: 0;
     width: 100%;
     height: 50%;
 }
@@ -124,8 +122,8 @@ export default defineComponent({
 }
 
 .item {
-    position: absolute;
     width: 10%;
     height: 22%;
+    position: absolute;
 }
 </style>
