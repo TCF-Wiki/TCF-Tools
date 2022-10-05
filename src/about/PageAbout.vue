@@ -106,18 +106,18 @@
                     <p>The most precise Interactive Map for TC:F</p>
                     <p>Look up exact spawn locations of every item, dead drops, evac locations & more</p>
                     <p>Always updated for the latest patch</p>
-                    <button class="button" type="button"><a href="https://map.thecyclefrontier.wiki" target="_blank">Interactive Map</a></button>
+                    <button class="button" type="button"><a href="https://apps.thecyclefrontier.wiki/map" target="_blank">Interactive Map</a></button>
                 </div>
 
                 <div class="grid-image">
                     <div class="grid-container-right">
                         <div>
-                            <a target="_blank" href="https://map.thecyclefrontier.wiki/">
+                            <a target="_blank" href="https://apps.thecyclefrontier.wiki/map">
                                 <img src="./images/MAP_image_1.png" />
                             </a>
                         </div>
                         <div>
-                            <a target="_blank" href="https://map.thecyclefrontier.wiki/">
+                            <a target="_blank" href="https://apps.thecyclefrontier.wiki/map">
                                 <img src="./images/MAP_image_2.png" />
                             </a>
                         </div>
@@ -180,12 +180,12 @@
                 <div class="grid-image">
                     <div class="grid-container-left">
                         <div>
-                            <a target="_blank" href="https://calc.thecyclefrontier.wiki/">
+                            <a target="_blank" href="https://apps.thecyclefrontier.wiki/calc">
                                 <img src="./images/CALCULATOR_image_2.png" />
                             </a>
                         </div>
                         <div>
-                            <a target="_blank" href="https://calc.thecyclefrontier.wiki/">
+                            <a target="_blank" href="https://apps.thecyclefrontier.wiki/calc">
                                 <img src="./images/CALCULATOR_image_1.png" />
                             </a>
                         </div>
@@ -198,7 +198,7 @@
                     <p>Calculate weapon statistics like TTK & DPS versus all types of armor</p>
                     <p>Compare two weapons with eachother</p>
 
-                    <button class="button" type="button"><a href="https://calc.thecyclefrontier.wiki" target="_blank">Weapon Calculator</a></button>
+                    <button class="button" type="button"><a href="https://apps.thecyclefrontier.wiki/calc" target="_blank">Weapon Calculator</a></button>
                 </div>
             </div>
 
@@ -207,11 +207,11 @@
                     <h2><span> Loadout Generator </span></h2>
                     <p>Generate random loadouts on the fly</p>
                     <p>Share loadouts with other people</p>
-                    <button class="button" type="button"><a href="https://loadout.thecyclefrontier.wiki" target="_blank">Loadout Generator</a></button>
+                    <button class="button" type="button"><a href="https://apps.thecyclefrontier.wiki/loadout" target="_blank">Loadout Generator</a></button>
                 </div>
 
                 <div class="grid-image">
-                    <a target="_blank" href="https://loadout.thecyclefrontier.wiki/">
+                    <a target="_blank" href="https://apps.thecyclefrontier.wiki/loadout">
                         <img src="./images/LOADOUT_image.png" />
                     </a>
                 </div>

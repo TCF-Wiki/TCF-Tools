@@ -59,21 +59,32 @@ export async function loadInitialStore() {
         // first we clear any default locations
         selectedLocations.clear()
 
-        let locationList = []
+        // create an object with the real names of the locations as key and the code name as values
+        let swappedLocationNames : any = {};
+        for(let key in locationNames){
+            swappedLocationNames[locationNames[key].toString()] = key;
+        }
+
+        let locationList : string[] = []
         for (let loc in locations) {
-            // we make sure each location exists
-            if (Object.keys(locationNames).includes(locations[loc])) {
-                // then we add it to our list of locations
-                locationList.push(locations[loc])
+            // make our parameter the same as the real name
+            let name = locations[loc].split('_').join(' ')
+
+            // if it exists...
+            if (swappedLocationNames[name]) {
+                // add it
+                locationList.push(swappedLocationNames[name])
             }
+
         }
         if (locationList) {
+            // and set our selected locations
             selectedLocations.set(locationList)
         }
     } 
 }
 
-export function getShareLink() : string {
+export async function getShareLink() {
     // this function generates the URL parameters for use with share link
     let resultString = ''
 
@@ -84,13 +95,16 @@ export function getShareLink() : string {
     resultString += `&tier=${selectedTier.get()}`
 
     // items
+    let itemData = await getMapData()
+    itemData = itemData['descriptions']
     for (let item in selectedItems.get()) {
-        resultString += `&item=${selectedItems.get()[item]}`
+        resultString += `&item=${(itemData[selectedItems.get()[item]]['name']).toString().split(' ').join('_')}`
     }
 
-    // locations
     for (let loc in selectedLocations.get()) {
-        resultString += `&loc=${selectedLocations.get()[loc]}`
+        let name = locationNames[selectedLocations.get()[loc]]
+        name = name.toString().split(' ').join('_')
+        resultString += `&loc=${name}`
     }
     
     return resultString

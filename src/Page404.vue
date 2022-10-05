@@ -1,1 +1,1 @@
-<template>404</template>
+<template><h2> 404 NOT FOUND </h2></template>
