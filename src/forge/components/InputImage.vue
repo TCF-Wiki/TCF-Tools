@@ -3,7 +3,7 @@
     aria-label="Input item. Click to remove."
     role="button">
         <div class="contents">
-            <img v-if="Object.keys(selectedItems.get())[item]" :src='`map-images/item-images/${itemData[Object.keys(selectedItems.get())[item]]["ingamename"].replaceAll(" ","_")}.png`' />
+            <img v-if="Object.keys(selectedItems.get())[item]" :src="imageNamer()" />
             {{ selectedItems.get()[Object.keys(selectedItems.get())[item]]}}
         </div>
     </div>
@@ -16,7 +16,17 @@ export default defineComponent({
     props: ['item'],
     methods: {
         imageNamer(){
-            
+           const codeName = Object.keys(selectedItems.get())[this.item]
+
+           if (codeName.includes('Tactical')) return `${shieldData[codeName]['ingamename'].replaceAll(" ", "_")}.png`
+            else if (codeName.includes('Restoration')) return `${shieldData[codeName]['ingamename'].replaceAll(" ", "_")}.png`
+            else if (codeName.includes('Shield')) return `${shieldData[codeName]['ingamename'].replaceAll(" ", "_")}.png`
+
+           if (codeName.includes('Tactical')) return `${helmetData[codeName]['ingamename'].replaceAll(" ", "_")}.png`
+            else if (codeName.includes('Restoration')) return `${helmetData[codeName]['ingamename'].replaceAll(" ", "_")}.png`
+            else if (codeName.includes('Helmet')) return `${helmetData[codeName]['ingamename'].replaceAll(" ", "_")}.png`
+
+           if (codeName.includes('bag')) return `${backpackData[codeName]['ingamename'].replaceAll(" ", "_")}.png`
         }
     },
     data() {
