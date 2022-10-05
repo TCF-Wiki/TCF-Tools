@@ -7,6 +7,7 @@ import About from './about/PageAbout.vue';
 import Calc from './calc/PageCalc.vue';
 import Loadout from './loadout/PageLoadout.vue';
 import Map from './map/PageMap.vue';
+import Forge from './forge/PageForge.vue';
 import NotFound from './Page404.vue';
 
 const routes = {
@@ -15,6 +16,7 @@ const routes = {
     '/calc': Calc,
     '/loadout': Loadout,
     '/map': Map,
+    '/forge': Forge,
 };
 const names = {
     '/': 'Apps',
@@ -22,6 +24,7 @@ const names = {
     '/calc': 'Weapon Calculator',
     '/loadout': 'Loadout Generator',
     '/map': 'Interactive Map',
+    '/forge': 'Forge Simulator',
 };
 
 export default defineComponent({
@@ -35,7 +38,7 @@ export default defineComponent({
             //@ts-expect-error
             var newPage = routes[this.currentPath || '/'] || NotFound;
             if (newPage != NotFound) {
-            //@ts-expect-error
+                //@ts-expect-error
                 var name = names[this.currentPath];
                 document.title = name + ' | TC:F Wiki';
             } else {
