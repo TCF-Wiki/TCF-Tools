@@ -47,8 +47,9 @@ import { defineComponent } from 'vue';
 import InputImage from './InputImage.vue';
 import ItemSelector from './ItemSelector.vue'
 
-import { getIngotItems } from '../ValidItems';
+import { getIngotItems, getPerkRecipes } from '../ValidItems';
 getIngotItems()
+getPerkRecipes()
 export default defineComponent({
     components: {
         InputImage,
