@@ -23,19 +23,19 @@
         </div>
         <div class="output">
             <div class="item" id="output-1">
-                <OutputImage item="First" />
+                <OutputImage item="0" />
             </div>
             <div class="item" id="output-2">
-                <OutputImage item="Second" />
+                <OutputImage item="1" />
             </div>
             <div class="item" id="output-3">
-                <OutputImage item="Third" />
+                <OutputImage item="2" />
             </div>
             <div class="item" id="output-4">
-                <OutputImage item="Fourth" />
+                <OutputImage item="3" />
             </div>
             <div class="item" id="output-5">
-                <OutputImage item="Fifth" />
+                <OutputImage item="4" />
             </div>
         </div>
     </div>

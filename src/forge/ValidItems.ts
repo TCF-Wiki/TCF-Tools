@@ -3,7 +3,7 @@ export let validItems = {
         ""
     ],
     "special": [
-        "AbyssAlloy"
+        "AF_Token"
     ],
     "ingots": [
         ""
