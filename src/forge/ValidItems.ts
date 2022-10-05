@@ -83,3 +83,5 @@ export function getGearItems() {
 getIngotItems()
 getPerkRecipes()
 getGearItems()
+
+console.log(validItems.gear)

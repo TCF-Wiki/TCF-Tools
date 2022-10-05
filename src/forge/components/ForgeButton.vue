@@ -1,19 +1,70 @@
 <template>
-    <div class="forge-button">
+    <div class="forge-button" role="button" @click="initiateForge()"
+    >
+        <img class="bg-image" src="forge-images/Button_Ready.png" v-if="Object.keys(selectedItems.get()).length > 0">
+        <img class="hover-image" src="forge-images/Button_Hover.png">
     </div>
+
 </template>
 <script lang="ts">
 import {defineComponent} from 'vue';
+import { outputItems, selectedItems } from '../store';
+import { resolveAbyssToken } from '../ForgeLogic';
+
 export default defineComponent({
     props: ['item'],
+    data() {
+        return {
+            outputItems,
+            selectedItems
+        }
+    },
+    methods: {
+        initiateForge() : void {
+            const output = resolveAbyssToken()
+            const outputString = `${output['type']}_Altered_0${output['rarity']}`
+            outputItems.add(outputString)
+        }
+    }
 });
 </script>
 <style scoped>
 .forge-button {
     width: 100%;
     height: 100%;
-    border: 2px solid red;
     border-radius: 50%;
     text-align: center;
+    cursor: pointer;
+    z-index: 2;
+    position: absolute;
+}
+
+.forge-button:hover .hover-image {
+    opacity: 1;
+}
+.hover-image {
+    position: absolute;
+    opacity: 0;
+    transition: all .2s ease-out;
+    transform: scale(1.80) translateY(-20%) translateX(-.5%);
+}
+
+
+.bg-image {
+    position: absolute;
+    transition: all .2s ease-out;
+    animation: pulse 5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        filter: brightness(100%) blur(1px)
+    }
+    50% {
+        filter: brightness(110%) blur(0px)
+    }
+    100% {
+        filter: brightness(100%) blur(1px)
+    }
 }
 </style>
