@@ -34,11 +34,13 @@
 @font-face {
     font-family: Refinery;
     src: url('./Refinery-25Medium.ttf');
+    font-display: swap;
 }
 
 @font-face {
     font-family: Rajhdani;
     src: url('./Rajdhani-Regular.ttf');
+    font-display: swap;
 }
 
 /* Box sizing rules */

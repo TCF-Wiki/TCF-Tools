@@ -1,14 +1,21 @@
 <template>
-    <main></main>
+    <div>
+        <TheForge />
+    </div>
 </template>
 
 <script lang="ts">
 import {defineComponent} from 'vue';
-export default defineComponent({});
+import TheForge from './components/TheForge.vue';
+export default defineComponent({
+    components: {
+        TheForge
+    }
+});
 </script>
 
 <style scoped>
-main {
+div {
     display: flex;
     flex-direction: column;
     align-items: center;
