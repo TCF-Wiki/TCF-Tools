@@ -1,19 +1,32 @@
 <template>
-    <div class="page-content">
-        <div class="left">
-            <ItemSearch />
-            <LocationSelector />
-            <h2>Misc</h2>
-            <TierToggler />
-            <ClearSearch />
-            <ShareLink />
-            <ColorSelector />
+    <Suspense>
+        <div class="page-content" id="page-content">
+        <div class="left" id="left">
+            <div id="left-content">
+                <ItemSearch />
+                <LocationSelector />
+                <h2>Misc</h2>
+                <TierToggler />
+                <ClearSearch />
+                <ShareLink />
+                <ColorSelector />
+            </div>
+            <button id="sidebar-toggler" @click="toggleSidebar">
+                ◀
+            </button>
         </div>
-        <div class="right">
+        <div class="right" id="right">
             <MapSelector />
             <div id="map"></div>
         </div>
     </div>
+    <template #fallback>
+        <div class="fallback-content page-content">
+            Loading...
+        </div>
+    </template>
+    </Suspense>
+    
 </template>
 
 <style src="./MarkerCluster.css" />
@@ -64,6 +77,7 @@ export default defineComponent({
             mapData: null as null | any,
             tierData: null as null | any,
             isModalVisible: false as boolean,
+            isExpanded: true as boolean
         };
     },
     async mounted() {
@@ -91,9 +105,9 @@ export default defineComponent({
                 [1024, -1024],
                 [-1024, 1024],
             ],
-            zoomDelta: 0.5,
-            zoomSnap: 0.5,
-            wheelPxPerZoomLevel: 60,
+            zoomDelta: 0.30,
+            zoomSnap: 0.05,
+            wheelPxPerZoomLevel: 70,
             attributionControl: false,
         }).setView([-128, 128], 1);
 
@@ -352,6 +366,48 @@ export default defineComponent({
         closeModal() {
             this.isModalVisible = false;
         },
+        toggleSidebar() {
+            let content = document.querySelector('#page-content')
+            let left = document.querySelector('#left')
+            let left_content = document.querySelector('#left-content')
+            
+            if (this.isExpanded) {
+                if (left) {
+                    left.classList.remove('expand-left')
+                    left.classList.add('collapse-left')
+                }
+
+                if (left_content) {
+                    left_content.classList.remove('expand-sidebar')
+                    left_content.classList.add('collapse-sidebar')
+                }
+
+                if (content) {
+                    content.classList.remove('expand-content')
+                    content.classList.add('collapse-content')
+                }
+
+                this.isExpanded = false
+            } else {
+                if (left) {
+                    left.classList.remove('collapse-left')
+                    left.classList.add('expand-left')
+                }
+
+                if (left_content) {
+                    left_content.classList.remove('collapse-sidebar')
+                    left_content.classList.add('expand-sidebar')
+                }
+
+                if (content) {
+                    content.classList.remove('collapse-content')
+                    content.classList.add('expand-content')
+                }
+
+                this.isExpanded = true
+            }
+            console.log('Pressed!')
+        }
     },
 });
 </script>
@@ -360,8 +416,6 @@ export default defineComponent({
 .page-content {
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
     height: 100%;
     margin-right: 1.5vw;
     max-width: 100%;
@@ -373,13 +427,16 @@ export default defineComponent({
     flex-direction: column;
     gap: 1rem;
     width: 40%;
+    position: relative;
 }
 
 .right {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content:start;
     width: 90%;
+    gap: 0;
 }
 
 #map {
@@ -412,5 +469,103 @@ export default defineComponent({
         width: 100%;
         height: 60rem;
     }
+
+    #sidebar-toggler {
+        display: none;
+    }
+}
+
+.collapse-sidebar {
+    animation: collapse-sidebar .8s linear forwards;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.expand-sidebar {
+    overflow: hidden;
+    white-space: nowrap;
+    animation: expand-sidebar .8s linear forwards;
+}
+
+.collapse-left {
+    animation: collapse-left .8s linear forwards;
+}
+
+.expand-left {
+    animation: expand-left .8s linear forwards;
+}
+
+#sidebar-toggler {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+@keyframes collapse-sidebar {
+    0% {
+        width: 100%;
+    }
+    100% {
+        width: 0;
+    }
+}
+
+@keyframes expand-sidebar {
+    0% {
+        width: 0%;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+@keyframes collapse-left {
+    1% {
+        width: 40%
+    }
+    100% {
+        width: 0%
+    }
+}
+
+@keyframes expand-left {
+    1% {
+        width: 0%;
+    }
+    100% {
+        width: 40%;
+    }
+}
+
+.collapse-content {
+    animation: collapse-content .8s linear forwards;
+}
+
+.expand-content {
+    animation: expand-content .8s linear forwards;
+}
+
+@keyframes collapse-content {
+    0% {
+        gap: 12em
+    }
+    100% {
+        gap: 2em
+    }
+}
+
+@keyframes expand-content {
+    0% {
+        gap: 2em
+    }
+    100% {
+        gap: 12em
+    }
+}
+
+.fallback-content {
+    width: 100%;
+    height: 40em;
+    background-color: red;
 }
 </style>

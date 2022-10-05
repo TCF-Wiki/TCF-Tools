@@ -33,7 +33,6 @@ export default defineComponent({
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%;
     width: 100%;
 }
 .map-buttons {
