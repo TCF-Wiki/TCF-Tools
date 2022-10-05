@@ -1,24 +1,21 @@
 <template>
-<div>
-    {{ item }}
-</div>
-    
+    <div class="itemImg">
+        {{ item }}
+    </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
+import {defineComponent} from 'vue';
 
 export default defineComponent({
-    props: ["item"]
-})
+    props: ['item'],
+});
 </script>
 <style scoped>
-div {
+.itemImg {
+    width: 100%;
+    height: 100%;
     border: 2px solid red;
-    position: absolute;
     border-radius: 50%;
     text-align: center;
 }
-
-
-
 </style>

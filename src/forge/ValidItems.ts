@@ -45,4 +45,6 @@ export const getPerkRecipes = () => {
     }
     validItems["perkRecipes"] = [...new Set(perkRecipes)]
     
+export function getGearItems() {
+    
 }
