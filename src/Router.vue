@@ -32,10 +32,10 @@ export default defineComponent({
     },
     computed: {
         currentView(): any {
-            // @ts-expect-error
+            //@ts-expect-error
             var newPage = routes[this.currentPath || '/'] || NotFound;
             if (newPage != NotFound) {
-                // @ts-expect-error
+            //@ts-expect-error
                 var name = names[this.currentPath];
                 document.title = name + ' | TC:F Wiki';
             } else {
