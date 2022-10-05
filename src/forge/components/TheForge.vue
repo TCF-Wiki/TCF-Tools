@@ -1,4 +1,6 @@
 <template>
+<ItemSelector />
+
 <div class="container">
     <img aria-label="The Forge"
         id="forge"
@@ -43,9 +45,14 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import InputImage from './InputImage.vue';
+import ItemSelector from './ItemSelector.vue'
+
+import { getIngotItems } from '../ValidItems';
+getIngotItems()
 export default defineComponent({
     components: {
-        InputImage
+        InputImage,
+        ItemSelector
     }
 })
 </script>
