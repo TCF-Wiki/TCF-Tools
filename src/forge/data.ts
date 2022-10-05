@@ -24,3 +24,21 @@ async function get_recipe_data() {
 }
 
 export const recipeData = await get_recipe_data();
+
+const get_helmet_data = async () => {
+    const response = await fetch('https://raw.githubusercontent.com/TCF-Wiki/TCF-Information/main/helmets.json', {})
+    const json = await response.json()
+
+    return json
+}
+
+export const helmetData = await get_helmet_data()
+
+const get_shield_data = async () => {
+    const response = await fetch('https://raw.githubusercontent.com/TCF-Wiki/TCF-Information/main/shields.json', {})
+    const json = await response.json()
+
+    return json
+}
+
+export const shieldData = await get_shield_data()
