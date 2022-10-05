@@ -2,6 +2,7 @@
     <div class="itemImg" @click="selectedItems.remove(Object.keys(selectedItems.get())[item])"
     aria-label="Input item. Click to remove."
     role="button">
+        <img class="bg-image" v-if="Object.keys(selectedItems.get())[item]" src="forge-images/Item_BG.png"> 
         <div class="contents">
             <img v-if="Object.keys(selectedItems.get())[item]" :src='`map-images/item-images/${itemData[Object.keys(selectedItems.get())[item]]["ingamename"].replaceAll(" ","_")}.png`' />
             {{ selectedItems.get()[Object.keys(selectedItems.get())[item]]}}
@@ -28,23 +29,30 @@ export default defineComponent({
     height: 100%;
     border-radius: 50%;
     text-align: center;
-    box-shadow: 0px 0px 0px 2px rgb(211, 74, 226);
-    transition: box-shadow .1s ease-out
-}
-
-.itemImg:hover {
-    box-shadow: 0px 0px 0px 5px rgb(211, 74, 226);
+    transition: all .1s ease-out;
+    cursor: pointer;
 }
 
 .contents {
     display: flex;
     flex-direction: column;
-    gap: .2em;
+    gap: .1em;
     height: 100%;
     width: 100%;
 }
 
 .contents img {
-    transform: scale(.9);
+    transform: scale(.8);
+}
+
+.bg-image {
+    position: absolute;
+    transform: scale(1.1);
+    transition: all .1s ease-out;
+}
+
+.itemImg:hover .bg-image {
+    filter:brightness(500%);
+    transform: scale(1.11)
 }
 </style>

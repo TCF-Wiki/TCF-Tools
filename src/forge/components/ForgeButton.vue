@@ -16,6 +16,4 @@ export default defineComponent({
     border-radius: 50%;
     text-align: center;
 }
-
-
 </style>

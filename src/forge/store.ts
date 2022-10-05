@@ -17,7 +17,9 @@ export const selectedItems = reactive({
                 this.list[addItem] = this.list[addItem] + 1
             }
         } else {
-            this.list[addItem] = 1
+            if (Object.keys(this.list).length < 5) {
+                this.list[addItem] = 1
+            }
         }
     },
     remove(removeItem: string) : void {

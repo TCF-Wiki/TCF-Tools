@@ -70,6 +70,7 @@ export default defineComponent({
 }
 #forge {
     width: 100%;
+    user-select: none;
 }
 
 .input {
@@ -80,23 +81,23 @@ export default defineComponent({
 }
 #input-1 {
     left: 12%;
-    top: 44%;
+    top: 41.5%;
 }
 #input-2 {
     left: 28.25%;
-    top: 40%;
+    top: 38%;
 }
 #input-3 {
     left: 44.5%;
-    top: 37.5%;
+    top: 35.5%;
 }
 #input-4 {
     left: 61%;
-    top: 40%;
+    top: 38%;
 }
 #input-5 {
     left: 77.1%;
-    top: 44%;
+    top: 42%;
 }
 
 #center {

@@ -15,16 +15,17 @@ export let validItems = {
 
 
 import { helmetData, ingotData, shieldData } from './data'
-import { recipeData } from './data'
+import { perkData } from './data'
 
 export function getIngotItems()  {
-    const recipes = ingotData[0]["Rows"]
+    const recipes = ingotData
 
     let ingotItems : string[] = []
     for (let recipe in recipes) {
-        let items = recipes[recipe]['m_requiredMaterials']
+        let items = recipes[recipe]['Ingredients']
         for (let item in items) {
-            ingotItems.push(items[item]['m_ingredient']["RowName"])
+            console.log(item)
+            ingotItems.push(item)
         }
     }
     validItems["ingots"] = [...new Set(ingotItems)]
@@ -33,14 +34,14 @@ export function getIngotItems()  {
 }
 
 export const getPerkRecipes = () => {
-    const recipes = recipeData[0]["Rows"]
+    const recipes = perkData
 
     let perkRecipes: string[] = []
     
     for (let recipe in recipes) {
-        let items = recipes[recipe]['m_materialsHostingThisPerk']
+        let items = recipes[recipe]['Items']
         for (let item in items) {
-            perkRecipes.push(items[item]["RowName"])
+            perkRecipes.push(items[item])
         }
     }
     validItems["perkRecipes"] = [...new Set(perkRecipes)]

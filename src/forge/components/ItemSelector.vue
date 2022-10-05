@@ -27,7 +27,7 @@
                 </p>
             </div>
             <div>
-
+                
             </div>
             <div>
                 <p v-for="item in validItems.perkRecipes" @click="selectedItems.add(item)" role="button" class="selector">
