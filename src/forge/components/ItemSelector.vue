@@ -27,7 +27,9 @@
                 </p>
             </div>
             <div>
-
+                <p v-for="item in validItems.gear" @click="selectedItems.add(item)" role="button" class="selector">
+                    {{ item }}
+                </p>
             </div>
             <div>
                 <p v-for="item in validItems.perkRecipes" @click="selectedItems.add(item)" role="button" class="selector">

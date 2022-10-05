@@ -43,6 +43,15 @@ const get_shield_data = async () => {
 
 export const shieldData = await get_shield_data()
 
+const get_backpack_data = async () => {
+    const response = await fetch('https://raw.githubusercontent.com/TCF-Wiki/TCF-Information/main/backpacks.json', {})
+    const json = await response.json()
+
+    return json
+}
+
+export const backpackData = await get_backpack_data()
+
 const get_item_data = async () => {
     const response = await fetch('https://raw.githubusercontent.com/TCF-Wiki/TCF-Information/main/allMaterials.json', {})
     const json = await response.json()
@@ -51,3 +60,4 @@ const get_item_data = async () => {
 }
 
 export const itemData = await get_item_data()
+
