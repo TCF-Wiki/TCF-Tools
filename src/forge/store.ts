@@ -9,9 +9,7 @@ export const selectedItems = reactive({
         this.list = newItems
     },
     add(addItem: string) : void {
-        if (this.list.length <= 5) {
-            this.list.push(addItem)
-        }
+        this.list.push(addItem)
     },
     remove(removeItem: string) : void {
         this.list = this.list.filter((a) => {
