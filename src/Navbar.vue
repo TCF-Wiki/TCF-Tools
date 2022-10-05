@@ -4,13 +4,14 @@
         <div class="nav-content" :class="showMobileMenu ? 'open-menu' : 'closed-menu'">
             <a class="logo" href="https://thecyclefrontier.wiki/wiki/Main_Page" target="_blank"><img src="/shared-images/wiki_logo_bar.png" /></a>
             <div class="nav-items">
-                <a href="/"> Home </a> 
-                <a href="/about"> About us </a> 
+                <a href="/"> Home </a>
+                <a href="/about"> About us </a>
                 <a href="https://thecyclefrontier.wiki/wiki/Main_Page" target="_blank"> Official Wiki </a>
-                <a href="/map"> Interactive Map </a> 
-                <a href="/calc"> Weapon Calculator </a> 
-                <a href="https://tracker.thecyclefrontier.wiki"> Item Tracker </a> 
-                <a href="/loadout"> Loadout Generator </a> 
+                <a href="/map"> Interactive Map </a>
+                <a href="/calc"> Weapon Calculator </a>
+                <a href="https://tracker.thecyclefrontier.wiki"> Item Tracker </a>
+                <a href="/forge"> Forge Simulator </a>
+                <a href="/loadout"> Loadout Generator </a>
             </div>
         </div>
     </div>
@@ -39,6 +40,7 @@ export default {
     background-color: var(--background-menu-color);
     color: var(--text-color-menu-white);
     z-index: 1;
+    width: 100vw;
 }
 .nav-content {
     display: flex;
@@ -54,7 +56,6 @@ export default {
 }
 
 .nav-items a {
-
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -71,14 +72,12 @@ export default {
     text-decoration: none;
 }
 
-
-
 .nav-items a:hover {
     background-color: var(--background-button-color);
     color: var(--link-body-color);
 }
 
-.nav-items div:hover a{
+.nav-items div:hover a {
     color: var(--link-body-color);
 }
 
