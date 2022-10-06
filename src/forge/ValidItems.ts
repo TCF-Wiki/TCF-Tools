@@ -14,8 +14,7 @@ export let validItems = {
 }
 
 
-import { backpackData, helmetData, ingotData, shieldData } from './data'
-import { perkData } from './data'
+import { backpackData, helmetData, ingotData, shieldData, perkData } from './data'
 
 export function getIngotItems()  {
     const recipes = ingotData
@@ -84,4 +83,4 @@ getIngotItems()
 getPerkRecipes()
 getGearItems()
 
-console.log(validItems.gear)
+console.log(validItems.perkRecipes)

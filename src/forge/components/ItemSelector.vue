@@ -23,22 +23,22 @@
         <div class="container">
             <div>
                 <p v-for="item in validItems.ingots" @click="selectedItems.add(item)" role="button" class="selector">
-                    {{ item }}
+                    {{ nameChangeAndSort(item)}}
                 </p>
             </div>
             <div>
                 <p v-for="item in validItems.gear" @click="selectedItems.add(item)" role="button" class="selector">
-                    {{ item }}
+                    {{ nameChangeAndSort(item) }}
                 </p>
             </div>
             <div>
                 <p v-for="item in validItems.perkRecipes" @click="selectedItems.add(item)" role="button" class="selector">
-                    {{ item }}
+                    {{ nameChangeAndSort(item) }}
                 </p>
             </div>
             <div>
                 <p v-for="item in validItems.special" @click="selectedItems.add(item)" aria-role="button" class="selector">
-                    {{ item }}
+                    {{ nameChangeAndSort(item) }}
                 </p>
 
             </div>
@@ -53,10 +53,26 @@
 import { defineComponent } from 'vue';
 import { validItems } from '../ValidItems'
 import { selectedItems } from '../store';
+import { helmetData, shieldData, backpackData, itemData } from '../data';
 export default defineComponent({
+    methods: {
+        nameChangeAndSort(item: string){
+            const codeName = item
+
+            if (codeName.includes('Shield_')) return `${shieldData[codeName]['ingamename']}`
+            if (codeName.includes('Helmet_')) return `${helmetData[codeName]['ingamename']}`
+            if (codeName.includes('Bag_')) return `${backpackData[codeName]['ingamename']}`
+            else return `${itemData[codeName]['ingamename']}`
+
+        }
+    },
     data() {
         return {
             validItems: validItems,
+            helmetData: helmetData,
+            shieldData: shieldData,
+            backpackData: backpackData,
+            itemData: itemData,
             selectedItems
         }
     }
