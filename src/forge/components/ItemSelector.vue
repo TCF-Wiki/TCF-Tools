@@ -23,22 +23,22 @@
         <div class="container">
             <div>
                 <p v-for="item in validItems.ingots" @click="selectedItems.add(item)" role="button" class="selector">
-                    {{ nameChangeAndSort(item)}}
+                    {{ nameChange(item)}}
                 </p>
             </div>
             <div>
                 <p v-for="item in validItems.gear" @click="selectedItems.add(item)" role="button" class="selector">
-                    {{ nameChangeAndSort(item) }}
+                    {{ nameChange(item) }}
                 </p>
             </div>
             <div>
                 <p v-for="item in validItems.perkRecipes" @click="selectedItems.add(item)" role="button" class="selector">
-                    {{ nameChangeAndSort(item) }}
+                    {{ nameChange(item) }}
                 </p>
             </div>
             <div>
                 <p v-for="item in validItems.special" @click="selectedItems.add(item)" aria-role="button" class="selector">
-                    {{ nameChangeAndSort(item) }}
+                    {{ nameChange(item) }}
                 </p>
 
             </div>
@@ -55,8 +55,11 @@ import { validItems } from '../ValidItems'
 import { selectedItems } from '../store';
 import { helmetData, shieldData, backpackData, itemData } from '../data';
 export default defineComponent({
+    mounted(){
+         
+        },
     methods: {
-        nameChangeAndSort(item: string){
+        nameChange(item: string){
             const codeName = item
 
             if (codeName.includes('Shield_')) return shieldData[codeName]['ingamename']
@@ -73,6 +76,8 @@ export default defineComponent({
             shieldData: shieldData,
             backpackData: backpackData,
             itemData: itemData,
+            unsortedItemList: {},
+            sortedItemList: {},
             selectedItems
         }
     }
