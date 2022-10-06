@@ -1,4 +1,4 @@
-export let validItems = {
+export let validItems : any = {
     "gear": [
         ""
     ],

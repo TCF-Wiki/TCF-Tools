@@ -22,23 +22,27 @@
 
         <div class="container">
             <div>
-                <p v-for="item in validItems.ingots" @click="selectedItems.add(item)" role="button" class="selector">
-                    {{ nameChange(item)}}
+                <p v-for="item, index in sortedItemList.ingots" @click="selectedItems.add(item)" role="button" class="selector">
+                    <img class="item-icon" width="24" :alt="index.toString()" :src="'map-images/item-images/' + index.toString().split(' ').join('_') + '.png'">
+                    {{ index }} 
                 </p>
             </div>
             <div>
-                <p v-for="item in validItems.gear" @click="selectedItems.add(item)" role="button" class="selector">
-                    {{ nameChange(item) }}
+                <p v-for="item, index in sortedItemList.gear" @click="selectedItems.add(item)" role="button" class="selector">
+                    <img class="item-icon" width="24" :alt="index.toString()" :src="'map-images/item-images/' + index.toString().split(' ').join('_') + '.png'">
+                    {{ index }}
                 </p>
             </div>
             <div>
-                <p v-for="item in validItems.perkRecipes" @click="selectedItems.add(item)" role="button" class="selector">
-                    {{ nameChange(item) }}
+                <p v-for="item, index in sortedItemList.perkRecipes" @click="selectedItems.add(item)" role="button" class="selector">
+                    <img class="item-icon" width="24" :alt="index.toString()" :src="'map-images/item-images/' + index.toString().split(' ').join('_') + '.png'">
+                    {{ index }}
                 </p>
             </div>
             <div>
-                <p v-for="item in validItems.special" @click="selectedItems.add(item)" aria-role="button" class="selector">
-                    {{ nameChange(item) }}
+                <p v-for="item, index in sortedItemList.special" @click="selectedItems.add(item)" aria-role="button" class="selector">
+                    <img class="item-icon" width="24" :alt="index.toString()" :src="'map-images/item-images/' + index.toString().split(' ').join('_') + '.png'">
+                    {{ index }} 
                 </p>
 
             </div>
@@ -55,20 +59,6 @@ import { validItems } from '../ValidItems'
 import { selectedItems } from '../store';
 import { helmetData, shieldData, backpackData, itemData } from '../data';
 export default defineComponent({
-    mounted(){
-         
-        },
-    methods: {
-        nameChange(item: string){
-            const codeName = item
-
-            if (codeName.includes('Shield_')) return shieldData[codeName]['ingamename']
-            if (codeName.includes('Helmet_')) return helmetData[codeName]['ingamename']
-            if (codeName.includes('Bag_')) return backpackData[codeName]['ingamename']
-            else return itemData[codeName]['ingamename']
-
-        }
-    },
     data() {
         return {
             validItems: validItems,
@@ -76,9 +66,36 @@ export default defineComponent({
             shieldData: shieldData,
             backpackData: backpackData,
             itemData: itemData,
-            unsortedItemList: {},
-            sortedItemList: {},
+            unsortedItemList: {} as any,
+            sortedItemList: {} as any,
             selectedItems
+        }
+    },
+    mounted() {
+        for (let type in validItems) {
+            this.unsortedItemList[type] = {}
+
+            let currentType = validItems[type]
+            for (let item in currentType) {
+                
+                let realName : string;
+                if (currentType[item].includes('Shield_')) realName = shieldData[currentType[item]]['ingamename']
+                else if (currentType[item].includes('Helmet_')) realName = helmetData[currentType[item]]['ingamename']
+                else if (currentType[item].includes('Bag_')) realName = backpackData[currentType[item]]['ingamename']
+                else realName = itemData[currentType[item]]['ingamename']
+
+                if (realName) this.unsortedItemList[type][realName] = currentType[item]
+            }
+        }
+
+        for (let type in this.unsortedItemList) {
+            this.sortedItemList[type] = Object.keys(this.unsortedItemList[type]).sort().reduce(
+                (obj, key) => { 
+                    // @ts-ignore
+                    obj[key] = this.unsortedItemList[type][key]; 
+                    return obj;
+                }, 
+            {});
         }
     }
 })
@@ -97,5 +114,9 @@ export default defineComponent({
 
 details {
     width: 80%;
+}
+
+.item-icon {
+    display: inline-block;
 }
 </style>
