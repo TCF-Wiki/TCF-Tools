@@ -59,10 +59,10 @@ export default defineComponent({
         nameChangeAndSort(item: string){
             const codeName = item
 
-            if (codeName.includes('Shield_')) return `${shieldData[codeName]['ingamename']}`
-            if (codeName.includes('Helmet_')) return `${helmetData[codeName]['ingamename']}`
-            if (codeName.includes('Bag_')) return `${backpackData[codeName]['ingamename']}`
-            else return `${itemData[codeName]['ingamename']}`
+            if (codeName.includes('Shield_')) return shieldData[codeName]['ingamename']
+            if (codeName.includes('Helmet_')) return helmetData[codeName]['ingamename']
+            if (codeName.includes('Bag_')) return backpackData[codeName]['ingamename']
+            else return itemData[codeName]['ingamename']
 
         }
     },
