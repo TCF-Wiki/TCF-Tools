@@ -115,8 +115,15 @@ export default defineComponent({
 details {
     width: 80%;
 }
-
+p {
+    width: 80%;
+    transition: background-color .2s ease-in-out;
+}
+p:hover {
+  background-color: var(--background-button-color);
+}
 .item-icon {
     display: inline-block;
+    translate: 0 7px;
 }
 </style>

@@ -56,15 +56,5 @@ export default defineComponent({
     animation: pulse 5s infinite;
 }
 
-@keyframes pulse {
-    0% {
-        filter: brightness(100%) blur(1px)
-    }
-    50% {
-        filter: brightness(110%) blur(0px)
-    }
-    100% {
-        filter: brightness(100%) blur(1px)
-    }
-}
+
 </style>

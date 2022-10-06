@@ -2,12 +2,9 @@ import { settingData } from './data'
 import { perksByType } from './ForgeConstants'
 
 const rarityMap : any = {
-    "Common": 1,
-    "Uncommon": 2,
-    "Rare": 3,
-    "Epic": 4,
-    "Exotic": 5,
-    "Legendary": 6
+    "Epic": 1,
+    "Exotic": 2,
+    "Legendary": 3
 }
 
 export function resolveAbyssToken() : any {

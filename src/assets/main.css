@@ -375,3 +375,15 @@ input[type='range']:hover::-webkit-slider-thumb {
 .leaflet-tile {
     filter: brightness(0.8) !important;
 }
+
+@keyframes pulse {
+    0% {
+        filter: brightness(100%) blur(1px)
+    }
+    50% {
+        filter: brightness(110%) blur(0px)
+    }
+    100% {
+        filter: brightness(100%) blur(1px)
+    }
+}
