@@ -1,5 +1,7 @@
 import { settingData } from './data'
 import { perksByType } from './ForgeConstants'
+import { selectedItems } from './store'
+import { validItems } from './ValidItems'
 
 const rarityMap : any = {
     "Epic": 1,
@@ -37,3 +39,30 @@ export function resolveAbyssToken() : any {
         "perk": foundPerk
     }
 }
+
+export const chooseRecipeOutput = (): any => {
+    let inputItems = Object.keys(selectedItems.get())
+
+   inputItems.forEach(input => {
+        validItems.special.forEach((item: string) => {
+            if (input === item) return resolveAbyssToken()
+        })
+
+        validItems.gear.forEach((item: string) => {
+            if (input === item) {
+                if (input.includes("Bag_")) return console.log(item)
+                if (input.includes("Helmet_")) return console.log(item)
+                if (input.includes("Shield_")) return console.log(item)
+            }
+        })
+
+        validItems.ingots.forEach((item: string) => {
+            if (input === item) {
+                if (input !== 'Letium' && input === 'ForgeIron') return console.log(item)
+                if (input === 'PureForgeIron') return console.log(item)
+            }
+        })
+   })
+}
+
+chooseRecipeOutput()
