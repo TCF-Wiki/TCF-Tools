@@ -83,4 +83,3 @@ getIngotItems()
 getPerkRecipes()
 getGearItems()
 
-console.log(validItems.perkRecipes)

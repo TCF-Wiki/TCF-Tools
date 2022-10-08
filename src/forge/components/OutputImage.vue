@@ -1,5 +1,5 @@
 <template>
-    <div class="itemImg">
+    <div class="itemImg" @click="outputItems.remove(Object.keys(outputItems.get())[item])">
         <img class="bg-image" v-if="Object.keys(outputItems.get())[item]" src="forge-images/Item_BG.png"> 
         <img class="hover-image" src="forge-images/Button_Hover.png">
         <div class="contents">
@@ -37,6 +37,7 @@ export default defineComponent({
     height: 100%;
     border-radius: 50%;
     text-align: center;
+    cursor: pointer;
 }
 
 .bg-image {
