@@ -2,7 +2,7 @@
 <div class="card">
     <div class="card-contents">
         <div> {{ rarities[data['rarity']] }} {{ data['type']}} </div>
-        <div> {{ data['perk']}} </div>
+        <div> {{ data['strength'] }} {{ perkData[data['perk']]['Description']}} </div>
 
     </div>
 </div>
@@ -10,12 +10,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { perkData } from '../data';
 import { reversedRarityMap } from '../ForgeLogic'
 export default defineComponent ({
     props: ['data'],
     data() {
         return {
-            rarities: reversedRarityMap
+            rarities: reversedRarityMap,
+            perkData: perkData
         }
     }
 })

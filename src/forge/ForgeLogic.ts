@@ -1,3 +1,16 @@
+import type { roundToThree } from '@/calc/utils'
+import type { log } from 'node:console'
+import type { log } from 'node:console'
+import type { randomBytes } from 'node:crypto'
+import type { randomBytes } from 'node:crypto'
+import type { faLongArrowRight } from '@fortawesome/free-solid-svg-icons'
+import type { faLongArrowRight } from '@fortawesome/free-solid-svg-icons'
+import type { faLongArrowRight } from '@fortawesome/free-solid-svg-icons'
+import type { log } from 'node:console'
+import type { pushScopeId } from 'vue'
+import type { pushScopeId } from 'vue'
+import type { log } from 'node:console'
+import type { log } from 'node:console'
 import { perkData, settingData } from './data'
 import { perksByType } from './ForgeConstants'
 import { outputItems, selectedItems } from './store'
@@ -40,10 +53,13 @@ export function resolveAbyssToken() : any {
     // @ts-ignore
     let foundPerk = perksByType[foundType][Math.floor(Math.random() * perksByType[foundType].length)];
     
+    let perkStrength = getPerkStrength(foundPerk)
+
     let returnData = {
         "rarity": rarityMap[foundRarity],
         "type": foundType,
-        "perk": foundPerk
+        "perk": foundPerk,
+        "strength": perkStrength
     }
 
     const outputString = `${returnData['type']}_Altered_0${returnData['rarity']}`
@@ -76,4 +92,31 @@ export const chooseRecipeOutput = (): any => {
    })
 }
 
+export function getPerkStrength(perk) : string {
+    const data = perkData[perk]['AttributeOverrides']
+    if (!data) return 0
+
+    let possibleResults : number[] = []
+    for (let x = 0; x <= data['numSteps']; x++) {
+        if (x == 0) {
+            possibleResults.push(data['minValue'])
+        } else {
+            possibleResults.push(data['minValue'] + (
+                data['stepGranularity'] * ( x -1 )
+            ))
+        }
+    }
+
+    let randomStrength : number = possibleResults[Math.floor(Math.random(possibleResults.length))]
+
+    if (randomStrength.toString().includes('.')) {
+        return Math.round((randomStrength-1)*100) + '%'
+    } else {
+        if (!randomStrength.toString().includes('-')) {
+            return '+' + randomStrength
+        } else {
+            return randomStrength
+        }
+    }
+}
 chooseRecipeOutput()

@@ -1,6 +1,7 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
 
+
 import Home from './home/PageHome.vue';
 import About from './about/PageAbout.vue';
 // @ts-ignore

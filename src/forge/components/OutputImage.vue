@@ -1,6 +1,6 @@
 <template>
     <div class="itemImg"  
-    @click.right.prevent="outputItems.remove(Object.keys(outputItems.get())[item])" v-touch="test()"
+    @click.right.prevent="outputItems.remove(Object.keys(outputItems.get())[item])"
     >
         <img class="bg-image" v-if="Object.keys(outputItems.get())[item]" src="forge-images/Item_BG.png"> 
         <img class="hover-image" src="forge-images/Button_Hover.png">
@@ -38,9 +38,6 @@ export default defineComponent({
             if (codeName.includes('Helmet_')) return `${helmetData[codeName]['ingamename'].replaceAll(" ", "_")}.png`
             if (codeName.includes('Bag_')) return `${backpackData[codeName]['ingamename'].replaceAll(" ", "_")}.png`
             else return `${itemData[codeName]['ingamename'].replaceAll(" ", "_")}.png`
-        },
-        test() {
-            console.log('test')
         }
     }
 });
@@ -92,8 +89,9 @@ export default defineComponent({
     position: absolute;
     z-index: 1;
     opacity: 0;
-    translate: -20% 60px;
+    translate: -33% 60px;
     margin: auto;
+    width: 300%;
     padding: 1em;
     background-color: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(2px);
