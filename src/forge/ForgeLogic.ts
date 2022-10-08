@@ -1,12 +1,18 @@
-import { settingData } from './data'
+import { perkData, settingData } from './data'
 import { perksByType } from './ForgeConstants'
-import { selectedItems } from './store'
+import { outputItems, selectedItems } from './store'
 import { validItems } from './ValidItems'
 
-const rarityMap : any = {
+export const rarityMap : any = {
     "Epic": 1,
     "Exotic": 2,
     "Legendary": 3
+}
+
+export const reversedRarityMap : any = {
+    "1": "Epic",
+    "2": "Exotic",
+    "3": "Legendary"
 }
 
 export function resolveAbyssToken() : any {
@@ -32,12 +38,17 @@ export function resolveAbyssToken() : any {
     
     // generate a random perk (assumes equal distribution) 
     // @ts-ignore
-    let foundPerk = perksByType[foundType][Math.floor(Math.random() * perksByType[foundType].length)]
-    return {
+    let foundPerk = perksByType[foundType][Math.floor(Math.random() * perksByType[foundType].length)];
+    
+    let returnData = {
         "rarity": rarityMap[foundRarity],
         "type": foundType,
         "perk": foundPerk
     }
+
+    const outputString = `${returnData['type']}_Altered_0${returnData['rarity']}`
+
+    outputItems.add(outputString, returnData)
 }
 
 export const chooseRecipeOutput = (): any => {

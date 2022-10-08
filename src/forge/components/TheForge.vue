@@ -64,6 +64,11 @@ export default defineComponent({
     position: relative;
     width: 50%;
     height: 50%;
+    user-select: none;
+}
+
+.container * {
+    user-select: none;
 }
 #forge {
     width: 100%;

@@ -21,9 +21,7 @@ export default defineComponent({
     },
     methods: {
         initiateForge() : void {
-            const output = resolveAbyssToken()
-            const outputString = `${output['type']}_Altered_0${output['rarity']}`
-            outputItems.add(outputString)
+            resolveAbyssToken()
         }
     }
 });

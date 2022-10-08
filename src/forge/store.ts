@@ -29,7 +29,12 @@ export const selectedItems = reactive({
 
 export const outputItems = reactive({
     /* {
-        "ForgeIron": 1
+        "ForgeIron": {
+            amount: 1,
+            rarity?: rarityNumber,
+            type?: Helmet | Shield | Bag,
+            perk?: GearPerk
+        }
     } */
     list: {} as any,
     get() {
@@ -38,14 +43,14 @@ export const outputItems = reactive({
     set(newItems: any) : void {
         this.list = newItems
     },
-    add(addItem: string) : void {
-        if (Object.keys(this.list).includes(addItem)) {
-            if (this.list[addItem] < 10) {
-                this.list[addItem] = this.list[addItem] + 1
+    add(itemName: string, itemData : any, stackable?: bool = false) : void {
+        if (Object.keys(this.list).includes(itemName) && stackable) {
+            if (this.list[itemName]['amount'] < 10) {
+                this.list[itemName]['amount'] = this.list[itemName]['amount'] + 1
             }
         } else {
             if (Object.keys(this.list).length < 5) {
-                this.list[addItem] = 1
+                this.list[itemName] = {...itemData, amount: 1}
             }
         }
     },

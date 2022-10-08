@@ -9,8 +9,11 @@ library.add(faBars, faTrash, faRedo, faSave);
 
 import './assets/main.css';
 
+import Vue3TouchEvents from "vue3-touch-events";
 import Router from './Router.vue';
-const RouterApp = createApp(Router).component('font-awesome-icon', FontAwesomeIcon);
+const RouterApp = createApp(Router)
+    .component('font-awesome-icon', FontAwesomeIcon)
+    .use(Vue3TouchEvents);
 RouterApp.mount('main');
 
 import Navbar from './Navbar.vue';
@@ -20,3 +23,4 @@ NavbarApp.mount('nav');
 import Footer from './Footer.vue';
 const FooterApp = createApp(Footer);
 FooterApp.mount('footer');
+

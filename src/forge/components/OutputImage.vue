@@ -1,19 +1,30 @@
 <template>
-    <div class="itemImg" @click="outputItems.remove(Object.keys(outputItems.get())[item])">
+    <div class="itemImg"  
+    @click.right.prevent="outputItems.remove(Object.keys(outputItems.get())[item])" v-touch="test()"
+    >
         <img class="bg-image" v-if="Object.keys(outputItems.get())[item]" src="forge-images/Item_BG.png"> 
         <img class="hover-image" src="forge-images/Button_Hover.png">
-        <div class="contents">
-            <img v-if="Object.keys(outputItems.get())[item]" :src="'map-images/item-images/' + imageNamer()" />
-            {{ outputItems.get()[Object.keys(outputItems.get())[item]]}}
+        <div class="contents" v-if="outputItems.get()[Object.keys(outputItems.get())[item]]">
+            <img  :src="'map-images/item-images/' + imageNamer()" />
+            <div class="hover-information">
+                <ItemCard :data="outputItems.get()[Object.keys(outputItems.get())[item]]">
+                </ItemCard>
+            </div>
         </div>
     </div>
 </template>
 <script lang="ts">
 import {defineComponent} from 'vue';
 import { outputItems } from '../store';
+import ItemCard from './ItemCard.vue'
 import { itemData, shieldData, helmetData, backpackData } from '../data';
+
+
 export default defineComponent({
     props: ['item'],
+    components: {
+        ItemCard
+    },
     data() {
         return {
             outputItems
@@ -27,6 +38,9 @@ export default defineComponent({
             if (codeName.includes('Helmet_')) return `${helmetData[codeName]['ingamename'].replaceAll(" ", "_")}.png`
             if (codeName.includes('Bag_')) return `${backpackData[codeName]['ingamename'].replaceAll(" ", "_")}.png`
             else return `${itemData[codeName]['ingamename'].replaceAll(" ", "_")}.png`
+        },
+        test() {
+            console.log('test')
         }
     }
 });
@@ -72,5 +86,24 @@ export default defineComponent({
 
 .contents img {
     transform: scale(.8);
+}
+
+.hover-information {
+    position: absolute;
+    z-index: 1;
+    opacity: 0;
+    translate: -20% 60px;
+    margin: auto;
+    padding: 1em;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(2px);
+    border-radius: 3px;
+
+
+    transition: opacity .2s ease-in-out;
+}
+
+.itemImg:hover .hover-information {
+    opacity: 1;
 }
 </style>
