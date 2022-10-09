@@ -62,15 +62,15 @@ export function getPerkStrength(perk: string) : string {
     }
 
     let randomStrength : number = possibleResults[Math.floor(Math.random()* possibleResults.length)]
+    let type = perkData[perk]['Attributes'][0]['Type']
 
-    if (randomStrength.toString().includes('.')) {
+    if (type.includes('Multiplicitive_PreAdd')) {
         return Math.round((randomStrength-1)*100) + '%'
+    } else if (type.includes('Additive')) {
+        return randomStrength.toString()
+        
     } else {
-        if (!randomStrength.toString().includes('-')) {
-            return '+' + randomStrength
-        } else {
-            return randomStrength.toString()
-        }
+        return randomStrength.toString()
     }
 }
 
