@@ -2,6 +2,11 @@ export let validItems : any = {
     "gear": [
         ""
     ],
+    "catalyst": [
+        "ForgeIronIngot",
+        "ChargedForgeIronIngot",
+        "SuperChargedForgeIronIngot"
+    ],
     "special": [
         "AF_Token"
     ],

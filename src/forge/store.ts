@@ -22,8 +22,17 @@ export const selectedItems = reactive({
             }
         }
     },
-    remove(removeItem: string) : void {
-        delete this.list[removeItem]
+    remove(removeItem: string, amount = 0) : void {
+        if (amount > 0) {
+            if ((this.list[removeItem] - amount) <= 0) {
+                delete this.list[removeItem]
+            } else {
+                this.list[removeItem] = this.list[removeItem] - amount
+            }
+
+        } else {
+            delete this.list[removeItem]
+        }
     }
 })
 
@@ -33,7 +42,13 @@ export const outputItems = reactive({
             amount: 1,
             rarity?: rarityNumber,
             type?: Helmet | Shield | Bag,
-            perk?: GearPerk
+            perkInfo: [
+                {
+                    perk?: GearPerk,
+                    strength?: GearStrength
+                }
+            ]
+                
         }
     } */
     list: {} as any,
@@ -43,7 +58,7 @@ export const outputItems = reactive({
     set(newItems: any) : void {
         this.list = newItems
     },
-    add(itemName: string, itemData : any, stackable?: bool = false) : void {
+    add(itemName: string, itemData : any, stackable = false) : void {
         if (Object.keys(this.list).includes(itemName) && stackable) {
             if (this.list[itemName]['amount'] < 10) {
                 this.list[itemName]['amount'] = this.list[itemName]['amount'] + 1
@@ -54,7 +69,11 @@ export const outputItems = reactive({
             }
         }
     },
-    remove(removeItem: string) : void {
-        delete this.list[removeItem]
+    remove(removeItem: string, amount : number = 0 ) : void {
+        if (amount > 0) {
+            this.list[removeItem] = this.list[removeItem] - amount
+        } else {
+            delete this.list[removeItem]
+        }
     }
 })

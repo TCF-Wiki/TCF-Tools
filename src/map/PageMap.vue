@@ -6,9 +6,12 @@
                 <ItemSearch />
                 <LocationSelector />
                 <h2>Misc</h2>
-                <TierToggler />
-                <ClearSearch />
-                <ShareLink />
+                <div class="setting-container"> 
+                    <TierToggler />
+                    <ClearSearch />
+                    <ShareLink />
+                </div>
+
                 <ColorSelector />
             </div>
             <button id="sidebar-toggler" @click="toggleSidebar">
@@ -499,6 +502,7 @@ export default defineComponent({
     position: absolute;
     top: 0;
     right: 0;
+    display: none;
 }
 
 @keyframes collapse-sidebar {
@@ -567,5 +571,12 @@ export default defineComponent({
     width: 100%;
     height: 40em;
     background-color: red;
+}
+
+.setting-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1em;
 }
 </style>

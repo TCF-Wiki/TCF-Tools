@@ -6,6 +6,7 @@
         <img class="hover-image" src="forge-images/Button_Hover.png">
         <div class="contents" v-if="outputItems.get()[Object.keys(outputItems.get())[item]]">
             <img  :src="'map-images/item-images/' + imageNamer()" />
+            <span class="amount">{{ outputItems.get()[Object.keys(outputItems.get())[item]]['amount']}} </span>
             <div class="hover-information">
                 <ItemCard :data="outputItems.get()[Object.keys(outputItems.get())[item]]">
                 </ItemCard>
@@ -103,5 +104,11 @@ export default defineComponent({
 
 .itemImg:hover .hover-information {
     opacity: 1;
+}
+
+.amount {
+    z-index: 1;
+    translate: 0 3px;
+    font-size: 1rem;
 }
 </style>

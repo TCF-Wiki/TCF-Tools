@@ -9,7 +9,7 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
 import { outputItems, selectedItems } from '../store';
-import { resolveAbyssToken } from '../ForgeLogic';
+import { chooseRecipeOutput, resolveAbyssToken } from '../ForgeLogic';
 
 export default defineComponent({
     props: ['item'],
@@ -21,7 +21,7 @@ export default defineComponent({
     },
     methods: {
         initiateForge() : void {
-            resolveAbyssToken()
+            chooseRecipeOutput()
         }
     }
 });

@@ -40,6 +40,7 @@
         </div>
     </div>
     <ItemSelector />
+
 </template>
 
 <script lang="ts">
@@ -49,12 +50,14 @@ import OutputImage from './OutputImage.vue';
 import ItemSelector from './ItemSelector.vue'
 import ForgeButton from './ForgeButton.vue';
 
+
+
 export default defineComponent({
     components: {
     InputImage,
     OutputImage,
     ItemSelector,
-    ForgeButton
+    ForgeButton,
 },
 });
 </script>

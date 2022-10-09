@@ -1,6 +1,6 @@
 @import './base.css';
 body {
-    font-family: Rajdhani, ui-sans, system-ui, Helvetica, Arial, sans-serif;
+    font-family: 'Rajdhani', ui-sans, system-ui, Helvetica, Arial, sans-serif;
     color: var(--text-color-body-white);
 }
 
@@ -49,10 +49,10 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: Refinery, ui-sans, system-ui, Arial, Helvetica, sans-serif;
+    font-family: Refinery, sans-serif;
     text-transform: uppercase;
     color: var(--text-color-body-white);
-    font-weight: 300;
+    font-weight: 100;
 }
 
 h2 {
@@ -143,6 +143,7 @@ button {
 
 input[type='range'] {
     -webkit-appearance: none;
+    appearance: none;
     width: 14rem;
     height: 1rem;
     background: #d6d6d6;

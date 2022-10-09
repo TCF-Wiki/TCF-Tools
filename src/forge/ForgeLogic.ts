@@ -1,17 +1,5 @@
 import type { roundToThree } from '@/calc/utils'
-import type { log } from 'node:console'
-import type { log } from 'node:console'
-import type { randomBytes } from 'node:crypto'
-import type { randomBytes } from 'node:crypto'
-import type { faLongArrowRight } from '@fortawesome/free-solid-svg-icons'
-import type { faLongArrowRight } from '@fortawesome/free-solid-svg-icons'
-import type { faLongArrowRight } from '@fortawesome/free-solid-svg-icons'
-import type { log } from 'node:console'
-import type { pushScopeId } from 'vue'
-import type { pushScopeId } from 'vue'
-import type { log } from 'node:console'
-import type { log } from 'node:console'
-import { perkData, settingData } from './data'
+import { perkData, settingData, itemData, shieldData, helmetData, backpackData } from './data'
 import { perksByType } from './ForgeConstants'
 import { outputItems, selectedItems } from './store'
 import { validItems } from './ValidItems'
@@ -27,6 +15,65 @@ export const reversedRarityMap : any = {
     "2": "Exotic",
     "3": "Legendary"
 }
+
+
+
+export const chooseRecipeOutput = (): any => {
+    const inputItems = Object.keys(selectedItems.get())
+
+    inputItems.forEach(input => {
+        validItems.special.forEach((item: string) => {
+            if (input === item) resolveAbyssToken()
+            return;
+        })
+
+
+        validItems.gear.forEach((item: string) => {
+            if (input === item) {
+                if (input.includes("Bag_")) resolveGearForge(item) 
+                if (input.includes("Helmet_")) resolveGearForge(item)
+                if (input.includes("Shield_")) resolveGearForge(item)
+                return;
+            }
+        })
+
+        validItems.ingots.forEach((item: string) => {
+            if (input === item) {
+                if (input !== 'Letium' && input === 'ForgeIron') return console.log(item)
+                if (input === 'PureForgeIron') return console.log(item)
+            }
+        })
+   })
+}
+
+export function getPerkStrength(perk: string) : string {
+    const data = perkData[perk]['AttributeOverrides']
+    if (!data) return  '0'
+
+    let possibleResults : number[] = []
+    for (let x = 0; x <= data['numSteps']; x++) {
+        if (x == 0) {
+            possibleResults.push(data['minValue'])
+        } else {
+            possibleResults.push(data['minValue'] + (
+                data['stepGranularity'] * ( x -1 )
+            ))
+        }
+    }
+
+    let randomStrength : number = possibleResults[Math.floor(Math.random()* possibleResults.length)]
+
+    if (randomStrength.toString().includes('.')) {
+        return Math.round((randomStrength-1)*100) + '%'
+    } else {
+        if (!randomStrength.toString().includes('-')) {
+            return '+' + randomStrength
+        } else {
+            return randomStrength.toString()
+        }
+    }
+}
+
 
 export function resolveAbyssToken() : any {
     const chances = settingData["Probability_Lottery"]
@@ -45,78 +92,203 @@ export function resolveAbyssToken() : any {
     }
 
     // generate a random item type (assumes equal distribution)
-    let possibleTypes = ["Shield","Helmet","Bag"]
+    const possibleTypes = ["Shield","Helmet","Bag"]
     const foundType = possibleTypes[Math.floor(Math.random() * possibleTypes.length)]
 
     
     // generate a random perk (assumes equal distribution) 
     // @ts-ignore
-    let foundPerk = perksByType[foundType][Math.floor(Math.random() * perksByType[foundType].length)];
+    const foundPerk = perksByType[foundType][Math.floor(Math.random() * perksByType[foundType].length)];
     
-    let perkStrength = getPerkStrength(foundPerk)
+    const perkStrength = getPerkStrength(foundPerk)
 
-    let returnData = {
+    const returnData = {
         "rarity": rarityMap[foundRarity],
         "type": foundType,
-        "perk": foundPerk,
-        "strength": perkStrength
+        "perkInfo":[{
+            "perk": foundPerk,
+            "strength": perkStrength
+        }]
     }
 
     const outputString = `${returnData['type']}_Altered_0${returnData['rarity']}`
 
+    selectedItems.remove('AF_Token', 1)
     outputItems.add(outputString, returnData)
 }
 
-export const chooseRecipeOutput = (): any => {
-    let inputItems = Object.keys(selectedItems.get())
+export function resolveGearForge(item: string) {
+    // first get the data of this specific item
+    let data;
+    if (item.includes('Shield_')) data = shieldData[item]
+    else if (item.includes('Helmet_')) data = helmetData[item]
+    else if (item.includes('Bag_')) data = backpackData[item]
+    else return;
 
-   inputItems.forEach(input => {
-        validItems.special.forEach((item: string) => {
-            if (input === item) return resolveAbyssToken()
-        })
+    // then we figure out what catalyst to check for...
+    let wantedCatalyst: string;
+    if (data['rarity'] == 'Rare') wantedCatalyst = 'ForgeIronIngot'
+    else if (data['rarity'] == 'Epic') wantedCatalyst = 'ChargedForgeIronIngot'
+    else if (data['rarity'] == 'Exotic') wantedCatalyst = 'SuperChargedForgeIronIngot'
+    else return;
+    
+    // check if we have the required ingot and amount...
+    if (!(selectedItems.get()[wantedCatalyst] >= settingData['CatalystAmount'])) return;
 
-        validItems.gear.forEach((item: string) => {
-            if (input === item) {
-                if (input.includes("Bag_")) return console.log(item)
-                if (input.includes("Helmet_")) return console.log(item)
-                if (input.includes("Shield_")) return console.log(item)
-            }
-        })
+    // now, check if there is the possibility of there being a perk added to it by checking if the input has any overlap with items used in perk recipes.
+    const possiblePerkItems = Object.keys(selectedItems.get()).filter(x => validItems.perkRecipes.includes(x))
+    
+    let type : string;
+    if (item.includes('Shield_')) type = 'Shield'
+    else if (item.includes('Helmet_')) type = 'Helmet'
+    else if (item.includes('Bag_')) type = 'Bag'
+    else return;
 
-        validItems.ingots.forEach((item: string) => {
-            if (input === item) {
-                if (input !== 'Letium' && input === 'ForgeIron') return console.log(item)
-                if (input === 'PureForgeIron') return console.log(item)
-            }
-        })
-   })
-}
-
-export function getPerkStrength(perk) : string {
-    const data = perkData[perk]['AttributeOverrides']
-    if (!data) return 0
-
-    let possibleResults : number[] = []
-    for (let x = 0; x <= data['numSteps']; x++) {
-        if (x == 0) {
-            possibleResults.push(data['minValue'])
-        } else {
-            possibleResults.push(data['minValue'] + (
-                data['stepGranularity'] * ( x -1 )
-            ))
+    // if no perk item is found, simply upgrade the item and remove the catalyst
+    if (possiblePerkItems.length == 0) {
+        // remove the input items
+        selectedItems.remove(item)
+        selectedItems.remove(wantedCatalyst, settingData['CatalystAmount'])
+        
+        // construct the information for our output item
+        const outputString = `${type}_Altered_0${rarityMap[itemData[wantedCatalyst]['rarity']]}`
+        const outputData = {
+            "rarity": rarityMap[itemData[wantedCatalyst]['rarity']],
+            "type": type
         }
-    }
 
-    let randomStrength : number = possibleResults[Math.floor(Math.random(possibleResults.length))]
-
-    if (randomStrength.toString().includes('.')) {
-        return Math.round((randomStrength-1)*100) + '%'
+        // and then finally add it to our output items
+        outputItems.add(outputString, outputData)
     } else {
-        if (!randomStrength.toString().includes('-')) {
-            return '+' + randomStrength
+        // @ts-ignore
+        const perks : any = perksByType[type]
+
+        // create a list of matching perks with current input
+        let result = getMatchingPerks(perks)
+        let matchingPerks = result[0]
+        let itemsInOrder  = result[1]
+
+
+        // we can get up to two perks, so, first we pick up to two random perks from the list.
+        let foundPerkIndexes : number[] = [];
+        if (matchingPerks.length == 1) {
+            // if there is only one possible perk...
+            foundPerkIndexes = [0]
+        } else if (Object.keys([...new Set(matchingPerks)]).length ==1) {
+            // or only one unique perk...
+            foundPerkIndexes = [Math.floor(Math.random() * matchingPerks.length)]
         } else {
-            return randomStrength
+            // there are multiple perks. This is going to complicate the matter.
+            // pick a random first perk from the list
+            const firstRandomIndex = Math.floor(Math.random() * matchingPerks.length)
+            const firstRandomPerk = matchingPerks[firstRandomIndex]
+
+            //  now, check if the item that we used still has enough amounts left to be used for a second recipe
+            const itemAmountAvailable = selectedItems.get()[itemsInOrder[firstRandomIndex]]
+            const itemAmountUsed = settingData["RarityAmount"][itemData[itemsInOrder[firstRandomIndex]]['rarity']] 
+
+            if (itemAmountAvailable >= itemAmountUsed*2) {
+                console.log('Multiple perks, but items used is not important')
+                // if yes, simply pick a second perk from the list that is not the same perk. 
+                let hasFoundPerk = false 
+              
+                let secondRandomIndex: number = -1;
+                // there must always be a second perk to pick that is not the same as the first one, so using a while loop to trial and error it is okay. 
+                while (!hasFoundPerk) {
+                    secondRandomIndex = Math.floor(Math.random() * matchingPerks.length)
+                    const secondRandomPerk = matchingPerks[secondRandomIndex]
+    
+                    if ( firstRandomPerk !== secondRandomPerk ) {
+                        hasFoundPerk = true
+                    }
+                }
+                foundPerkIndexes = [firstRandomIndex, secondRandomIndex]
+            } else {
+                // if no, we want to make sure we pick a perk that does not use the same item.
+                //console.log('Multiple perks, we cannot use the same item as the first one')
+                // first, create a list of perks that use different items.
+                let indexesOfDifferentPerks : number[] = []
+
+                for (let perk in matchingPerks) {
+                    let newPerk = matchingPerks[perk]
+                    // if the perk is the same as the first one, or uses the same item, we do not want to use it.
+                    if ((newPerk !== firstRandomPerk) && (itemsInOrder[perk] !== itemsInOrder[firstRandomIndex])) {
+                        indexesOfDifferentPerks.push(parseInt(perk))
+                    }
+                }
+
+                // now, just pick a random perk from the list of valid perks...
+                if (indexesOfDifferentPerks.length == 0) {
+                    // fallback...
+                    foundPerkIndexes = [firstRandomIndex]
+                } else {
+                    // we pick a random perk and save it to our output.
+                    const secondRandomIndex = indexesOfDifferentPerks[Math.floor(Math.random() * indexesOfDifferentPerks.length)] 
+                    foundPerkIndexes = [firstRandomIndex, secondRandomIndex]
+                }
+            }            
         }
+
+        // now that we have all our perks, we turn them back into usable info
+        let foundPerks : string[] = [];
+
+        for (let perk in foundPerkIndexes) {
+            foundPerks.push(matchingPerks[foundPerkIndexes[perk]])
+        }
+
+        
+
+        // now we are going to create the perkInfo for this item.
+
+        let perkInfo = []
+        for (let perk in foundPerks) {
+            perkInfo.push({
+                perk: foundPerks[perk],
+                strength: getPerkStrength(foundPerks[perk])
+            })
+        }
+        // Pick a random perk + strength from the matching perk list
+
+        // remove the input items
+        // gear
+        selectedItems.remove(item)
+        // catalyst
+        selectedItems.remove(wantedCatalyst, settingData['CatalystAmount'])
+        // and the items that we ended up using...
+        for (let perkItem in foundPerkIndexes) {
+            const item = itemsInOrder[foundPerkIndexes[perkItem]]
+            const amount = settingData['RarityAmount'][itemData[item]['rarity']]
+            selectedItems.remove(item, amount)
+        }
+
+        
+        // construct the information for our output item
+        const outputString = `${type}_Altered_0${rarityMap[itemData[wantedCatalyst]['rarity']]}`
+        const outputData = {
+            "rarity": rarityMap[itemData[wantedCatalyst]['rarity']],
+            "type": type,
+            "perkInfo": perkInfo
+        }
+
+        // and then finally add it to our output items
+        outputItems.add(outputString, outputData)
     }
 }
-chooseRecipeOutput()
+
+export function getMatchingPerks(perks: string[]) {
+    let matchingPerks : string[] = [];
+    let itemsInOrder : string[] = []
+    for (let perk in perks) {
+        // go through each compatible perk and check if any of the items are found in input
+        // and if the input has the required amount, add it to the possible matching perks
+        let data = perkData[perks[perk]]['Items']
+        for (let perkItem in data) {
+            if ((selectedItems.get()[data[perkItem]] >= settingData['RarityAmount'][itemData[data[perkItem]]['rarity']] )) {
+                matchingPerks.push(perks[perk])
+                itemsInOrder.push(data[perkItem])
+            }
+        }
+    }
+
+    return [matchingPerks, itemsInOrder]
+}

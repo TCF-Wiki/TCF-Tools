@@ -1,23 +1,48 @@
 <template>
 <div class="card">
-    <div class="card-contents">
-        <div> {{ rarities[data['rarity']] }} {{ data['type']}} </div>
-        <div> {{ data['strength'] }} {{ perkData[data['perk']]['Description']}} </div>
+    <div class="card-contents" v-if="data">
+        <div> Altered {{ rarities[data['rarity']] }} {{ data['type']}} </div>
+        <div v-if="data['perkInfo']"> 
+            <p v-for="perk in data['perkInfo']">
+                {{ perk['strength'] }}
+                {{ perkData[perk['perk']]['Description'] }} 
+            </p>
+        </div>
+    </div>
 
+    <div class="card-contents" v-if="name">
+        <div> {{ itemNamer() }} </div>
     </div>
 </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { perkData } from '../data';
+import { perkData, shieldData, helmetData, backpackData, itemData } from '../data';
 import { reversedRarityMap } from '../ForgeLogic'
+
 export default defineComponent ({
-    props: ['data'],
+    props: ['data', 'name'],
     data() {
         return {
             rarities: reversedRarityMap,
-            perkData: perkData
+            perkData: perkData,
+            shieldData: shieldData,
+            helmetData: helmetData,
+            backpackData: backpackData,
+            itemData: itemData
+        }
+    },
+    methods: {
+        itemNamer() {
+            let realName : any;
+
+            if (this.name.includes('Shield_'))      realName = this.shieldData[this.name]['ingamename']
+            else if (this.name.includes('Helmet_')) realName = this.helmetData[this.name]['ingamename']
+            else if (this.name.includes('Bag_'))    realName = this.backpackData[this.name]['ingamename']
+            else realName = this.itemData[this.name]['ingamename']
+
+            return realName
         }
     }
 })
