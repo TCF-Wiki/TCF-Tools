@@ -1,5 +1,5 @@
 <template>
-<button @click="selectedTier.toggle" :class="{on: selectedTier.get()}"> Toggle Loot Tiers </button>
+<button class="button toggleBtn" @click="selectedTier.toggle" :class="{on: selectedTier.get()}"> Toggle Loot Tiers </button>
 </template>
 
 <script lang="ts">
