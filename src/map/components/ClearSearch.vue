@@ -1,5 +1,5 @@
 <template>
-<button class="button"
+<button 
 @click="clearSearch">
     Clear Search
 </button>

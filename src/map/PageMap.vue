@@ -1,31 +1,27 @@
 <template>
-    <Suspense>
-        <div class="page-content" id="page-content">
+    <div class="page-content" id="page-content">
         <div class="left" id="left">
             <div id="left-content">
+                <button id="sidebar-toggler" @click="toggleSidebar">
+                ◀
+            </button>
                 <ItemSearch />
                 <LocationSelector />
                 <h2>Misc</h2>
-                <TierToggler />
-                <ClearSearch />
-                <ShareLink />
+                <div class="setting-container"> 
+                    <TierToggler />
+                    <ClearSearch />
+                    <ShareLink />
+                </div>
                 <ColorSelector />
             </div>
-            <button id="sidebar-toggler" @click="toggleSidebar">
-                ◀
-            </button>
         </div>
         <div class="right" id="right">
             <MapSelector />
             <div id="map"></div>
         </div>
     </div>
-    <template #fallback>
-        <div class="fallback-content page-content">
-            Loading...
-        </div>
-    </template>
-    </Suspense>
+
     
 </template>
 
@@ -369,73 +365,24 @@ export default defineComponent({
         toggleSidebar() {
             let content = document.querySelector('#page-content')
             let left = document.querySelector('#left')
-            let left_content = document.querySelector('#left-content')
-            
-            if (this.isExpanded) {
-                if (left) {
-                    left.classList.remove('expand-left')
-                    left.classList.add('collapse-left')
-                }
-
-                if (left_content) {
-                    left_content.classList.remove('expand-sidebar')
-                    left_content.classList.add('collapse-sidebar')
-                }
-
-                if (content) {
-                    content.classList.remove('expand-content')
-                    content.classList.add('collapse-content')
-                }
-
-                this.isExpanded = false
-            } else {
-                if (left) {
-                    left.classList.remove('collapse-left')
-                    left.classList.add('expand-left')
-                }
-
-                if (left_content) {
-                    left_content.classList.remove('collapse-sidebar')
-                    left_content.classList.add('expand-sidebar')
-                }
-
-                if (content) {
-                    content.classList.remove('collapse-content')
-                    content.classList.add('expand-content')
-                }
-
-                this.isExpanded = true
+            if (left && content) {
+                left.classList.toggle('left_large');
+                content.classList.toggle('page-content_small')
             }
-            console.log('Pressed!')
         }
     },
 });
 </script>
 
 <style scoped>
-.page-content {
-    display: flex;
-    flex-direction: row;
-    height: 100%;
-    margin-right: 1.5vw;
-    max-width: 100%;
-    gap: 12rem;
-}
 
-.left {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    width: 40%;
-    position: relative;
-}
 
 .right {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content:start;
-    width: 90%;
+    width: 100%;
     gap: 0;
 }
 
@@ -455,7 +402,8 @@ export default defineComponent({
 @media screen and (max-width: 900px) {
     .page-content {
         margin: 0;
-        flex-direction: column;
+        grid-template-columns: none;
+        grid-template-rows: 1fr;
         gap: 2rem;
     }
 
@@ -475,97 +423,53 @@ export default defineComponent({
     }
 }
 
-.collapse-sidebar {
-    animation: collapse-sidebar .8s linear forwards;
-    overflow: hidden;
-    white-space: nowrap;
+
+.setting-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1em;
 }
 
-.expand-sidebar {
-    overflow: hidden;
-    white-space: nowrap;
-    animation: expand-sidebar .8s linear forwards;
-}
-
-.collapse-left {
-    animation: collapse-left .8s linear forwards;
-}
-
-.expand-left {
-    animation: expand-left .8s linear forwards;
-}
-
-#sidebar-toggler {
-    position: absolute;
-    top: 0;
-    right: 0;
-}
-
-@keyframes collapse-sidebar {
-    0% {
-        width: 100%;
-    }
-    100% {
-        width: 0;
-    }
-}
-
-@keyframes expand-sidebar {
-    0% {
-        width: 0%;
-    }
-    100% {
-        width: 100%;
-    }
-}
-
-@keyframes collapse-left {
-    1% {
-        width: 40%
-    }
-    100% {
-        width: 0%
-    }
-}
-
-@keyframes expand-left {
-    1% {
-        width: 0%;
-    }
-    100% {
-        width: 40%;
-    }
-}
-
-.collapse-content {
-    animation: collapse-content .8s linear forwards;
-}
-
-.expand-content {
-    animation: expand-content .8s linear forwards;
-}
-
-@keyframes collapse-content {
-    0% {
-        gap: 12em
-    }
-    100% {
-        gap: 2em
-    }
-}
-
-@keyframes expand-content {
-    0% {
-        gap: 2em
-    }
-    100% {
-        gap: 12em
-    }
-}
-
-.fallback-content {
+.page-content {
     width: 100%;
-    height: 40em;
-    background-color: red;
+    height: 90vh;
+    display: flex;
+    border: 2px solid rgba(0, 0, 0, .4);
+    transition: 1s ease;
+}
+
+.left {
+  width: 30%;
+  height: 100%;
+  transition: 1s ease;
+  position: relative;
+}
+
+.page-content {
+  width: 90%;
+  height: 100%;
+  transition: 1s ease;
+}
+
+.page-content_small {
+  width: 70%;
+}
+
+.sidebar_large {
+  width: 10%;
+}
+
+#sidebar-toggle {
+  position: absolute;
+  border: none;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  box-shadow: 0px 1px 4px 1px rgba(0 ,0, 0, .3);
+  left: 100%;
+  top: 2rem;
+  transform: translateX(-50%);
+  cursor: pointer;
 }
 </style>
