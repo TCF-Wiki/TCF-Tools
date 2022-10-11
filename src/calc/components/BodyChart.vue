@@ -1,6 +1,6 @@
 <template>
     <button class="" type="button" @click.prevent="showModal = true"> 
-        <img src="calc-images/Body_Chart.png">
+        <img src="/calc-images/Body_Chart.png">
     </button>
     <section class="selection-list" v-show="showModal">
         <button class="close" @click.prevent="showModal = false"> &times; </button>

@@ -1,5 +1,5 @@
 <template>
-    <button class="" type="button" @click.prevent="showModal = true"><img src="calc-images/Attachment_Icon.png"> </button>
+    <button class="" type="button" @click.prevent="showModal = true"><img src="/calc-images/Attachment_Icon.png"> </button>
     <!-- <p> Stats modified by <br> an attachment will<br>  be <span style="text-decoration: underline"> underlined </span> </p>  -->
     <div class="attachment-list"> 
         <p> Selected attachments: </p>
