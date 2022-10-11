@@ -59,6 +59,7 @@ export function penetrationChart() {
     let armorScale = target.armorConstant;
     let min = target.minDamageReduction;
     let max = target.maxDamageReduction;
+
     for (let x = -40; x <= 40; x++) {
         let eHP = hp + Math.abs(x) * armorScale * hp;
         let ratio = hp / eHP;
@@ -75,8 +76,7 @@ export function penetrationChart() {
         dataPoints: penData,
         showInLegend: true,
         legendText: 'DMG Multiplier',
-        lineThickness: 3
-
+        lineThickness: 2
     }]
 
     for (let wep in selectedWeapons.list) {
