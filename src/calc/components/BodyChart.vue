@@ -1,5 +1,7 @@
 <template>
-    <button class="button" type="button" @click.prevent="showModal = true"> Show Body figure </button>
+    <button class="" type="button" @click.prevent="showModal = true"> 
+        <img src="calc-images/Body_Chart.png">
+    </button>
     <section class="selection-list" v-show="showModal">
         <button class="close" @click.prevent="showModal = false"> &times; </button>
         <h2> Body Chart </h2>
@@ -134,5 +136,9 @@ export default defineComponent({
 span {
     font-size: larger;
     text-transform: uppercase;
+}
+
+button img {
+    filter: invert(1);
 }
 </style>

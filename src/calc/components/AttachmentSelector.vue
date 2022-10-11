@@ -1,8 +1,8 @@
 <template>
-    <button class="button" type="button" @click.prevent="showModal = true"> Select Attachments </button>
-    <p> Stats modified by <br> an attachment will<br>  be <span style="text-decoration: underline"> underlined </span> </p> 
+    <button class="" type="button" @click.prevent="showModal = true"><img src="calc-images/Attachment_Icon.png"> </button>
+    <!-- <p> Stats modified by <br> an attachment will<br>  be <span style="text-decoration: underline"> underlined </span> </p>  -->
     <div class="attachment-list"> 
-        <p> Selected: </p>
+        <p> Selected attachments: </p>
         <p v-for="attachment in selectedAttachments.list[weapon]" > {{ attachmentData[attachment]['IGN'] }} ({{attachmentData[attachment]['rarity']}})</p>
         <p v-if="!selectedAttachments.list[weapon] || selectedAttachments.list[weapon].length==0"> None </p>
 
@@ -65,12 +65,6 @@ export default {
 
 <style scoped>
 
-.button {
-    margin: 2rem 0 1rem;
-    font-size: smaller;
-    padding: .4rem;
-    width: 100%;
-}
 .attachment-image {
     width: 12em;
     margin: auto;
@@ -112,6 +106,15 @@ p, span {
 }
 
 .attachment-list {
-    padding-top: 1rem;
+    grid-area: 2 / 1 / 2 / 3;
+    width: 100%;
+}
+button {
+    aspect-ratio: 1 /1 ;
+}
+button img {
+    filter: invert(1);    
+    width: 100%;
+    height: 100%
 }
 </style>

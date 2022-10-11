@@ -44,12 +44,15 @@
             <p v-for="(value, key) in detailedStats[weapon]"> 
                 <span :class="colourClassGiver(key, weapon)"> {{ value }} </span>
             </p>
-            <AttachmentSelector 
-            :weapon="weapon"
-            />
-            <BodyChart 
-            :weapon="weapon"
-            />
+            <div class="button-container">
+                <BodyChart 
+                :weapon="weapon"
+                />
+                <AttachmentSelector 
+                :weapon="weapon"
+                />
+            </div>
+            
         </div>
     </div>
 </section>
@@ -92,6 +95,7 @@ export default {
         colourClassGiver(key, weapon) {
             let effects = attachment.getAttachmentEffects(weapon)
             let output = '';
+            if (Object.keys(this.colourList).length == 1) return;
             if (effects[key]) {
                 output += 'modified '
             }
@@ -331,8 +335,12 @@ export default {
 
     max-width: 50vw;
     overflow-x: auto;
+    scroll-snap-type: x mandatory;
 }
 
+.inner-container > div {
+   scroll-snap-align: start; 
+}
 .flex-item {
     border: 2px solid var(--primary-accent);
     padding: .5rem 2rem 2rem 2rem;
@@ -381,6 +389,13 @@ export default {
 .weapon-image {
     height: 1.8rem;
     display: inline;
+}
+
+.button-container {
+    width: 12rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);   
+    grid-gap: 1em      
 }
 </style>
 
