@@ -54,7 +54,7 @@
                 :weapon="weapon"
                 />
             </div>
-            
+
             <div class="delete-button">
                 <button @click="selectedWeapons.toggleSelected(weapon)"> Remove Weapon </button>
             </div>
@@ -355,6 +355,10 @@ export default {
     -webkit-flex: none;
     line-height: 1.2;
 
+}
+
+.flex-item p {
+    white-space: nowrap;
 }
 
 .flex-item span {
