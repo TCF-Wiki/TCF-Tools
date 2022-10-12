@@ -2,27 +2,27 @@
 <details>
     <summary>  
         <div class="container"> 
-            <div>
+            <div class="itemTitle-Container">
                 <h2> Ingot Items</h2>
             </div>
 
-            <div>
+            <div class="itemTitle-Container">
                 <h2> Ingots </h2>
             </div>
 
-            <div>
+            <div class="itemTitle-Container">
                 <h2> Gear Items </h2>
             </div>
 
-            <div>
+            <div class="itemTitle-Container">
                 <h2> Recipe Items </h2>
             </div>
 
-            <div>
+            <div class="itemTitle-Container">
                 <h2> Special Items </h2>
             </div>
 
-            <div>
+            <div class="itemTitle-Container">
                 <h2> Matching Recipes </h2>
             </div>
         </div>   
@@ -32,31 +32,31 @@
             <div>
                 <p v-for="item, index in sortedItemList.ingots" @click="selectedItems.add(item)" role="button" class="selector">
                     <img class="item-icon" width="24" :alt="index.toString()" :src="'map-images/item-images/' + index.toString().split(' ').join('_') + '.png'">
-                    {{ index }} 
+                    <span class="item-name">{{ index }}</span>
                 </p>
             </div>
             <div>
                 <p v-for="item, index in sortedItemList.catalyst" @click="selectedItems.add(item)" role="button" class="selector">
                     <img class="item-icon" width="24" :alt="index.toString()" :src="'map-images/item-images/' + index.toString().split(' ').join('_') + '.png'">
-                    {{ index }}
+                    <span class="item-name">{{ index }}</span>
                 </p>
             </div>
             <div>
                 <p v-for="item, index in sortedItemList.gear" @click="selectedItems.add(item)" role="button" class="selector">
                     <img class="item-icon" width="24" :alt="index.toString()" :src="'map-images/item-images/' + index.toString().split(' ').join('_') + '.png'">
-                    {{ index }}
+                    <span class="item-name">{{ index }}</span>
                 </p>
             </div>
             <div>
                 <p v-for="item, index in sortedItemList.perkRecipes" @click="selectedItems.add(item)" role="button" class="selector">
                     <img class="item-icon" width="24" :alt="index.toString()" :src="'map-images/item-images/' + index.toString().split(' ').join('_') + '.png'">
-                    {{ index }}
+                    <span class="item-name">{{ index }}</span>
                 </p>
             </div>
             <div>
                 <p v-for="item, index in sortedItemList.special" @click="selectedItems.add(item)" aria-role="button" class="selector">
                     <img class="item-icon" width="24" :alt="index.toString()" :src="'map-images/item-images/' + index.toString().split(' ').join('_') + '.png'">
-                    {{ index }} 
+                    <span class="item-name">{{ index }}</span>
                 </p>
             </div>
 
@@ -122,6 +122,7 @@ export default defineComponent({
 <style scoped>
 .container {
     display: grid;
+    width: 100%;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
@@ -142,5 +143,46 @@ p:hover {
 .item-icon {
     display: inline-block;
     translate: 0 7px;
+}
+
+@media screen and (max-width: 1100px) {
+
+    details {
+        width: 100%;
+    }
+
+    summary {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .selector {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .itemTitle-Container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .itemTitle-Container h2 {
+        text-align: center;
+        font-size: 1.2rem;
+    }
+
+    .item-name {
+        display: none;
+    }
+    
+    .item-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: .25rem;
+    }
 }
 </style>

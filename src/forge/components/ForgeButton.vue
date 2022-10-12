@@ -52,7 +52,7 @@ export default defineComponent({
     position: absolute;
     transition: all .2s ease-out;
     animation: pulse 5s infinite;
+    min-width: 100%;
 }
-
 
 </style>

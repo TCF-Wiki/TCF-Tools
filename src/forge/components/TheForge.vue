@@ -145,4 +145,13 @@ export default defineComponent({
     width: 10%;
     height: 22%;
 }
+
+/* mobile styling starts here */
+
+@media screen and (max-width: 1100px) {
+    .container {
+        height: 100%;
+        width: 100%;
+    }
+}
 </style>

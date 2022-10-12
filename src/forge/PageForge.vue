@@ -23,4 +23,12 @@ div {
     height: 100%;
     width: 100%;
 }
+
+@media screen and (max-width: 1100px) {
+    div {
+        min-height: 100vh;
+        justify-content: flex-start;
+        gap: 4rem;
+    }
+}
 </style>
