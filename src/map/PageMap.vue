@@ -1,32 +1,24 @@
 <template>
-    <Suspense>
         <div class="page-content" id="page-content">
         <div class="left" id="left">
             <div id="left-content">
                 <ItemSearch />
                 <LocationSelector />
                 <h2>Misc</h2>
-                <TierToggler />
-                <ClearSearch />
-                <ShareLink />
+                <div class="button-container">
+                    <TierToggler />
+                    <ClearSearch />
+                    <ShareLink />
+                </div>
+
                 <ColorSelector />
             </div>
-            <button id="sidebar-toggler" @click="toggleSidebar">
-                ◀
-            </button>
         </div>
         <div class="right" id="right">
             <MapSelector />
             <div id="map"></div>
         </div>
     </div>
-    <template #fallback>
-        <div class="fallback-content page-content">
-            Loading...
-        </div>
-    </template>
-    </Suspense>
-    
 </template>
 
 <style src="./MarkerCluster.css" />
@@ -501,71 +493,10 @@ export default defineComponent({
     right: 0;
 }
 
-@keyframes collapse-sidebar {
-    0% {
-        width: 100%;
-    }
-    100% {
-        width: 0;
-    }
-}
-
-@keyframes expand-sidebar {
-    0% {
-        width: 0%;
-    }
-    100% {
-        width: 100%;
-    }
-}
-
-@keyframes collapse-left {
-    1% {
-        width: 40%
-    }
-    100% {
-        width: 0%
-    }
-}
-
-@keyframes expand-left {
-    1% {
-        width: 0%;
-    }
-    100% {
-        width: 40%;
-    }
-}
-
-.collapse-content {
-    animation: collapse-content .8s linear forwards;
-}
-
-.expand-content {
-    animation: expand-content .8s linear forwards;
-}
-
-@keyframes collapse-content {
-    0% {
-        gap: 12em
-    }
-    100% {
-        gap: 2em
-    }
-}
-
-@keyframes expand-content {
-    0% {
-        gap: 2em
-    }
-    100% {
-        gap: 12em
-    }
-}
-
-.fallback-content {
-    width: 100%;
-    height: 40em;
-    background-color: red;
+.button-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: .5rem;
+    margin: .5rem 0 .8rem
 }
 </style>

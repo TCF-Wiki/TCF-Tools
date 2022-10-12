@@ -1,6 +1,5 @@
 <template>
     <button 
-        class="button" 
         aria-label="Get share link"
         @click="getShareLink"
         ref="shareButton"
