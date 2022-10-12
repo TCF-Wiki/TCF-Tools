@@ -357,7 +357,8 @@ export default {
 
 }
 
-.flex-item p {
+.flex-item p,
+.flex-item h2 {
     white-space: nowrap;
 }
 
