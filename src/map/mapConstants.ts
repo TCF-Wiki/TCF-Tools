@@ -161,11 +161,11 @@ export const DeadDropInfo: any = {
         description: '',
     },
     DeadDrop_NutronFarms_Courtyard_BP: {
-        ingame: 'Nutron Farms Storage Dead Drop',
+        ingame: 'Nutrion Farms Storage Dead Drop',
         description: '',
     },
     DeadDrop_NutronFarms_Office: {
-        ingame: 'Nutron Farms Office Dead Drop',
+        ingame: 'Nutrion Farms Office Dead Drop',
         description: '',
     },
 };
