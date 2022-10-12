@@ -1,11 +1,19 @@
 <template>
     <section>
         <div> 
-            <h2> Options </h2>
             <div class="content">
-                <WeaponSelector />
-                <ArmorSelector />
-                <TargetSelector />
+                <h2> Options </h2>
+                <div class="button-container">
+                    <div> 
+                        <WeaponSelector />
+                    </div>
+                    <div> 
+                        <ArmorSelector />
+                    </div>
+                    <div>
+                        <TargetSelector />
+                    </div> 
+                </div>
                 <AccuracySelector />
                 <DistanceSelector />
             </div>
@@ -38,8 +46,10 @@ section {
     flex-wrap: wrap;
     flex-direction: row;
     margin-bottom: 2rem;
+    width: 20rem;
 
     padding: .5rem 2rem 2rem 2rem;
+
 }
 
 div {
@@ -59,6 +69,17 @@ h2 {
     flex-direction: row;
   }
 }
+
+.button-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);   
+    grid-gap: .1rem;
+}
+
+.button-container div {
+    width: 5rem;
+}
+
 </style>
 
 

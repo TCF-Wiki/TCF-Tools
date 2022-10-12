@@ -40,10 +40,10 @@ let theme = {
 	},
 	DataSeries: {
 		//bevelEnabled: true,
-		indexLabelFontColor: "grey",
+		indexLabelFontColor: "red",
 		//indexLabelFontFamily: "Trebuchet MS, monospace, Courier New, Courier",
 		indexLabelFontFamily: "Refinery, Helvetica",
-		//indexLabelFontWeight: "bold",
+		indexLabelFontWeight: "bold",
 		indexLabelFontSize: 18,
 		//indexLabelLineColor: "lightgrey",
 		indexLabelLineThickness: 1

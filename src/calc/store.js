@@ -12,7 +12,7 @@ export const selectedWeapons = reactive({
 })
 
 export const selectedArmor = reactive({
-    selected: 'PlayerDefault',
+    selected: 'Shield_01',
     changeSelected(armor) {
         this.selected = armor;
     }

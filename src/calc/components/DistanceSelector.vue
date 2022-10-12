@@ -5,7 +5,7 @@
                 v-model="distance" 
                 @input="selectedDistance.changeValue(distance)"
             > 
-            <p> This affects if damage falls off at range. </p>
+            <p> This affects if damage falls off at range. See the chart below. </p>
     </div>
     </template>
     

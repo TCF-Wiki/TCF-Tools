@@ -1,5 +1,9 @@
 <template>
-    <button class="button" type="button" @click.prevent="showWeaponModal = true"> Select Weapons </button>
+    <div class="container">
+        <button class="" type="button" @click.prevent="showWeaponModal = true"> 
+            <img src="calc-images/Weapon_Icon.png"> 
+        </button>
+    </div>
     <section class="selection-list" v-show="showWeaponModal">
         <button class="close" @click.prevent="showWeaponModal = false"> &times; </button>
         <h2> Weapon Selector </h2>
@@ -86,9 +90,15 @@ export default {
     transform: scale(1.05);
 }
 
-.container {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem
+.container button {
+    width: 100%;
+    height: 100%;
+}
+
+.container button img {
+    filter: invert(1);
+    width: 100%;
+    margin-top: 25%;
+    margin-bottom: 25%;
 }
 </style>

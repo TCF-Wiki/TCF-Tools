@@ -5,7 +5,7 @@
             v-model="HSValue" 
             @input="selectedHSValue.changeValue(HSValue)"
         > 
-    <p> This value is only used if the target is a player. </p> 
+    <p> This value is only used if the target is a player. If the target is a creature, it assumes you do not hit any weakpoints. </p> 
 </div>
 </template>
 

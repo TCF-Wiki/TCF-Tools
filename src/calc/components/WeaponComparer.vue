@@ -40,10 +40,12 @@
             <p v-for="(value, key) in filter(weaponData[weapon])">
                 <span :class="colourClassGiver(key, weapon)"> {{ value }} {{attachmentStat(weapon, key)}}</span>
             </p>
+            
             <h2> {{ weaponData[weapon]['inGameName'] }} <img class="weapon-image" :src=" 'calc-images/' + weaponData[weapon]['inGameName'] + '.png'"> </h2>
             <p v-for="(value, key) in detailedStats[weapon]"> 
                 <span :class="colourClassGiver(key, weapon)"> {{ value }} </span>
             </p>
+            
             <div class="button-container">
                 <BodyChart 
                 :weapon="weapon"
@@ -51,6 +53,10 @@
                 <AttachmentSelector 
                 :weapon="weapon"
                 />
+            </div>
+            
+            <div class="delete-button">
+                <button @click="selectedWeapons.toggleSelected(weapon)"> Remove Weapon </button>
             </div>
             
         </div>
@@ -395,7 +401,23 @@ export default {
     width: 12rem;
     display: grid;
     grid-template-columns: repeat(2, 1fr);   
-    grid-gap: 1em      
+    grid-gap: 1rem;
+    margin: auto;
+    margin-top: 1rem;      
+}
+
+
+
+.delete-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 1em;
+}
+
+.delete-button button {
+    background-color: var(--rarity-color-exotic);
+    border: none;
+    padding: .2rem
 }
 </style>
 

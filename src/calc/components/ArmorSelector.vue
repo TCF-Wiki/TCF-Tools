@@ -1,7 +1,8 @@
 <template>
     <div class="container"> 
-        <button class="button" type="button" @click.prevent="showModal = true"> Select Armor </button>
-        <p> Selected: {{ armorName(selectedArmor.selected) }}</p>
+        <button class="" type="button" @click.prevent="showModal = true"> 
+            <img :src=" 'calc-images/' + armorImage(selectedArmor.selected) + '.png'  " > 
+        </button>
     </div>
     <section class="selection-list" v-show="showModal">
         <button class="close" @click.prevent="showModal = false"> &times; </button>
@@ -81,10 +82,9 @@ export default {
     grid-template-columns: 1fr 1fr 1fr 
 }
 
-.container {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem
+.container button {
+    width: 100%;
+    height: 100%;
 }
 
 .armor-selector {
