@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <button class="" type="button" @click.prevent="showWeaponModal = true"> 
-            <img src="calc-images/Weapon_Icon.png"> 
+            <img src="/calc-images/Weapon_Icon.png"> 
         </button>
     </div>
     <section class="selection-list" v-show="showWeaponModal">
