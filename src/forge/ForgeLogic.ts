@@ -275,7 +275,7 @@ export function resolveGearForge(item: string) {
     }
 }
 
-export function getMatchingPerks(perks: string[]) {
+export function getMatchingPerks(perks: string[]) : [string[], string[]]{
     let matchingPerks : string[] = [];
     let itemsInOrder : string[] = []
     for (let perk in perks) {
