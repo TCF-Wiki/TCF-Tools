@@ -33,6 +33,9 @@ export const selectedItems = reactive({
         } else {
             delete this.list[removeItem]
         }
+    },
+    clear() {
+        this.list = [] as string[]
     }
 })
 
@@ -75,5 +78,8 @@ export const outputItems = reactive({
         } else {
             delete this.list[removeItem]
         }
+    },
+    clear() {
+        this.list = [] as string[]
     }
 })
