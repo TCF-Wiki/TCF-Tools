@@ -114,6 +114,7 @@ export function resolveAbyssToken() : any {
     const outputString = `${returnData['type']}_Altered_0${returnData['rarity']}`
 
     selectedItems.remove('AF_Token', 1)
+    outputItems.clear()
     outputItems.add(outputString, returnData)
 }
 
@@ -158,6 +159,7 @@ export function resolveGearForge(item: string) {
         }
 
         // and then finally add it to our output items
+        outputItems.clear()
         outputItems.add(outputString, outputData)
     } else {
         // @ts-ignore
@@ -271,6 +273,7 @@ export function resolveGearForge(item: string) {
         }
 
         // and then finally add it to our output items
+        outputItems.clear()
         outputItems.add(outputString, outputData)
     }
 }

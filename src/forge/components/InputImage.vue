@@ -12,6 +12,8 @@
                 </ItemCard>
             </div>
         </div>
+        <div class="mobileItemRemove-Button" @click="selectedItems.remove(Object.keys(selectedItems.get())[item])"
+        role="button">&times;</div>
     </div>
 </template>
 <script lang="ts">
@@ -47,6 +49,7 @@ export default defineComponent({
 </script>
 <style scoped>
 .itemImg {
+    position: relative;
     width: 100%;
     height: 100%;
     border-radius: 50%;
@@ -114,5 +117,20 @@ export default defineComponent({
     z-index: 1;
     translate: 0 8px;
     font-size: 1rem;
+}
+
+.mobileItemRemove-Button {
+    display: none;
+}
+
+@media screen and (max-width: 900px) {
+    .mobileItemRemove-Button {
+        position: absolute;
+        display: flex;
+        top: -2rem;
+        right: .7rem;
+        color: lightcoral;
+        font-size: 1.3rem;
+    }
 }
 </style>
