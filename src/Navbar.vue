@@ -39,13 +39,14 @@ export default {
 .nav-menu {
     background-color: var(--background-menu-color);
     color: var(--text-color-menu-white);
-    z-index: 1;
+    z-index: 99;
     width: 100vw;
 }
 .nav-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0.5rem 1rem;
 }
 .nav-items {
     display: flex;
@@ -87,6 +88,8 @@ export default {
 /* Mobile version - hidden hamburger menu */
 @media screen and (max-width: 900px) {
     .nav-menu {
+        display: flex;
+        flex-direction: column;
         padding: 1rem 0;
         position: absolute;
         width: 100%;
@@ -109,14 +112,18 @@ export default {
         z-index: 100;
         position: relative;
         transition: all 0.5s linear;
-        justify-content: center;
     }
     .nav-items {
+        display: flex;
+        gap: 1rem;
         flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        height: 100%;
     }
     .nav-items a {
         padding: 0;
-        font-size: 3rem;
+        font-size: 2rem;
     }
     .nav-menu svg {
         display: block;
