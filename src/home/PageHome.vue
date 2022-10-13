@@ -47,8 +47,7 @@
 .about {
     width: 40%;
     text-align: center;
-    font-size: 1rem;
-    font-weight: bold;
+    font-size: .8rem;
     color: #ffffff;
     font-family: 'Lato', sans-serif;
 }
@@ -68,5 +67,21 @@
 .navigation img {
     width: 100%;
     height: auto;
+}
+
+@media screen and (max-width: 900px) {
+    .about {
+        width: 100%;
+    }
+
+    .navigation {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .navigation a {
+        width: 23%;
+        margin: .3rem
+    }
 }
 </style>

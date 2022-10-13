@@ -462,20 +462,24 @@ export default defineComponent({
         gap: 2rem;
     }
 
-    .left {
+    .left, 
+    .right {
         width: 	100%;
     }
 
     #map {
         margin-top: 1rem;
+        margin-right: 0;
         padding: 0;
         width: 100%;
-        height: 60rem;
+        padding-bottom: 100%;
     }
 
     #sidebar-toggler {
         display: none;
     }
+
+    
 }
 
 .collapse-sidebar {
