@@ -61,6 +61,7 @@ export function getGearItems() {
         let items = helmets[helmet]
         
         if (items['rarity'] === 'Rare' || items['rarity'] === 'Epic' || items['rarity'] === 'Exotic') {
+            if (helmet.includes('Tactical') || helmet.includes('Restoration') || helmet.includes('Altered')) continue
             validHelmets.push(helmet)
         }
     }
@@ -69,6 +70,7 @@ export function getGearItems() {
         let items = shields[shield]
 
         if (items['rarity'] === 'Rare' || items['rarity'] === 'Epic' || items['rarity'] === 'Exotic') {
+            if (shield.includes('Tactical') || shield.includes('Restoration') || shield.includes('Altered')) continue
             validShields.push(shield)
         }
     }
@@ -77,6 +79,7 @@ export function getGearItems() {
         let items = bags[bag]
 
         if (items['rarity'] === 'Rare' || items['rarity'] === 'Epic' || items['rarity'] === 'Exotic') {
+            if (bag.includes('Altered')) continue
             validBags.push(bag)
         }
     }

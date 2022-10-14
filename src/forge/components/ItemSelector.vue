@@ -1,71 +1,75 @@
 <template>
-<details>
-    <summary>  
-        <div class="container"> 
-            <div class="itemTitle-Container">
-                <h2> Ingot Items</h2>
-            </div>
-
-            <div class="itemTitle-Container">
-                <h2> Ingots </h2>
-            </div>
-
-            <div class="itemTitle-Container">
-                <h2> Gear Items </h2>
-            </div>
-
-            <div class="itemTitle-Container">
-                <h2> Recipe Items </h2>
-            </div>
-
-            <div class="itemTitle-Container">
-                <h2> Special Items </h2>
-            </div>
-
-            <div class="itemTitle-Container">
-                <h2> Matching Recipes </h2>
-            </div>
-        </div>   
-    </summary>
-
+    <section>
         <div class="container">
-            <div>
-                <p v-for="item, index in sortedItemList.ingots" @click="selectedItems.add(item)" role="button" class="selector">
-                    <img class="item-icon" width="24" :alt="index.toString()" :src="'map-images/item-images/' + index.toString().split(' ').join('_') + '.png'">
-                    <span class="item-name">{{ index }}</span>
-                </p>
-            </div>
-            <div>
-                <p v-for="item, index in sortedItemList.catalyst" @click="selectedItems.add(item)" role="button" class="selector">
-                    <img class="item-icon" width="24" :alt="index.toString()" :src="'map-images/item-images/' + index.toString().split(' ').join('_') + '.png'">
-                    <span class="item-name">{{ index }}</span>
-                </p>
-            </div>
-            <div>
-                <p v-for="item, index in sortedItemList.gear" @click="selectedItems.add(item)" role="button" class="selector">
-                    <img class="item-icon" width="24" :alt="index.toString()" :src="'map-images/item-images/' + index.toString().split(' ').join('_') + '.png'">
-                    <span class="item-name">{{ index }}</span>
-                </p>
-            </div>
-            <div>
-                <p v-for="item, index in sortedItemList.perkRecipes" @click="selectedItems.add(item)" role="button" class="selector">
-                    <img class="item-icon" width="24" :alt="index.toString()" :src="'map-images/item-images/' + index.toString().split(' ').join('_') + '.png'">
-                    <span class="item-name">{{ index }}</span>
-                </p>
-            </div>
-            <div>
-                <p v-for="item, index in sortedItemList.special" @click="selectedItems.add(item)" aria-role="button" class="selector">
-                    <img class="item-icon" width="24" :alt="index.toString()" :src="'map-images/item-images/' + index.toString().split(' ').join('_') + '.png'">
-                    <span class="item-name">{{ index }}</span>
-                </p>
+            <div> 
+                <div class="itemTitle-Container">
+                    <h2> Ingot Items</h2>
+                </div>
+
+                <div class="grid-container">
+                    <p v-for="item, index in sortedItemList.ingots" @click="selectedItems.add(item)" role="button" class="selector">
+                        <img class="item-icon" width="24" :alt="index.toString()" :src="'map-images/item-images/' + index.toString().split(' ').join('_') + '.png'">
+                    </p>
+                </div>
             </div>
 
             <div>
+                <div class="itemTitle-Container">
+                    <h2> Ingots </h2>
+                </div>
+
+                <div class="grid-container">
+                    <p v-for="item, index in sortedItemList.catalyst" @click="selectedItems.add(item)" role="button" class="selector">
+                        <img class="item-icon" width="24" :alt="index.toString()" :src="'map-images/item-images/' + index.toString().split(' ').join('_') + '.png'">
+                    </p>
+                </div>
+            </div>
+
+            <div> 
+                <div class="itemTitle-Container">
+                    <h2> Gear Items </h2>
+                </div>
+
+                <div class="grid-container gear-container">
+                    <p v-for="item, index in sortedItemList.gear" @click="selectedItems.add(item)" role="button" class="selector">
+                        <img class="item-icon" width="24" :alt="index.toString()" :src="'map-images/item-images/' + index.toString().split(' ').join('_') + '.png'">
+                        <span class="item-name"> {{ rarityNamer(item) }} </span>
+                    </p>
+                </div>
+            </div>
+
+            <div>
+                <div class="itemTitle-Container">
+                    <h2> Recipe Items </h2>
+                </div>
+
+                <div class="grid-container">
+                    <p v-for="item, index in sortedItemList.perkRecipes" @click="selectedItems.add(item)" role="button" class="selector">
+                        <img class="item-icon" width="24" :alt="index.toString()" :src="'map-images/item-images/' + index.toString().split(' ').join('_') + '.png'">
+                    </p>
+                </div>
+            </div> 
+
+            <div> 
+                <div class="itemTitle-Container">
+                    <h2> Special Items </h2>
+                </div>
+
+                <div class="grid-container">
+                    <p v-for="item, index in sortedItemList.special" @click="selectedItems.add(item)" aria-role="button" class="selector">
+                        <img class="item-icon" width="24" :alt="index.toString()" :src="'map-images/item-images/' + index.toString().split(' ').join('_') + '.png'">
+                    </p>
+                </div>
+            </div>
+            <div>
+                <div class="itemTitle-Container">
+                    <h2> Matching Recipes </h2>
+                </div>
+
                 <RecipeList />
             </div>
         </div>
-
-</details>
+    </section>
 
 </template>
 
@@ -114,6 +118,14 @@ export default defineComponent({
             }, {});
         }
     },
+    methods: {
+        rarityNamer(item: string) {
+            if (item.includes('Shield_')) return shieldData[item]['rarity']
+            if (item.includes('Helmet_')) return helmetData[item]['rarity']
+            if (item.includes('Bag_')) return backpackData[item]['rarity']
+        
+        }
+    },
     components: { RecipeList }
 })
 
@@ -121,9 +133,12 @@ export default defineComponent({
 
 <style scoped>
 .container {
-    display: grid;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     width: 100%;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    margin: 0 2rem;
+    gap: 2rem;
 }
 
 .selector {
@@ -131,10 +146,10 @@ export default defineComponent({
 }
 
 details {
-    width: 80%;
+    width: 100%;
 }
 p {
-    width: 80%;
+    width: 100%;
     transition: background-color .2s ease-in-out;
 }
 p:hover {
@@ -143,6 +158,10 @@ p:hover {
 .item-icon {
     display: inline-block;
     translate: 0 7px;
+}
+
+.itemTitle-Container {
+    text-align: center;
 }
 
 @media screen and (max-width: 1100px) {
@@ -184,5 +203,27 @@ p:hover {
         align-items: center;
         margin-top: .25rem;
     }
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: .2rem;
+    height: fit-content;
+}
+
+.grid-container p {
+    display: grid;
+    grid-template-rows: 1fr;
+    gap: .5rem;
+    border: 1px solid var(--rarity-color-common);
+    text-align: center;
+    padding: .6rem
+}
+
+.grid-container p img {
+    margin: auto;
+    display: block;
+    translate: 0;
 }
 </style>

@@ -33,6 +33,7 @@ export default defineComponent({
     text-align: center;
     cursor: pointer;
     z-index: 2;
+
     position: absolute;
 }
 
@@ -43,7 +44,6 @@ export default defineComponent({
     position: absolute;
     opacity: 0;
     transition: all .2s ease-out;
-    transform: scale(1.80) translateY(-20%) translateX(-.5%);
 }
 
 

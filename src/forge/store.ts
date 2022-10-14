@@ -35,7 +35,7 @@ export const selectedItems = reactive({
         }
     },
     clear() {
-        this.list = [] as string[]
+        this.list = {} as any
     }
 })
 
@@ -80,6 +80,6 @@ export const outputItems = reactive({
         }
     },
     clear() {
-        this.list = [] as string[]
+        this.list = {} as any
     }
 })
