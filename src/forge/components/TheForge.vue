@@ -39,7 +39,7 @@
             </div>
         </div>
         <div id="bottom">
-            <ClearButton item="bottom" />
+            <ClearButton />
         </div>
     </div>
     <ItemSelector />
@@ -148,7 +148,8 @@ export default defineComponent({
 #bottom {
     position: absolute;
     width: 10%;
-    bottom: 0;
+    bottom: 8.5%;
+    left: 44.70%;
 }
 
 .item {

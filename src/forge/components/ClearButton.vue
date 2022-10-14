@@ -1,7 +1,7 @@
 <template>
   <div class="forgeClear-Button" role="button" @click="clearItems()"
   >
-      <img class="clearBtn-Image" src="forge-images/Clear_Button_Ready.png" v-if="Object.keys(selectedItems.get()).length > 0">
+      <img class="clearBtn-Image" src="forge-images/Clear_Button_Ready.png" v-if="Object.keys(selectedItems.get()).length > 0 || Object.keys(outputItems.get()).length > 0">
       <img class="clearBtnHover-Image" src="forge-images/Clear_Button_Hover.png">
   </div>
 
@@ -18,7 +18,7 @@ export default defineComponent({
       }
   },
   methods: {
-      clearItems() : void {
+      clearItems(): void {
           outputItems.clear()
           selectedItems.clear()
       }
@@ -40,10 +40,16 @@ export default defineComponent({
 .forgeClear-Button:hover .clearBtnHover-Image {
     opacity: 1;
 }
+
+.forgeClear-Button:hover .clearBtn-Image {
+  display: none;
+}
 .clearBtnHover-Image {
     position: absolute;
     opacity: 0;
     transition: all .2s ease-out;
+    transform: scale(1.80) translateY(-20%) translateX(-.5%);
+    left: .5%;
 }
 
 
@@ -52,6 +58,8 @@ export default defineComponent({
     transition: all .2s ease-out;
     animation: pulse 5s infinite;
     min-width: 100%;
+    min-height: 100%;
+    bottom: -4.2rem;
 }
 
 </style>
