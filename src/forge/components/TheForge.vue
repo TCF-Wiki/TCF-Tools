@@ -38,6 +38,9 @@
                 <OutputImage item="4" />
             </div>
         </div>
+        <div id="bottom">
+            <ClearButton item="bottom" />
+        </div>
     </div>
     <ItemSelector />
 
@@ -49,6 +52,7 @@ import InputImage from './InputImage.vue';
 import OutputImage from './OutputImage.vue';
 import ItemSelector from './ItemSelector.vue'
 import ForgeButton from './ForgeButton.vue';
+import ClearButton from './ClearButton.vue';
 
 
 
@@ -58,6 +62,7 @@ export default defineComponent({
     OutputImage,
     ItemSelector,
     ForgeButton,
+    ClearButton
 },
 });
 </script>
@@ -138,6 +143,12 @@ export default defineComponent({
 #output-5 {
     left: 77.1%;
     top: 31.5%;
+}
+
+#bottom {
+    position: absolute;
+    width: 10%;
+    bottom: 0;
 }
 
 .item {
