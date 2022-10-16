@@ -1,5 +1,5 @@
 import type { roundToThree } from '@/calc/utils'
-import { perkData, settingData, itemData, shieldData, helmetData, backpackData } from './data'
+import { perkData, settingData, itemData, shieldData, helmetData, backpackData, ingotData } from './data'
 import { perksByType } from './ForgeConstants'
 import { outputItems, selectedItems } from './store'
 import { validItems } from './ValidItems'
@@ -22,6 +22,7 @@ export const chooseRecipeOutput = (): any => {
     const inputItems = Object.keys(selectedItems.get())
 
     inputItems.forEach(input => {
+
         validItems.special.forEach((item: string) => {
             if (input === item) resolveAbyssToken()
             return;
@@ -38,12 +39,57 @@ export const chooseRecipeOutput = (): any => {
         })
 
         validItems.ingots.forEach((item: string) => {
-            if (input === item) {
-                if (input !== 'Letium' && input === 'ForgeIron') return console.log(item)
-                if (input === 'PureForgeIron') return console.log(item)
-            }
+            if (input === item && item !== 'GlowingCrystalCoreShard') resolveIngotForge(item)
+            return
         })
    })
+}
+
+export const resolveIngotForge = (item: string) => {
+    const data = ingotData
+    const inputItems = Object.keys(selectedItems.get())
+    const wantedIngredients: string[] = []
+
+    for (let recipe in data) {
+        
+        for (let ingredient in data[recipe]['Ingredients']) {
+            // check if passed item is one of the ingredients
+            if (item === ingredient) {
+                // push the appropriate ingredients based on what the item is
+                if (item === 'ForgeIron') {
+                    wantedIngredients.push('ForgeIron')
+                    wantedIngredients.push('GlowingCrystalCoreShard')
+                }
+                if (item === 'PureForgeIron' || item === 'Letium') {
+                    wantedIngredients.push('PureForgeIron')
+                    wantedIngredients.push('Letium')
+                    wantedIngredients.push('GlowingCrystalCoreShard')
+                }
+                
+            }
+        }
+    }
+
+    // check if all the ingredients are in the forge; no specific recipe yet
+    const allIngredientsExist = wantedIngredients.every(ingredient => inputItems.includes(ingredient))
+    let currentRecipe: any
+
+    if (allIngredientsExist) {
+        // check if all ingredients exist inside recipe and if it does setting that recipe as currentRecipe
+        wantedIngredients.every(wantedIngredient => {
+            for (let recipe in data) {
+    
+                for (let ingredient in data[recipe]['Ingredients']) {
+                    
+                    if (wantedIngredient === ingredient) currentRecipe = data[recipe]
+                }
+            }
+
+        })
+    }
+
+    console.log(currentRecipe)
+
 }
 
 export function getPerkStrength(perk: string) : string {
