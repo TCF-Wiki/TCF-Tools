@@ -115,19 +115,13 @@ export const resolveIngotForge = (item: string) => {
             // 0-3=rare. 3-100 = common
             if (randomChance <= (runningTotal + rewardChances[r])) {
                 // Now we store the amount of this item in our rewards data
-                
-                // if this already exists in our output object, add one
-                if (rewards[r]) {
-                    rewards[r] = rewards[r] + 1
-                }  else {
-                    // otherwise, set the amount to one
-                    rewards[r] = 1
-                }
-                // and make sure we don't get any duplicates, just in case.
+                // by checking if we have stored it already. If so, add 1. Otherwise, start at 0.
+                rewards[r] = (rewards[r] ?? 0) + 1
                 break
             }
             runningTotal += rewardChances[r]
         }
+        console.log(rewards)
     }  
 
     // and then remove the input items and add the output items
