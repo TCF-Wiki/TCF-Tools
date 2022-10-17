@@ -5,7 +5,7 @@ Webpage for the cycle frontier wiki apps pages, found here: https://apps.thecycl
 
 To run site locally, do: 
 ```sh
-$ git clone https://github.com/Stevnbak/TCF-Apps
+$ git clone https://github.com/TCF-Wiki/TCF-Apps
 $ cd TCF-Apps
 $ npm install --save
 $ npm run dev
