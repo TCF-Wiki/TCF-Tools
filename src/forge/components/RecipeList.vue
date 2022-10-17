@@ -29,7 +29,6 @@ export default defineComponent({
             deep: true,
             handler() {
                 const inputItems = Object.keys(selectedItems.get())
-                console.log('Hit!')
                 inputItems.forEach(input => {
                     validItems.gear.forEach((item: string) => {
                         if (input === item) {

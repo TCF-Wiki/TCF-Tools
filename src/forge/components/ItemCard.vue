@@ -1,17 +1,17 @@
 <template>
 <div class="card">
     <div class="card-contents" v-if="data">
-        <div> Altered {{ rarities[data['rarity']] }} {{ data['type']}} </div>
+        <div v-if="data['perkInfo']"> Altered {{ rarities[data['rarity']] }} {{ data['type']}} </div>
         <div v-if="data['perkInfo']"> 
             <p v-for="perk in data['perkInfo']">
                 {{ perk['strength'] }}
                 {{ perkData[perk['perk']]['Description'] }} 
             </p>
         </div>
-    </div>
 
-    <div class="card-contents" v-if="name">
-        <div> {{ itemNamer() }} </div>
+        <div v-if="!data['perkInfo']">
+            {{ itemData[name]['ingamename'] }} 
+        </div>
     </div>
 </div>
 </template>

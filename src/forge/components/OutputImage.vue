@@ -8,7 +8,9 @@
             <img  :src="'map-images/item-images/' + imageNamer()" />
             <span class="amount">{{ outputItems.get()[Object.keys(outputItems.get())[item]]['amount']}} </span>
             <div class="hover-information">
-                <ItemCard :data="outputItems.get()[Object.keys(outputItems.get())[item]]">
+                <ItemCard 
+                    :data="outputItems.get()[Object.keys(outputItems.get())[item]]" 
+                    :name="Object.keys(outputItems.get())[item]">
                 </ItemCard>
             </div>
         </div>

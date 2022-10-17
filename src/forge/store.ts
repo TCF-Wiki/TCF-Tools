@@ -61,14 +61,22 @@ export const outputItems = reactive({
     set(newItems: any) : void {
         this.list = newItems
     },
-    add(itemName: string, itemData : any, stackable = false) : void {
+    add(itemName: string, amount = 1, itemData? : any, stackable = false) : void {
         if (Object.keys(this.list).includes(itemName) && stackable) {
             if (this.list[itemName]['amount'] < 10) {
-                this.list[itemName]['amount'] = this.list[itemName]['amount'] + 1
+                if ((this.list[itemName]['amount'] + amount) <= 10) {
+                    this.list[itemName]['amount'] + amount
+                } else {
+                    this.list[itemName]['amount'] = amount
+                }
             }
         } else {
             if (Object.keys(this.list).length < 5) {
-                this.list[itemName] = {...itemData, amount: 1}
+                if (amount <= 10) {
+                    this.list[itemName] = {...itemData, amount: amount}
+                } else {
+                    this.list[itemName] = {...itemData, amount: 10}
+                }
             }
         }
     },

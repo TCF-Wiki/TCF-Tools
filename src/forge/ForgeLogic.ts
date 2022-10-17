@@ -40,7 +40,7 @@ export const chooseRecipeOutput = (): any => {
 
         validItems.ingots.forEach((item: string) => {
             if (input === item && item !== 'GlowingCrystalCoreShard') resolveIngotForge(item)
-            return
+            return;
         })
    })
 }
@@ -88,8 +88,45 @@ export const resolveIngotForge = (item: string) => {
         })
     }
 
-    console.log(currentRecipe)
+    if (!currentRecipe) return;
+    
+    const rewardChances = currentRecipe['RewardChance']
+    const rewardAmount = currentRecipe['RewardAmount']
+    const ingredients = currentRecipe['Ingredients']
 
+    // First lets check if we have the required items for this recipe
+    for (let i in ingredients) {
+        // if not, stop the recipe logic
+        if (selectedItems.get()[i] < ingredients[i]) return;
+    }    
+
+    // otherwise, figure out the rewards for these items...
+    let rewards = {} as any
+    for (let i = 0; i <= rewardAmount-1; i++) {
+        let randomChance = Math.round(Math.random() * 100) 
+        
+        let runningTotal = 0
+        for (let r in rewardChances) {
+            if (randomChance <= (runningTotal + rewardChances[r])) {
+                if (rewards[r]) {
+                    rewards[r] = rewards[r] + 1
+                }  else {
+                    rewards[r] = 1
+                }
+                break
+            }
+            runningTotal += rewardChances[r]
+        }
+    }  
+
+    // and then remove the input items and add the output items
+    for (let item in ingredients) {
+        selectedItems.remove(item, ingredients[item])
+    }
+
+    for (let item in rewards) {
+        outputItems.add(item, rewards[item])
+    }
 }
 
 export function getPerkStrength(perk: string) : string {
@@ -161,7 +198,7 @@ export function resolveAbyssToken() : any {
 
     selectedItems.remove('AF_Token', 1)
     outputItems.clear()
-    outputItems.add(outputString, returnData)
+    outputItems.add(outputString, 1, returnData)
 }
 
 export function resolveGearForge(item: string) {
@@ -206,7 +243,7 @@ export function resolveGearForge(item: string) {
 
         // and then finally add it to our output items
         outputItems.clear()
-        outputItems.add(outputString, outputData)
+        outputItems.add(outputString, 1, outputData)
     } else {
         // @ts-ignore
         const perks : any = perksByType[type]
@@ -320,7 +357,7 @@ export function resolveGearForge(item: string) {
 
         // and then finally add it to our output items
         outputItems.clear()
-        outputItems.add(outputString, outputData)
+        outputItems.add(outputString, 1, outputData)
     }
 }
 
