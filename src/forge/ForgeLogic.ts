@@ -89,7 +89,7 @@ export const resolveIngotForge = (item: string) => {
     }
 
     if (!currentRecipe) return;
-    
+
     const rewardChances = currentRecipe['RewardChance']
     const rewardAmount = currentRecipe['RewardAmount']
     const ingredients = currentRecipe['Ingredients']
@@ -103,16 +103,27 @@ export const resolveIngotForge = (item: string) => {
     // otherwise, figure out the rewards for these items...
     let rewards = {} as any
     for (let i = 0; i <= rewardAmount-1; i++) {
-        let randomChance = Math.round(Math.random() * 100) 
+        // get the chance roll for this reward
+        let randomChance = Math.random() * 100
         
+        // we have to keep track of the total chance we have gone through, so it adds it 
+        // up to 100 at the final reward
         let runningTotal = 0
         for (let r in rewardChances) {
+            // if the number we rolled is less or equal to the chance for this item + the chances we have gone over
+            // Example: 3% chance for rare item. 97% chance for common item
+            // 0-3=rare. 3-100 = common
             if (randomChance <= (runningTotal + rewardChances[r])) {
+                // Now we store the amount of this item in our rewards data
+                
+                // if this already exists in our output object, add one
                 if (rewards[r]) {
                     rewards[r] = rewards[r] + 1
                 }  else {
+                    // otherwise, set the amount to one
                     rewards[r] = 1
                 }
+                // and make sure we don't get any duplicates, just in case.
                 break
             }
             runningTotal += rewardChances[r]
