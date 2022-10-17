@@ -147,9 +147,10 @@ export default defineComponent({
 
 #bottom {
     position: absolute;
-    width: 10%;
-    bottom: 8.5%;
-    left: 44.70%;
+    width: 12%;
+    height: 10%;
+    bottom: 3.5%;
+    left: 43.7%;
 }
 
 .item {

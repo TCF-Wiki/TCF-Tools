@@ -49,7 +49,9 @@ export default defineComponent({
     opacity: 0;
     transition: all .2s ease-out;
     transform: scale(1.80) translateY(-20%) translateX(-.5%);
-    left: .5%;
+    left: 10.5%;
+    max-width: 75%;
+    bottom: -59%;
 }
 
 
@@ -57,9 +59,6 @@ export default defineComponent({
     position: absolute;
     transition: all .2s ease-out;
     animation: pulse 5s infinite;
-    min-width: 100%;
-    min-height: 100%;
-    bottom: -4.2rem;
 }
 
 </style>
