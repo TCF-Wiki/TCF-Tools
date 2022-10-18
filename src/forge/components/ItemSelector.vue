@@ -7,9 +7,9 @@
                 </div>
 
                 <div class="grid-container">
-                    <p v-for="item, index in sortedItemList.ingots" @click="selectedItems.add(item, 3)" role="button" class="selector">
+                    <p v-for="item, index in sortedItemList.ingots" @click="selectedItems.add(item, index.toString().includes('Iron') ? 9 : 3)" role="button" class="selector">
                         <img class="item-icon" width="24" :alt="index.toString()" :src="'map-images/item-images/' + index.toString().split(' ').join('_') + '.png'">
-                        <span class="item-name"> {{ rarityNamer(item) }} (3) </span>
+                        <span class="item-name"> {{ rarityNamer(item) }} ({{ index.toString().includes('Iron') ? 9 : 3 }}) </span>
                     </p>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                         <span class="item-name"> {{ rarityNamer(item) }} </span>
                     </p>
 
-                    <p v-for="item, index in sortedItemList.catalyst" @click="selectedItems.add(item, settingData['CatalystAmount'])" role="button" class="selector">
+                    <p v-for="item, index in sortedItemList.catalyst" @click="selectedItems.add(item,  settingData['CatalystAmount'])" role="button" class="selector">
                         <img class="item-icon" width="24" :alt="index.toString()" :src="'map-images/item-images/' + index.toString().split(' ').join('_') + '.png'">
                         <span class="item-name"> {{ rarityNamer(item) }} ({{settingData['CatalystAmount']}}) </span>
                     </p>

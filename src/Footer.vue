@@ -55,6 +55,8 @@
                 <li><a href="/map">Interactive Map</a></li>
                 <li><a href="https://tracker.thecyclefrontier.wiki"> Item Tracker </a></li>
                 <li><a href="/calc">Weapon Calculator</a></li>
+                <li><a href="/forge">Forge Simulator</a></li>
+
             </ul>
             <span>&copy; 2022 The Cycle: Frontier Wiki </span>
         </div>

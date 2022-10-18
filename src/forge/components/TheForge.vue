@@ -44,8 +44,9 @@
             </div>
         </div>
     </div>
-    <p> See all recipes you can use at <a href="https://thecyclefrontier.wiki/wiki/The_Forge">the Official Wiki</a>. </p>
-
+    <p> See all recipes you can use at the <a href="https://thecyclefrontier.wiki/wiki/The_Forge">Official Wiki</a>. Right click an item to remove it.</p>
+    <p> Output items are cleared upon forging to prevent confusion on what a forge resulted in. </p>
+    <p> Consume input items? <ConsumeInputToggle /> </p>
     <ItemSelector />
 
     <div class="container">
@@ -68,16 +69,17 @@ import OutputImage from './OutputImage.vue';
 import ItemSelector from './ItemSelector.vue'
 import ForgeButton from './ForgeButton.vue';
 import ClearButton from './ClearButton.vue';
-
+import ConsumeInputToggle from './ConsumeInputToggle.vue'
 
 
 export default defineComponent({
     components: {
-    InputImage,
-    OutputImage,
-    ItemSelector,
-    ForgeButton,
-    ClearButton
+        InputImage,
+        OutputImage,
+        ItemSelector,
+        ForgeButton,
+        ClearButton,
+        ConsumeInputToggle
     },
     mounted() {
         const el = document.getElementById('forge-container')
@@ -187,6 +189,10 @@ p {
     margin: .15rem 0;
 }
 
+
+p:first-of-type {
+    margin-top: .5rem
+}
 .indent {
     padding-left: 1rem
 }

@@ -1,7 +1,7 @@
 import type { roundToThree } from '@/calc/utils'
 import { perkData, settingData, itemData, shieldData, helmetData, backpackData, ingotData } from './data'
 import { perksByType } from './ForgeConstants'
-import { outputItems, selectedItems } from './store'
+import { consumeInput, outputItems, selectedItems } from './store'
 import { validItems } from './ValidItems'
 
 import {useToast} from 'vue-toastification';
@@ -54,7 +54,8 @@ export const resolveIngotForge = (item: string) => {
     const wantedIngredients: string[] = []
 
     for (let recipe in data) {
-        
+        const allIngredients = Object.keys(data[recipe]['Ingredients'])
+        console.log(allIngredients)
         for (let ingredient in data[recipe]['Ingredients']) {
             // check if passed item is one of the ingredients
             if (item === ingredient) {
@@ -91,7 +92,7 @@ export const resolveIngotForge = (item: string) => {
         })
     }
 
-    if (!currentRecipe) toast.error('Incomplete Forge Iron Ingot Recipe.', {timeout: 3000});
+    if (!currentRecipe) return;
 
     const rewardChances = currentRecipe['RewardChance']
     const rewardAmount = currentRecipe['RewardAmount']
@@ -124,12 +125,11 @@ export const resolveIngotForge = (item: string) => {
             }
             runningTotal += rewardChances[r]
         }
-        console.log(rewards)
     }  
 
     // and then remove the input items and add the output items
     for (let item in ingredients) {
-        selectedItems.remove(item, ingredients[item])
+        if (consumeInput.get()) selectedItems.remove(item, ingredients[item])
     }
 
     outputItems.clear()
@@ -213,7 +213,7 @@ export function resolveAbyssToken() : any {
 
     const outputString = `${returnData['type']}_Altered_0${returnData['rarity']}`
 
-    selectedItems.remove('AF_Token', 1)
+    if (consumeInput.get()) selectedItems.remove('AF_Token', 1)
     outputItems.clear()
     outputItems.add(outputString, 1, returnData)
 }
@@ -249,8 +249,10 @@ export function resolveGearForge(item: string) {
     if (possiblePerkItems.length == 0) {
         // remove the input 
         outputItems.clear()
-        selectedItems.remove(item)
-        selectedItems.remove(wantedCatalyst, settingData['CatalystAmount'])
+        if (consumeInput.get()){
+            selectedItems.remove(item)
+            selectedItems.remove(wantedCatalyst, settingData['CatalystAmount'])
+        } 
         
         // construct the information for our output item
         const outputString = `${type}_Altered_0${rarityMap[itemData[wantedCatalyst]['rarity']]}`
@@ -354,14 +356,17 @@ export function resolveGearForge(item: string) {
 
         // remove the input items
         // gear
-        selectedItems.remove(item)
-        // catalyst
-        selectedItems.remove(wantedCatalyst, settingData['CatalystAmount'])
+        if (consumeInput.get()) {
+            selectedItems.remove(item)
+            // catalyst
+            selectedItems.remove(wantedCatalyst, settingData['CatalystAmount'])
+        }
+
         // and the items that we ended up using...
         for (let perkItem in foundPerkIndexes) {
             const item = itemsInOrder[foundPerkIndexes[perkItem]]
             const amount = settingData['RarityAmount'][itemData[item]['rarity']]
-            selectedItems.remove(item, amount)
+            if (consumeInput.get()) selectedItems.remove(item, amount)
         }
 
         
