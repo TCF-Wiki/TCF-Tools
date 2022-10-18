@@ -1,11 +1,12 @@
 <template>
+    <Suspense>
         <div class="page-content" id="page-content">
         <div class="left" id="left">
             <div id="left-content">
                 <ItemSearch />
                 <LocationSelector />
                 <h2>Misc</h2>
-                <div class="button-container">
+                <div class="setting-container"> 
                     <TierToggler />
                     <ClearSearch />
                     <ShareLink />
@@ -13,12 +14,22 @@
 
                 <ColorSelector />
             </div>
+            <button id="sidebar-toggler" @click="toggleSidebar">
+                ◀
+            </button>
         </div>
         <div class="right" id="right">
             <MapSelector />
             <div id="map"></div>
         </div>
     </div>
+    <template #fallback>
+        <div class="fallback-content page-content">
+            Loading...
+        </div>
+    </template>
+    </Suspense>
+    
 </template>
 
 <style src="./MarkerCluster.css" />
@@ -451,20 +462,24 @@ export default defineComponent({
         gap: 2rem;
     }
 
-    .left {
+    .left, 
+    .right {
         width: 	100%;
     }
 
     #map {
         margin-top: 1rem;
+        margin-right: 0;
         padding: 0;
         width: 100%;
-        height: 60rem;
+        padding-bottom: 100%;
     }
 
     #sidebar-toggler {
         display: none;
     }
+
+    
 }
 
 .collapse-sidebar {
@@ -491,12 +506,81 @@ export default defineComponent({
     position: absolute;
     top: 0;
     right: 0;
+    display: none;
 }
 
-.button-container {
+@keyframes collapse-sidebar {
+    0% {
+        width: 100%;
+    }
+    100% {
+        width: 0;
+    }
+}
+
+@keyframes expand-sidebar {
+    0% {
+        width: 0%;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+@keyframes collapse-left {
+    1% {
+        width: 40%
+    }
+    100% {
+        width: 0%
+    }
+}
+
+@keyframes expand-left {
+    1% {
+        width: 0%;
+    }
+    100% {
+        width: 40%;
+    }
+}
+
+.collapse-content {
+    animation: collapse-content .8s linear forwards;
+}
+
+.expand-content {
+    animation: expand-content .8s linear forwards;
+}
+
+@keyframes collapse-content {
+    0% {
+        gap: 12em
+    }
+    100% {
+        gap: 2em
+    }
+}
+
+@keyframes expand-content {
+    0% {
+        gap: 2em
+    }
+    100% {
+        gap: 12em
+    }
+}
+
+.fallback-content {
+    width: 100%;
+    height: 40em;
+    background-color: red;
+}
+
+.setting-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: .5rem;
-    margin: .5rem 0 .8rem
+    gap: 1rem;
+    margin-bottom: 1em;
 }
 </style>

@@ -6,12 +6,12 @@
         "paths": {
             "@/*": ["./src/*"]
         },
-        "target": "es2017",
+        "target": "es2021",
         "module": "esnext",
         "moduleResolution": "node",
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
-        "allowJs": true
+        "allowJs": true,
     },
     "references": [
         {
