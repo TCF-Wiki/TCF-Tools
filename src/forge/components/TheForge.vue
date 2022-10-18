@@ -44,21 +44,20 @@
             </div>
         </div>
     </div>
-    <p> See all recipes you can use at the <a href="https://thecyclefrontier.wiki/wiki/The_Forge">Official Wiki</a>. Right click an item to remove it.</p>
-    <p> Output items are cleared upon forging to prevent confusion on what a forge resulted in. </p>
-    <p> Consume input items? <ConsumeInputToggle /> </p>
+    <p>See all recipes you can use at the <a href="https://thecyclefrontier.wiki/wiki/The_Forge">Official Wiki</a>. Right click an item to remove it.</p>
+    <p>Output items are cleared upon forging to prevent confusion on what a forge resulted in.</p>
+    <p>Consume input items? <ConsumeInputToggle /></p>
     <ItemSelector />
 
     <div class="container">
-        <header> 
-            <h2> Information </h2> 
+        <header>
+            <h2>Information</h2>
         </header>
-        <p> This site simulates The Forge as best as possible. It includes all gear recipes. It also has random chances for each perk. </p>
-            
-        <p> It assumes that the chances for each perk / output item is equally likely. </p>
-        <p> The following edge case is not handled properly: </p>
-        <p class="indent"> In the game, if you want to perks that use the same item, you have to put each set of item in different slots. The simulator does not require them to be in the same slot. </p>
+        <p>This site simulates The Forge as best as possible. It includes all gear recipes. It also has random chances for each perk.</p>
 
+        <p>It assumes that the chances for each perk / output item is equally likely.</p>
+        <p>The following edge case is not handled properly:</p>
+        <p class="indent">In the game, if you want two perks that use the same item, you have to put each set of item in different slots. The simulator does not require them to be in the same slot.</p>
     </div>
 </template>
 
@@ -66,11 +65,10 @@
 import {defineComponent} from 'vue';
 import InputImage from './InputImage.vue';
 import OutputImage from './OutputImage.vue';
-import ItemSelector from './ItemSelector.vue'
+import ItemSelector from './ItemSelector.vue';
 import ForgeButton from './ForgeButton.vue';
 import ClearButton from './ClearButton.vue';
-import ConsumeInputToggle from './ConsumeInputToggle.vue'
-
+import ConsumeInputToggle from './ConsumeInputToggle.vue';
 
 export default defineComponent({
     components: {
@@ -79,12 +77,14 @@ export default defineComponent({
         ItemSelector,
         ForgeButton,
         ClearButton,
-        ConsumeInputToggle
+        ConsumeInputToggle,
     },
     mounted() {
-        const el = document.getElementById('forge-container')
-        el!.oncontextmenu = function() { return false; }
-    }
+        const el = document.getElementById('forge-container');
+        el!.oncontextmenu = function () {
+            return false;
+        };
+    },
 });
 </script>
 
@@ -176,7 +176,7 @@ export default defineComponent({
 
 #bottom .item {
     left: 44.7%;
-    top: -26%
+    top: -26%;
 }
 
 .item {
@@ -186,17 +186,15 @@ export default defineComponent({
 }
 
 p {
-    margin: .15rem 0;
+    margin: 0.15rem 0;
 }
-
 
 p:first-of-type {
-    margin-top: .5rem
+    margin-top: 0.5rem;
 }
 .indent {
-    padding-left: 1rem
+    padding-left: 1rem;
 }
-
 
 /* mobile styling starts here */
 
