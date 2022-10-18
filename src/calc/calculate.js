@@ -108,7 +108,14 @@ export const calculate = {
 
         return this.s(weapon,'spinupTime') + this.s(weapon,'refireTime') * (shots - Math.ceil(ratio)) + Math.floor(ratio) * this.s(weapon,'reloadTime');
     },
+    dmgPerBullet : function(weapon) {
+        return ( (this.s(weapon, 'directDamage') + this.s(weapon, 'radialDamage') ) * this.falloffMultiplier(weapon) * this.penetrationMultiplier(weapon) )
+    },
+    
+    dmgPerBulletHS : function(weapon) {
+        return ( (this.s(weapon, 'directDamage') + this.s(weapon, 'radialDamage') ) * this.falloffMultiplier(weapon) * this.penetrationMultiplier(weapon) * this.s(weapon, 'weakDamageMultiplier') )
 
+    },
     falloffMultiplier: function(weapon) {
         let distance = parseInt(selectedDistance.distance) * 100;
         

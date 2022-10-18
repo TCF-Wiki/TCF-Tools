@@ -10,19 +10,19 @@
             <span> Penetration Multiplier </span>
         </p>
         <p>
-            <span> Rounds Per Minute </span>
+            <span> Rounds per Minute </span>
         </p>
         <p>
             <span> Reload Adjust RPM </span>
         </p>
         <p>
-            <span> Damage Per Second </span>
+            <span> Damage per Second </span>
         </p>
         <p>
             <span> Reload Adjusted DPS </span>
         </p>
         <p>
-            <span> Damage Per Mag </span>
+            <span> Damage per Mag </span>
         </p>
         <p>
             <span> Time to Empty Mag (s) </span>
@@ -32,6 +32,12 @@
         </p> 
         <p>
             <span> Time to Kill (s) </span> 
+        </p>
+        <p>
+            <span> Bullet per Bullet</span>
+        </p>
+        <p>
+            <span> Damage per Bullet (HS) </span>
         </p>
     </div>
     <div class="inner-container">
@@ -193,7 +199,8 @@ export default {
                 detailedStats[wepName]['timeToEmpty'] = roundToThree(calculate.timeToEmpty(wepName))
                 detailedStats[wepName]['shotsToKill'] = Math.round(calculate.shotsToKill(wepName))
                 detailedStats[wepName]['timeToKill'] = roundToThree(calculate.timeToKill(wepName))
-
+                detailedStats[wepName]['dmgPerBullet'] = roundToThree(calculate.dmgPerBullet(wepName))
+                detailedStats[wepName]['dmgPerBulletHS'] = roundToThree(calculate.dmgPerBulletHS(wepName))
             }
 
             this.detailedStats = detailedStats
