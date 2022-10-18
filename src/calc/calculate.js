@@ -113,7 +113,7 @@ export const calculate = {
     },
     
     dmgPerBulletHS : function(weapon) {
-        return ( (this.s(weapon, 'directDamage') + this.s(weapon, 'radialDamage') ) * this.falloffMultiplier(weapon) * this.penetrationMultiplier(weapon) * this.s(weapon, 'weakDamageMultiplier') )
+        return ( (this.s(weapon, 'directDamage') + this.s(weapon, 'radialDamage') ) * this.falloffMultiplier(weapon) * this.penetrationMultiplier(weapon) * ( selectedTarget.selected === 'PlayerDefault' ? this.s(weapon, 'weakDamageMultiplier') :1 ) )
 
     },
     falloffMultiplier: function(weapon) {
