@@ -409,8 +409,7 @@ export function resolveLotteryItems() : void {
     for (let item in lotteryItems) {
         const randomChance = Math.random() * 100
 
-        console.log(randomChance, item, lotteryItems[item])
-        if (randomChance >= lotteryItems[item]) {
+        if (randomChance <= lotteryItems[item]) {
             outputItems.add(item, 1)
         }
     }
