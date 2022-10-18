@@ -1,8 +1,8 @@
 <template>
   <div class="forgeClear-Button" role="button" @click="clearItems()"
   >
-      <img class="clearBtn-Image" src="forge-images/Clear_Button_Ready.png" v-if="Object.keys(selectedItems.get()).length > 0 || Object.keys(outputItems.get()).length > 0">
-      <img class="clearBtnHover-Image" src="forge-images/Clear_Button_Hover.png">
+      <img class="clearBtn-Image" src="/forge-images/Clear_Button_Ready.png" v-if="Object.keys(selectedItems.get()).length > 0 || Object.keys(outputItems.get()).length > 0">
+      <img class="clearBtnHover-Image" src="/forge-images/Clear_Button_Hover.png">
   </div>
 
 </template>

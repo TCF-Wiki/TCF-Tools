@@ -1,8 +1,8 @@
 <template>
     <div class="forge-button" role="button" @click="initiateForge()"
     >
-        <img class="bg-image" src="forge-images/Button_Ready.png" v-if="Object.keys(selectedItems.get()).length > 0">
-        <img class="hover-image" src="forge-images/Button_Hover.png">
+        <img class="bg-image" src="/forge-images/Button_Ready.png" v-if="Object.keys(selectedItems.get()).length > 0">
+        <img class="hover-image" src="/forge-images/Button_Hover.png">
     </div>
 
 </template>

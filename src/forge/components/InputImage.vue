@@ -3,7 +3,7 @@
     aria-label="Input item. Right click to remove."
     role="button">
         <img class="bg-image" v-if="Object.keys(selectedItems.get())[item]" src="/forge-images/Item_BG.png"> 
-        <img class="hover-image" src="forge-images/Button_Hover.png">
+        <img class="hover-image" src="/forge-images/Button_Hover.png">
         <div class="contents" v-if="Object.keys(selectedItems.get())[item]">
             <img :src="'map-images/item-images/' + imageNamer()" />
             <span class="amount">{{ selectedItems.get()[Object.keys(selectedItems.get())[item]]}} </span>
