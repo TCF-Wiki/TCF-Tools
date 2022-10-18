@@ -36,7 +36,6 @@ export const chooseRecipeOutput = (): any => {
                 if (input.includes("Bag_")) resolveGearForge(item) 
                 if (input.includes("Helmet_")) resolveGearForge(item)
                 if (input.includes("Shield_")) resolveGearForge(item)
-                resolveLotteryItems()
                 return;
             }
         })
@@ -264,6 +263,9 @@ export function resolveGearForge(item: string) {
         // and then finally add it to our output items
         outputItems.clear()
         outputItems.add(outputString, 1, outputData)
+
+        //and roll for lottery item...
+        resolveLotteryItems()
     } else {
         // @ts-ignore
         const perks : any = perksByType[type]
@@ -381,6 +383,9 @@ export function resolveGearForge(item: string) {
         // and then finally add it to our output items
         outputItems.clear()
         outputItems.add(outputString, 1, outputData)
+
+        // and roll for lottery item...
+        resolveLotteryItems()
     }
 }
 
