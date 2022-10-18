@@ -57,7 +57,7 @@
             
         <p> It assumes that the chances for each perk / output item are spread evenly. </p>
         <p> The following edge case is not handled properly: </p>
-        <p class="indent"> Ingame: if you want to perks that use the same item, you have to put each set of item in a different slot. The simulator does not require them to be in different slots. </p>
+        <p class="indent"> Ingame: if you want two perks that use the same item, you have to put each set of item in a different slot. The simulator does not require them to be in different slots. </p>
     </div>
 </template>
 
