@@ -44,6 +44,8 @@
             </div>
         </div>
     </div>
+    <p> See all recipes you can use at <a href="https://thecyclefrontier.wiki/wiki/The_Forge">the Official Wiki</a>. </p>
+
     <ItemSelector />
 
     <div class="container">
@@ -51,7 +53,6 @@
             <h2> Information </h2> 
         </header>
         <p> This site simulates The Forge as best as possible. It includes all gear recipes. It also has random chances for each perk. </p>
-        <p> See all recipes you can use at <a href="https://thecyclefrontier.wiki/wiki/The_Forge">the Official Wiki</a>. </p>
             
         <p> This site assumes that the chances for each perk / output item is equally likely. </p>
         <p> The following edge case is not handled properly: </p>
