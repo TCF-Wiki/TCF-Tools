@@ -1,5 +1,5 @@
 <template>
-    <div class="container" id="forge-container" @contextmenu="false">
+    <div class="container">
         <img aria-label="The Forge" id="forge" src="/forge-images/The_Forge_UI.png" />
         <div class="input">
             <div class="item" id="input-1">
@@ -39,25 +39,11 @@
             </div>
         </div>
         <div id="bottom">
-            <div class="item">
-                <ClearButton />
-            </div>
+            <ClearButton />
         </div>
     </div>
     <ItemSelector />
 
-    <div class="container">
-        <header> 
-            <h2> Information </h2> 
-        </header>
-        <p> This site simulates The Forge as best as possible. It includes all gear recipes. It also has random chances for each perk. </p>
-        <p> See all recipes you can use at <a href="https://thecyclefrontier.wiki/wiki/The_Forge">the Official Wiki</a>. </p>
-            
-        <p> This site assumes that the chances for each perk / output item is equally likely. </p>
-        <p> The following edge case is not handled properly: </p>
-        <p class="indent"> In the game, if you want to perks that use the same item, you have to put each set of item in different slots. The simulator does not require them to be in the same slot. </p>
-
-    </div>
 </template>
 
 <script lang="ts">
@@ -77,11 +63,7 @@ export default defineComponent({
     ItemSelector,
     ForgeButton,
     ClearButton
-    },
-    mounted() {
-        const el = document.getElementById('forge-container')
-        el!.oncontextmenu = function() { return false; }
-    }
+},
 });
 </script>
 
@@ -165,15 +147,10 @@ export default defineComponent({
 
 #bottom {
     position: absolute;
-    width: 100%;
+    width: 12%;
     height: 10%;
-    bottom: 0;
-    left: 0;
-}
-
-#bottom .item {
-    left: 44.6%;
-    top: -26%
+    bottom: 3.5%;
+    left: 43.7%;
 }
 
 .item {
@@ -181,15 +158,6 @@ export default defineComponent({
     width: 10%;
     height: 22%;
 }
-
-p {
-    margin: .15rem 0;
-}
-
-.indent {
-    padding-left: 1rem
-}
-
 
 /* mobile styling starts here */
 
