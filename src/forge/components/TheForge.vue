@@ -172,7 +172,7 @@ export default defineComponent({
 }
 
 #bottom .item {
-    left: 44.6%;
+    left: 44.7%;
     top: -26%
 }
 
