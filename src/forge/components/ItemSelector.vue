@@ -7,20 +7,9 @@
                 </div>
 
                 <div class="grid-container">
-                    <p v-for="item, index in sortedItemList.ingots" @click="selectedItems.add(item)" role="button" class="selector">
+                    <p v-for="item, index in sortedItemList.ingots" @click="selectedItems.add(item, 3)" role="button" class="selector">
                         <img class="item-icon" width="24" :alt="index.toString()" :src="'map-images/item-images/' + index.toString().split(' ').join('_') + '.png'">
-                    </p>
-                </div>
-            </div>
-
-            <div>
-                <div class="itemTitle-Container">
-                    <h2> Ingots </h2>
-                </div>
-
-                <div class="grid-container">
-                    <p v-for="item, index in sortedItemList.catalyst" @click="selectedItems.add(item)" role="button" class="selector">
-                        <img class="item-icon" width="24" :alt="index.toString()" :src="'map-images/item-images/' + index.toString().split(' ').join('_') + '.png'">
+                        <span class="item-name"> {{ rarityNamer(item) }} (3) </span>
                     </p>
                 </div>
             </div>
@@ -35,6 +24,11 @@
                         <img class="item-icon" width="24" :alt="index.toString()" :src="'map-images/item-images/' + index.toString().split(' ').join('_') + '.png'">
                         <span class="item-name"> {{ rarityNamer(item) }} </span>
                     </p>
+
+                    <p v-for="item, index in sortedItemList.catalyst" @click="selectedItems.add(item, settingData['CatalystAmount'])" role="button" class="selector">
+                        <img class="item-icon" width="24" :alt="index.toString()" :src="'map-images/item-images/' + index.toString().split(' ').join('_') + '.png'">
+                        <span class="item-name"> {{ rarityNamer(item) }} ({{settingData['CatalystAmount']}}) </span>
+                    </p>
                 </div>
             </div>
 
@@ -44,8 +38,9 @@
                 </div>
 
                 <div class="grid-container">
-                    <p v-for="item, index in sortedItemList.perkRecipes" @click="selectedItems.add(item)" role="button" class="selector">
+                    <p v-for="item, index in sortedItemList.perkRecipes" @click="selectedItems.add(item, amount(item))" role="button" class="selector">
                         <img class="item-icon" width="24" :alt="index.toString()" :src="'map-images/item-images/' + index.toString().split(' ').join('_') + '.png'">
+                        <span class="item-name"> {{ rarityNamer(item) }} ({{amount(item)}}) </span>
                     </p>
                 </div>
             </div> 
@@ -55,9 +50,11 @@
                     <h2> Special Items </h2>
                 </div>
 
-                <div class="grid-container">
+                <div class="grid-container centered-grid">
+                    <p class="hidden"></p>
                     <p v-for="item, index in sortedItemList.special" @click="selectedItems.add(item)" aria-role="button" class="selector">
                         <img class="item-icon" width="24" :alt="index.toString()" :src="'map-images/item-images/' + index.toString().split(' ').join('_') + '.png'">
+                        <span class="item-name"> {{ rarityNamer(item) }}  </span>
                     </p>
                 </div>
             </div>
@@ -77,12 +74,13 @@
 import { defineComponent } from 'vue';
 import { validItems } from '../ValidItems'
 import { selectedItems } from '../store';
-import { helmetData, shieldData, backpackData, itemData } from '../data';
+import { helmetData, shieldData, backpackData, itemData, settingData } from '../data';
 import RecipeList from './RecipeList.vue';
 export default defineComponent({
     data() {
         return {
             validItems: validItems,
+            settingData: settingData,
             helmetData: helmetData,
             shieldData: shieldData,
             backpackData: backpackData,
@@ -123,7 +121,15 @@ export default defineComponent({
             if (item.includes('Shield_')) return shieldData[item]['rarity']
             if (item.includes('Helmet_')) return helmetData[item]['rarity']
             if (item.includes('Bag_')) return backpackData[item]['rarity']
+            else return itemData[item]['rarity']
         
+        },
+        amount(item: string) : number {
+            const itemRarity = itemData[item]['rarity']
+            const amount = settingData['RarityAmount'][itemRarity]
+
+            if (amount) return amount
+            return amount
         }
     },
     components: { RecipeList }
@@ -151,6 +157,7 @@ details {
 p {
     width: 100%;
     transition: background-color .2s ease-in-out;
+    user-select: none;
 }
 p:hover {
   background-color: var(--background-button-color);
@@ -212,15 +219,25 @@ p:hover {
     height: fit-content;
 }
 
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+
 .grid-container p {
     display: grid;
     grid-template-rows: 1fr;
     gap: .5rem;
-    border: 1px solid var(--rarity-color-common);
+    border: 2px solid var(--background-button-color);
     text-align: center;
-    padding: .6rem
+    padding: .05rem .2rem;
 }
 
+.item-name {
+    font-size: .9rem;
+    opacity: .8;
+}
 .grid-container p img {
     margin: auto;
     display: block;

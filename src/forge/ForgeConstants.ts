@@ -1,6 +1,6 @@
 import { perkData } from "./data"
 
-export const perksByType = {
+export const perksByType : any = {
     'Helmet': [] as string[],
     'Shield': [] as string[],
     'Bag':    [] as string[]

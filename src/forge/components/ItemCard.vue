@@ -10,8 +10,11 @@
         </div>
 
         <div v-if="!data['perkInfo']">
-            {{ itemData[name]['ingamename'] }} 
+            {{ itemNamer() }}
         </div>
+    </div>
+    <div class="card-contents" v-if="!data">
+        {{ itemNamer() }}
     </div>
 </div>
 </template>

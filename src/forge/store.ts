@@ -1,5 +1,6 @@
 import { reactive} from "vue";
 
+const MAX_PER_SLOT = 9
 export const selectedItems = reactive({
     /* {
         "ForgeIron": 1
@@ -11,14 +12,22 @@ export const selectedItems = reactive({
     set(newItems: any) : void {
         this.list = newItems
     },
-    add(addItem: string) : void {
-        if (Object.keys(this.list).includes(addItem)) {
-            if (this.list[addItem] < 10) {
-                this.list[addItem] = this.list[addItem] + 1
+    add(itemName: string, amount = 1) : void {
+        if (Object.keys(this.list).includes(itemName)) {
+            if (this.list[itemName] < MAX_PER_SLOT) {
+                if ((this.list[itemName] + amount) <= MAX_PER_SLOT) {
+                    this.list[itemName] = this.list[itemName] + amount
+                } else {
+                    this.list[itemName] = amount
+                }
             }
         } else {
             if (Object.keys(this.list).length < 5) {
-                this.list[addItem] = 1
+                if (amount <= MAX_PER_SLOT) {
+                    this.list[itemName] = amount
+                } else {
+                    this.list[itemName] = MAX_PER_SLOT
+                }
             }
         }
     },
@@ -63,8 +72,8 @@ export const outputItems = reactive({
     },
     add(itemName: string, amount = 1, itemData? : any, stackable = false) : void {
         if (Object.keys(this.list).includes(itemName) && stackable) {
-            if (this.list[itemName]['amount'] < 10) {
-                if ((this.list[itemName]['amount'] + amount) <= 10) {
+            if (this.list[itemName]['amount'] < MAX_PER_SLOT) {
+                if ((this.list[itemName]['amount'] + amount) <= MAX_PER_SLOT) {
                     this.list[itemName]['amount'] + amount
                 } else {
                     this.list[itemName]['amount'] = amount
@@ -72,22 +81,35 @@ export const outputItems = reactive({
             }
         } else {
             if (Object.keys(this.list).length < 5) {
-                if (amount <= 10) {
+                if (amount <= MAX_PER_SLOT) {
                     this.list[itemName] = {...itemData, amount: amount}
                 } else {
-                    this.list[itemName] = {...itemData, amount: 10}
+                    this.list[itemName] = {...itemData, amount: MAX_PER_SLOT}
                 }
             }
         }
     },
-    remove(removeItem: string, amount : number = 0 ) : void {
-        if (amount > 0) {
-            this.list[removeItem] = this.list[removeItem] - amount
+    remove(itemName: string, amount : number = 0 ) : void {
+        if (amount !== 0 && (this.list[itemName]['amount'] - amount) > 0) {
+            this.list[itemName] = this.list[itemName]['amount'] - amount
         } else {
-            delete this.list[removeItem]
+            delete this.list[itemName]
         }
     },
     clear() {
         this.list = {} as any
+    }
+})
+
+export const consumeInput = reactive({
+    consume: true as boolean,
+    get() {
+        return this.consume
+    },
+    set(consume: boolean) {
+        this.consume = consume
+    },
+    toggle() {
+        this.consume = !this.consume
     }
 })

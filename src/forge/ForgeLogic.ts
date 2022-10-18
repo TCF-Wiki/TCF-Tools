@@ -4,6 +4,9 @@ import { perksByType } from './ForgeConstants'
 import { outputItems, selectedItems } from './store'
 import { validItems } from './ValidItems'
 
+import {useToast} from 'vue-toastification';
+const toast = useToast();
+
 export const rarityMap : any = {
     "Epic": 1,
     "Exotic": 2,
@@ -15,7 +18,6 @@ export const reversedRarityMap : any = {
     "2": "Exotic",
     "3": "Legendary"
 }
-
 
 
 export const chooseRecipeOutput = (): any => {
@@ -34,6 +36,7 @@ export const chooseRecipeOutput = (): any => {
                 if (input.includes("Bag_")) resolveGearForge(item) 
                 if (input.includes("Helmet_")) resolveGearForge(item)
                 if (input.includes("Shield_")) resolveGearForge(item)
+                resolveLotteryItems()
                 return;
             }
         })
@@ -88,7 +91,7 @@ export const resolveIngotForge = (item: string) => {
         })
     }
 
-    if (!currentRecipe) return;
+    if (!currentRecipe) toast.error('Incomplete Forge Iron Ingot Recipe.', {timeout: 3000});
 
     const rewardChances = currentRecipe['RewardChance']
     const rewardAmount = currentRecipe['RewardAmount']
@@ -97,7 +100,7 @@ export const resolveIngotForge = (item: string) => {
     // First lets check if we have the required items for this recipe
     for (let i in ingredients) {
         // if not, stop the recipe logic
-        if (selectedItems.get()[i] < ingredients[i]) return;
+        if (selectedItems.get()[i] < ingredients[i]) toast.error('Not enough items for this Forge Iron Ingot recipe.', {timeout: 3000});;
     }    
 
     // otherwise, figure out the rewards for these items...
@@ -129,6 +132,7 @@ export const resolveIngotForge = (item: string) => {
         selectedItems.remove(item, ingredients[item])
     }
 
+    outputItems.clear()
     for (let item in rewards) {
         outputItems.add(item, rewards[item])
     }
@@ -144,7 +148,7 @@ export function getPerkStrength(perk: string) : string {
             possibleResults.push(data['minValue'])
         } else {
             possibleResults.push(data['minValue'] + (
-                data['stepGranularity'] * ( x -1 )
+                data['stepGranularity'] * ( x - 1 )
             ))
         }
     }
@@ -185,10 +189,15 @@ export function resolveAbyssToken() : any {
 
     
     // generate a random perk (assumes equal distribution) 
-    // @ts-ignore
     const foundPerk = perksByType[foundType][Math.floor(Math.random() * perksByType[foundType].length)];
-    
     const perkStrength = getPerkStrength(foundPerk)
+
+    // generate a random second perk, preventing duplicates
+    const secondPerks = perksByType[foundType].filter((a: any) => {
+        return a !== foundPerk;
+    });
+    const secondFoundPerk = secondPerks[Math.floor(Math.random() * secondPerks.length)]
+    const secondPerkStrength = getPerkStrength(secondFoundPerk)
 
     const returnData = {
         "rarity": rarityMap[foundRarity],
@@ -196,6 +205,9 @@ export function resolveAbyssToken() : any {
         "perkInfo":[{
             "perk": foundPerk,
             "strength": perkStrength
+        }, {
+            "perk": secondFoundPerk,
+            "strength": secondPerkStrength
         }]
     }
 
@@ -212,17 +224,17 @@ export function resolveGearForge(item: string) {
     if (item.includes('Shield_')) data = shieldData[item]
     else if (item.includes('Helmet_')) data = helmetData[item]
     else if (item.includes('Bag_')) data = backpackData[item]
-    else return;
+    else toast.error('Something went wrong!', {timeout: 3000});
 
     // then we figure out what catalyst to check for...
     let wantedCatalyst: string;
     if (data['rarity'] == 'Rare') wantedCatalyst = 'ForgeIronIngot'
     else if (data['rarity'] == 'Epic') wantedCatalyst = 'ChargedForgeIronIngot'
     else if (data['rarity'] == 'Exotic') wantedCatalyst = 'SuperChargedForgeIronIngot'
-    else return;
+    else return toast.error('You do not the required Forge Iron Ingot!', {timeout: 3000});;
     
     // check if we have the required ingot and amount...
-    if (!(selectedItems.get()[wantedCatalyst] >= settingData['CatalystAmount'])) return;
+    if (!(selectedItems.get()[wantedCatalyst] >= settingData['CatalystAmount'])) return toast.error(`You need ${settingData['CatalystAmount']} ${itemData[wantedCatalyst]['ingamename']}`)
 
     // now, check if there is the possibility of there being a perk added to it by checking if the input has any overlap with items used in perk recipes.
     const possiblePerkItems = Object.keys(selectedItems.get()).filter(x => validItems.perkRecipes.includes(x))
@@ -231,11 +243,12 @@ export function resolveGearForge(item: string) {
     if (item.includes('Shield_')) type = 'Shield'
     else if (item.includes('Helmet_')) type = 'Helmet'
     else if (item.includes('Bag_')) type = 'Bag'
-    else return;
+    else return toast.error('Uh Oh! Something went wrong!', {timeout: 3000});
 
     // if no perk item is found, simply upgrade the item and remove the catalyst
     if (possiblePerkItems.length == 0) {
-        // remove the input items
+        // remove the input 
+        outputItems.clear()
         selectedItems.remove(item)
         selectedItems.remove(wantedCatalyst, settingData['CatalystAmount'])
         
@@ -382,4 +395,18 @@ export function getMatchingPerks(perks: string[]) : [string[], string[]]{
     }
 
     return [matchingPerks, itemsInOrder]
+}
+
+export function resolveLotteryItems() : void {
+    // this function adds possible lottery items to the output result
+    const lotteryItems = settingData["SideProducts"]
+
+    for (let item in lotteryItems) {
+        const randomChance = Math.random() * 100
+
+        console.log(randomChance, item, lotteryItems[item])
+        if (randomChance >= lotteryItems[item]) {
+            outputItems.add(item, 1)
+        }
+    }
 }

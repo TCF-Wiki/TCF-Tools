@@ -32,9 +32,27 @@ export default defineComponent({
     border-radius: 50%;
     text-align: center;
     cursor: pointer;
-    z-index: 2;
 
+}
+
+.clearBtn-Image {
     position: absolute;
+    transition: all .2s ease-out;
+    animation: pulse 5s infinite;
+
+    
+}
+
+img {
+    filter: hue-rotate(-70deg) !important;
+}
+
+.clearBtnHover-Image {
+    opacity: 0;
+    position: absolute;
+    transition: all .2s ease-out;
+    transform: scale(1.70);
+    left: .5%;
 }
 
 .forgeClear-Button:hover .clearBtnHover-Image {
@@ -42,24 +60,7 @@ export default defineComponent({
 }
 
 .forgeClear-Button:hover .clearBtn-Image {
-  display: none;
-}
-.clearBtnHover-Image {
-    position: absolute;
-    opacity: 0;
-    transition: all .2s ease-out;
-    transform: scale(1.80) translateY(-20%) translateX(-.5%);
-    left: .5%;
-}
-
-
-.clearBtn-Image {
-    position: absolute;
-    transition: all .2s ease-out;
-    animation: pulse 5s infinite;
-    min-width: 100%;
-    min-height: 100%;
-    bottom: -4.2rem;
+  opacity: 0;
 }
 
 </style>
