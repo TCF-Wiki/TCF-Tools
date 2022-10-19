@@ -34,7 +34,7 @@
             <span> Time to Kill (s) </span> 
         </p>
         <p>
-            <span> Bullet per Bullet</span>
+            <span> Damage per Bullet</span>
         </p>
         <p>
             <span> Damage per Bullet (HS) </span>
