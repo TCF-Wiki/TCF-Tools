@@ -75,9 +75,6 @@ p, span {
     color: var(--text-color-body-white)
 }
 
-.active {
-    color: var(--text-color-body-gray)
-}
 .attachment-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
