@@ -97,9 +97,7 @@ export default {
     height: 100%;
 }
 
-.active {
-    background-color: var(--background-stripe-color);
-}
+
 .armor-selector {
     margin: .2em;
     text-align: center;

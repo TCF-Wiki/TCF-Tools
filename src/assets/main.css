@@ -138,8 +138,8 @@ button {
 }
 
 .active {
-    background-color: var(--minor-accent-color);
-    color: var(--text-color-body-gray);
+    background-color: var(--background-stripe-color);
+
 }
 
 input[type='range'] {
