@@ -8,9 +8,9 @@
         <button class="close" @click.prevent="showModal = false"> &times; </button>
         <h2> Armor Selector </h2>
         <div class="armor-container">
-            <div v-for="(armor, key) in armorFilter(armorData)" class="armor-selector" :class="{active: (selectedArmor.selected == key)}" @click="selectedArmor.changeSelected(key)">
+            <div v-for="(armor, key) in armorFilter(armorData)" class="armor-selector" :class="classGiver(key)" @click="selectedArmor.changeSelected(key)">
                 <img :src=" 'calc-images/' + armorImage(key) + '.png'  " class="armor-image" > 
-                <span> {{  armorName(key)}} ({{armor['armorAmount']}})</span> 
+                <span> {{  armorName(key)}} ({{armor['armorAmount']}}) </span> 
             </div>
         </div>
     </section>
@@ -35,13 +35,16 @@ export default {
             let temp = {}
             temp['PlayerDefault'] = {'armorAmount': 0, 'rarity': 'None'}
             for (let key in data)  {
-                if (key.includes('Test')) continue
+                if (key.includes('Test') || key.includes('Tactical') || key.includes('Restoration') || key.includes('Altered')) continue
+                if (key.includes)
                 temp[key] = data[key]
             }
+            temp['Shield_Altered_03'] = data['Shield_Altered_03']
             return temp;
         },
         armorImage(key) {
             if (key.includes('PlayerDefault')) return 'No_Armor'
+            if (key.includes('Altered_03')) return 'Shield_Forged'
             if (key.includes('01')) {
                 if (key.includes('Restoration')) return 'Shield_Uncommon'
                 return 'Shield_Common'
@@ -65,6 +68,13 @@ export default {
                 return this.armorData[key]['rarity'] + ' Restoration Armor' 
             }
             return this.armorData[key]['rarity'] + ' Armor'
+        },
+        classGiver(key) {
+            let output = ''
+            output += armorData[key]['rarity'].toLowerCase()
+
+            if (selectedArmor.selected == key) output += ' active'
+            return output
         }
     }
 };
@@ -87,10 +97,13 @@ export default {
     height: 100%;
 }
 
+.active {
+    background-color: var(--background-stripe-color);
+}
 .armor-selector {
     margin: .2em;
     text-align: center;
-    border: 2px solid var(--tertairy);
+    box-shadow: 0 0 2px 2px var(--background-menu-color) inet;
 }
 
 .armor-selector:hover .weapon-image {
@@ -108,4 +121,5 @@ export default {
         grid-template-columns: 1fr 1fr
     }
 }
+
 </style>
