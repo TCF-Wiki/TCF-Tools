@@ -2,14 +2,14 @@
 import {defineComponent} from 'vue';
 
 
-import Home from './home/PageHome.vue';
-import About from './about/PageAbout.vue';
+import Home from './views/home/PageHome.vue';
+import About from './views/about/PageAbout.vue';
 // @ts-ignore
-import Calc from './calc/PageCalc.vue';
-import Loadout from './loadout/PageLoadout.vue';
-import Map from './map/PageMap.vue';
-import Forge from './forge/PageForge.vue';
-import NotFound from './Page404.vue';
+import Calc from './apps/calc/PageCalc.vue';
+import Loadout from './apps/loadout/PageLoadout.vue';
+import Map from './apps/map/PageMap.vue';
+import Forge from './apps/forge/PageForge.vue';
+import NotFound from './views/Page404.vue';
 
 const routes = {
     '/': Home,

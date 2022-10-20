@@ -1,4 +1,4 @@
-import {roundToThree} from '@/calc/utils';
+import {roundToThree} from '@/apps/calc/utils';
 import L, {LayerGroup, Marker, type Content, type LeafletEvent, type LeafletEventHandlerFn} from 'leaflet';
 import 'leaflet.markercluster';
 import 'leaflet-responsive-popup';
