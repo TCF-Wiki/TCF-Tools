@@ -1,6 +1,6 @@
 import {keyCardInfo, DeadDropInfo, specialDescriptions, specialLocations, locationNames} from './mapConstants';
 import {getMapData} from './data';
-import {roundToThree} from '@/calc/utils';
+import {roundToThree} from '@/apps/calc/utils';
 import type {TextNode} from '@vue/compiler-core';
 const mapData = await getMapData();
 

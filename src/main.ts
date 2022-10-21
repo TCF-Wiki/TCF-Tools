@@ -21,11 +21,11 @@ const RouterApp = createApp(Router)
     .use(Toast)
 RouterApp.mount('main');
 
-import Navbar from './Navbar.vue';
+import Navbar from './constantComponents/Navbar.vue';
 const NavbarApp = createApp(Navbar).component('font-awesome-icon', FontAwesomeIcon);
 NavbarApp.mount('nav');
 
-import Footer from './Footer.vue';
+import Footer from './constantComponents/Footer.vue';
 const FooterApp = createApp(Footer);
 FooterApp.mount('footer');
 

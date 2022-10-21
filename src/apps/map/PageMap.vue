@@ -52,7 +52,7 @@ import {selectedMap, selectedLocations, selectedItems, selectedTier} from './sto
 import {getMapData, getTierData} from './data';
 
 import {map1TileLayer, map2TileLayer, map3TileLayer, bounds, brightsandsColor, crescentfallsColor} from './mapConstants';
-import {addLeafletStyles, addResponsivePopupScript, addResponsivePopupStyles} from '../scriptLoader';
+import {addLeafletStyles, addResponsivePopupScript, addResponsivePopupStyles} from '../../scriptLoader';
 import {mapOneLabels, mapTwoLabels, mapThreeLabels} from './labels';
 
 import {updateLocationLayerGroups, getLocationLayerGroups, updateItemLayerGroups, getItemLayerGroups} from './layerGroups';

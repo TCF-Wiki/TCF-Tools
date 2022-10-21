@@ -1,4 +1,4 @@
-import type { roundToThree } from '@/calc/utils'
+import type { roundToThree } from '@/apps/calc/utils'
 import { perkData, settingData, itemData, shieldData, helmetData, backpackData, ingotData } from './data'
 import { perksByType } from './ForgeConstants'
 import { consumeInput, outputItems, selectedItems } from './store'

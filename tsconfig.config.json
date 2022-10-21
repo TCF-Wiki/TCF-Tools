@@ -7,5 +7,6 @@
     "target": "es2021",
     "module": "esnext",
     "allowJs": true,
+    "outDir": "build"
   }
 }
