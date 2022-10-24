@@ -9,6 +9,7 @@ import Calc from './apps/calc/PageCalc.vue';
 import Loadout from './apps/loadout/PageLoadout.vue';
 import Map from './apps/map/PageMap.vue';
 import Forge from './apps/forge/PageForge.vue';
+import Progress from './apps/quest/PageQuest.vue'
 import NotFound from './views/Page404.vue';
 
 const routes = {
@@ -18,6 +19,7 @@ const routes = {
     '/loadout': Loadout,
     '/map': Map,
     '/forge': Forge,
+    '/progress': Progress
 };
 const names = {
     '/': 'Apps',
@@ -26,6 +28,7 @@ const names = {
     '/loadout': 'Loadout Generator',
     '/map': 'Interactive Map',
     '/forge': 'Forge Simulator',
+    '/progress': 'Progress Tracker'
 };
 
 export default defineComponent({

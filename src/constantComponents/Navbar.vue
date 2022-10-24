@@ -10,6 +10,7 @@
                 <a href="/map"> Interactive Map </a>
                 <a href="/calc"> Weapon Calculator </a>
                 <a href="https://tracker.thecyclefrontier.wiki"> Item Tracker </a>
+                <a href="/progress"> Progress Tracker </a>
                 <a href="/forge"> Forge Simulator </a>
                 <a href="/loadout"> Loadout Generator </a>
             </div>
