@@ -220,6 +220,20 @@ export default defineComponent({
 .item__image {
     height: 100%;
     translate: 0 -5px
+}
 
+@media screen and (max-width: 900px) {
+    .card__costs {
+        font-size: 2rem;
+        width: fit-content
+    }
+    .item__image {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .item__row span {
+        grid-column: 2;
+    }
 }
 </style>

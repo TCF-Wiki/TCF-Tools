@@ -225,6 +225,7 @@ export default defineComponent({
     left: var(--padding);
 }
 
+
 .item__row {
     display: grid;
     grid-template-columns: 1fr 5fr;
@@ -245,4 +246,18 @@ export default defineComponent({
     translate: 0 -5px
 
 }
+
+@media screen and (max-width: 900px) {
+    .card__costs {
+        display: none;
+    }
+
+    .card__level {
+        top: 30%;
+        left: 43%;
+        right: unset;
+        bottom: unset;
+    }
+}
+
 </style>
