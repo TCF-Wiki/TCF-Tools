@@ -212,7 +212,7 @@
 
                 <div class="quarter-list__left">
                     <QuarterTechCard
-                        upgrade="generate_kmarks_3"
+                        upgrade="generate_kmarks_4"
                     />
                 </div>
 
