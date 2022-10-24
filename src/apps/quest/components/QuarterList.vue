@@ -210,21 +210,11 @@
                     6
                 </div>
 
-                <div class="quarter-list__left">
-                    <QuarterTechCard
-                        upgrade="generate_kmarks_4"
-                    />
-                </div>
-
                 <div class="quarter-list__center-left">
                     <QuarterTechCard
                         upgrade="kmarks_passive_cap_4"
                     />
                 </div>
-
-
-
-
             </div>
 
             <div class="quarter-list">
