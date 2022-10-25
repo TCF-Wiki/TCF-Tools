@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-        <h2> Headshot Percentage {{ HSValue }}% </h2>
+        <h2> HS Percentage: {{ HSValue }}% </h2>
         <input type="range" min="0" max="100" 
             v-model="HSValue" 
             @input="selectedHSValue.changeValue(HSValue)"

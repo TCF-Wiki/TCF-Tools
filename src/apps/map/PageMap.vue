@@ -108,9 +108,9 @@ export default defineComponent({
                 [1024, -1024],
                 [-1024, 1024],
             ],
-            zoomDelta: 0.30,
+            zoomDelta: 0.7,
             zoomSnap: 0.05,
-            wheelPxPerZoomLevel: 70,
+            wheelPxPerZoomLevel: 40,
             attributionControl: false,
         }).setView([-128, 128], 1);
 

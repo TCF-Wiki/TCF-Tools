@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h2> Distance to target {{ distance }}m</h2>
+        <h2> Distance: {{ distance }}m</h2>
             <input type="range" min="0" max="100" 
                 v-model="distance" 
                 @input="selectedDistance.changeValue(distance)"
