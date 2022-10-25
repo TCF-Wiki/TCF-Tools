@@ -24,8 +24,16 @@
     <p v-if="Object.keys(currentItems).length > 0"> Complete missions and upgrades to update the list </p>
     <p v-else class="complete"> You have completed every mission and upgrade.</p>
 
+    <div class="search-container" v-if="Object.keys(currentItems).length > 0"> 
+        <input type="text" v-model="searchValue" placeholder="Search for items...">  
+    </div>
+
     <section class="list__container">
-        <div v-for="amount, index in currentItems" :key="index.toString()" class="item__row">
+        <div v-for="amount, index in currentItems" 
+            :key="index.toString()" 
+            class="item__row" 
+            :class="{'matching': rowColor(index.toString())}"
+        >
             <img :src="'/map-images/item-images/' + itemName(index.toString(), true) + '.png'" class="item__image"> 
             <span>
                 <span v-if="index.toString()=='SoftCurrency'"> {{ amount/1000 }}k </span>
@@ -40,8 +48,16 @@
     <p v-if="Object.keys(currentMissionsItems).length > 0"> Complete missions to update the list </p>
     <p v-else class="complete"> You have completed every mission.</p>
 
+    <div class="search-container" v-if="Object.keys(currentMissionsItems).length > 0"> 
+        <input type="text" v-model="searchValue" placeholder="Search for items...">  
+    </div>
+
     <section class="list__container">
-        <div v-for="amount, index in currentMissionsItems" :key="index.toString()" class="item__row">
+        <div v-for="amount, index in currentMissionsItems" 
+            :key="index.toString()" 
+            class="item__row" 
+            :class="{'matching': rowColor(index.toString())}"
+        >
             <img :src="'/map-images/item-images/' + itemName(index.toString(), true) + '.png'" class="item__image"> 
             <span>
                 <span v-if="index.toString()=='SoftCurrency'"> {{ amount/1000 }}k </span>
@@ -56,8 +72,17 @@
     <p v-if="Object.keys(currentQuarterItems).length > 0"> Complete upgrades to update the list </p>
     <p v-else class="complete"> You have completed every upgrade.</p>
     
+    <div class="search-container" v-if="Object.keys(currentQuarterItems).length > 0"> 
+        <input type="text" v-model="searchValue" placeholder="Search for items...">  
+    </div>
+
     <section class="list__container">
-        <div v-for="amount, index in currentQuarterItems" :key="index.toString()" class="item__row">
+        <div 
+        v-for="amount, index in currentQuarterItems" 
+            :key="index.toString()" 
+            class="item__row" 
+            :class="{'matching': rowColor(index.toString())}"
+        >
             <img :src="'/map-images/item-images/' + itemName(index.toString(), true) + '.png'" class="item__image"> 
             <span>
                 <span v-if="index.toString()=='SoftCurrency'"> {{ amount/1000 }}k </span>
@@ -106,7 +131,9 @@ export default defineComponent({
             techLevelsData: techLevelsData,
             techTreeData: techTreeData,
 
-            slideIndex: 1
+            slideIndex: 1,
+
+            searchValue: '',
         }
     },
     mounted() {
@@ -117,6 +144,14 @@ export default defineComponent({
         this.showSlides(this.slideIndex)
     },
     methods: {
+        rowColor(name: string) : boolean {
+            if (this.searchValue.length < 3) return false
+            const itemName = this.itemName(name)
+
+            if (itemName.toLowerCase().includes(this.searchValue.toLowerCase())) return true
+
+            return false
+        },
         plusSlides(n: number) {
             this.showSlides(this.slideIndex +=n)
         },
@@ -343,8 +378,7 @@ export default defineComponent({
 p {
     text-align: center;
     font-size: 2rem;
-    margin-bottom: 1.6rem;
-    border-bottom: 2px dotted var(--text-color-body-white);
+    margin-bottom: .3rem;
 }
 
 p.complete {
@@ -499,4 +533,29 @@ p.complete {
     border-bottom-color: var(--button-accent-color);
 }
 
+.matching {
+    transition: all .2s linear;
+    background-color: var(--background-menu-color);
+    color: var(--link-footer-color);
+}
+
+.search-container {
+    width: 100%;
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+
+    border-bottom: 2px dotted var(--text-color-body-white);
+}
+
+.search-container input {
+    width: 30%;
+    height: 100%;
+    font-size: 1.2rem;
+    padding: .2rem
+}
 </style>
