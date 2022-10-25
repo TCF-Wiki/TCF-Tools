@@ -1,7 +1,6 @@
 import { selectedItems, selectedLocations, selectedMap, selectedTier } from "./store";
 import { getMapData } from "./data";
 import { locationNames } from "./mapConstants";
-
 export async function loadInitialStore() {
     // get all the search params
     const params = (new URL(document.location.toString())).searchParams
@@ -31,22 +30,22 @@ export async function loadInitialStore() {
         selectedItems.clear()
         // to not clutter the map, we also clear the selected locations. 
         selectedLocations.clear()
-        // load our item data 
-        let itemData = await getMapData()
-        itemData = itemData['descriptions']
-
         // find the item that matches
+        let tempData = await getMapData()
+        const itemData = tempData['descriptions']
 
-        let itemList = [];
+        let itemList : string[] = [];
         for (let item in items) {
+            // find the matching item
             for (let i in itemData) {
+                // find a matching item
                 if (itemData[i]['name'].toLowerCase() == items[item].split('_').join(' ').toLowerCase()) {
                     //and add it to our store
-                    let toAdd = i.split('_').join(' ')
-                    itemList.push(toAdd)
+                    itemList.push(i)
                     break;
-                }
+                } 
             }
+
         }
         if (itemList) {
             selectedItems.set(itemList)
