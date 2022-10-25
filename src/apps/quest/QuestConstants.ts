@@ -128,6 +128,7 @@ export const missions : missionList = {
         ],
         "Titan Hunter": [
             "Main-KOR-TitanOre-1",
+            "Main-KOR-TitanOre-2"
         ],
         "Focused on Crystals": [
             "Main-KOR-FocusCrystals-1"
