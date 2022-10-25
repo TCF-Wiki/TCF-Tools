@@ -37,6 +37,7 @@ export const mapOneLabels = [
     mapLabel('Swamp', -196.499,49.247),
     mapLabel('Waterfalls', -35.620,199.141),
     mapLabel('East Caverns', -101.869,206.141),
+    mapLabel('Base Camp', -135.812, 125.115)
 ]
 
 export const mapTwoLabels = [
