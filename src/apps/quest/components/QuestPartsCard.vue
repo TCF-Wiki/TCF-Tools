@@ -115,7 +115,11 @@ export default defineComponent({
             else if (reward.includes('ICAScrip')) reward = "ICA Scrip"
             else if (reward.includes('OsirisScrip')) reward = "Osiris Scrip"
             else if (reward.includes('KorolevScrip')) reward = "Korolev Scrip"
-            else if (reward.includes('HardDrive'))  reward = 'Data Drive Tier 1'
+            else if (reward.includes('HardDrive_common'))  reward = 'Data Drive Tier 1'
+            else if (reward.includes('HardDrive_uncommon'))  reward = 'Data Drive Tier 2'
+            else if (reward.includes('HardDrive_rare'))  reward = 'Data Drive Tier 3'
+            else if (reward.includes('HardDrive_epic'))  reward = 'Data Drive Tier 4'
+            else if (reward.includes('HardDrive_legendary'))  reward = 'Data Drive Tier 5'
             else if (reward.includes('KeyCard')) {
                 if (reward.includes('Map01'))       reward = 'Bright_Sands_Key_Card'
                 if (reward.includes('Map02'))       reward = 'Crescent_Falls_Key_Card'

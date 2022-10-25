@@ -132,7 +132,11 @@ export default defineComponent({
             else if (item.includes('SmokeGrenade_01')) item = 'Smoke Grenade'
             else if (item.includes('Consumable_Health')) item = 'Weak Medkit'
             else if (item.includes('Scrip'))      item = item
-            else if (item.includes('HardDrive'))  item = 'Data Drive Tier 1'
+            else if (item.includes('HardDrive_common'))  item = 'Data Drive Tier 1'
+            else if (item.includes('HardDrive_uncommon'))  item = 'Data Drive Tier 2'
+            else if (item.includes('HardDrive_rare'))  item = 'Data Drive Tier 3'
+            else if (item.includes('HardDrive_epic'))  item = 'Data Drive Tier 4'
+            else if (item.includes('HardDrive_legendary'))  item = 'Data Drive Tier 5'
             else if (item.includes('VadimPredecessorItem')) item = 'Gregor\'s Dossier'
             else {
                 if (itemData[item]) {
