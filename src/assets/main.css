@@ -239,28 +239,28 @@ input[type='range']:hover::-webkit-slider-thumb {
 }
 
 .common {
-    color: var(--rarity-color-common);
+    color: var(--rarity-color-common) !important;
 }
 
 .uncommon {
-    color: var(--rarity-color-uncommon);
+    color: var(--rarity-color-uncommon) !important;
 }
 
 .rare {
-    color: var(--rarity-color-rare);
+    color: var(--rarity-color-rare) !important;
 }
 
 .epic {
     /* This color is hard to read on dark backgrounds, so we change it a little bit. */
-    color: #733aa8;
+    color: #733aa8 !important;
 }
 
 .exotic {
-    color: var(--rarity-color-exotic);
+    color: var(--rarity-color-exotic) !important;
 }
 
 .legendary {
-    color: var(--rarity-color-legendary);
+    color: var(--rarity-color-legendary) !important;
 }
 
 .map-label {

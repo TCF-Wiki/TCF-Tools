@@ -2,10 +2,14 @@ import { weaponData, targetData, armorData } from "./data";
 import { selectedTarget, selectedArmor, selectedHSValue, selectedDistance } from "./store";
 import { attachment } from './attachment'
 export const calculate = {
-    penetrationMultiplier: function(weapon) {
+    penetrationMultiplier: function(weapon, armorOverride) {
         let target = targetData[selectedTarget.selected]
         let penDiff;
-        if (selectedTarget.selected == 'PlayerDefault' && selectedTarget.selected != 'None') {
+
+        if (armorOverride) {
+            penDiff = this.s(weapon,'penetration') - armorOverride
+            target = targetData['PlayerDefault']
+        } else if (selectedTarget.selected == 'PlayerDefault' && selectedTarget.selected != 'None') {
             penDiff = this.s(weapon,'penetration') - armorData[selectedArmor.selected]['armorAmount']
         } else {
             penDiff =  this.s(weapon,'penetration') - target.armorValue
@@ -81,10 +85,11 @@ export const calculate = {
         return timeAMag;
     },
 
-    shotsToKill: function(weapon) {
+    shotsToKill: function(weapon, armorOverride, hsMultiplier) {
+        console.log(hsMultiplier)
         let hp = targetData[selectedTarget.selected].health;
 
-        let shots = hp / ((this.s(weapon, "directDamage") + this.s(weapon, 'radialDamage') ) * Math.max(this.s(weapon, "amountOfBurst") + 1, 1) * this.s(weapon, 'amountOfImmediateFires') * this.getShotModifiers(weapon)) * Math.max(this.s(weapon, 'amountOfBurst') + 1, 1)
+        let shots = hp / ((this.s(weapon, "directDamage") + this.s(weapon, 'radialDamage') ) * Math.max(this.s(weapon, "amountOfBurst") + 1, 1) * this.s(weapon, 'amountOfImmediateFires') * this.getShotModifiers(weapon, armorOverride, hsMultiplier)) * Math.max(this.s(weapon, 'amountOfBurst') + 1, 1)
 
         // adjust for small JS rounding errors (e.g. PDW vs exotic armor)
         let remaining = shots % Math.floor(shots)
@@ -132,10 +137,11 @@ export const calculate = {
         return 1 - (wRatio / fRatio) * (1 - mult);
     },
 
-    headShotMult: function(weapon) {
+    headShotMult: function(weapon, hsMultiplier) {
         if (selectedTarget.selected != 'PlayerDefault') return 1;
         let hsMult = this.s(weapon, 'weakDamageMultiplier');
         let HSPercent = selectedHSValue.HSValue;
+        if (hsMultiplier) HSPercent = hsMultiplier
         return 1 + ((hsMult - 1) * HSPercent) / 100;
     },
 
@@ -150,8 +156,9 @@ export const calculate = {
         return 1
 
     },
-    getShotModifiers: function(weapon) {
-        return this.headShotMult(weapon) * this.penetrationMultiplier(weapon) * this.falloffMultiplier(weapon) * this.creatureDamageMult(weapon);
+    getShotModifiers: function(weapon, armorOverride, hsMultiplier) {
+        console.log(hsMultiplier)
+        return this.headShotMult(weapon, hsMultiplier) * this.penetrationMultiplier(weapon, armorOverride) * this.falloffMultiplier(weapon) * this.creatureDamageMult(weapon);
     },
 
     savedWeaponData: {},

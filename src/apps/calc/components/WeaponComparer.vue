@@ -39,6 +39,51 @@
         <p>
             <span> Damage per Bullet (HS) </span>
         </p>
+        <h2> Shots to Kill (Shield) </h2>
+        <p>
+            <span> No Shield </span>
+        </p>
+        <p>
+            <span class="common"> Common Shield </span>
+        </p>
+        <p>
+            <span class="uncommon"> Uncommon Shield </span>
+        </p>
+        <p>
+            <span class="rare"> Rare Shield </span>
+        </p>
+        <p>
+            <span class="epic"> Epic Shield </span>
+        </p>
+        <p>
+            <span class="exotic"> Exotic Shield </span>
+        </p>
+        <p>
+            <span class="legendary"> Legendary Shield </span>
+        </p>
+        <h2> Shots to Kill (Helmet) </h2>
+        <p>
+            <span> No Helmet </span>
+        </p>
+        <p>
+            <span class="common"> Common Helmet </span>
+        </p>
+        <p>
+            <span class="uncommon"> Uncommon Helmet </span>
+        </p>
+        <p>
+            <span class="rare"> Rare Helmet </span>
+        </p>
+        <p>
+            <span class="epic"> Epic Helmet </span>
+        </p>
+        <p>
+            <span class="exotic"> Exotic Helmet </span>
+        </p>
+        <p>
+            <span class="legendary"> Legendary Helmet </span>
+        </p>
+
     </div>
     <div class="inner-container">
         <div v-for="weapon in selectedWeapons.list" class="flex-item">
@@ -48,10 +93,18 @@
             </p>
             
             <h2> {{ weaponData[weapon]['inGameName'] }} <img class="weapon-image" :src=" 'calc-images/' + weaponData[weapon]['inGameName'] + '.png'"> </h2>
-            <p v-for="(value, key) in detailedStats[weapon]"> 
+            <p v-for="(value, key) in getDetailedStats(weapon, undefined)"> 
                 <span :class="colourClassGiver(key, weapon)"> {{ value }} </span>
             </p>
-            
+
+            <h2> {{ weaponData[weapon]['inGameName'] }} <img class="weapon-image" :src=" 'calc-images/' + weaponData[weapon]['inGameName'] + '.png'"> </h2>
+            <p v-for="(value, key) in getDetailedStats(weapon, 'Shield')"> 
+                <span :class="colourClassGiver(key, weapon)"> {{ value }} </span>
+            </p>
+            <h2> {{ weaponData[weapon]['inGameName'] }} <img class="weapon-image" :src=" 'calc-images/' + weaponData[weapon]['inGameName'] + '.png'"> </h2>
+            <p v-for="(value, key) in getDetailedStats(weapon, 'Helmet')"> 
+                <span :class="colourClassGiver(key, weapon)"> {{ value }} </span>
+            </p>
             <div class="button-container">
                 <BodyChart 
                 :weapon="weapon"
@@ -72,7 +125,7 @@
 
 <script> 
 import { selectedWeapons, selectedArmor, selectedTarget, selectedHSValue, selectedDistance, selectedAttachments } from '../store';
-import { weaponData as wepData} from '../data';
+import { armorData, weaponData as wepData} from '../data';
 import { keyObject, detailedKeyObject, flippedKeys as flippedKeysData, roundToThree } from '../utils';
 import { calculate } from '../calculate';
 import { attachment } from '../attachment';
@@ -80,6 +133,7 @@ import { penetrationChart, falloffChart } from '../charts';
 
 import AttachmentSelector from './AttachmentSelector.vue'
 import BodyChart from './BodyChart.vue';
+import { helmetData } from '@/apps/forge/data';
 
 export default {
     components : {
@@ -104,6 +158,33 @@ export default {
         }
     },
     methods : {
+        getDetailedStats(weapon, getShotsForType) {
+            // This function filters the output based on if we want to have the shots to kill or not.
+            // uses the $ in the key name to filter.
+
+            const data = this.detailedStats[weapon]
+            if (!data) {
+                return {}
+            }
+
+            if (!getShotsForType) {
+                console.log('Hit!')
+                return Object.fromEntries(Object.entries(data).filter(([key]) => !key.includes('%')));
+
+            }
+
+            if (getShotsForType == "Shield") {
+                return Object.keys(data).
+                    filter((key) => key.includes('$')).
+                    reduce((cur, key) => { return Object.assign(cur, { [key]: data[key] })}, {});
+            }
+            if (getShotsForType == "Helmet") {
+                return Object.keys(data).
+                    filter((key) => key.includes('&')).
+                    reduce((cur, key) => { return Object.assign(cur, { [key]: data[key] })}, {});
+            }
+            return data;
+        },
         colourClassGiver(key, weapon) {
             let effects = attachment.getAttachmentEffects(weapon)
             let output = '';
@@ -176,10 +257,7 @@ export default {
 
                     }
                 }
-
-
             }
-            
 
             this.colourList = colouredList;
         },
@@ -201,6 +279,26 @@ export default {
                 detailedStats[wepName]['timeToKill'] = roundToThree(calculate.timeToKill(wepName))
                 detailedStats[wepName]['dmgPerBullet'] = roundToThree(calculate.dmgPerBullet(wepName))
                 detailedStats[wepName]['dmgPerBulletHS'] = roundToThree(calculate.dmgPerBulletHS(wepName))
+
+                // shield shots to kill
+                detailedStats[wepName]['noShield$%']       = Math.round(calculate.shotsToKill(wepName, 0, 0))
+                detailedStats[wepName]['commonShield$%']   = Math.round(calculate.shotsToKill(wepName, armorData['Shield_01']['armorAmount'], 0 ))
+                detailedStats[wepName]['uncommonShield$%'] = Math.round(calculate.shotsToKill(wepName, armorData['Shield_02']['armorAmount'], 0 ))
+                detailedStats[wepName]['rareShield$%']     = Math.round(calculate.shotsToKill(wepName, armorData['Shield_03']['armorAmount'], 0 ))
+                detailedStats[wepName]['epicShield$%']     = Math.round(calculate.shotsToKill(wepName, armorData['Shield_04']['armorAmount'], 0 ))
+                detailedStats[wepName]['exoticShield$%']   = Math.round(calculate.shotsToKill(wepName, armorData['Shield_05']['armorAmount'], 0 ))
+                detailedStats[wepName]['legendaryShield$%']= Math.round(calculate.shotsToKill(wepName, armorData['Shield_Altered_03']['armorAmount'], 0))
+
+                // Helmet shots to kill
+                detailedStats[wepName]['noHelmet&%']       = Math.round(calculate.shotsToKill(wepName, 0, 100 ))
+                detailedStats[wepName]['commonHelmet&%']   = Math.round(calculate.shotsToKill(wepName, helmetData['Helmet_01']['armorAmount'], 100 ))
+                detailedStats[wepName]['uncommonHelmet&%'] = Math.round(calculate.shotsToKill(wepName, helmetData['Helmet_02']['armorAmount'], 100 ))
+                detailedStats[wepName]['rareHelmet&%']     = Math.round(calculate.shotsToKill(wepName, helmetData['Helmet_03']['armorAmount'], 100 ))
+                detailedStats[wepName]['epicHelmet&%']     = Math.round(calculate.shotsToKill(wepName,helmetData['Helmet_04']['armorAmount'],  100 ))
+                detailedStats[wepName]['exoticHelmet&%']   = Math.round(calculate.shotsToKill(wepName, helmetData['Helmet_05']['armorAmount'], 100 ))
+                detailedStats[wepName]['legendaryHelmet&%']= Math.round(calculate.shotsToKill(wepName, helmetData['Helmet_Altered_03']['armorAmount'], 100))
+                // a % indicates it is a special data set we want to filter out seperately later.
+                // $ is armour, & is helmet
             }
 
             this.detailedStats = detailedStats
@@ -214,7 +312,7 @@ export default {
                 }
 
                 let compareValue;
-                if (this.flippedKeys.includes(key)) {
+                if (this.flippedKeys.includes(key) || key.includes('%')) {
                     compareValue = Math.min.apply(null, detailedStatsData) 
                 } else {
                     compareValue = Math.max.apply(null, detailedStatsData) 
