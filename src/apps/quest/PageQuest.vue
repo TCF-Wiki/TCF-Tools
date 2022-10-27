@@ -512,14 +512,10 @@
                             faction="osi"
                         />
                     </div>
+                </div>
 
-                    <div class="quest-list__right-line" :class="lineColor('osi','Laser Show', 2)">
-                            <div class="quest-list__right-line-content">
-                                Part 2
-                            </div>
-                    </div>
-
-                    <div class="quest-list__right" :class="lineColor('osi','Path to Strong Medkits')"> 
+                <div class="quest-list">
+                    <div class="quest-list__center" :class="lineColor('osi','Path to Strong Medkits')"> 
                         <QuestCard 
                             name="Path to Strong Medkits"
                             faction="osi"
@@ -527,9 +523,8 @@
                         />
                     </div>
                 </div>
-
                 <div class="quest-list">
-                    <div class="quest-list__center" :class="lineColor('osi','Laser Show')"> 
+                    <div class="quest-list__center" :class="lineColor('osi','Everything is Crystals')"> 
                         <QuestCard 
                             name="Everything is Crystals"
                             faction="osi"
