@@ -6,7 +6,7 @@ export const calculate = {
         let target = targetData[selectedTarget.selected]
         let penDiff;
 
-        if (armorOverride) {
+        if (armorOverride !== undefined) {
             penDiff = this.s(weapon,'penetration') - armorOverride
             target = targetData['PlayerDefault']
         } else if (selectedTarget.selected == 'PlayerDefault' && selectedTarget.selected != 'None') {
