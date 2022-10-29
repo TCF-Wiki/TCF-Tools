@@ -86,8 +86,12 @@ export const calculate = {
     },
 
     shotsToKill: function(weapon, armorOverride, hsMultiplier) {
-        console.log(hsMultiplier)
-        let hp = targetData[selectedTarget.selected].health;
+        let hp;
+        if (armorOverride !== undefined) {
+            hp = targetData['PlayerDefault'].health
+        } else {
+            hp = targetData[selectedTarget.selected].health;
+        }
 
         let shots = hp / ((this.s(weapon, "directDamage") + this.s(weapon, 'radialDamage') ) * Math.max(this.s(weapon, "amountOfBurst") + 1, 1) * this.s(weapon, 'amountOfImmediateFires') * this.getShotModifiers(weapon, armorOverride, hsMultiplier)) * Math.max(this.s(weapon, 'amountOfBurst') + 1, 1)
 
@@ -157,7 +161,6 @@ export const calculate = {
 
     },
     getShotModifiers: function(weapon, armorOverride, hsMultiplier) {
-        console.log(hsMultiplier)
         return this.headShotMult(weapon, hsMultiplier) * this.penetrationMultiplier(weapon, armorOverride) * this.falloffMultiplier(weapon) * this.creatureDamageMult(weapon);
     },
 
