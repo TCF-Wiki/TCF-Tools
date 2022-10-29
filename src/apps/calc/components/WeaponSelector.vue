@@ -1,23 +1,45 @@
 <template>
     <div class="container">
-        <button class="" type="button" @click.prevent="showWeaponModal = true"> 
+        <button class="" type="button" @click.prevent="isModalOpen = true"> 
             <img src="/calc-images/Weapon_Icon.png"> 
         </button>
     </div>
-    <section class="selection-list" v-show="showWeaponModal">
-        <button class="close" @click.prevent="showWeaponModal = false"> &times; </button>
-        <h2> Weapon Selector </h2>
-        <div class="weapon-container">
-            <div v-for="weapon in sortedData" class="weapon-selector" :class="{active: selectedWeapons.list.includes(weapon[1])}" @click="selectedWeapons.toggleSelected(weapon[1])">
-                <img :src=" 'calc-images/' + weapon[0] + '.png' " class="weapon-image" > 
-                <span class="weapon-name"> {{ weapon[0] }} </span> 
+    <Teleport to="#modal">
+        <Transition name="modal"> 
+            <div class="modal__bg" v-if="isModalOpen">
+                <section class="modal__content" ref="modal">  
+                    <button @click="isModalOpen = false" class="modal__close-button" aria-label="Close Modal" type="button">x</button>
+                    <div class="weapon-container">
+                        <div v-for="weapon in sortedData" class="weapon-selector" :class="{active: selectedWeapons.list.includes(weapon[1])}" @click="selectedWeapons.toggleSelected(weapon[1])">
+                            <img :src=" 'calc-images/' + weapon[0] + '.png' " class="weapon-image" > 
+                            <span class="weapon-name"> {{ weapon[0] }} </span> 
+                        </div>
+                    </div>
+                </section>
             </div>
-        </div>
-    </section>
-    <div class="background" v-show="showWeaponModal" @click.prevent="showWeaponModal = false"> </div>
-
-
+        </Transition>
+    </Teleport>
 </template>
+
+<script setup>
+import { ref } from 'vue'
+/* @ts-ignore */
+import { onClickOutside } from '@vueuse/core';
+
+const isModalOpen = ref(false)
+const modal = ref(null)
+onClickOutside(modal, () => (isModalOpen.value = false))
+    
+const openModal = () => {
+    isModalOpen.value = true
+
+    const body = document.body
+    
+    body.style.pointerEvents = 'none'
+
+    setTimeout( () => { body.style.pointerEvents = 'all'},600)
+}
+</script>
 
 <script>
 import { weaponData as wepData } from '../data';

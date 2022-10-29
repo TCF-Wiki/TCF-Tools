@@ -1,22 +1,48 @@
 <template>
     <div class="container"> 
-        <button class="" type="button" @click.prevent="showModal = true"> 
+        <button class="" type="button" @click.prevent="isModalOpen = true"> 
             <img :src=" 'calc-images/' + armorImage(selectedArmor.selected) + '.png'  " > 
         </button>
     </div>
-    <section class="selection-list" v-show="showModal">
-        <button class="close" @click.prevent="showModal = false"> &times; </button>
-        <h2> Armor Selector </h2>
-        <div class="armor-container">
-            <div v-for="(armor, key) in armorFilter(armorData)" class="armor-selector" :class="classGiver(key)" @click="selectedArmor.changeSelected(key)">
-                <img :src=" 'calc-images/' + armorImage(key) + '.png'  " class="armor-image" > 
-                <span> {{  armorName(key)}} ({{armor['armorAmount']}}) </span> 
+    <Teleport to="#modal">
+        <Transition name="modal"> 
+            <div class="modal__bg" v-if="isModalOpen">
+                <section class="modal__content" ref="modal">  
+                    <button @click="isModalOpen = false" class="modal__close-button" aria-label="Close Modal" type="button">x</button>
+                    <div class="weapon-container">
+                        <h2> Armor Selector </h2>
+                        <div class="armor-container">
+                            <div v-for="(armor, key) in armorFilter(armorData)" class="armor-selector" :class="classGiver(key)" @click="selectedArmor.changeSelected(key)">
+                                <img :src=" 'calc-images/' + armorImage(key) + '.png'  " class="armor-image" > 
+                                <span> {{  armorName(key)}} ({{armor['armorAmount']}}) </span> 
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
-        </div>
-    </section>
-    <div class="background" v-show="showModal" @click.prevent="showModal = false"> </div>
-
+        </Transition>
+    </Teleport>
 </template>
+
+<script setup>
+import { ref } from 'vue'
+/* @ts-ignore */
+import { onClickOutside } from '@vueuse/core';
+
+const isModalOpen = ref(false)
+const modal = ref(null)
+onClickOutside(modal, () => (isModalOpen.value = false))
+    
+const openModal = () => {
+    isModalOpen.value = true
+
+    const body = document.body
+    
+    body.style.pointerEvents = 'none'
+
+    setTimeout( () => { body.style.pointerEvents = 'all'},600)
+}
+</script>
 
 <script>
 import { armorData } from '../data';

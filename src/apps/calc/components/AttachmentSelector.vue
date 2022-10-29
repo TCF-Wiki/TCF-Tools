@@ -1,5 +1,5 @@
 <template>
-    <button class="" type="button" @click.prevent="showModal = true"><img src="/calc-images/Attachment_Icon.png"> </button>
+    <button class="" type="button" @click.prevent="isModalOpen = true"><img src="/calc-images/Attachment_Icon.png"> </button>
     <!-- <p> Stats modified by <br> an attachment will<br>  be <span style="text-decoration: underline"> underlined </span> </p>  -->
     <div class="attachment-list"> 
         <p> Selected attachments: </p>
@@ -7,27 +7,53 @@
         <p v-if="!selectedAttachments.list[weapon] || selectedAttachments.list[weapon].length==0"> None </p>
 
     </div>
-    <section class="selection-list" v-show="showModal">
-        <button class="close" @click.prevent="showModal = false"> &times; </button>
-        <h2> Attachment Selector </h2>
-        <div class="attachment-container">
-            <div v-for="(group, key) in groupAttachments(weapon)" class="attachment-selector">
-                <!-- <img :src=" 'images/' + armorImage(key) + '.png'  " class="attachment-image" >  -->
-                <!-- <span> {{  attachmentData[attachment]['IGN'] }} ({{attachmentData[attachment]['rarity']}})</span>  -->
-                <h3> {{ keyNames[key] }} </h3>
-                <p v-for="(attachment) in group" 
-                :class="{active: colourClassGiver(attachment)}"
-                @click="selectedAttachments.toggleSelected(weapon, attachment, key)">
-                     {{  attachmentData[attachment]['IGN'] }} ({{attachmentData[attachment]['rarity']}})
-                </p>
+
+    <Teleport to="#modal">
+        <Transition name="modal"> 
+            <div class="modal__bg" v-if="isModalOpen">
+                <section class="modal__content" ref="modal">  
+                    <button @click="isModalOpen = false" class="modal__close-button" aria-label="Close Modal" type="button">x</button>
+                    <h2> Attachment Selector </h2>
+                    <div class="attachment-container">
+                        <div v-for="(group, key) in groupAttachments(weapon)" class="attachment-selector">
+                            <!-- <img :src=" 'images/' + armorImage(key) + '.png'  " class="attachment-image" >  -->
+                            <!-- <span> {{  attachmentData[attachment]['IGN'] }} ({{attachmentData[attachment]['rarity']}})</span>  -->
+                            <h3> {{ keyNames[key] }} </h3>
+                            <p v-for="(attachment) in group" 
+                            :class="{active: colourClassGiver(attachment)}"
+                            @click="selectedAttachments.toggleSelected(weapon, attachment, key)">
+                                {{  attachmentData[attachment]['IGN'] }} ({{attachmentData[attachment]['rarity']}})
+                            </p>
+                        </div>
+                        <div v-if="getAttachments(weapon).length == 0">
+                            <p class="center"> This weapon has no attachments available. </p>
+                        </div>
+                    </div>
+                </section>
             </div>
-            <div v-if="getAttachments(weapon).length == 0">
-                <p class="center"> This weapon has no attachments available. </p>
-            </div>
-        </div>
-    </section>
-    <div class="background" v-show="showModal" @click.prevent="showModal = false"> </div>
+        </Transition>
+    </Teleport>
 </template>
+
+<script setup>
+import { ref } from 'vue'
+/* @ts-ignore */
+import { onClickOutside } from '@vueuse/core';
+
+const isModalOpen = ref(false)
+const modal = ref(null)
+onClickOutside(modal, () => (isModalOpen.value = false))
+    
+const openModal = () => {
+    isModalOpen.value = true
+
+    const body = document.body
+    
+    body.style.pointerEvents = 'none'
+
+    setTimeout( () => { body.style.pointerEvents = 'all'},600)
+}
+</script>
 
 <script>
 import { attachmentData } from '../data'

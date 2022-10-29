@@ -1,37 +1,54 @@
 <template>
     <div class="container">
-        <button class="" type="button" @click.prevent="showTargetModal = true"> 
+        <button class="" type="button" @click.prevent="isModalOpen = true"> 
             <img :src=" 'calc-images/' + selectedTarget.selected + '.png'  " class="button-image"> 
         </button>
     </div>
-    <section class="selection-list" v-show="showTargetModal">
-        <button class="close" 
-        @click.prevent="showTargetModal = false"> 
-            &times; 
-        </button>
-        <h2> Target Selector </h2>
-        <div class="target-container">
-            <div 
-            v-for="(target, key) in targetData" 
-            class="target-selector" 
-            :class="{active: (selectedTarget.selected == key)}" 
-            @click="selectedTarget.changeSelected(key)"
-            >
-                <img :src=" 'calc-images/' + key + '.png' " class="target-image" >  
-                <span> {{ creatureNames[key] }} </span> 
+    <Teleport to="#modal">
+        <Transition name="modal"> 
+            <div class="modal__bg" v-if="isModalOpen">
+                <section class="modal__content" ref="modal">  
+                    <button @click="isModalOpen = false" class="modal__close-button" aria-label="Close Modal" type="button">x</button>
+                    <div class="weapon-container">
+                        <h2> Target Selector </h2>
+                        <div class="target-container">
+                            <div 
+                            v-for="(target, key) in targetData" 
+                            class="target-selector" 
+                            :class="{active: (selectedTarget.selected == key)}" 
+                            @click="selectedTarget.changeSelected(key)"
+                            >
+                                <img :src=" 'calc-images/' + key + '.png' " class="target-image" >  
+                                <span> {{ creatureNames[key] }} </span> 
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
-        </div>
-    </section>
-    <Teleport to="body">
-        <div class="background" 
-            v-show="showTargetModal" 
-            @click.prevent="showTargetModal = false"> 
-        </div>
+        </Transition>
     </Teleport>
 
-
-
 </template>
+
+<script setup>
+import { ref } from 'vue'
+/* @ts-ignore */
+import { onClickOutside } from '@vueuse/core';
+
+const isModalOpen = ref(false)
+const modal = ref(null)
+onClickOutside(modal, () => (isModalOpen.value = false))
+    
+const openModal = () => {
+    isModalOpen.value = true
+
+    const body = document.body
+    
+    body.style.pointerEvents = 'none'
+
+    setTimeout( () => { body.style.pointerEvents = 'all'},600)
+}
+</script>
 
 <script>
 import { targetData } from '../data';
