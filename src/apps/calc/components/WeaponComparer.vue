@@ -529,5 +529,6 @@ export default {
     border: none;
     padding: .2rem
 }
+
 </style>
 

@@ -214,8 +214,12 @@ export default defineComponent({
                 } else if (newKeys.length > 1) {
                     // Handle edge cases..
                     if (['Main-KOR-LetiumResearch-4','Main-KOR-Caverns-13','Main-ICA-GruntWork-5', 'Main-ICA-GruntWork-8'].includes(mission)) index = index-1
+
                     let text = this.stringTable[newKeys[index]]
 
+                    // another edge case
+                    if (mission == 'Main-ICA-MeteorReactor-5') text = this.stringTable[newKeys[newKeys.length-index-1]]
+                    
                     if (text.includes('Stash an')) return text
                     
                     // Stringtable is incomplete T_T
