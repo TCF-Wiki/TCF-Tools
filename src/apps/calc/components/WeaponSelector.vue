@@ -7,7 +7,7 @@
     <Teleport to="#modal">
         <Transition name="modal"> 
             <div class="modal__bg" v-if="isModalOpen">
-                <section class="modal__content" ref="modal">  
+                <section class="modal__content modal__small" ref="modal">  
                     <button @click="isModalOpen = false" class="modal__close-button" aria-label="Close Modal" type="button">x</button>
                     <div class="weapon-container">
                         <div v-for="weapon in sortedData" class="weapon-selector" :class="{active: selectedWeapons.list.includes(weapon[1])}" @click="selectedWeapons.toggleSelected(weapon[1])">
@@ -84,11 +84,13 @@ export default {
 .weapon-image {
     width: 10rem;
     margin: auto;
+    transition: all .2s ease-in-out;
 }
 
 .weapon-container {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    margin: auto;
 }
 
 
@@ -106,7 +108,7 @@ export default {
 .weapon-selector {
     margin: .2em;
     text-align: center;
-    border: 2px solid var(--tertairy);
+    cursor: pointer;
 }
 
 .weapon-selector:hover .weapon-image {

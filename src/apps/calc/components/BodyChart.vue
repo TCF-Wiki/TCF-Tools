@@ -6,7 +6,7 @@
     <Teleport to="#modal">
         <Transition name="modal"> 
             <div class="modal__bg" v-if="isModalOpen">
-                <section class="modal__content" ref="modal">  
+                <section class="modal__content modal__small" ref="modal">  
                     <button @click="isModalOpen = false" class="modal__close-button" aria-label="Close Modal" type="button">x</button>
                     <h2> Body Chart </h2>
                     <p> Damage per bullet </p>
@@ -93,6 +93,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
+
+section {
+    width: 30rem !important;
+}
 #figure {
     background-image: url('/calc-images/figure.webp');
     background-size: cover;

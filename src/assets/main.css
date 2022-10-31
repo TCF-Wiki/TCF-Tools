@@ -398,7 +398,8 @@ input[type='range']:hover::-webkit-slider-thumb {
     height: 100%;
 
     background-color: rgba(0, 0, 0, 0.5);
-
+    backdrop-filter: blur(2px);
+    
     display: flex;
     justify-content: center;
     align-items: center;
@@ -415,16 +416,20 @@ input[type='range']:hover::-webkit-slider-thumb {
 
     overflow-y: scroll;
     overscroll-behavior: contain;
+}
 
+.modal__small {
+    width: fit-content;
+    height: fit-content;
 }
 
 .modal__close-button {
     position: absolute;
-    top: .75rem;
-    right: 1.5rem;
+    top: 0rem;
+    right: .1rem;
 
-    font-size: 2rem;
-    color: var(--text-color-body-white);
+    font-size: 3rem;
+    color: var(--rarity-color-exotic);
     background: none;
     border: none;
     cursor: pointer;

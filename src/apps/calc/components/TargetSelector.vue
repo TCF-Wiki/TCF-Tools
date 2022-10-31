@@ -7,10 +7,9 @@
     <Teleport to="#modal">
         <Transition name="modal"> 
             <div class="modal__bg" v-if="isModalOpen">
-                <section class="modal__content" ref="modal">  
+                <section class="modal__content modal__small" ref="modal">  
                     <button @click="isModalOpen = false" class="modal__close-button" aria-label="Close Modal" type="button">x</button>
                     <div class="weapon-container">
-                        <h2> Target Selector </h2>
                         <div class="target-container">
                             <div 
                             v-for="(target, key) in targetData" 
@@ -74,6 +73,7 @@ export default {
 .target-image {
     width: 10rem;
     margin: auto;
+    transition: all .2s ease-in-out;
 }
 
 .target-container {
@@ -85,10 +85,10 @@ export default {
 .target-selector {
     margin: .2em;
     text-align: center;
-    border: 2px solid var(--tertairy);
+    cursor: pointer;
 }
 
-.target-selector:hover .weapon-image {
+.target-selector:hover .target-image {
     transform: scale(1.05);
 }
 

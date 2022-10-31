@@ -7,10 +7,9 @@
     <Teleport to="#modal">
         <Transition name="modal"> 
             <div class="modal__bg" v-if="isModalOpen">
-                <section class="modal__content" ref="modal">  
+                <section class="modal__content modal__small" ref="modal">  
                     <button @click="isModalOpen = false" class="modal__close-button" aria-label="Close Modal" type="button">x</button>
                     <div class="weapon-container">
-                        <h2> Armor Selector </h2>
                         <div class="armor-container">
                             <div v-for="(armor, key) in armorFilter(armorData)" class="armor-selector" :class="classGiver(key)" @click="selectedArmor.changeSelected(key)">
                                 <img :src=" 'calc-images/' + armorImage(key) + '.png'  " class="armor-image" > 
@@ -111,6 +110,7 @@ export default {
 .armor-image {
     width: 6em;
     margin: auto;
+    transition: all .2s ease-in-out;
 }
 
 .armor-container {
@@ -127,10 +127,10 @@ export default {
 .armor-selector {
     margin: .2em;
     text-align: center;
-    box-shadow: 0 0 2px 2px var(--background-menu-color) inet;
+    cursor: pointer;
 }
 
-.armor-selector:hover .weapon-image {
+.armor-selector:hover .armor-image {
     transform: scale(1.05);
 }
 

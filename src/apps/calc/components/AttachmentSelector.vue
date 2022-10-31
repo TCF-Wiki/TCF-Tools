@@ -11,7 +11,7 @@
     <Teleport to="#modal">
         <Transition name="modal"> 
             <div class="modal__bg" v-if="isModalOpen">
-                <section class="modal__content" ref="modal">  
+                <section class="modal__content modal__small" ref="modal">  
                     <button @click="isModalOpen = false" class="modal__close-button" aria-label="Close Modal" type="button">x</button>
                     <h2> Attachment Selector </h2>
                     <div class="attachment-container">
@@ -20,9 +20,9 @@
                             <!-- <span> {{  attachmentData[attachment]['IGN'] }} ({{attachmentData[attachment]['rarity']}})</span>  -->
                             <h3> {{ keyNames[key] }} </h3>
                             <p v-for="(attachment) in group" 
-                            :class="{active: colourClassGiver(attachment)}"
+                            :class="colourClassGiver(attachment)"
                             @click="selectedAttachments.toggleSelected(weapon, attachment, key)">
-                                {{  attachmentData[attachment]['IGN'] }} ({{attachmentData[attachment]['rarity']}})
+                                {{  attachmentData[attachment]['IGN'] }} ({{attachmentData[attachment]['rarity'].slice(0, 2)}})
                             </p>
                         </div>
                         <div v-if="getAttachments(weapon).length == 0">
@@ -79,10 +79,11 @@ export default {
             return attachment.getAttachments(weapon)
         },
         colourClassGiver(attachment) {
-            if (selectedAttachments.list[this.weapon]) {
-                return (selectedAttachments.list[this.weapon].includes(attachment))
-            }
-            return false
+            let output = ''
+            output += attachmentData[attachment]['rarity'].toLowerCase()
+
+            if (selectedAttachments.list[attachment]) output += ' active'
+            return output
         },
     }
 }
@@ -90,7 +91,6 @@ export default {
 </script>
 
 <style scoped>
-
 .attachment-image {
     width: 12em;
     margin: auto;
@@ -98,18 +98,24 @@ export default {
 
 
 p, span {
-    color: var(--text-color-body-white)
+    color: var(--text-color-body-white);
+    transition: all .1s ease-in-out;
+}
+
+p:hover {
+    background-color: var(--background-stripe-color);
 }
 
 .attachment-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: .5rem;
     margin-top: 1rem;
 }
 
 .attachment-selector {
     margin: .2em;
-    border: 2px solid var(--tertairy);
+    cursor: pointer;
     padding: .5em;
     text-align: left;
 }
