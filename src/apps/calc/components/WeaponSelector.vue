@@ -82,7 +82,8 @@ export default {
 <style scoped>
 
 .weapon-image {
-    width: 10rem
+    width: 10rem;
+    margin: auto;
 }
 
 .weapon-container {
