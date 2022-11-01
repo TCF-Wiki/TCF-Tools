@@ -1,10 +1,22 @@
 <template> 
 <section class="table-container"> 
     <div class="flex-item header-row">
-        <h2> Stats </h2>
-        <p v-for="(value, key) in filter(weaponData['WP_A_Pistol_Bullet_01'])">
-            <span> {{ keyNames[key] }} </span>
-        </p>
+        <h2> 
+            Stats 
+            <span class="collapse-button" @click="collapsed = !collapsed" role="button" aria-label="Collapse this section">
+                <span v-if="!collapsed">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>
+                </span>
+                <span v-else>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M182.6 137.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8H288c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z"/></svg>
+                </span>
+            </span>
+        </h2>
+        <div class="stats-wrapper" :class="{collapsed: collapsed}">
+            <p v-for="(value, key) in filter(weaponData['WP_A_Pistol_Bullet_01'])">
+                <span> {{ keyNames[key] }} </span>
+            </p>
+        </div>
         <h2> Detailed Stats </h2>
         <p>
             <span> Penetration Multiplier </span>
@@ -88,10 +100,11 @@
     <div class="inner-container">
         <div v-for="weapon in selectedWeapons.list" class="flex-item">
             <h2> {{ weaponData[weapon]['inGameName'] }} <img class="weapon-image" :src=" 'calc-images/' + weaponData[weapon]['inGameName'] + '.png'"> </h2>
-            <p v-for="(value, key) in filter(weaponData[weapon])">
-                <span :class="colourClassGiver(key, weapon)"> {{ value }} {{attachmentStat(weapon, key)}}</span>
-            </p>
-            
+            <div class="stats-wrapper" :class="{collapsed: collapsed}">
+                <p v-for="(value, key) in filter(weaponData[weapon])">
+                    <span :class="colourClassGiver(key, weapon)"> {{ value }} {{attachmentStat(weapon, key)}}</span>
+                </p>
+            </div>
             <h2> {{ weaponData[weapon]['inGameName'] }} <img class="weapon-image" :src=" 'calc-images/' + weaponData[weapon]['inGameName'] + '.png'"> </h2>
             <p v-for="(value, key) in getDetailedStats(weapon, undefined)"> 
                 <span :class="colourClassGiver(key, weapon)"> {{ value }} </span>
@@ -154,7 +167,8 @@ export default {
             flippedKeys: flippedKeysData,
             compareData: [],
             colourList: {},
-            detailedStats: {}
+            detailedStats: {},
+            collapsed: false
         }
     },
     methods : {
@@ -530,5 +544,25 @@ export default {
     padding: .2rem
 }
 
+.stats-wrapper {
+    transition: max-height .19s linear;
+    max-height: 1500px;
+}
+
+.collapsed {
+    max-height: 0px;
+    overflow: hidden;
+}
+
+.collapse-button {
+    float: right;
+    cursor: pointer;
+    width: 20px;
+    height: 100%;
+}
+
+svg {
+    fill: var(--rarity-color-uncommon);
+}
 </style>
 
