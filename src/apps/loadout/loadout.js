@@ -129,7 +129,7 @@ function getLoadoutFromURL() {
     if (weapons.length == 0 && items.length == 0) {
         RandomLoadout();
     } else {
-        displayLoadout(weapons[0], weapons[1], helmet, backpack, shield, items, itemNumbers);
+        displayLoadout(weapons[0].replaceAll('_', ' '), weapons[1].replaceAll('_', ' '), helmet, backpack, shield, items, itemNumbers);
     }
 }
 
@@ -137,19 +137,19 @@ export function ShareLoadout(clipboard = false) {
     let shareString = '?';
     let Weapon1 = document.getElementById('Weapon1').firstChild.getAttribute('src').replace('/loadout-images/Weapons/', '').replace('.png', '');
     let Weapon2 = document.getElementById('Weapon2').firstChild.getAttribute('src').replace('/loadout-images/', '').replace('Weapons/', '').replace('.png', '');
-    shareString += 'weapon=' + Weapon1.replaceAll(' ','_');
-    if (Weapon2 != 'None') shareString += '&weapon=' + Weapon2.replaceAll(' ','_');
+    shareString += 'weapon=' + Weapon1.replaceAll(' ', '_');
+    if (Weapon2 != 'None') shareString += '&weapon=' + Weapon2.replaceAll(' ', '_');
     for (let i = 1; i <= 4; i++) {
         let item = document.getElementById(`Item${i}`).getAttribute('src').replace('/loadout-images/', '').replace('.png', '');
         let number = document.getElementById(`Item${i}Number`).innerText;
-        if (item != 'None') shareString += '&item=' + item.replaceAll(' ','_') + '-' + number;
+        if (item != 'None') shareString += '&item=' + item.replaceAll(' ', '_') + '-' + number;
     }
     let helmet = document.getElementById('Helmet').getAttribute('src').replace('/loadout-images/', '').replace('Helmet_', '').replace('.png', '');
-    if (helmet != 'None') shareString += '&helmet=' + helmet.replaceAll(' ','_');
+    if (helmet != 'None') shareString += '&helmet=' + helmet.replaceAll(' ', '_');
     let shield = document.getElementById('Shield').getAttribute('src').replace('/loadout-images/', '').replace('Shield_', '').replace('.png', '');
-    if (shield != 'None') shareString += '&shield=' + shield.replaceAll(' ','_');
+    if (shield != 'None') shareString += '&shield=' + shield.replaceAll(' ', '_');
     let backpack = document.getElementById('Backpack').getAttribute('src').replace('/loadout-images/', '').replace('Backpack_', '').replace('.png', '');
-    if (backpack != 'None') shareString += '&backpack=' + backpack.replaceAll(' ','_');
+    if (backpack != 'None') shareString += '&backpack=' + backpack.replaceAll(' ', '_');
     if (clipboard) {
         navigator.clipboard.writeText(document.baseURI + shareString);
         let popup = document.getElementById('sharePopup');
