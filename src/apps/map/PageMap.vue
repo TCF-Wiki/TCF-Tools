@@ -281,7 +281,7 @@ export default defineComponent({
         const tierTwoOptions = {color: '#4cb31b', weight: 0, fillOpacity: 0.3};
         const tierThreeOptions = {color: '#1da7ec', weight: 0, fillOpacity: 0.3};
         const tierFourOptions = {color: '#4f0e8b', weight: 0, fillOpacity: 0.3};
-        const tierFiveOptions = {color: '#ff0984', weight: 0, fillOpacity: 0.3};
+        const tierFiveOptions = {color: '#ee3355', weight: 0, fillOpacity: 0.3};
 
         const mapOneTierOne = L.polygon(this.tierData['1']['1'], tierOneOptions);
         const mapOneTierTwo = L.polygon(this.tierData['1']['2'], tierTwoOptions);
