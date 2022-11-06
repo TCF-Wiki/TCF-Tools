@@ -88,7 +88,8 @@ export const missions : missionList = {
         ],
         "The Community Needs You": [
             "Main-ICA-ExtraWork2-1",
-            "Main-ICA-ExtraWork2-2"
+            "Main-ICA-ExtraWork2-2",
+            "Main-ICA-ExtraWork2-3"
         ]
     },
     "kor": {
