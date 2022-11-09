@@ -106,8 +106,16 @@ export async function updateItemLayerGroups() {
                 return new L.DivIcon({html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster' + c, iconSize: new L.Point(20, 20)});
             },
         });
+
+        // get name of item, adjusting for possible items with wrong name
+        let name : string;
+        if (item?.includes('Map01_KeyCard')) name = 'Bright_Sands_Key_Card'
+        else if (item?.includes('Map02_KeyCard')) name = 'Crescent_Falls_Key_Card'
+        else if (item?.includes('Map03_KeyCard')) name = 'Tharis_Island_Key_Card'
+        else name = mapData['descriptions'][item]['name'].replaceAll(' ', '_').replaceAll('#', '%23')
+
         let ItemMarker = L.icon({
-            iconUrl: `map-images/item-images/${mapData['descriptions'][item]['name'].replaceAll(' ', '_').replaceAll('#', '%23')}.png`,
+            iconUrl: `map-images/item-images/${name}.png`,
             iconSize: [25, 25],
             className: 'marker',
         });
