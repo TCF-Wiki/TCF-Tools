@@ -401,6 +401,9 @@ p.complete {
 
 .item__row span {
     text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    gap: .3rem;
 }
 
 .item__image {

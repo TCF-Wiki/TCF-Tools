@@ -45,7 +45,6 @@ export default defineComponent({
             // This function gets the name of the image when given an item name. Handles edge cases.
             if (item.includes('SoftCurrency'))    item = 'K-Marks'
             else if (item.includes('ShockGrenade_02')) item =  'Frag Grenade'
-            else if (item.includes('Scrip'))      item = item
             else if (item.includes('HardDrive_common'))  item = 'Data Drive Tier 1'
             else if (item.includes('HardDrive_uncommon'))  item = 'Data Drive Tier 2'
             else if (item.includes('HardDrive_rare'))  item = 'Data Drive Tier 3'
