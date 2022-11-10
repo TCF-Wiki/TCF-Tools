@@ -49,16 +49,16 @@
     <p>Consume input items? <ConsumeInputToggle /></p>
     <ItemSelector />
 
-    <div class="container">
+    <div class="info">
         <header>
             <h2>Information</h2>
         </header>
         <p> This site simulates The Forge. It includes all perk recipes, abyss alloy, and more. </p>
             
         <p> It assumes that the chances for each perk / output item are spread evenly. </p>
-        <p> The following edge case is not handled properly: </p>
-        <p class="indent"> Ingame: if you want two perks that use the same item, you have to put each set of item in a different slot. The simulator does not require them to be in different slots. </p>
-    </div>
+        <!-- <p> The following edge case is not handled properly: </p>
+        <p class="indent"> Ingame: if you want two perks that use the same item, you have to put each set of item in a different slot. The simulator does not require them to be in different slots. </p>-->
+    </div> 
 </template>
 
 <script lang="ts">
@@ -96,6 +96,11 @@ export default defineComponent({
     user-select: none;
 }
 
+.info {
+    text-align: center;
+    margin-top: 2rem;
+    border-top: 2px solid var(--rarity-color-common);
+}
 .container * {
     user-select: none;
 }

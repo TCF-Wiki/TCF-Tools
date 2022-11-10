@@ -294,23 +294,24 @@ export function resolveGearForge(item: string) {
             const itemAmountAvailable = selectedItems.get()[itemsInOrder[firstRandomIndex]]
             const itemAmountUsed = settingData["RarityAmount"][itemData[itemsInOrder[firstRandomIndex]]['rarity']] 
 
-            if (itemAmountAvailable >= itemAmountUsed*2) {
-                console.log('Multiple perks, but items used is not important')
-                // if yes, simply pick a second perk from the list that is not the same perk. 
-                let hasFoundPerk = false 
+            // Patch 2.4.0 made this no longer possible.
+            // if (itemAmountAvailable >= itemAmountUsed*2) {
+            //     console.log('Multiple perks, but items used is not important')
+            //     // if yes, simply pick a second perk from the list that is not the same perk. 
+            //     let hasFoundPerk = false 
               
-                let secondRandomIndex: number = -1;
-                // there must always be a second perk to pick that is not the same as the first one, so using a while loop to trial and error it is okay. 
-                while (!hasFoundPerk) {
-                    secondRandomIndex = Math.floor(Math.random() * matchingPerks.length)
-                    const secondRandomPerk = matchingPerks[secondRandomIndex]
+            //     let secondRandomIndex: number = -1;
+            //     // there must always be a second perk to pick that is not the same as the first one, so using a while loop to trial and error it is okay. 
+            //     while (!hasFoundPerk) {
+            //         secondRandomIndex = Math.floor(Math.random() * matchingPerks.length)
+            //         const secondRandomPerk = matchingPerks[secondRandomIndex]
     
-                    if ( firstRandomPerk !== secondRandomPerk ) {
-                        hasFoundPerk = true
-                    }
-                }
-                foundPerkIndexes = [firstRandomIndex, secondRandomIndex]
-            } else {
+            //         if ( firstRandomPerk !== secondRandomPerk ) {
+            //             hasFoundPerk = true
+            //         }
+            //     }
+            //     foundPerkIndexes = [firstRandomIndex, secondRandomIndex]
+            // } else {
                 // if no, we want to make sure we pick a perk that does not use the same item.
                 //console.log('Multiple perks, we cannot use the same item as the first one')
                 // first, create a list of perks that use different items.
@@ -333,7 +334,7 @@ export function resolveGearForge(item: string) {
                     const secondRandomIndex = indexesOfDifferentPerks[Math.floor(Math.random() * indexesOfDifferentPerks.length)] 
                     foundPerkIndexes = [firstRandomIndex, secondRandomIndex]
                 }
-            }            
+            //}            
         }
 
         // now that we have all our perks, we turn them back into usable info
