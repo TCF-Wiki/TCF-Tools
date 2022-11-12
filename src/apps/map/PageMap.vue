@@ -1,5 +1,4 @@
 <template>
-    <Suspense>
         <div class="page-content" id="page-content">
         <div class="left" id="left">
             <div id="left-content">
@@ -13,26 +12,20 @@
                         <ShareLink />
                     </div>
                 </section>
-                <section> 
+                <section class="container"> 
                     <ColorSelector />
                 </section>
             </div>
-            <button id="sidebar-toggler" @click="toggleSidebar">
-                ◀
-            </button>
         </div>
         <div class="right" id="right">
+            <button id="sidebar-toggler" @click="toggleSidebar">
+                <font-awesome-icon icon="fa-solid fa-caret-left" v-if="isExpanded"/> 
+                <font-awesome-icon icon="fa-solid fa-caret-right" v-else/>
+            </button>
             <MapSelector />
             <div id="map"></div>
         </div>
-    </div>
-    <template #fallback>
-        <div class="fallback-content page-content">
-            Loading...
-        </div>
-    </template>
-    </Suspense>
-    
+    </div> 
 </template>
 
 <style src="./MarkerCluster.css" />
@@ -373,67 +366,33 @@ export default defineComponent({
             this.isModalVisible = false;
         },
         toggleSidebar() {
-            let content = document.querySelector('#page-content')
-            let left = document.querySelector('#left')
-            let left_content = document.querySelector('#left-content')
-            
-            if (this.isExpanded) {
-                if (left) {
-                    left.classList.remove('expand-left')
-                    left.classList.add('collapse-left')
-                }
-
-                if (left_content) {
-                    left_content.classList.remove('expand-sidebar')
-                    left_content.classList.add('collapse-sidebar')
-                }
-
-                if (content) {
-                    content.classList.remove('expand-content')
-                    content.classList.add('collapse-content')
-                }
-
-                this.isExpanded = false
-            } else {
-                if (left) {
-                    left.classList.remove('collapse-left')
-                    left.classList.add('expand-left')
-                }
-
-                if (left_content) {
-                    left_content.classList.remove('collapse-sidebar')
-                    left_content.classList.add('expand-sidebar')
-                }
-
-                if (content) {
-                    content.classList.remove('collapse-content')
-                    content.classList.add('expand-content')
-                }
-
-                this.isExpanded = true
-            }
-            console.log('Pressed!')
+            let content = document.querySelector('#page-content');
+            content?.classList.toggle('collapsed');
+            content?.classList.toggle('add-keyframe')
+            this.isExpanded = !this.isExpanded
         }
     },
 });
 </script>
 
 <style scoped>
-.page-content {
+/* .page-content {
     display: flex;
     flex-direction: row;
     height: 100%;
     margin-right: 1.5vw;
     max-width: 100%;
     gap: 12rem;
-}
+} */
 
 .left {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    width: 40%;
+    /* width: 40%; */
     position: relative;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .right {
@@ -441,13 +400,14 @@ export default defineComponent({
     flex-direction: column;
     align-items: flex-start;
     justify-content:start;
-    width: 90%;
+    /* width: 90%; */
     gap: 0;
+    position: relative;
 }
 
 #map {
     width: 100%;
-    padding-bottom: 100%;
+    height: 100%;
     z-index: 0;
     background-color: #081021;
 }
@@ -466,11 +426,64 @@ h2 {
     margin: auto;
 }
 
+
+section {
+    background-color: var(--background-body-color);
+    padding: 1rem;
+    position: relative;
+}
+
+section:not(:last-child) {
+    margin-bottom: 1rem;
+}
+.setting-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    position: relative;
+}
+
+.container {
+    position: relative;
+}
+
+.page-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 5rem;
+
+    transition: all .4s ease-in-out;
+    padding: 1rem;
+}
+
+.page-content.collapsed {
+    grid-template-columns: 0fr 2fr;
+    gap: 0;
+}
+
+.page-content.collapsed .left {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+
+#sidebar-toggler {
+    position: absolute;
+    left: -3.75rem;
+    width: 2.5rem;
+
+    font-size: 2rem;
+
+    background-color: transparent;
+    border: transparent;
+    color: var(--rarity-color-rare);
+}
+
+
 @media screen and (max-width: 900px) {
     .page-content {
-        margin: 0;
-        flex-direction: column;
-        gap: 2rem;
+        display: grid;
+        grid-template-columns: 1fr;
     }
 
     .left, 
@@ -489,113 +502,6 @@ h2 {
     #sidebar-toggler {
         display: none;
     }
-
-    
 }
 
-.collapse-sidebar {
-    animation: collapse-sidebar .8s linear forwards;
-    overflow: hidden;
-    white-space: nowrap;
-}
-
-.expand-sidebar {
-    overflow: hidden;
-    white-space: nowrap;
-    animation: expand-sidebar .8s linear forwards;
-}
-
-.collapse-left {
-    animation: collapse-left .8s linear forwards;
-}
-
-.expand-left {
-    animation: expand-left .8s linear forwards;
-}
-
-#sidebar-toggler {
-    position: absolute;
-    top: 0;
-    right: 0;
-    display: none;
-}
-
-@keyframes collapse-sidebar {
-    0% {
-        width: 100%;
-    }
-    100% {
-        width: 0;
-    }
-}
-
-@keyframes expand-sidebar {
-    0% {
-        width: 0%;
-    }
-    100% {
-        width: 100%;
-    }
-}
-
-@keyframes collapse-left {
-    1% {
-        width: 40%
-    }
-    100% {
-        width: 0%
-    }
-}
-
-@keyframes expand-left {
-    1% {
-        width: 0%;
-    }
-    100% {
-        width: 40%;
-    }
-}
-
-.collapse-content {
-    animation: collapse-content .8s linear forwards;
-}
-
-.expand-content {
-    animation: expand-content .8s linear forwards;
-}
-
-@keyframes collapse-content {
-    0% {
-        gap: 12em
-    }
-    100% {
-        gap: 2em
-    }
-}
-
-@keyframes expand-content {
-    0% {
-        gap: 2em
-    }
-    100% {
-        gap: 12em
-    }
-}
-
-.fallback-content {
-    width: 100%;
-    height: 40em;
-    background-color: red;
-}
-
-section {
-    background-color: var(--background-body-color);
-    padding: 1rem;
-    margin-bottom: 1rem;
-}
-.setting-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 1rem;
-}
 </style>

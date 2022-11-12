@@ -7,12 +7,21 @@
     @input="setColor"
     label="Select marker outline colour" 
     v-model="color">
-    <button type="button" @click="saveColor" class="save">
+    <button type="button" @click="saveColor" class="save btn">
         <font-awesome-icon icon="fas fa-save" />
     </button>
-    <button type="button" @click="resetColor" class=reset>
+
+    <div class="hover"> 
+        Save
+    </div>
+
+    <button type="button" @click="resetColor" class="reset btn">
         <font-awesome-icon icon="fas fa-redo" />
     </button>
+
+    <div class="hover"> 
+        Reset
+    </div>
 </div>
 </template>
 
@@ -76,6 +85,7 @@ div {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 1rem;
+    position: relative;
 }
 
 input[type=color] {
@@ -85,19 +95,54 @@ input[type=color] {
     background: none;
     outline: none;
     box-shadow: none;
+
+    cursor: pointer;
 }
 
-button {
-    appearance: none;
-    background: none;
-    border: none;
-}
 .save {
     color: var(--rarity-color-uncommon);
 }
 
 .reset {
     color: var(--rarity-color-exotic);
+}
+
+.btn {
+    appearance: none;
+    background: none;
+    border: none;
+}
+
+.hover {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    z-index: 1;
+    background-color: var(--background-stripe-color);
+    top: -250%;
+    padding: .5rem;
+
+    width: fit-content;
+
+    transition: all .2s ease-in-out .2s;
+
+    border-radius: .5rem;
+
+    display: flex;
+    justify-content: center;
+    width: 28%;
+}
+
+.hover:first-of-type {
+    right: 35%;
+}
+
+.hover:nth-of-type(2) {
+    right: 0%
+}
+.btn:hover + .hover {
+    opacity: 1;
+    pointer-events: all;
 }
 
 </style>

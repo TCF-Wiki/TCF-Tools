@@ -14,13 +14,15 @@ import {
     faSquareXmark,
     faRankingStar,
     faUpRightFromSquare,
-    faLocationDot
+    faLocationDot,
+    faCaretLeft, 
+    faCaretRight
 
 } from '@fortawesome/free-solid-svg-icons';
 
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 
-library.add(faBars, faTrash, faRedo, faSave, faMagnifyingGlass, faCircleXmark, faSquareCheck, faSquareXmark, faRankingStar, faUpRightFromSquare, faLocationDot);
+library.add(faBars, faTrash, faRedo, faSave, faMagnifyingGlass, faCircleXmark, faSquareCheck, faSquareXmark, faRankingStar, faUpRightFromSquare, faLocationDot, faCaretLeft, faCaretRight);
 
 import './assets/main.css';
 
