@@ -1,7 +1,6 @@
 import {keyCardInfo, DeadDropInfo, specialDescriptions, specialLocations, locationNames} from './mapConstants';
 import {getMapData} from './data';
 import {roundToThree} from '@/apps/calc/utils';
-import type {TextNode} from '@vue/compiler-core';
 const mapData = await getMapData();
 
 export function createLootPopup(type: string) {
@@ -74,7 +73,9 @@ export function createLootPopup(type: string) {
                         img.src = `map-images/item-images/Tharis_Island_Key_Card.png`;
                     } else {
                         img.src = `map-images/item-images/Bright_Sands_Key_Card.png`;
-                    }
+                    } 
+                } else if (cellData[x].includes('Flechette Gun')) {
+                    img.src = `map-images/item-images/ASP_Flechette_Gun.png`
                 } else {
                     img.src = `map-images/item-images/${itemData[cellData[x]]['name'].replaceAll(' ', '_')}.png`;
                 }

@@ -1,5 +1,7 @@
 <template>
-<button @click="selectedTier.toggle"> Toggle Loot Tiers </button>
+<button @click="selectedTier.toggle">
+    <font-awesome-icon icon="fa-solid fa-ranking-star" />
+</button>
 </template>
 
 <script lang="ts">
@@ -15,16 +17,11 @@ export default defineComponent({
 })
 </script> 
 
-<style scoped>
-.toggleBtn {
-    background-color: var(--rarity-color-common);
-    border-color: #b0b3b6;
-    font-size: .8rem;
+<style scoped> 
+button {
+    color: var(--rarity-color-rare);
+    appearance: none;
+    background: none;
+    border: none;
 }
-
-.on {
-    background-color: var(--rarity-color-uncommon);
-    border-color: #398e11;
-}
-
 </style>

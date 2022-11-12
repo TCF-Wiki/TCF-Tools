@@ -91,7 +91,7 @@ export async function getShareLink() {
     resultString += `?map=${selectedMap.get()}`
 
     // tier overlay
-    resultString += `&tier=${selectedTier.get()}`
+    if (selectedTier.get()) resultString += `&tier=${selectedTier.get()}`
 
     // items
     let itemData = await getMapData()

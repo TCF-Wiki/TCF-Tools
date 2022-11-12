@@ -3,26 +3,34 @@
         aria-label="Get share link"
         @click="getShareLink"
         ref="shareButton"
-    > Share Link 
+    > 
+    <font-awesome-icon icon="fa-solid fa-up-right-from-square" />
     </button>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { getShareLink } from '../URLParameterHandler'
+
+import { useToast } from 'vue-toastification';
+const toast = useToast()
 export default defineComponent({
     methods: {
         async getShareLink() {
             navigator.clipboard.writeText(document.location + await getShareLink())
-
-            let el = this.$refs.shareButton as HTMLButtonElement
-            el.innerText = 'Copied Succesfully!'
-            el.classList.add('apply-bounce')
-            setTimeout(() => {
-                el.innerText = "Get share link"
-                el.classList.remove('apply-bounce')
-            }, 3000)
+            toast.info('Coplied share link to clipboard!', {timeout: 2000})
+            
         }
     }
 })
 </script>
+
+<style scoped> 
+button {
+    color: var(--rarity-color-legendary);
+    appearance: none;
+    background: none;
+    border: none;
+}
+</style>
+

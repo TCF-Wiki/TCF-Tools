@@ -22,7 +22,7 @@
                             <p v-for="(attachment) in group" 
                             :class="colourClassGiver(attachment)"
                             @click="selectedAttachments.toggleSelected(weapon, attachment, key)">
-                                {{  attachmentData[attachment]['IGN'] }} ({{attachmentData[attachment]['rarity'].slice(0, 2)}})
+                                {{  attachmentData[attachment]['IGN'] }} ({{attachmentData[attachment]['rarity']}})
                             </p>
                         </div>
                         <div v-if="getAttachments(weapon).length == 0">

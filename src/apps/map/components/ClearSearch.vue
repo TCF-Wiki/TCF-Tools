@@ -1,7 +1,7 @@
 <template>
 <button class=""
 @click="clearSearch">
-    Clear Search
+    <font-awesome-icon icon="fa-solid fa-trash" />
 </button>
 
 </template>
@@ -25,3 +25,12 @@ export default defineComponent({
     }
 })
 </script>
+
+<style scoped> 
+button {
+    color: var(--rarity-color-exotic);
+    appearance: none;
+    background: none;
+    border: none;
+}
+</style>

@@ -5,14 +5,17 @@
             <div id="left-content">
                 <ItemSearch />
                 <LocationSelector />
-                <h2>Misc</h2>
-                <div class="setting-container"> 
-                    <TierToggler />
-                    <ClearSearch />
-                    <ShareLink />
-                </div>
-
-                <ColorSelector />
+                <section>
+                <h2>Options</h2>
+                    <div class="setting-container"> 
+                        <TierToggler />
+                        <ClearSearch />
+                        <ShareLink />
+                    </div>
+                </section>
+                <section> 
+                    <ColorSelector />
+                </section>
             </div>
             <button id="sidebar-toggler" @click="toggleSidebar">
                 ◀
@@ -455,6 +458,14 @@ export default defineComponent({
     flex-direction: column;
 }
 
+h2 {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
 @media screen and (max-width: 900px) {
     .page-content {
         margin: 0;
@@ -577,10 +588,14 @@ export default defineComponent({
     background-color: red;
 }
 
+section {
+    background-color: var(--background-body-color);
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
 .setting-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 1rem;
-    margin-bottom: 1em;
 }
 </style>

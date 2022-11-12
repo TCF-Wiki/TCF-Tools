@@ -1,24 +1,25 @@
 <template>
+<h2> Outline </h2> 
 <div> 
-    <label for="colorSelector">Select Marker Outline </label>
     <input 
     type="color" 
     id="colorSelector" 
-    @input="setColor" 
+    @input="setColor"
+    label="Select marker outline colour" 
     v-model="color">
-    <button type="button" @click="saveColor">
+    <button type="button" @click="saveColor" class="save">
         <font-awesome-icon icon="fas fa-save" />
     </button>
-    <button type="button" @click="resetColor">
+    <button type="button" @click="resetColor" class=reset>
         <font-awesome-icon icon="fas fa-redo" />
     </button>
 </div>
-{{ comment }}
-
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { useToast } from 'vue-toastification';
+const toast = useToast()
 export default defineComponent({
     data() {
         return {
@@ -55,8 +56,7 @@ export default defineComponent({
         saveColor() {
             if (typeof this.color == 'string') {
                 localStorage.setItem('markerOutlineColor', this.color)
-                this.comment = 'Saved. Reloading the page will not reset the color.'
-                setTimeout( () => {this.comment = ''}, 9000)
+                toast.info('Saved outline colour!', { timeout: 2000 })
             }
         }
     }
@@ -64,15 +64,40 @@ export default defineComponent({
 </script>
 
 <style scoped>
-div {
+h2 {
+    width: 50%;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+div {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
 }
 
 input[type=color] {
-    width: 20%;
-    border-radius: 1px;
+    /* width: 20%; */
+    margin: auto;
+    border: none;
+    background: none;
+    outline: none;
+    box-shadow: none;
+}
+
+button {
+    appearance: none;
+    background: none;
+    border: none;
+}
+.save {
+    color: var(--rarity-color-uncommon);
+}
+
+.reset {
+    color: var(--rarity-color-exotic);
 }
 
 </style>

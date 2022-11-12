@@ -1,56 +1,58 @@
 <template>
-    <h2> Containers </h2>
-    <div class="button-container">
-        <button type="button" @click="enableAllContainers()"
-        aria-label="Enable all container locations">
-            Enable All
-        </button>
-        <button type="button" @click="disableAllContainers()"
-        aria-label="Disable all container locations">
-            Disable All
-        </button>
-    </div>
-    <div class="button-container">
-        <div v-if="mapData" 
-        v-for="value in orderedContainers" 
-        @click="notFoundContainers.includes(value) ? null : selectedLocations.toggle(value)"
-        :aria-label="'Toggle ' + locationNamer(value)"
-        role="button">
-            <div>
-                <p 
-                    :class="containerClassGiver(value)"
-                    >
-                    {{ locationNamer(value) }}
-                </p>
-            </div>
-        </div>
-    </div>
-    <h2> Special Locations </h2>
-    <div class="button-container">
-        <button type="button" @click="enableAllSpecial"
-        aria-label="Enable all container locations">
-            Enable All
-        </button>
-        <button type="button" @click="disableAllSpecial"
-        aria-label="Disable all special locations">
-            Disable All
-        </button>
-    </div>
-    <div class="button-container">
-        <div v-if="mapData" 
-            v-for="value in orderedSpecialLocations" 
-            @click="notFoundSpecialLocations.includes(value) ? null : selectedLocations.toggle(value)"
+    <section>
+        <header> 
+            <h2> Containers </h2> 
+            <div @click="enableAllContainers()" aria-label="Enable all container locations" class="enable-all"> 
+                <font-awesome-icon icon="fa-solid fa-square-check" />    
+            </div> 
+        
+            <div @click="disableAllContainers()" aria-label="Disable all container locations" class="disable-all">
+                <font-awesome-icon icon="fa-solid fa-square-xmark" />   
+            </div> 
+        </header>
+        <div class="button-container">
+            <div v-if="mapData" 
+            v-for="value in orderedContainers" 
+            @click="notFoundContainers.includes(value) ? null : selectedLocations.toggle(value)"
             :aria-label="'Toggle ' + locationNamer(value)"
             role="button">
-            <p 
-                :class="specialLocationClassGiver(value)"
-                    
-                >
-
-                {{ locationNamer(value) }}
-        </p>
+                <div>
+                    <p 
+                        :class="containerClassGiver(value)"
+                        >
+                        {{ locationNamer(value) }}
+                    </p>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
+    <section> 
+        <header> 
+            <h2> Special Locations </h2> 
+            <div @click="enableAllSpecial()" aria-label="Enable all special locations" class="enable-all"> 
+                <font-awesome-icon icon="fa-solid fa-square-check" />    
+            </div> 
+        
+            <div @click="disableAllSpecial()" aria-label="Disable all special locations" class="disable-all">
+                <font-awesome-icon icon="fa-solid fa-square-xmark" />
+            </div> 
+        </header>
+        <div class="button-container">
+            <div v-if="mapData" 
+                v-for="value in orderedSpecialLocations" 
+                @click="notFoundSpecialLocations.includes(value) ? null : selectedLocations.toggle(value)"
+                :aria-label="'Toggle ' + locationNamer(value)"
+                role="button">
+                <p 
+                    :class="specialLocationClassGiver(value)"
+                        
+                    >
+
+                    {{ locationNamer(value) }}
+            </p>
+            </div>
+        </div>
+    </section> 
 </template>
 
 
@@ -253,48 +255,85 @@ export default defineComponent({
 
 
 <style scoped>
-    p {
-        cursor: pointer;
-    }
-    
-    .selected::before {
-        content: '✔ ';
-        color: var(--rarity-color-uncommon);
-    }
-    .not-selected::before {
-        content: '✖ ';
-        color: var(--rarity-color-exotic);
-    }
+h2 {
+    text-align: center;
+}
+p {
+    cursor: pointer;
+}
 
-    .not-found {
-        text-decoration-line: line-through;
-    }
+.selected::before {
+    content: '✔ ';
+    color: var(--rarity-color-uncommon);
+}
+.not-selected::before {
+    content: '✖ ';
+    color: var(--rarity-color-exotic);
+}
 
-    .not-found::before {
-        content: '? ';
-        color: var(--rarity-color-rare);
-        font-weight: bold;
-    }
-    
-    .hidden {
-        display: none;
-    }
-    
+.not-found {
+    text-decoration-line: line-through;
+}
+
+.not-found::before {
+    content: '? ';
+    color: var(--rarity-color-rare);
+    font-weight: bold;
+}
+
+.hidden {
+    display: none;
+}
+
+.button-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .6rem;
+}
+
+@media screen  and (max-width: 900px){
     .button-container {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: .6rem;
-        justify-content: left;
+        grid-template-columns: 1fr 1fr 1fr;
+        width: 100%;
+        font-size: .9rem;
     }
-    
-    @media screen  and (max-width: 900px){
-        .button-container {
-            grid-template-columns: 1fr 1fr 1fr;
-            width: 100%;
-            font-size: .9rem;
-        }
+}
+.button-container div {
+    background-color: transparent;
+    transition: background-color .2s ease-in-out;
+}
+.button-container div:hover {
+    background-color: var(--background-stripe-color);
+}
+.enable-all,
+.disable-all {
+    width: 	16px;
+    cursor: pointer;
+}
 
-    }
-    
+.enable-all:hover,
+.disable-all:hover {
+    scale: 1.1
+}
 
-    </style>
+.enable-all {
+    color: var(--rarity-color-uncommon);
+}
+
+.disable-all {
+    color: var(--rarity-color-exotic);
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .4em;
+}
+
+section {
+    background-color: var(--background-body-color);
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+</style>

@@ -3,11 +3,24 @@ import {library} from '@fortawesome/fontawesome-svg-core';
 
 
 
-import {faBars, faTrash, faRedo, faSave} from '@fortawesome/free-solid-svg-icons';
+import {
+    faBars, 
+    faTrash, 
+    faRedo, 
+    faSave,
+    faMagnifyingGlass,
+    faCircleXmark,
+    faSquareCheck,
+    faSquareXmark,
+    faRankingStar,
+    faUpRightFromSquare,
+    faLocationDot
+
+} from '@fortawesome/free-solid-svg-icons';
 
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 
-library.add(faBars, faTrash, faRedo, faSave);
+library.add(faBars, faTrash, faRedo, faSave, faMagnifyingGlass, faCircleXmark, faSquareCheck, faSquareXmark, faRankingStar, faUpRightFromSquare, faLocationDot);
 
 import './assets/main.css';
 
