@@ -101,3 +101,33 @@ export const selectedTier = reactive({
         this.on = false;
     },
 });
+
+
+export const clusterEnabled = reactive({
+    on: false as boolean,
+    get(): boolean {
+        return this.on;
+    },
+    set(New: boolean): void {
+        this.on = New;
+    },
+    toggle() {
+        this.on = !this.on;
+    },
+    enable() {
+        this.on = true;
+    },
+    disable() {
+        this.on = false;
+    }, 
+})
+
+export const minimumPercent = reactive({
+    distance: 0,
+    get() {
+        return this.distance
+    },
+    set(value: number) {
+        this.distance = value;
+    }
+})

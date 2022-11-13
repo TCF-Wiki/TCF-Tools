@@ -37,7 +37,7 @@
     <Transition name="modal"> 
         <div class="modal__bg" v-if="isModalOpen">
             <section class="modal__content" ref="modal">  
-                <button @click="isModalOpen = false" class="modal__close-button" aria-label="Close Modal" type="button">x</button>
+                <button @click="isModalOpen = false" class="modal__close-button" aria-label="Close Modal" type="button"><font-awesome-icon icon="fa-solid fa-xmark" /></button>
                     <QuestParts 
                         :name="name" 
                         :faction="faction"

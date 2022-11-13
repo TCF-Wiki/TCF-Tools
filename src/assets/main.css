@@ -179,6 +179,7 @@ input[type='range']:hover::-moz-range-thumb {
 input[type='range']:hover::-webkit-slider-thumb {
     background: var(--button-accent-color);
 }
+
 #loading {
     position: fixed;
     left: 50%;
@@ -479,3 +480,6 @@ input[type='range']:hover::-webkit-slider-thumb {
     color: var(--primary);
 }
 
+warning {
+    color: var(--rarity-color-exotic);
+}

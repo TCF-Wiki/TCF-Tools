@@ -6,22 +6,18 @@
     id="colorSelector" 
     @input="setColor"
     label="Select marker outline colour" 
-    v-model="color">
-    <button type="button" @click="saveColor" class="save btn">
+    v-model="color"
+    
+    v-tooltip="{ content: 'Click to set marker outline colour', html: true }">
+    <button type="button" @click="saveColor" class="save btn"
+    v-tooltip="{ content: 'Save current colour for future use', html: true }">
         <font-awesome-icon icon="fas fa-save" />
     </button>
 
-    <div class="hover"> 
-        Save
-    </div>
-
-    <button type="button" @click="resetColor" class="reset btn">
+    <button type="button" @click="resetColor" class="reset btn"
+    v-tooltip="{ content: 'Reset to default', html: true }">
         <font-awesome-icon icon="fas fa-redo" />
     </button>
-
-    <div class="hover"> 
-        Reset
-    </div>
 </div>
 </template>
 
@@ -112,37 +108,4 @@ input[type=color] {
     background: none;
     border: none;
 }
-
-.hover {
-    opacity: 0;
-    pointer-events: none;
-    position: absolute;
-    z-index: 1;
-    background-color: var(--background-stripe-color);
-    top: -250%;
-    padding: .5rem;
-
-    width: fit-content;
-
-    transition: all .2s ease-in-out .2s;
-
-    border-radius: .5rem;
-
-    display: flex;
-    justify-content: center;
-    width: 28%;
-}
-
-.hover:first-of-type {
-    right: 35%;
-}
-
-.hover:nth-of-type(2) {
-    right: 0%
-}
-.btn:hover + .hover {
-    opacity: 1;
-    pointer-events: all;
-}
-
 </style>

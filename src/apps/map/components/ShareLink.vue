@@ -4,13 +4,10 @@
         aria-label="Get share link"
         @click="getShareLink"
         ref="shareButton"
+        v-tooltip="{ content: 'Get a shareable link to <br> your current selections', html: true }"
     > 
     <font-awesome-icon icon="fa-solid fa-up-right-from-square" />
     </button>
-    <div class="hover"> 
-        Get a shareable link to <br>
-        your current selections
-    </div>
 </template>
 
 <script lang="ts">
@@ -36,25 +33,6 @@ export default defineComponent({
     appearance: none;
     background: none;
     border: none;
-}
-
-.hover {
-    opacity: 0;
-    pointer-events: none;
-    position: absolute;
-    z-index: 1;
-    background-color: var(--background-stripe-color);
-    top: -250%;
-    right: -3%;
-    padding: .5rem;
-    border-radius: .5rem;
-
-    transition: all .2s ease-in-out .2s;
-}
-
-.btn:hover + .hover {
-    opacity: 1;
-    pointer-events: all;
 }
 </style>
 

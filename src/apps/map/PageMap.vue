@@ -7,6 +7,8 @@
                 <section>
                 <h2>Options</h2>
                     <div class="setting-container"> 
+                        <ClusterButton />
+                        <PercentButton />
                         <TierToggler />
                         <ClearSearch />
                         <ShareLink />
@@ -18,7 +20,8 @@
             </div>
         </div>
         <div class="right" id="right">
-            <button id="sidebar-toggler" @click="toggleSidebar">
+            <button id="sidebar-toggler" @click="toggleSidebar"
+             v-tooltip="{ content: 'Collapse/expand menu', html: true }">
                 <font-awesome-icon icon="fa-solid fa-caret-left" v-if="isExpanded"/> 
                 <font-awesome-icon icon="fa-solid fa-caret-right" v-else/>
             </button>
@@ -39,12 +42,13 @@ import TierToggler from './components/TierToggler.vue';
 import ClearSearch from './components/ClearSearch.vue';
 import ShareLink from './components/ShareLink.vue';
 import ColorSelector from './components/ColorSelector.vue';
+import ClusterButton from './components/ClusterButton.vue';
+import PercentButton from './components/PercentButton.vue';
 
 import {defineComponent} from 'vue';
 import L, {Map, type LeafletEvent, type TileLayer} from 'leaflet';
-import 'leaflet-draw';
 
-import {selectedMap, selectedLocations, selectedItems, selectedTier} from './store';
+import {selectedMap, selectedLocations, selectedItems, selectedTier, clusterEnabled, minimumPercent} from './store';
 import {getMapData, getTierData} from './data';
 
 import {map1TileLayer, map2TileLayer, map3TileLayer, bounds, brightsandsColor, crescentfallsColor} from './mapConstants';
@@ -64,6 +68,8 @@ export default defineComponent({
         ClearSearch,
         ShareLink,
         ColorSelector,
+        ClusterButton,
+        PercentButton
     },
     data() {
         return {
@@ -71,6 +77,8 @@ export default defineComponent({
             selectedLocations,
             selectedItems,
             selectedTier,
+            clusterEnabled,
+            minimumPercent,
             savedLocationMarkers: [] as any,
             savedItemMarkers: [] as any,
             mapData: null as null | any,
@@ -178,6 +186,35 @@ export default defineComponent({
             },
             {deep: true}
         );
+
+        this.$watch(
+            'clusterEnabled',
+            async () => {
+                removeAllMarkers();
+
+                await updateItemLayerGroups(clusterEnabled.get());
+                itemLayerGroups = getItemLayerGroups();
+
+                placeMarkersForSelectedLocations();
+                placeMarkersForSelectedItems();
+            },
+            {deep: true}
+        )
+
+        this.$watch(
+            'minimumPercent',
+            async () => {
+                console.log('Hit!')
+                removeAllMarkers();
+
+                await updateItemLayerGroups(clusterEnabled.get(), minimumPercent.get());
+                itemLayerGroups = getItemLayerGroups();
+
+                placeMarkersForSelectedLocations();
+                placeMarkersForSelectedItems();
+            },
+            {deep: true}
+        )
 
         function initiateMapToMapNumber(mapNumber: number): TileLayer {
             // this function initialises the map to a specified map number.

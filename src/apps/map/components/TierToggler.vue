@@ -1,12 +1,8 @@
 <template>
-<button @click="selectedTier.toggle" class="btn">
+<button @click="selectedTier.toggle" class="btn"
+v-tooltip="{ content: ' Toggle loot tiers <br>  Not available on map 3 yet', html: true }">
     <font-awesome-icon icon="fa-solid fa-ranking-star" />
 </button>
-
-<div class="hover"> 
-    Toggle loot tiers
-</div>
-
 </template>
 
 <script lang="ts">
@@ -24,28 +20,9 @@ export default defineComponent({
 
 <style scoped> 
 .btn {
-    color: var(--rarity-color-rare);
+    color: var(--rarity-color-epic);
     appearance: none;
     background: none;
     border: none;
-}
-
-.hover {
-    opacity: 0;
-    pointer-events: none;
-    position: absolute;
-    z-index: 1;
-    background-color: var(--background-stripe-color);
-    top: -250%;
-    left: 3.9%;
-    padding: .5rem;
-    border-radius: .5rem;
-
-    transition: all .2s ease-in-out .2s;
-}
-
-.btn:hover + .hover {
-    opacity: 1;
-    pointer-events: all;
 }
 </style>

@@ -17,6 +17,8 @@
     "@types/leaflet.markercluster": "^1.5.1",
     "@types/vue": "^2.0.0",
     "@vueuse/core": "^9.3.1",
+    "chroma-js": "^2.4.2",
+    "floating-vue": "^2.0.0-beta.20",
     "install": "^0.13.0",
     "leaflet": "^1.8.0",
     "leaflet-draw": "^1.0.4",
@@ -28,7 +30,8 @@
     "vue-router": "^4.1.5",
     "vue-toastification": "^2.0.0-rc.5",
     "vue3-simple-typeahead": "^1.0.10",
-    "vue3-touch-events": "^4.1.0"
+    "vue3-touch-events": "^4.1.0",
+    "vuejs-title": "^1.0.16"
   },
   "devDependencies": {
     "@types/leaflet-draw": "^1.0.5",

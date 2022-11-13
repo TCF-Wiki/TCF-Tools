@@ -71,24 +71,53 @@ export async function updateLocationLayerGroups() {
 }
 
 let itemLayerGroups: any = {};
-
 export function getItemLayerGroups(): any {
     return itemLayerGroups;
 }
 const mapData = await getMapData();
 
-export async function updateItemLayerGroups() {
+export async function updateItemLayerGroups(disableCluster = false, minimumPercent = 0) {
+    if (disableCluster) {
+        itemLayerGroups = {}
+    }  
     for (let map in mapData['itemSpawns']) {
         if (!itemLayerGroups[map]) itemLayerGroups[map] = {};
         for (let item in mapData['itemSpawns'][map]) {
-            createGroups(map, item, mapData['itemSpawns'][map][item]);
+            let data : any;
+            
+            // optional feature: If a user wants to filter out spawns from below a certain percentage.
+            // Performance heavy (it is a long list)
+            if (minimumPercent) {
+                let tempData = []
+                const spawns = mapData['itemSpawns'][map][item]
+
+                for (let spawn in spawns) {
+                    const pool = spawns[spawn]['lootPool']
+                    if (!pool) continue
+
+                    const loot = mapData['lootPools'][pool]['items']
+                    if (!loot) continue
+
+                    const itemPercent = loot[item]
+                    if (!itemPercent) continue
+
+                    if (itemPercent >= minimumPercent) tempData.push(spawns[spawn])
+                }
+
+                data = tempData
+    
+            } else {
+                data =  mapData['itemSpawns'][map][item]
+            }
+            createGroups(map, item, data);
         }
     }
     function createGroups(map: string, item: string, locationData: any) {
         let locationGroup = L.markerClusterGroup({
             showCoverageOnHover: false,
             spiderfyOnMaxZoom: false,
-            disableClusteringAtZoom: 5,
+            // disables clustering if the users wants that by setting zoom value to something impossible.
+            disableClusteringAtZoom: disableCluster ? -10 : 5,
             iconCreateFunction: function (cluster) {
                 let childCount = cluster.getChildCount();
 

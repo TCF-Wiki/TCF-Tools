@@ -2,11 +2,13 @@
     <section>
         <header> 
             <h2> Containers </h2> 
-            <div @click="enableAllContainers()" aria-label="Enable all container locations" class="enable-all"> 
+            <div @click="enableAllContainers()" aria-label="Enable all container locations" class="enable-all"
+            v-tooltip="{ content: 'Enable all', html: true }">
                 <font-awesome-icon icon="fa-solid fa-square-check" />    
             </div> 
         
-            <div @click="disableAllContainers()" aria-label="Disable all container locations" class="disable-all">
+            <div @click="disableAllContainers()" aria-label="Disable all container locations" class="disable-all"
+            v-tooltip="{ content: 'Disable all', html: true }">
                 <font-awesome-icon icon="fa-solid fa-square-xmark" />   
             </div> 
         </header>
@@ -29,11 +31,13 @@
     <section> 
         <header> 
             <h2> Special Locations </h2> 
-            <div @click="enableAllSpecial()" aria-label="Enable all special locations" class="enable-all"> 
+            <div @click="enableAllSpecial()" aria-label="Enable all special locations" class="enable-all"     
+            v-tooltip="{ content: 'Enable all', html: true }">
                 <font-awesome-icon icon="fa-solid fa-square-check" />    
             </div> 
         
-            <div @click="disableAllSpecial()" aria-label="Disable all special locations" class="disable-all">
+            <div @click="disableAllSpecial()" aria-label="Disable all special locations" class="disable-all"
+            v-tooltip="{ content: 'Disable all', html: true }">
                 <font-awesome-icon icon="fa-solid fa-square-xmark" />
             </div> 
         </header>
@@ -305,6 +309,7 @@ p {
 .button-container div:hover {
     background-color: var(--background-stripe-color);
 }
+
 .enable-all,
 .disable-all {
     width: 	16px;

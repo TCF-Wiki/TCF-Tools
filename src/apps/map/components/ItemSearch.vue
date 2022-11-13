@@ -180,9 +180,12 @@ form {
 }
 
 .autocomplete {
+    isolation: isolate;
+    overflow: unset;
     margin-top: 0.5rem;
     position: absolute;
-    width: 100%;
+    max-width: 100%;
+    width: 70%;
     transform: translateY(3px);
     max-height: 40%;
     overflow-y: auto;
