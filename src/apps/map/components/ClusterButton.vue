@@ -1,6 +1,6 @@
 <template>
     <button class="btn" @click="clusterEnabled.toggle()"
-    v-tooltip="{ content: 'Toggles clustering markers. <br> <warning> WARNING </warning>: Turning clustering off will have <br> significant performance impact', html: true }"> 
+    v-tooltip="{ content: 'Toggles clustering item markers. <br> <warning> WARNING </warning>: Turning clustering off will have <br> significant performance impact', html: true }"> 
         <font-awesome-icon icon="fa-solid fa-circle-nodes" />
     </button>
 </template>
