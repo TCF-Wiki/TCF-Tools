@@ -279,8 +279,9 @@ p {
     text-decoration-line: line-through;
 }
 
+/* Two spaces after this so it iw side enough to be equal width as selected and not selected. Second one is unicode space. */
 .not-found::before {
-    content: '? ';
+    content: '? \00a0';
     color: var(--rarity-color-rare);
     font-weight: bold;
 }
