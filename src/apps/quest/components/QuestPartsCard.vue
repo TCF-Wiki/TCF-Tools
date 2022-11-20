@@ -27,9 +27,10 @@
             </div>
         </section>
         <section class="card__rewards" :style="{'--length': orderedRewards(missionData[mission]['rewards']).length}">
-            <div v-for="r in orderedRewards(missionData[mission]['rewards'])" class="card__rewards-container"> 
+            <div v-for="r in orderedRewards(missionData[mission]['rewards'])" class="card__rewards-container"
+            v-tooltip="{ content: rewardImageNamer(r['item']), html: true }"> 
                 <img  
-                    :src="'/map-images/item-images/' + rewardImageNamer(r['item']) + '.png'" 
+                    :src="'/map-images/item-images/' + rewardImageNamer(r['item'], true) + '.png'" 
                     class="card__rewards-image"
                 >
                 <div> 
@@ -104,7 +105,7 @@ export default defineComponent({
                 this.progressInfo.setPart(this.faction, this.name, this.index+1)
             }
         },
-        rewardImageNamer(reward: string) : string {
+        rewardImageNamer(reward: string, urlFormat = false) : string {
             // This function gets the name of the image when given an item name. Handles edge cases.
             if (reward.includes('SoftCurrency'))    reward = 'SoftCurrency'
             else if (reward.includes('Reputation')) reward =  `${this.faction}_Reputation`
@@ -139,7 +140,13 @@ export default defineComponent({
             if (reward.includes('Fusion Cartridge')) reward = 'Fusion_Cartridge_Batteries'
             if (reward.includes('OrbitalCanonTarget')) reward = 'Orbital_Cannon_Beacon'
             if (stringTables['Materials'][reward]) reward = stringTables['Materials'][reward]['name']
-            return reward.split(' ').join('_').replace('#', '%23')
+
+            if (urlFormat) return reward.split(' ').join('_').replace('#', '%23')
+            
+            if (reward.includes('Reputation')) reward =  'Reputation'
+            if (reward.includes('SoftCurrency'))    reward = 'K-Marks'
+
+            return reward
         },
         currencyDisplay(r: any) : string {
             // Gets a string representing the reward amount for a mission
