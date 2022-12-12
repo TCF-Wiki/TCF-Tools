@@ -82,7 +82,7 @@ export function killCreatureOrPlayer(task: any, faction: string) : string {
             .replace('EYDeviceCategory::','')
             .replace('SniperRifle','Sniper')
             .replace('AssaultRifle', 'AR')
-        weapon += `with a ${weaponString}`
+        weapon += ` with a ${weaponString}`
     } else if (weapons.length > 0) {
         if (weapons.length > 1 ) {
             let factionString = faction

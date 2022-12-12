@@ -107,6 +107,7 @@ export default defineComponent({
         },
         rewardImageNamer(reward: string, urlFormat = false) : string {
             // This function gets the name of the image when given an item name. Handles edge cases.
+            let orig = reward
             if (reward.includes('SoftCurrency'))    reward = 'SoftCurrency'
             else if (reward.includes('Reputation')) reward =  `${this.faction}_Reputation`
             else if (reward.includes('Shield_'))    reward =  this.shieldData[reward]['ingamename']
@@ -145,6 +146,7 @@ export default defineComponent({
             
             if (reward.includes('Reputation')) reward =  'Reputation'
             if (reward.includes('SoftCurrency'))    reward = 'K-Marks'
+            if (reward.includes('Key_Card')) reward = stringTables['Equipment']['Equip_Keys_' + orig.replace('KeyCard_','Key')]['name']
 
             return reward
         },
@@ -174,6 +176,7 @@ export default defineComponent({
                     .replace('HardDrive_legendary','Data Drive Tier 5')
                     .replace('the Tharis Files','Gregor\'s Dossier')
                     .replace('Bag_Altered_01','Huge Forge Backpack')
+                    
                     return `Deliver ${task['maxProgress']} ${item}`
             }
 
@@ -246,7 +249,7 @@ export default defineComponent({
             // This function gets the name of the image that shows in the tasks info
             const type = task['type']
             if (type=='OwnNumOfItem') {
-                return this.rewardImageNamer(task['itemToOwn']).split('"').join('')
+                return this.rewardImageNamer(task['itemToOwn'], true).split('"').join('')
             }
 
             if (type=='VisitArea') {

@@ -166,6 +166,7 @@ export const missions : missionList = {
             "Main-KOR-Caverns-3",
             "Main-KOR-Caverns-4",
             "Main-KOR-Caverns-5",
+            "Main-KOR-Caverns-6",
             "Main-KOR-Caverns-7",
             "Main-KOR-Caverns-8",
             "Main-KOR-Caverns-9",
