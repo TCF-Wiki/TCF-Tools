@@ -228,8 +228,17 @@ export default defineComponent({
                     let text = this.stringTable[newKeys[index]]
 
                     // another edge case
-                    if (mission == 'Main-ICA-MeteorReactor-5') text = this.stringTable[newKeys[newKeys.length-index-1]]
+                    if (['Main-ICA-MeteorReactor-5'].includes(mission)) text = this.stringTable[newKeys[newKeys.length-index-1]]
                     
+                    // and another one we are not going to talk about...
+                    if (['Main-ICA-OilPump-1'].includes(mission)) {
+                        if (index == 0) {
+                            text = this.stringTable[newKeys[1]]
+                        }
+                        if (index == 1) {
+                            text = this.stringTable[newKeys[0]]
+                        }
+                    }
                     if (text.includes('Stash an')) return text
                     
                     // Stringtable is incomplete T_T
