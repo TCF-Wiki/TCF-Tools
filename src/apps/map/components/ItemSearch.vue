@@ -127,6 +127,7 @@ export default defineComponent({
             if (foundItem?.includes('Map02_KeyCard')) return 'Crescent_Falls_Key_Card';
             if (foundItem?.includes('Map03_KeyCard')) return 'Tharis_Island_Key_Card';
             if (foundItem?.includes('Flechette Gun')) return 'ASP Flechette Gun';
+
             return item.replaceAll(' ', '_').replaceAll('#', '#');
         },
     },
@@ -142,6 +143,7 @@ export default defineComponent({
         }
         this.searchTerms = tempData;
         this.lowerCaseSearchTerms = tempLowerData;
+
     },
 });
 </script>

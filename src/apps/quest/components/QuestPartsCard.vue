@@ -148,7 +148,7 @@ export default defineComponent({
             if (reward.includes('SoftCurrency'))    reward = 'K-Marks'
             if (reward.includes('Key_Card')) reward = stringTables['Equipment']['Equip_Keys_' + orig.replace('KeyCard_','Key')]['name']
 
-            return reward
+            return reward.split('_').join(' ')
         },
         currencyDisplay(r: any) : string {
             // Gets a string representing the reward amount for a mission
