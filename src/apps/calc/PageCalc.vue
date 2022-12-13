@@ -61,7 +61,7 @@ export default {
 section {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 2rem 0rem;
 }
 
 @media screen and (max-width: 900px) {

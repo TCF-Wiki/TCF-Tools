@@ -468,7 +468,7 @@ export default {
 }
 .flex-item {
     border: 2px solid var(--primary-accent);
-    padding: .5rem 2rem 2rem 2rem;
+    padding: .5rem 1rem 2rem 1rem;
     width: fit-content;
     flex: none;
     -webkit-flex: none;
