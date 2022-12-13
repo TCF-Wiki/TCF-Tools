@@ -21,7 +21,7 @@
                 <div>
                     <p :class="containerClassGiver(value)">
                         <span>{{ locationNamer(value) }} </span>
-                        <span class="small"> ({{ test(value, 'locations')}}) </span>
+                        <span class="small"> ({{ spawnAmount(value, 'locations')}}) </span>
                     </p>
                         
                 </div>
@@ -49,7 +49,7 @@
                 role="button">
                 <p :class="creatureClassGiver(value)">
                     <span> {{ creatureNamer(value) }} </span>
-                    <span class="small"> ({{ test(value, 'creatureLocations')}}) </span>
+                    <span class="small"> ({{ spawnAmount(value, 'creatureLocations')}}) </span>
                 </p>
             </div>
         </div>
@@ -75,7 +75,7 @@
                 role="button">
                 <p :class="specialLocationClassGiver(value)">
                     <span> {{ locationNamer(value) }} </span>
-                    <span class="small"> ({{ test(value, 'other')}}) </span>
+                    <span class="small"> ({{ spawnAmount(value, 'other')}}) </span>
             </p>
             </div>
         </div>
@@ -135,11 +135,9 @@ export default defineComponent({
         );
     },
     methods: {
-        test(value: string, source: string) {
-            console.log(value, source)
+        spawnAmount(value: string, source: string) {
             let data;
             if (source == 'other') {
-                console.log(this.mapData['locations'][selectedMap.get()]['other'])
                 data = this.mapData['locations'][selectedMap.get()]['other'][value];
             } else {
                 data = this.mapData[source][selectedMap.get()][value];
