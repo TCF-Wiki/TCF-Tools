@@ -7,7 +7,7 @@ v-tooltip="{ content: 'Clear your current selections', html: true }">
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { selectedItems, selectedLocations } from '../store';
+import { selectedCreatures, selectedItems, selectedLocations } from '../store';
 export default defineComponent({
     data() {
         return {
@@ -20,6 +20,7 @@ export default defineComponent({
             // this function clears the current search
             selectedItems.clear()
             selectedLocations.clear()
+            selectedCreatures.clear()
         }
     }
 })
