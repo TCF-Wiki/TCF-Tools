@@ -3,7 +3,7 @@ import L, {LayerGroup, Marker, type Content, type LeafletEvent, type LeafletEven
 import 'leaflet.markercluster';
 import 'leaflet-responsive-popup';
 import {getMapData} from './data';
-import {specialLocations} from './mapConstants';
+import {alphabeticalCreatures, specialLocations} from './mapConstants';
 import {createLootPopup, createSpecialPopup} from './popup';
 let locationLayerGroups: any = {};
 
@@ -69,6 +69,55 @@ export async function updateLocationLayerGroups() {
         locationLayerGroups[map][locationType] = locationGroup;
     }
 }
+
+export function getCreatureLayerGroups(): any {
+    return locationLayerGroups;
+}
+
+export async function updateCreatureLayerGroups() {
+    const mapData = await getMapData();
+    for (var map in mapData['creatureLocations']) {
+        if (!locationLayerGroups[map]) locationLayerGroups[map] = {};
+        for (var creature in mapData['creatureLocations'][map]) {
+            createGroups(map, creature, mapData['creatureLocations'][map][creature]);
+        }
+    }
+    function createGroups(map: string, creature: string, locationData: any) {
+        // our layer group for our markers.
+        let locationGroup = L.layerGroup();
+        // the icon that will be used for this group
+        let url : string = '';
+        if (creature.includes('Beetle')) {
+            if (creature.includes('Acid')) {
+                url = `map-images/item-images/Acid_Tick.png`
+            } else {
+                url = `map-images/item-images/Blast_Tick.png`
+            }
+        } else {
+            // @ts-ignore
+            url = `map-images/item-images/${alphabeticalCreatures[creature].replaceAll(' ', '_')}_Head.png`
+        }
+        
+        let LocationMarker = L.icon({
+            iconUrl: url,
+            iconSize: [25, 25],
+            className: 'marker',
+        });
+        // add each location to the group
+        for (let location in locationData) {
+            // create the marker for it at the location, and add it to the group
+            let m = new Marker(locationData[location]['location'], {
+                riseOnHover: true,
+                icon: LocationMarker,
+            });
+            locationGroup.addLayer(m);
+        }
+        // add it to our main group object
+        locationLayerGroups[map][creature] = locationGroup;
+    }
+}
+
+
 
 let itemLayerGroups: any = {};
 export function getItemLayerGroups(): any {

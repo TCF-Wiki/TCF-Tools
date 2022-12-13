@@ -47,6 +47,39 @@ export const selectedLocations = reactive({
     },
 });
 
+export const selectedCreatures = reactive({
+    list: [] as string[],
+    get(): string[] {
+        return this.list;
+    },
+    set(locList: string[]) {
+        // sets the list to a new list. Typically used to toggle multiple on at the same time
+        // without triggering the watcher each time when adding them indivually
+        this.list = locList;
+    },
+    toggle: function (creatureName: string) {
+        if (this.list.includes(creatureName))
+            this.list = this.list.filter((a) => {
+                return a !== creatureName;
+            });
+        else this.list.push(creatureName);
+    },
+    add(creatureName: string) {
+        if (!this.list.includes(creatureName)) this.list.push(creatureName);
+    },
+    remove(creatureName: string) {
+        if (this.list.includes(creatureName)) {
+            this.list = this.list.filter((a) => {
+                return a !== creatureName;
+            });
+        }
+    },
+    clear() {
+        // clears the current list
+        this.list = [] as string[];
+    },
+});
+
 export const selectedItems = reactive({
     list: [] as string[],
     get(): string[] {

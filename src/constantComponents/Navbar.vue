@@ -5,10 +5,9 @@
             <a class="logo" href="https://thecyclefrontier.wiki/wiki/Main_Page" target="_blank"><img src="/shared-images/wiki_logo_bar.png" /></a>
             <div class="nav-items">
                 <a href="/"> Home </a>
-                <a href="/about"> About us </a>
-                <a href="https://thecyclefrontier.wiki/wiki/Main_Page" target="_blank"> Official Wiki </a>
+                <a href="https://thecyclefrontier.wiki/wiki/Main_Page" target="_blank"> Wiki </a>
                 <a href="/map"> Interactive Map </a>
-                <a href="/calc"> Weapon Calculator </a>
+                <a href="/calculator"> Weapon Calculator </a>
                 <a href="https://tracker.thecyclefrontier.wiki"> Item Tracker </a>
                 <a href="/progress"> Progress Tracker </a>
                 <a href="/forge"> Forge Simulator </a>

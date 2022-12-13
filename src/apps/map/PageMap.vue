@@ -48,17 +48,18 @@ import PercentButton from './components/PercentButton.vue';
 import {defineComponent} from 'vue';
 import L, {Map, type LeafletEvent, type TileLayer} from 'leaflet';
 
-import {selectedMap, selectedLocations, selectedItems, selectedTier, clusterEnabled, minimumPercent} from './store';
+import {selectedMap, selectedLocations, selectedItems, selectedTier, clusterEnabled, minimumPercent, selectedCreatures} from './store';
 import {getMapData, getTierData} from './data';
 
 import {map1TileLayer, map2TileLayer, map3TileLayer, bounds, brightsandsColor, crescentfallsColor} from './mapConstants';
 import {addLeafletStyles, addResponsivePopupScript, addResponsivePopupStyles} from '../../scriptLoader';
 import {mapOneLabels, mapTwoLabels, mapThreeLabels} from './labels';
 
-import {updateLocationLayerGroups, getLocationLayerGroups, updateItemLayerGroups, getItemLayerGroups} from './layerGroups';
+import {updateLocationLayerGroups, getLocationLayerGroups, updateItemLayerGroups, getItemLayerGroups, getCreatureLayerGroups, updateCreatureLayerGroups} from './layerGroups';
 import {loadInitialStore} from './URLParameterHandler';
 let locationLayerGroups: any;
 let itemLayerGroups: any;
+let creatureLayerGroups: any;
 export default defineComponent({
     components: {
         MapSelector,
@@ -77,10 +78,12 @@ export default defineComponent({
             selectedLocations,
             selectedItems,
             selectedTier,
+            selectedCreatures,
             clusterEnabled,
             minimumPercent,
             savedLocationMarkers: [] as any,
             savedItemMarkers: [] as any,
+            savedCreatureMarkers: [] as any,
             mapData: null as null | any,
             tierData: null as null | any,
             isModalVisible: false as boolean,
@@ -100,6 +103,9 @@ export default defineComponent({
 
         await updateItemLayerGroups();
         itemLayerGroups = getItemLayerGroups();
+
+        await updateCreatureLayerGroups();
+        creatureLayerGroups = getCreatureLayerGroups();
 
         loadInitialStore();
         // create our map, mounting it on the '#map' element
@@ -151,6 +157,7 @@ export default defineComponent({
                 removeAllMarkers();
                 placeMarkersForSelectedLocations();
                 placeMarkersForSelectedItems();
+                placeMarkersForSelectedCreatures();
                 initiateMapToMapNumber(selectedMap.get()).addTo(map);
                 addMapLabels();
             },
@@ -171,6 +178,15 @@ export default defineComponent({
             () => {
                 removeUnselectedItemMarkers();
                 placeMarkersForSelectedItems();
+            },
+            {deep: true}
+        );
+
+        this.$watch(
+            'selectedCreatures',
+            () => {
+                removeUnselectedCreatureMarkers();
+                placeMarkersForSelectedCreatures();
             },
             {deep: true}
         );
@@ -289,6 +305,16 @@ export default defineComponent({
             }
         }
 
+        function removeUnselectedCreatureMarkers(): void {
+            //console.log('Removing unselected markers');
+            for (let creature in VM.savedCreatureMarkers) {
+                if (selectedCreatures.get().includes(VM.savedCreatureMarkers[creature])) continue;
+                let layers = creatureLayerGroups[VM.selectedMap.get()][VM.savedCreatureMarkers[creature]];
+                if (layers) layers.removeFrom(map);
+                delete VM.savedCreatureMarkers[creature];
+            }
+        }
+
         function placeMarkersForSelectedLocations(): void {
             let mapMarkers = [] as any;
             // this function places the markers for each location. Hurray!
@@ -299,6 +325,18 @@ export default defineComponent({
             }
             VM.savedLocationMarkers = mapMarkers;
         }
+
+        function placeMarkersForSelectedCreatures(): void {
+            let mapMarkers = [] as any;
+            // this function places the markers for each location. Hurray!
+            for (let creature in selectedCreatures.get()) {
+                let layers = creatureLayerGroups[VM.selectedMap.get()][selectedCreatures.get()[creature]];
+                if (layers) layers.addTo(map);
+                mapMarkers.push(selectedCreatures.get()[creature]);
+            }
+            VM.savedCreatureMarkers = mapMarkers;
+        }
+
 
         function placeMarkersForSelectedItems(): void {
             let mapMarkers = [] as any;

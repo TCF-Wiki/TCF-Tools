@@ -378,7 +378,7 @@ input[type='range']:hover::-webkit-slider-thumb {
 }
 
 .leaflet-tile {
-    filter: brightness(0.8) !important;
+    filter: brightness(.9) !important;
 }
 
 @keyframes pulse {

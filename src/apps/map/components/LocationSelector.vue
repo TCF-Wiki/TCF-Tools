@@ -19,15 +19,41 @@
             :aria-label="'Toggle ' + locationNamer(value)"
             role="button">
                 <div>
-                    <p 
-                        :class="containerClassGiver(value)"
-                        >
-                        {{ locationNamer(value) }}
+                    <p :class="containerClassGiver(value)">
+                        <span>{{ locationNamer(value) }} </span>
+                        <span class="small"> ({{ test(value, 'locations')}}) </span>
                     </p>
+                        
                 </div>
             </div>
         </div>
     </section>
+    <section> 
+        <header> 
+            <h2> Creature Spawns </h2> 
+            <div @click="enableAllCreatures()" aria-label="Enable all creature locations" class="enable-all"     
+            v-tooltip="{ content: 'Enable all', html: true }">
+                <font-awesome-icon icon="fa-solid fa-square-check" />    
+            </div> 
+        
+            <div @click="disableAllCreatures()" aria-label="Disable all creature locations" class="disable-all"
+            v-tooltip="{ content: 'Disable all', html: true }">
+                <font-awesome-icon icon="fa-solid fa-square-xmark" />
+            </div> 
+        </header>
+        <div class="button-container">
+            <div v-if="mapData" 
+                v-for="value in orderedCreatures" 
+                @click="notFoundCreatures.includes(value) ? null : selectedCreatures.toggle(value)"
+                :aria-label="'Toggle ' + creatureNamer(value)"
+                role="button">
+                <p :class="creatureClassGiver(value)">
+                    <span> {{ creatureNamer(value) }} </span>
+                    <span class="small"> ({{ test(value, 'creatureLocations')}}) </span>
+                </p>
+            </div>
+        </div>
+    </section> 
     <section> 
         <header> 
             <h2> Special Locations </h2> 
@@ -47,12 +73,9 @@
                 @click="notFoundSpecialLocations.includes(value) ? null : selectedLocations.toggle(value)"
                 :aria-label="'Toggle ' + locationNamer(value)"
                 role="button">
-                <p 
-                    :class="specialLocationClassGiver(value)"
-                        
-                    >
-
-                    {{ locationNamer(value) }}
+                <p :class="specialLocationClassGiver(value)">
+                    <span> {{ locationNamer(value) }} </span>
+                    <span class="small"> ({{ test(value, 'other')}}) </span>
             </p>
             </div>
         </div>
@@ -64,31 +87,37 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { getMapData } from '../data';
-import { selectedLocations, selectedMap } from '../store';
-import { locationNames, specialLocations, alphabeticalContainers, alphabeticalSpecialLocations } from '../mapConstants'
+import { selectedLocations, selectedMap, selectedCreatures } from '../store';
+import { locationNames, specialLocations, alphabeticalContainers, alphabeticalSpecialLocations, alphabeticalCreatures } from '../mapConstants'
 export default defineComponent({
     data() {
         return {
             mapData: null as null | any,
             selectedLocations,
             selectedMap,
+            selectedCreatures,
             containers: [] as string[],
             specialLocations: [] as string[],
             orderedContainers: [] as string[],
             orderedSpecialLocations: [] as string[],
             notFoundContainers: [] as string[],
             notFoundSpecialLocations: [] as string[],
+            creatures: [] as string[],
+            orderedCreatures: [] as string[],
+            notFoundCreatures: [] as string[]
         };
     },
     async mounted() {
         // load map data and other misc data
         this.mapData = await getMapData();
         this.containers = await this.getLocations()
+        this.creatures = await this.getCreatures()
         this.specialLocations = Object.keys(this.mapData['locations'][selectedMap.get()]['other'])
 
         // create our initial list of locations, properly ordered
         this.orderContainers()
         this.orderSpecialLocations()
+        this.orderCreatures()
 
         // whenever our map changes update our list locations
         this.$watch(
@@ -96,14 +125,29 @@ export default defineComponent({
             async () => {
                 this.containers = await this.getLocations()
                 this.specialLocations = Object.keys(this.mapData['locations'][selectedMap.get()]['other'])
+                this.creatures = await this.getCreatures()
 
                 this.orderContainers()
                 this.orderSpecialLocations()
+                this.orderCreatures()
             },
             {deep: true}
         );
     },
     methods: {
+        test(value: string, source: string) {
+            console.log(value, source)
+            let data;
+            if (source == 'other') {
+                console.log(this.mapData['locations'][selectedMap.get()]['other'])
+                data = this.mapData['locations'][selectedMap.get()]['other'][value];
+            } else {
+                data = this.mapData[source][selectedMap.get()][value];
+            }
+
+            if (data) return Object.keys(data).length
+            return 0
+        },
         async getLocations() {
             // returns a list of our location data used for display. 
             // We remove the keys we do not want people to be able to search for.
@@ -127,6 +171,10 @@ export default defineComponent({
             delete data['LootPoint']
             delete data['GenericContainer']
             delete data['other']
+            return Object.keys(data)
+        },
+        async getCreatures() {
+            let data = {...this.mapData['creatureLocations'][selectedMap.get()]}
             return Object.keys(data)
         },
         locationNamer(key: string) {
@@ -196,6 +244,45 @@ export default defineComponent({
 
             selectedLocations.set(newLocations)
         },
+        creatureNamer(creature: string) : string {
+            /* @ts-ignore */
+            return alphabeticalCreatures[creature]
+        },
+        orderCreatures() {
+            // order our list of creatures on this map alphabetically
+            let creatureNames = this.creatures;
+            let ordered = alphabeticalCreatures;
+
+            let orderedList : string[] = [];
+            let notFoundOnThisMap : string[] = []
+
+            for (let creature in ordered) {
+                if (creatureNames.includes(creature)) {
+                    orderedList.push(creature)
+                } else {
+                    // update our display to show if this map does not have this search available
+                    orderedList.push(creature)
+                    notFoundOnThisMap.push(creature)
+                }
+            }
+            this.orderedCreatures = orderedList;
+            this.notFoundCreatures = notFoundOnThisMap;
+        },
+        enableAllCreatures() : void {
+            // enables all containers
+            let nameList = this.orderedCreatures
+
+            let newLocations : string[] = [];
+
+            for (let cont in nameList) {
+                newLocations.push(nameList[cont])
+            }
+
+            selectedCreatures.set(newLocations)
+        },
+        disableAllCreatures() : void {
+            selectedCreatures.clear()
+        },
         enableAllSpecial() : void {
             // enables all special locations
             let nameList = Object.keys(this.mapData['locations'][selectedMap.get()]['other'])
@@ -252,6 +339,22 @@ export default defineComponent({
             }
             
             return classList
+        },
+        creatureClassGiver(creature: string) : string {
+            // returns a list of classes this location should have
+
+            let classList = ''
+            if (selectedCreatures.get().includes(creature)) {
+                classList += 'selected '
+            } else {
+                classList += 'not-selected '
+            }
+
+            if (this.notFoundCreatures.includes(creature)) {
+                classList += 'not-found'
+            }
+            
+            return classList
         }
     }
 });
@@ -264,6 +367,7 @@ h2 {
 }
 p {
     cursor: pointer;
+    user-select: none;
 }
 
 .selected::before {
@@ -275,7 +379,7 @@ p {
     color: var(--rarity-color-exotic);
 }
 
-.not-found {
+.not-found span{
     text-decoration-line: line-through;
 }
 
@@ -341,5 +445,10 @@ section {
     background-color: var(--background-body-color);
     padding: 1rem;
     margin-bottom: 1rem;
+}
+
+.small {
+    font-size: small;
+    text-decoration-line: none !important;
 }
 </style>

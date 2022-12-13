@@ -239,6 +239,7 @@ export default defineComponent({
                             text = this.stringTable[newKeys[0]]
                         }
                     }
+                    
                     if (text.includes('Stash an')) return text
                     
                     // Stringtable is incomplete T_T

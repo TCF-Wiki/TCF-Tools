@@ -92,6 +92,19 @@ export const alphabeticalSpecialLocations = {
     Uplink: 'Uplink',
 };
 
+export const alphabeticalCreatures = {
+    GlowBeetle_Acid: "Acid Tick",
+    Crusher_2: "Alpha Crusher",
+    GlowBeetle_Blast: "Blast Tick",
+    Crusher: "Crusher",
+    Strider_3: "Heavy Strider",
+    Weremole: "Marauder",
+    Rattler_2: "Mature Rattler",
+    Rattler: "Rattler",
+    Weremole_2: "Savage Marauder",
+    Strider: "Strider",
+}
+
 export const specialDescriptions: any = {
     HealingPlant: 'A large green plant that heals you gradually if you stand next to it.',
     LaserDrill: 'A Letium deposit where a laser drill can be deployed using a Laser Drill Beacon.',

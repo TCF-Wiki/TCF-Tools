@@ -1,5 +1,7 @@
+import {githubURL} from '../constants.json';
+
 async function get_weapon_data() {
-    const response = await fetch('https://raw.githubusercontent.com/Stevnbak/TCF-Information/main/allWeapons.json', {});
+    const response = await fetch(githubURL + 'allWeapons.json', {});
     const json = await response.json();
 
     return json;
@@ -20,7 +22,7 @@ for (let wep in tempWeaponData) {
 export const weaponData = tempWeaponData;
 
 async function get_attachment_data() {
-    const response = await fetch('https://raw.githubusercontent.com/Stevnbak/TCF-Information/main/allAttachments.json', {});
+    const response = await fetch(githubURL + 'allAttachments.json', {});
     const json = await response.json();
 
     return json;
@@ -36,7 +38,7 @@ tempAttachmentData['NoGrip']['IGN'] = 'No Grip';
 export const attachmentData = tempAttachmentData;
 
 async function get_armor_data() {
-    const response = await fetch('https://raw.githubusercontent.com/Stevnbak/TCF-Information/main/shields.json');
+    const response = await fetch(githubURL + 'shields.json');
     const json = await response.json();
 
     return json;
@@ -45,7 +47,7 @@ async function get_armor_data() {
 export const armorData = await get_armor_data();
 
 async function get_target_data() {
-    const response = await fetch('https://raw.githubusercontent.com/Stevnbak/TCF-Information/main/creatureInfo.json');
+    const response = await fetch(githubURL + 'creatureInfo.json');
     const json = await response.json();
 
     return json;
