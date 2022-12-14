@@ -158,6 +158,10 @@ export function getPerkStrength(perk: string) : string {
     if (type.includes('Multiplicitive_PreAdd')) {
         return Math.round((randomStrength-1)*100) + '%'
     } else if (type.includes('Additive')) {
+
+        if (perk == "HealthRegen" ) {
+            return (Math.round(100 * randomStrength) / 100).toString()
+        }
         return randomStrength.toString()
         
     } else {
