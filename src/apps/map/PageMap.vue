@@ -1,12 +1,12 @@
 <template>
-        <div class="page-content" id="page-content">
+    <div class="page-content" id="page-content">
         <div class="left" id="left">
             <div id="left-content">
                 <ItemSearch />
                 <LocationSelector />
                 <section>
-                <h2>Options</h2>
-                    <div class="setting-container"> 
+                    <h2>Options</h2>
+                    <div class="setting-container">
                         <ClusterButton />
                         <PercentButton />
                         <TierToggler />
@@ -14,21 +14,20 @@
                         <ShareLink />
                     </div>
                 </section>
-                <section class="container"> 
+                <section class="container">
                     <ColorSelector />
                 </section>
             </div>
         </div>
         <div class="right" id="right">
-            <button id="sidebar-toggler" @click="toggleSidebar"
-             v-tooltip="{ content: 'Collapse/expand menu', html: true }">
-                <font-awesome-icon icon="fa-solid fa-caret-left" v-if="isExpanded"/> 
-                <font-awesome-icon icon="fa-solid fa-caret-right" v-else/>
+            <button id="sidebar-toggler" @click="toggleSidebar" v-tooltip="{content: 'Collapse/expand menu', html: true}">
+                <font-awesome-icon icon="fa-solid fa-caret-left" v-if="isExpanded" />
+                <font-awesome-icon icon="fa-solid fa-caret-right" v-else />
             </button>
             <MapSelector />
             <div id="map"></div>
         </div>
-    </div> 
+    </div>
 </template>
 
 <style src="./MarkerCluster.css" />
@@ -70,7 +69,7 @@ export default defineComponent({
         ShareLink,
         ColorSelector,
         ClusterButton,
-        PercentButton
+        PercentButton,
     },
     data() {
         return {
@@ -87,7 +86,7 @@ export default defineComponent({
             mapData: null as null | any,
             tierData: null as null | any,
             isModalVisible: false as boolean,
-            isExpanded: true as boolean
+            isExpanded: true as boolean,
         };
     },
     async mounted() {
@@ -215,12 +214,12 @@ export default defineComponent({
                 placeMarkersForSelectedItems();
             },
             {deep: true}
-        )
+        );
 
         this.$watch(
             'minimumPercent',
             async () => {
-                console.log('Hit!')
+                console.log('Hit!');
                 removeAllMarkers();
 
                 await updateItemLayerGroups(clusterEnabled.get(), minimumPercent.get());
@@ -230,7 +229,7 @@ export default defineComponent({
                 placeMarkersForSelectedItems();
             },
             {deep: true}
-        )
+        );
 
         function initiateMapToMapNumber(mapNumber: number): TileLayer {
             // this function initialises the map to a specified map number.
@@ -337,7 +336,6 @@ export default defineComponent({
             VM.savedCreatureMarkers = mapMarkers;
         }
 
-
         function placeMarkersForSelectedItems(): void {
             let mapMarkers = [] as any;
             for (let item in selectedItems.get()) {
@@ -443,9 +441,9 @@ export default defineComponent({
         toggleSidebar() {
             let content = document.querySelector('#page-content');
             content?.classList.toggle('collapsed');
-            content?.classList.toggle('add-keyframe')
-            this.isExpanded = !this.isExpanded
-        }
+            content?.classList.toggle('add-keyframe');
+            this.isExpanded = !this.isExpanded;
+        },
     },
 });
 </script>
@@ -474,7 +472,7 @@ export default defineComponent({
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    justify-content:start;
+    justify-content: start;
     /* width: 90%; */
     gap: 0;
     position: relative;
@@ -501,7 +499,6 @@ h2 {
     margin: auto;
 }
 
-
 section {
     background-color: var(--background-body-color);
     padding: 1rem;
@@ -527,7 +524,7 @@ section:not(:last-child) {
     grid-template-columns: 1fr 2fr;
     gap: 5rem;
 
-    transition: all .4s ease-in-out;
+    transition: all 0.4s ease-in-out;
     padding: 1rem;
 }
 
@@ -541,7 +538,6 @@ section:not(:last-child) {
     overflow: hidden;
 }
 
-
 #sidebar-toggler {
     position: absolute;
     left: -3.75rem;
@@ -554,16 +550,15 @@ section:not(:last-child) {
     color: var(--rarity-color-rare);
 }
 
-
 @media screen and (max-width: 900px) {
     .page-content {
         display: grid;
         grid-template-columns: 1fr;
     }
 
-    .left, 
+    .left,
     .right {
-        width: 	100%;
+        width: 100%;
     }
 
     #map {
@@ -578,5 +573,4 @@ section:not(:last-child) {
         display: none;
     }
 }
-
 </style>
