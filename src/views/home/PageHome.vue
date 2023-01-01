@@ -23,9 +23,10 @@
         <div class="navigation">
             <h3>Navigation</h3>
             <div>
-                <a href="/calculator"><img src="./images/Nav_Calculator.png" /> Weapon Calculator </a>
                 <a href="/map"><img src="./images/Nav_Map.png" /> Interactive Map </a>
+                <a href="/calculator"><img src="./images/Nav_Calculator.png" /> Weapon Calculator </a>
                 <a href="/forge"><img src="./images/Nav_Forge.png" /> Forge Simulator </a>
+                <a href="/progress"><img src="./images/Nav_Progress.png" /> Progress Tracker </a>
                 <a href="https://tracker.thecyclefrontier.wiki"><img src="./images/Nav_Tracker.png" /> Item Tracker </a>
                 <a href="/loadout"><img src="./images/Nav_Loadout.png" /> Loadout Generator</a>
             </div>
@@ -154,10 +155,10 @@ h3 {
     flex-direction: row;
     align-items: flex-start;
     justify-content: center;
-    width: 75%;
+    width: 85%;
 }
 .navigation a {
-    width: 15%;
+    width: 12.5%;
     padding: 0 1rem 0 1rem;
     text-align: center;
 }
