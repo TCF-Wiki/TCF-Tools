@@ -143,6 +143,7 @@ button {
     background-color: var(--background-stripe-color);
 }
 
+/* SLIDER */
 input[type='range'] {
     -webkit-appearance: none;
     appearance: none;
@@ -178,6 +179,36 @@ input[type='range']:hover::-moz-range-thumb {
 input[type='range']:hover::-webkit-slider-thumb {
     background: var(--button-accent-color);
 }
+
+/* CHECKBOX */
+input[type='checkbox'] {
+    -webkit-appearance: none;
+    appearance: none;
+    position: relative;
+    width: 1rem;
+    height: 1rem;
+    background: var(--button-body-color);
+    outline: 3px solid var(--button-accent-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+input[type='checkbox']:checked {
+    background: var(--button-body-color);
+}
+input[type='checkbox']:checked::before {
+    position: absolute;
+    content: '✔';
+    color: #000000;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    top: -25%;
+    left: 7.5%;
+    opacity: 1;
+}
+input[type='checkbox']:hover {
+    background: var(--button-accent-color);
+}
+
+/* LOADING */
 
 #loading {
     position: fixed;

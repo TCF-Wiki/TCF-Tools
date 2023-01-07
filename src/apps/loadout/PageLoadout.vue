@@ -1,27 +1,49 @@
 <template>
     <div class="loadoutPage">
         <div class="settings">
+            <div class="sliders">
+                <label>Minimum rarity: {{ minRarityString }}</label>
+                <div class="slider">
+                    <input id="minRaritySlider" type="range" min="0" max="4" v-model="minRarity" />
+                    <input id="maxRaritySlider"  :class="minRarity == maxRarity ? 'small' : '' " type="range" min="0" max="4" v-model="maxRarity" />
+                </div>
+                <label>Maximum rarity: {{ maxRarityString }}</label>
+            </div>
+            <div class="checkboxes">
+                <div class="checkbox">
+                    <input type="checkbox" name="weapons" v-model="alwaysGetWeapons">
+                    <p>Always get 2 weapons</p>
+                </div>
+                <div class="checkbox">
+                    <input type="checkbox" name="armor" v-model="alwaysGetArmor">
+                    <p>Always get armor</p>
+                </div>
+                <div class="slider">
+                    <p>Amount of consumables: {{ consumableAmount }}</p>
+                    <input id="consumableSlider" type="range" min="0" max="5" v-model="consumableAmount" />
+                </div>
+            </div>
             <div class="buttons">
                 <button class="button" @click.prevent="RandomLoadout()">Generate</button>
-                <button class="button" @click.prevent="ShareLoadout(true)">Share</button>
+                <button class="button" @click.prevent="ShareLoadout()">Share</button>
             </div>
         </div>
         <div class="loadout">
             <img id="inventory" src="/loadout-images/Inventory.png" />
-            <div class="weapon" id="Weapon1" v-if="weapons[0]" :style="`background-image: url('/loadout-images/${weapons[0].rarity}_Weapon.png');`">
-                <img :src="`/loadout-images/${weapons[0].img}.png`"/>
+            <div class="weapon" id="Weapon1" v-if="weapons[0]" :style="`background-image: url('/loadout-images/Rarity/${weapons[0].rarity}_Weapon.png');`">
+                <img :src="`/loadout-images/Weapons/${weapons[0].img}.png`"/>
             </div>
-            <div class="weapon" id="Weapon2" v-if="weapons[1]" :style="`background-image: url('/loadout-images/${weapons[1].rarity}_Weapon.png');`">
-                <img :src="`/loadout-images/${weapons[1].img}.png`"/>
+            <div class="weapon" id="Weapon2" v-if="weapons[1]" :style="`background-image: url('/loadout-images/Rarity/${weapons[1].rarity}_Weapon.png');`">
+                <img :src="`/loadout-images/Weapons/${weapons[1].img}.png`"/>
             </div>
             <div class="gear">
-                <img id="backpack" :src="`/loadout-images/${backpack.img}.png`" :style="`background-image: url('/loadout-images/${backpack.rarity}.png');`" />
-                <img id="shield" :src="`/loadout-images/${shield.img}.png`" :style="`background-image: url('/loadout-images/${shield.rarity}.png');`" />
-                <img id="helmet" :src="`/loadout-images/${helmet.img}.png`" :style="`background-image: url('/loadout-images/${helmet.rarity}.png');`" />
+                <img id="backpack" :src="`/loadout-images/Backpacks/${backpack.img}.png`" :style="`background-image: url('/loadout-images/Rarity/${backpack.rarity}.png');`" />
+                <img id="shield" :src="`/loadout-images/Armor/${shield.img}.png`" :style="`background-image: url('/loadout-images/Rarity/${shield.rarity}.png');`" />
+                <img id="helmet" :src="`/loadout-images/Armor/${helmet.img}.png`" :style="`background-image: url('/loadout-images/Rarity/${helmet.rarity}.png');`" />
             </div>
             <div class="items">
                 <div class="item" v-for="item in items" >
-                    <img :src="`/loadout-images/${item.img}.png`" :style="`background-image: url('/loadout-images/${item.rarity}.png');`"/>
+                    <img :src="`/loadout-images/${item.img}.png`" :style="`background-image: url('/loadout-images/Rarity/${item.rarity}.png');`"/>
                     <p>{{ item.amount }}</p>
                 </div>
             </div>
@@ -37,23 +59,32 @@ import {GenerateRandomLoadout, GetRarity} from './loadout';
 export default defineComponent({
     data() {
         return {
+            //Loadout
             weapons: [] as {img: string, rarity: string}[],
             backpack: {} as {img: string, rarity: string},
             shield: {} as {img: string, rarity: string},
             helmet: {} as {img: string, rarity: string},
             items: [] as {img: string, amount: number, rarity: string}[],
+            //Settings
+            minRarity: 0,
+            maxRarity: 4,
+            minRarityString: "Common",
+            maxRarityString: "Exotic/Legendary",
+            consumableAmount: 2,
+            alwaysGetWeapons: true,
+            alwaysGetArmor: true,
         };
     },
     methods: {
         RandomLoadout: function () {
             this.ResetLoadout();
-            let newData = GenerateRandomLoadout();
+            let newData = GenerateRandomLoadout(this.minRarity, this.maxRarity, this.consumableAmount, this.alwaysGetWeapons, this.alwaysGetArmor);
             this.weapons = newData.weapons;
             this.backpack = newData.backpack;
             this.shield = newData.shield;
             this.helmet = newData.helmet;
             this.items = newData.items;
-            this.ShareLoadout(false);
+            window.history.replaceState({}, document.title, '/loadout');
         },
         ResetLoadout: function () {
             this.weapons = [];
@@ -62,26 +93,31 @@ export default defineComponent({
             this.helmet = {img: "None", rarity: "None"};
             this.items = [];
         },
-        ShareLoadout: function (copy: boolean) {
+        ShareLoadout: function () {
             let shareString = '?';
-            shareString += 'weapon=' + this.weapons[0].img.replace(' ', '_');
-            if (this.weapons[1]) shareString += '&weapon=' + + this.weapons[1].img.replace(' ', '_');
+            console.log(this.weapons);
+            //Weapons
+            shareString += 'weapon=' + this.weapons[0].img;
+            if (this.weapons.length == 2) shareString += '&weapon=' + this.weapons[1].img;
+            //Items
             this.items.forEach((item) => {
-                shareString += '&item=' + item.img.replace(' ', '_') + '-' + item.amount;
+                shareString += '&item=' + item.img + '-' + item.amount;
             })
-            if (this.helmet) shareString += '&helmet=' + this.helmet.img.replace(' ', '_');
-            if (this.shield) shareString += '&shield=' + this.shield.img.replace(' ', '_');
-            if (this.backpack) shareString += '&backpack=' + this.backpack.img.replace(' ', '_');
+            //Gear
+            if (this.helmet) shareString += '&helmet=' + this.helmet.img;
+            if (this.shield) shareString += '&shield=' + this.shield.img;
+            if (this.backpack) shareString += '&backpack=' + this.backpack.img;
 
-            if (copy) {
-                navigator.clipboard.writeText(document.baseURI + shareString);
-                window.history.replaceState({}, document.title, '/loadout' + shareString);
-                toast.success('Link copied to clipboard', {timeout: 3000});
-            } else {
-                window.history.replaceState({}, document.title, '/loadout');
-            }
+            //Replace spaces
+            shareString = shareString.replace(/ /g, '_');
+
+            //Copy to clipboard
+            navigator.clipboard.writeText(document.baseURI + shareString);
+            window.history.replaceState({}, document.title, '/loadout' + shareString);
+            toast.success('Link copied to clipboard', {timeout: 3000});
         },
         getLoadoutFromURL: function () {
+            //Get loadout values from URL
             let params = new URLSearchParams(location.search);
             let weapons = params.getAll('weapon');
             let rawItems = params.getAll('item');
@@ -95,19 +131,32 @@ export default defineComponent({
             let shield = params.get('shield');
             let backpack = params.get('backpack');
             //window.history.replaceState({}, document.title, '/');
+            //Set loadout values
             if (weapons.length == 0 && items.length == 0) {
                 this.RandomLoadout();
             } else {
                 for (let i = 0; i < weapons.length; i++) {
-                    this.weapons.push({img: weapons[i].replace('_', ' '), rarity: GetRarity(weapons[i].replace('_', ' '))});
+                    let weapon = weapons[i].split("_").join(" ");
+                    this.weapons.push({img: weapon, rarity: GetRarity(weapon)});
                 }
                 for (let i = 0; i < items.length; i++) {
-                    this.items.push({img: items[i].replace('_', ' '), amount: parseInt(itemNumbers[i]), rarity: GetRarity(items[i].replace('_', ' '))});
+                    let item = items[i].split("_").join(" ");
+                    this.items.push({img: item, amount: parseInt(itemNumbers[i]), rarity: GetRarity(item.split("/")[1])});
                 }
-                if (helmet) this.helmet = {img: helmet.replace('_', ' '), rarity: GetRarity(helmet.replace('_', ' '))};
-                if (shield) this.shield = {img: shield.replace('_', ' '), rarity: GetRarity(shield.replace('_', ' '))};
-                if (backpack) this.backpack = {img: backpack.replace('_', ' '), rarity: GetRarity(backpack.replace('_', ' '))};
+                if (helmet) this.helmet = {img: helmet, rarity: GetRarity(helmet)};
+                if (shield) this.shield = {img: shield, rarity: GetRarity(shield)};
+                if (backpack) this.backpack = {img: backpack, rarity: GetRarity(backpack)};
             }
+        },
+    },
+    watch: {
+        minRarity: function (newVal) {
+            if(newVal > this.maxRarity) this.minRarity = this.maxRarity;
+            this.minRarityString = newVal == 4 ? "Exotic/Legendary" : newVal == 3 ? "Epic" : newVal == 2 ? "Rare" : newVal == 1 ? "Uncommon" : "Common";
+        },
+        maxRarity: function (newVal) {
+            if(newVal < this.minRarity) this.maxRarity = this.minRarity;
+            this.maxRarityString = newVal == 4 ? "Exotic/Legendary" : newVal == 3 ? "Epic" : newVal == 2 ? "Rare" : newVal == 1 ? "Uncommon" : "Common";
         },
     },
     mounted() {
@@ -127,9 +176,18 @@ export default defineComponent({
     justify-content: space-between;
 }
 /* SETTINGS */
+.settings {
+    width: 75%;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2rem;
+}
 .buttons {
     width: 100%;
-    height: 5%;
+    height: 20%;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -137,10 +195,118 @@ export default defineComponent({
     margin: 2rem;
 }
 .button {
-    min-width: 15%;
-    height: 100%;
+    min-width: 25%;
+    height: 40%;
     margin: 2rem;
 }
+.sliders {
+    width: 75%;
+    height: 20%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2rem;
+}
+.sliders label {
+    width: 25%;
+    text-align: center;
+}
+.slider {
+    width: 30%;
+    height: 50%;
+    position: relative;
+}
+.slider input {
+    width: 100%;
+    top: 25%;
+    position: absolute;
+    pointer-events: none;
+}
+.slider input::-webkit-slider-thumb {
+    cursor: pointer;
+    pointer-events: auto;
+}
+.small::-webkit-slider-thumb {
+    width: 1.1rem;
+    height: 1.1rem;
+}
+#maxRaritySlider {
+    background: none;
+}
+.checkboxes {
+    position: relative;
+    width: 80%;
+    height: 35%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 2rem;
+}
+.checkbox {
+    width: 25%;
+    height: 20%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0.5rem;
+}
+.checkbox p {
+    text-align: left;
+    width: 80%;
+}
+.checkboxes .slider {
+    height: 25%;
+    width: 20%;
+    text-align: center;
+}
+.checkboxes .slider input {
+    position: relative;
+}
+
+@media screen and (max-width: 1100px) {
+    .settings {
+        width: 85%;
+        height: 100%;
+        margin: 0;
+    }
+    .buttons {
+        width: 100%;
+        height: 20%;
+    }
+    .button {
+        min-width: 50%;
+        height: 20%;
+    }
+    .sliders {
+        width: 100%;
+        height: 20%;
+    }
+    .sliders label {
+        width: 100%;
+    }
+    .slider {
+        width: 80%;
+        height: 50%;
+    }
+    .checkboxes {
+        width: 100%;
+        height: 35%;
+        flex-wrap: nowrap;
+    }
+    .checkboxes .slider {
+        width: 80%;
+    }
+    .checkbox {
+        width: 50%;
+        height: 20%;
+    }
+}
+
+
 /* LOADOUT */
 .loadout {
     max-width: 100%;
@@ -239,5 +405,11 @@ export default defineComponent({
     font-family: 'Noto Sans', sans-serif;
     color: white;
     font-size: 1.5vh;
+}
+
+@media screen and (max-width: 1100px) {
+    .item p {
+        font-size: 1.5vw;
+    }
 }
 </style>

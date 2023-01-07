@@ -35,7 +35,8 @@ let ShotgunWeapons = ['PKR Maelstrom', 'Shattergun', 'B9 Trenchgun', 'Bulldog'];
 let SpecialWeapons = ['Komrad'];
 
 //Other Arrays
-let Consumables = ['GrenadeFrag', 'GrenadeGas', 'GrenadeSmoke', 'GrenadeSound', 'MedkitCombat', 'MedkitStrong', 'MedkitWeak', 'StimCombat', 'StimStrong', 'StimWeak'];
+let Consumables = ['GrenadeLight', "GrenadeStandard", "GrenadeEpic", "GrenadeExotic", 'GrenadeGas', 'GrenadeSmoke', 'GrenadeSound', 'MedkitCombat', 'MedkitStrong', 'MedkitWeak', 'StimCombat', 'StimStrong', 'StimWeak'];
+let OtherItems = ["Mineral Scanner", "Heavy Mining Tool","Data Drive"];
 let Backpacks = ['Common', 'Uncommon', 'Rare', 'Epic'];
 let Shields = ['Common', 'Common_Tactical', 'Common_Restoration', 'Uncommon', 'Uncommon_Tactical', 'Uncommon_Restoration', 'Rare', 'Rare_Tactical', 'Rare_Restoration', 'Epic', 'Exotic'];
 let Helmets = ['Common', 'Common_Tactical', 'Common_Restoration', 'Uncommon', 'Uncommon_Tactical', 'Uncommon_Restoration', 'Rare', 'Rare_Tactical', 'Rare_Restoration', 'Epic', 'Exotic', 'Nightvision'];
@@ -44,35 +45,46 @@ import itemList from './itemList.json';
 
 export function GetRarity(IGN: string) {
     if (!IGN) return "";
-    for (var item in itemList) {
-        if (itemList[item]['ingame'] == IGN) {
-            return itemList[item]['rarity'];
-        }
-    }
+
+    //Medkit/Stim
     if (IGN.includes('Medkit') || IGN.includes('Stim')) {
         if (IGN.includes('Weak')) return 'Common';
         if (IGN.includes('Strong')) return 'Uncommon';
         if (IGN.includes('Combat')) return 'Rare';
     }
+
+    //Grenade
     if (IGN.includes('Grenade')) {
         if (IGN == 'GrenadeSmoke') return 'Common';
-        if (IGN == 'GrenadeSound' || IGN == 'GrenadeGas' || IGN == 'GrenadeFrag') return 'Uncommon';
+        if (IGN == 'GrenadeSound' || IGN == 'GrenadeGas' || IGN == 'GrenadeLight') return 'Uncommon';
+        if (IGN == 'GrenadeStandard') return 'Rare';
     }
-    if (IGN.includes('Ammo')) {
-        if (IGN.includes('Light') || IGN.includes('Medium')) return 'Common';
-        if (IGN.includes('Heavy') || IGN.includes('Shotgun')) return 'Uncommon';
-        if (IGN.includes('Special')) return 'Rare';
-    }
+
+    //Gear
     if (IGN.includes('Common')) return 'Common';
     if (IGN.includes('Uncommon')) return 'Uncommon';
     if (IGN.includes('Rare')) return 'Rare';
     if (IGN.includes('Epic')) return 'Epic';
     if (IGN.includes('Exotic')) return 'Exotic';
     if (IGN.includes('Nightvision')) return 'Legendary';
-    return "";
+
+    //Item List
+    for (var item in itemList) {
+        if (itemList[item]['ingame'] == IGN) {
+            return itemList[item]['rarity'];
+        }
+    }
+
+    //Ammo
+    if (IGN.includes('Light') || IGN.includes('Medium')) return 'Common';
+    if (IGN.includes('Heavy') || IGN.includes('Shotgun')) return 'Uncommon';
+    if (IGN.includes('Special')) return 'Rare';
+
+    //None found
+    return "None";
 }
 
-export function GenerateRandomLoadout() {
+export function GenerateRandomLoadout(minRarity: number, maxRarity: number, consumableAmount: number, alwaysGetWeapons: boolean, alwaysGetArmor: boolean) {
     let data = {
         weapons: [] as {img: string, rarity: string}[],
         backpack: {} as {img: string, rarity: string},
@@ -82,38 +94,90 @@ export function GenerateRandomLoadout() {
     };
 
     //Weapons
+    let totalAmmo = [];
     let tempWeaponArr = [...allWeapons];
     for(let i = 0; i < 2; i++) {
-        let weapon = tempWeaponArr[Math.floor(Math.random() * tempWeaponArr.length)];
+        if(i == 1 && !alwaysGetWeapons) {
+            if(getRandomRange(1, 100) <= 5) break;
+        }
+        let rarityNumber = -1;
+        let weapon = '';
+        //Find a weapon that is within the rarity range
+        while(rarityNumber < minRarity || rarityNumber > maxRarity) {
+            weapon = tempWeaponArr[Math.floor(Math.random() * tempWeaponArr.length)];
+            rarityNumber = rarityToInt(GetRarity(weapon));
+        }
+        //Remove the weapon from the array so it can't be picked again
         tempWeaponArr = tempWeaponArr.filter((w) => w != weapon);
-        let Ammo = "Ammo_" + getAmmoType(weapon);
-        let AmmoRarity = GetRarity(Ammo);
-        let AmmoAmount = getAmmoAmount(Ammo.replace("Ammo_", ""));
-        data.weapons.push({img: "Weapons/" + weapon, rarity: GetRarity(weapon)});
-        AmmoAmount.forEach((amount) => {
-            data.items.push({img: Ammo, amount: amount, rarity: AmmoRarity});
-        });
+        //Ammo...
+        let Ammo = getAmmoType(weapon);
+        totalAmmo.push({type: Ammo, amount: getAmmoAmount(Ammo)});
+        //Add the weapon to the data
+        data.weapons.push({img: weapon, rarity: GetRarity(weapon)});
     }
 
+    //Ammo
+    let ammo = splitAmmo(totalAmmo);
+    ammo.forEach(a => {
+        data.items.push({img: "Ammo/" + a.type, amount: a.amount, rarity: GetRarity(a.type)});
+    });
+
+
     //Backpack
-    let backpack = "Backpack_" + Backpacks[Math.floor(Math.random() * Backpacks.length)];
+    let rarityNumber = -1;
+    let backpack = '';
+    //Find a backpack that is within the rarity range
+    while(rarityNumber < (minRarity == 4 ? 3 : minRarity) || rarityNumber > maxRarity) {
+        backpack = Backpacks[Math.floor(Math.random() * Backpacks.length)];
+        rarityNumber = rarityToInt(GetRarity(backpack));
+        console.log(backpack, rarityNumber);
+    }
+    //Add the backpack to the data
     data.backpack = {img: backpack, rarity: GetRarity(backpack)};
 
     //Shield
-    let shield = "Shield_" + Shields[Math.floor(Math.random() * Shields.length)];
-    data.shield = {img: shield, rarity: GetRarity(shield)};
-
+    if(getRandomRange(1, 100) > 8 || alwaysGetArmor) {
+        let rarityNumber = -1;
+        let shield = '';
+        //Find a shield that is within the rarity range
+        while(rarityNumber < minRarity || rarityNumber > maxRarity) {
+            shield = "Shield_" + Shields[Math.floor(Math.random() * Shields.length)];
+            rarityNumber = rarityToInt(GetRarity(shield));
+        }
+        //Add the shield to the data
+        data.shield = {img: shield, rarity: GetRarity(shield)};
+    } else {
+        //No shield
+        data.shield = {img: "None", rarity: "None"};
+    }
     //Helmet
-    let helmet = "Helmet_" + Helmets[Math.floor(Math.random() * Helmets.length)];
-    data.helmet = {img: helmet, rarity: GetRarity(helmet)};
+    if(getRandomRange(1, 100) > 8 || alwaysGetArmor) {
+        let rarityNumber = -1;
+        let helmet = '';
+        //Find a helmet that is within the rarity range
+        while(rarityNumber < minRarity || rarityNumber > maxRarity) {
+            helmet = "Helmet_" + Helmets[Math.floor(Math.random() * Helmets.length)];
+            rarityNumber = rarityToInt(GetRarity(helmet));
+        }
+        //Add the helmet to the data
+        data.helmet = {img: helmet, rarity: GetRarity(helmet)};
+    } else {
+        //No helmet
+        data.helmet = {img: "None", rarity: "None"};
+    }
 
     //Consumables:
     let C = [...Consumables];
-    for (let i = 1; i <= 2; i++) {
+    for (let i = 1; i <= consumableAmount; i++) {
         let Consumable;
-        let r = Math.floor(Math.random() * C.length);
-        Consumable = C[r];
-        C.splice(r, 1);
+        let rarityNumber = -1;
+        //Find a consumable that is within the rarity range
+        while(rarityNumber < (minRarity >= 3 ? 2 : minRarity) || rarityNumber > maxRarity) {
+            let r = Math.floor(Math.random() * C.length);
+            Consumable = C[r];
+            rarityNumber = rarityToInt(GetRarity(Consumable));
+            C.splice(r, 1);
+        }
         if (Consumable) {
             if (Consumable.includes('Medkit')) {
                 addConsumable(Consumable, Math.floor(Math.random() * 1) + 1);
@@ -127,9 +191,18 @@ export function GenerateRandomLoadout() {
         }
     }
     function addConsumable(Consumable: string, amount: number) {
-        data.items.push({img: Consumable, amount: amount, rarity: GetRarity(Consumable)});
+        data.items.push({img: "Consumables/" + Consumable, amount: amount, rarity: GetRarity(Consumable)});
     }
 
+    //Other items:
+    if(getRandomRange(1, 100) > 50) {
+        //Find an item
+        let item = OtherItems[Math.floor(Math.random() * OtherItems.length)];
+        //Add the item to the data
+        data.items.push({img: item, amount: 1, rarity: GetRarity(item)});
+    }
+
+    //Return the data
     return data;
 }
 
@@ -141,34 +214,63 @@ function getAmmoType(weapon: string) : string {
     if (SpecialWeapons.includes(weapon)) return 'Special';
     return '';
 }
-
-function getAmmoAmount(type: string): number[] {
-    let total, stackSize;
+function getAmmoAmount(type: string): number {
+    let total;
     if (type == 'Light' || type == 'Medium') {
         total = getRandomRange(150,600);
-        stackSize = 250;
     } else
     if (type == 'Shotgun' || type == 'Special'){ 
         total = getRandomRange(40,150);
-        stackSize = 50;
     } else
     if (type == 'Heavy') {
         total = getRandomRange(30,100);
-        stackSize = 50;
     } else {
-        return [];
+        total = 0;
     }
-    let stacks = [];
-    for(let i = 0; i < Math.ceil(total / stackSize); i++) {
-        if(total - (i + 1) * stackSize > 0) {
-            stacks.push(stackSize);
-        } else {
-            stacks.push(total - i * stackSize);
+    return total;
+}
+function splitAmmo(ammo: {type: string, amount: number}[]) : {type: string, amount: number}[] {
+    //Combine ammo types
+    ammo.forEach((a) => {
+        ammo.forEach((b) => {
+            if(a.type == b.type && a != b) {
+                a.amount += b.amount;
+                ammo.splice(ammo.indexOf(b), 1);
+            }
+        });
+    });
+
+    //Split into stacks
+    let stacks = [] as {type: string, amount: number}[];
+    ammo.forEach((a) => {
+        let stackSize;
+        if (a.type == 'Light' || a.type == 'Medium') {
+            stackSize = 250;
+        } else
+        if (a.type == 'Shotgun' || a.type == 'Special' || a.type == 'Heavy'){ 
+            stackSize = 50;
+        } else{
+            return [];
         }
-    }
+        for(let i = 0; i < Math.ceil(a.amount / stackSize); i++) {
+            if(a.amount - (i + 1) * stackSize > 0) {
+                stacks.push({type: a.type, amount: stackSize});
+            } else {
+                stacks.push({type: a.type, amount: a.amount - i * stackSize});
+            }
+        }
+    });
     return stacks;
 }
-
 function getRandomRange (min: number, max :number): number {
     return Math.ceil(Math.random() * (max - min) + min);
-  }
+}
+function rarityToInt(rarity: string): number {
+    if(rarity == 'Common') return 0;
+    if(rarity == 'Uncommon') return 1;
+    if(rarity == 'Rare') return 2;
+    if(rarity == 'Epic') return 3;
+    if(rarity == 'Exotic') return 4;
+    if(rarity == 'Legendary') return 4;
+    return -1;
+}
