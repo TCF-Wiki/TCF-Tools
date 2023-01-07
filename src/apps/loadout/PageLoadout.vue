@@ -5,17 +5,17 @@
                 <label>Minimum rarity: {{ minRarityString }}</label>
                 <div class="slider">
                     <input id="minRaritySlider" type="range" min="0" max="4" v-model="minRarity" />
-                    <input id="maxRaritySlider"  :class="minRarity == maxRarity ? 'small' : '' " type="range" min="0" max="4" v-model="maxRarity" />
+                    <input id="maxRaritySlider" :class="minRarity == maxRarity ? 'small' : ''" type="range" min="0" max="4" v-model="maxRarity" />
                 </div>
                 <label>Maximum rarity: {{ maxRarityString }}</label>
             </div>
             <div class="checkboxes">
                 <div class="checkbox">
-                    <input type="checkbox" name="weapons" v-model="alwaysGetWeapons">
+                    <input type="checkbox" name="weapons" v-model="alwaysGetWeapons" />
                     <p>Always get 2 weapons</p>
                 </div>
                 <div class="checkbox">
-                    <input type="checkbox" name="armor" v-model="alwaysGetArmor">
+                    <input type="checkbox" name="armor" v-model="alwaysGetArmor" />
                     <p>Always get armor</p>
                 </div>
                 <div class="slider">
@@ -31,10 +31,10 @@
         <div class="loadout">
             <img id="inventory" src="/loadout-images/Inventory.png" />
             <div class="weapon" id="Weapon1" v-if="weapons[0]" :style="`background-image: url('/loadout-images/Rarity/${weapons[0].rarity}_Weapon.png');`">
-                <img :src="`/loadout-images/Weapons/${weapons[0].img}.png`"/>
+                <img :src="`/loadout-images/Weapons/${weapons[0].img}.png`" />
             </div>
             <div class="weapon" id="Weapon2" v-if="weapons[1]" :style="`background-image: url('/loadout-images/Rarity/${weapons[1].rarity}_Weapon.png');`">
-                <img :src="`/loadout-images/Weapons/${weapons[1].img}.png`"/>
+                <img :src="`/loadout-images/Weapons/${weapons[1].img}.png`" />
             </div>
             <div class="gear">
                 <img id="backpack" :src="`/loadout-images/Backpacks/${backpack.img}.png`" :style="`background-image: url('/loadout-images/Rarity/${backpack.rarity}.png');`" />
@@ -42,8 +42,8 @@
                 <img id="helmet" :src="`/loadout-images/Armor/${helmet.img}.png`" :style="`background-image: url('/loadout-images/Rarity/${helmet.rarity}.png');`" />
             </div>
             <div class="items">
-                <div class="item" v-for="item in items" >
-                    <img :src="`/loadout-images/${item.img}.png`" :style="`background-image: url('/loadout-images/Rarity/${item.rarity}.png');`"/>
+                <div class="item" v-for="item in items">
+                    <img :src="`/loadout-images/${item.img}.png`" :style="`background-image: url('/loadout-images/Rarity/${item.rarity}.png');`" />
                     <p>{{ item.amount }}</p>
                 </div>
             </div>
@@ -60,16 +60,16 @@ export default defineComponent({
     data() {
         return {
             //Loadout
-            weapons: [] as {img: string, rarity: string}[],
-            backpack: {} as {img: string, rarity: string},
-            shield: {} as {img: string, rarity: string},
-            helmet: {} as {img: string, rarity: string},
-            items: [] as {img: string, amount: number, rarity: string}[],
+            weapons: [] as {img: string; rarity: string}[],
+            backpack: {} as {img: string; rarity: string},
+            shield: {} as {img: string; rarity: string},
+            helmet: {} as {img: string; rarity: string},
+            items: [] as {img: string; amount: number; rarity: string}[],
             //Settings
             minRarity: 0,
             maxRarity: 4,
-            minRarityString: "Common",
-            maxRarityString: "Exotic/Legendary",
+            minRarityString: 'Common',
+            maxRarityString: 'Exotic/Legendary',
             consumableAmount: 2,
             alwaysGetWeapons: true,
             alwaysGetArmor: true,
@@ -88,9 +88,9 @@ export default defineComponent({
         },
         ResetLoadout: function () {
             this.weapons = [];
-            this.backpack = {img: "None", rarity: "None"};
-            this.shield = {img: "None", rarity: "None"};
-            this.helmet = {img: "None", rarity: "None"};
+            this.backpack = {img: 'None', rarity: 'None'};
+            this.shield = {img: 'None', rarity: 'None'};
+            this.helmet = {img: 'None', rarity: 'None'};
             this.items = [];
         },
         ShareLoadout: function () {
@@ -102,7 +102,7 @@ export default defineComponent({
             //Items
             this.items.forEach((item) => {
                 shareString += '&item=' + item.img + '-' + item.amount;
-            })
+            });
             //Gear
             if (this.helmet) shareString += '&helmet=' + this.helmet.img;
             if (this.shield) shareString += '&shield=' + this.shield.img;
@@ -136,12 +136,12 @@ export default defineComponent({
                 this.RandomLoadout();
             } else {
                 for (let i = 0; i < weapons.length; i++) {
-                    let weapon = weapons[i].split("_").join(" ");
+                    let weapon = weapons[i].split('_').join(' ');
                     this.weapons.push({img: weapon, rarity: GetRarity(weapon)});
                 }
                 for (let i = 0; i < items.length; i++) {
-                    let item = items[i].split("_").join(" ");
-                    this.items.push({img: item, amount: parseInt(itemNumbers[i]), rarity: GetRarity(item.split("/")[1])});
+                    let item = items[i].split('_').join(' ');
+                    this.items.push({img: item, amount: parseInt(itemNumbers[i]), rarity: GetRarity(item.split('/')[1])});
                 }
                 if (helmet) this.helmet = {img: helmet, rarity: GetRarity(helmet)};
                 if (shield) this.shield = {img: shield, rarity: GetRarity(shield)};
@@ -151,12 +151,12 @@ export default defineComponent({
     },
     watch: {
         minRarity: function (newVal) {
-            if(newVal > this.maxRarity) this.minRarity = this.maxRarity;
-            this.minRarityString = newVal == 4 ? "Exotic/Legendary" : newVal == 3 ? "Epic" : newVal == 2 ? "Rare" : newVal == 1 ? "Uncommon" : "Common";
+            if (newVal > this.maxRarity) this.minRarity = this.maxRarity;
+            this.minRarityString = newVal == 4 ? 'Exotic/Legendary' : newVal == 3 ? 'Epic' : newVal == 2 ? 'Rare' : newVal == 1 ? 'Uncommon' : 'Common';
         },
         maxRarity: function (newVal) {
-            if(newVal < this.minRarity) this.maxRarity = this.minRarity;
-            this.maxRarityString = newVal == 4 ? "Exotic/Legendary" : newVal == 3 ? "Epic" : newVal == 2 ? "Rare" : newVal == 1 ? "Uncommon" : "Common";
+            if (newVal < this.minRarity) this.maxRarity = this.minRarity;
+            this.maxRarityString = newVal == 4 ? 'Exotic/Legendary' : newVal == 3 ? 'Epic' : newVal == 2 ? 'Rare' : newVal == 1 ? 'Uncommon' : 'Common';
         },
     },
     mounted() {
@@ -305,7 +305,6 @@ export default defineComponent({
         height: 20%;
     }
 }
-
 
 /* LOADOUT */
 .loadout {
