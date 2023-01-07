@@ -1,40 +1,28 @@
 <template>
     <div class="loadoutPage">
-        <h1 class="title">The Cycle: Frontier - Random Loadout Generator</h1>
-        <div class="buttons">
-            <button class="button loadoutBtn" @click.prevent="RandomLoadout()">Generate</button>
-            <button class="button loadoutBtn" @click.prevent="ShareLoadout(true)">Share</button>
-            <span class="popup" id="sharePopup">Link copied to clipboard</span>
+        <div class="settings">
+            <div class="buttons">
+                <button class="button" @click.prevent="RandomLoadout()">Generate</button>
+                <button class="button" @click.prevent="ShareLoadout(true)">Share</button>
+            </div>
         </div>
         <div class="loadout">
-            <img class="loadout-image" src="/loadout-images/Inventory.png" />
-            <div class="weapon" id="Weapon1">
-                <img class="weaponImg" src="/loadout-images/None.png" />
+            <img id="inventory" src="/loadout-images/Inventory.png" />
+            <div class="weapon" id="Weapon1" v-if="weapons[0]" :style="`background-image: url('/loadout-images/${weapons[0].rarity}_Weapon.png');`">
+                <img :src="`/loadout-images/${weapons[0].img}.png`"/>
             </div>
-            <div class="weapon" id="Weapon2">
-                <img class="weaponImg" src="/loadout-images/None.png" />
+            <div class="weapon" id="Weapon2" v-if="weapons[1]" :style="`background-image: url('/loadout-images/${weapons[1].rarity}_Weapon.png');`">
+                <img :src="`/loadout-images/${weapons[1].img}.png`"/>
             </div>
             <div class="gear">
-                <img class="gearImg" id="Backpack" src="/loadout-images/None.png" />
-                <img class="gearImg" id="Shield" src="/loadout-images/None.png" />
-                <img class="gearImg" id="Helmet" src="/loadout-images/None.png" />
+                <img id="backpack" :src="`/loadout-images/${backpack.img}.png`" :style="`background-image: url('/loadout-images/${backpack.rarity}.png');`" />
+                <img id="shield" :src="`/loadout-images/${shield.img}.png`" :style="`background-image: url('/loadout-images/${shield.rarity}.png');`" />
+                <img id="helmet" :src="`/loadout-images/${helmet.img}.png`" :style="`background-image: url('/loadout-images/${helmet.rarity}.png');`" />
             </div>
             <div class="items">
-                <div class="Item">
-                    <img class="itemImg" id="Item1" src="/loadout-images/None.png" />
-                    <p class="itemNumber" id="Item1Number"></p>
-                </div>
-                <div class="Item">
-                    <img class="itemImg" id="Item2" src="/loadout-images/None.png" />
-                    <p class="itemNumber" id="Item2Number"></p>
-                </div>
-                <div class="Item">
-                    <img class="itemImg" id="Item3" src="/loadout-images/None.png" />
-                    <p class="itemNumber" id="Item3Number"></p>
-                </div>
-                <div class="Item">
-                    <img class="itemImg" id="Item4" src="/loadout-images/None.png" />
-                    <p class="itemNumber" id="Item4Number"></p>
+                <div class="item" v-for="item in items" >
+                    <img :src="`/loadout-images/${item.img}.png`" :style="`background-image: url('/loadout-images/${item.rarity}.png');`"/>
+                    <p>{{ item.amount }}</p>
                 </div>
             </div>
         </div>
@@ -43,20 +31,88 @@
 
 <script lang="ts">
 import {defineComponent} from 'vue';
-// @ts-ignore
-import {onLoad, ShareLoadout, RandomLoadout} from './loadout.js';
+import {useToast} from 'vue-toastification';
+const toast = useToast();
+import {GenerateRandomLoadout, GetRarity} from './loadout';
 export default defineComponent({
-    data() {},
+    data() {
+        return {
+            weapons: [] as {img: string, rarity: string}[],
+            backpack: {} as {img: string, rarity: string},
+            shield: {} as {img: string, rarity: string},
+            helmet: {} as {img: string, rarity: string},
+            items: [] as {img: string, amount: number, rarity: string}[],
+        };
+    },
     methods: {
         RandomLoadout: function () {
-            RandomLoadout();
+            this.ResetLoadout();
+            let newData = GenerateRandomLoadout();
+            this.weapons = newData.weapons;
+            this.backpack = newData.backpack;
+            this.shield = newData.shield;
+            this.helmet = newData.helmet;
+            this.items = newData.items;
+            this.ShareLoadout(false);
+        },
+        ResetLoadout: function () {
+            this.weapons = [];
+            this.backpack = {img: "None", rarity: "None"};
+            this.shield = {img: "None", rarity: "None"};
+            this.helmet = {img: "None", rarity: "None"};
+            this.items = [];
         },
         ShareLoadout: function (copy: boolean) {
-            ShareLoadout(copy);
+            let shareString = '?';
+            shareString += 'weapon=' + this.weapons[0].img.replace(' ', '_');
+            if (this.weapons[1]) shareString += '&weapon=' + + this.weapons[1].img.replace(' ', '_');
+            this.items.forEach((item) => {
+                shareString += '&item=' + item.img.replace(' ', '_') + '-' + item.amount;
+            })
+            if (this.helmet) shareString += '&helmet=' + this.helmet.img.replace(' ', '_');
+            if (this.shield) shareString += '&shield=' + this.shield.img.replace(' ', '_');
+            if (this.backpack) shareString += '&backpack=' + this.backpack.img.replace(' ', '_');
+
+            if (copy) {
+                navigator.clipboard.writeText(document.baseURI + shareString);
+                window.history.replaceState({}, document.title, '/loadout' + shareString);
+                toast.success('Link copied to clipboard', {timeout: 3000});
+            } else {
+                window.history.replaceState({}, document.title, '/loadout');
+            }
+        },
+        getLoadoutFromURL: function () {
+            let params = new URLSearchParams(location.search);
+            let weapons = params.getAll('weapon');
+            let rawItems = params.getAll('item');
+            let items = [];
+            let itemNumbers = [];
+            for (let i = 0; i < rawItems.length; i++) {
+                items.push(rawItems[i].split('-')[0]);
+                itemNumbers.push(rawItems[i].split('-')[1]);
+            }
+            let helmet = params.get('helmet');
+            let shield = params.get('shield');
+            let backpack = params.get('backpack');
+            //window.history.replaceState({}, document.title, '/');
+            if (weapons.length == 0 && items.length == 0) {
+                this.RandomLoadout();
+            } else {
+                for (let i = 0; i < weapons.length; i++) {
+                    this.weapons.push({img: weapons[i].replace('_', ' '), rarity: GetRarity(weapons[i].replace('_', ' '))});
+                }
+                for (let i = 0; i < items.length; i++) {
+                    this.items.push({img: items[i].replace('_', ' '), amount: parseInt(itemNumbers[i]), rarity: GetRarity(items[i].replace('_', ' '))});
+                }
+                if (helmet) this.helmet = {img: helmet.replace('_', ' '), rarity: GetRarity(helmet.replace('_', ' '))};
+                if (shield) this.shield = {img: shield.replace('_', ' '), rarity: GetRarity(shield.replace('_', ' '))};
+                if (backpack) this.backpack = {img: backpack.replace('_', ' '), rarity: GetRarity(backpack.replace('_', ' '))};
+            }
         },
     },
     mounted() {
-        onLoad();
+        this.ResetLoadout();
+        this.getLoadoutFromURL();
     },
 });
 </script>
@@ -70,14 +126,7 @@ export default defineComponent({
     align-items: center;
     justify-content: space-between;
 }
-.title {
-    width: 100%;
-    text-align: center;
-    font-size: 2vw;
-    font-weight: bold;
-    color: #ffffff;
-    font-family: 'Lato', sans-serif;
-}
+/* SETTINGS */
 .buttons {
     width: 100%;
     height: 5%;
@@ -87,28 +136,25 @@ export default defineComponent({
     align-items: center;
     margin: 2rem;
 }
-
-.loadoutBtn {
+.button {
     min-width: 15%;
     height: 100%;
     margin: 2rem;
 }
-
+/* LOADOUT */
 .loadout {
     max-width: 100%;
     margin-bottom: 5vh;
     position: relative;
     display: block;
 }
-.loadout-image {
+#inventory {
     width: auto;
     height: 87.5%;
     display: block;
 }
 .weapon {
     position: absolute;
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
     left: 52.5%;
     width: 45%;
     height: 15%;
@@ -116,8 +162,10 @@ export default defineComponent({
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
 }
-.weaponImg {
+.weapon img {
     position: relative;
     width: auto;
     height: 100%;
@@ -141,7 +189,7 @@ export default defineComponent({
     justify-content: space-between;
     align-content: center;
 }
-.gearImg {
+.gear img {
     background-size: cover;
     background-repeat: no-repeat;
     position: relative;
@@ -151,12 +199,8 @@ export default defineComponent({
     margin: 1%;
     margin-top: 0%;
 }
-#Backpack {
+#backpack {
     margin-left: 0;
-}
-
-#Helmet {
-    margin-right: 0;
 }
 
 .items {
@@ -168,25 +212,26 @@ export default defineComponent({
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: flex-start;
     align-content: flex-start;
 }
 
-.Item {
+.item {
     position: relative;
     width: 31.33%;
     margin: 1%;
+    margin-bottom: 1.5%;
 }
 
-.itemImg {
+.item img {
     background-size: cover;
     background-repeat: no-repeat;
     width: 100%;
     padding: 10%;
 }
 
-.itemNumber {
+.item p {
     position: absolute;
     bottom: 5%;
     right: 10%;
@@ -194,56 +239,5 @@ export default defineComponent({
     font-family: 'Noto Sans', sans-serif;
     color: white;
     font-size: 1.5vh;
-}
-
-/*Copy popup*/
-.popup {
-    position: absolute;
-    opacity: 0;
-    visibility: hidden;
-    width: 15vw;
-    text-align: center;
-    padding: 0.5em;
-    top: 2%;
-    left: 41.5vw;
-    background-color: #176e99;
-    border-radius: 0.3em;
-    margin: 10px;
-    text-transform: uppercase;
-    font-size: 1vw;
-    font-family: 'Noto Sans', sans-serif;
-}
-.show {
-    visibility: visible;
-    animation: fade 2s;
-    -webkit-animation: fade 2s;
-}
-@-webkit-keyframes fade {
-    0% {
-        opacity: 0;
-    }
-    45% {
-        opacity: 1;
-    }
-    55% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
-}
-@keyframes fade {
-    0% {
-        opacity: 0;
-    }
-    45% {
-        opacity: 1;
-    }
-    55% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
 }
 </style>
