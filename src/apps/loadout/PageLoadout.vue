@@ -178,7 +178,7 @@ export default defineComponent({
 /* SETTINGS */
 .settings {
     width: 75%;
-    height: 50vh;
+    height: 40vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -187,26 +187,26 @@ export default defineComponent({
 }
 .buttons {
     width: 100%;
-    height: 20%;
+    height: 10%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin: 2rem;
+    margin: 1rem;
 }
 .button {
     min-width: 25%;
-    height: 40%;
+    height: 80%;
     margin: 2rem;
 }
 .sliders {
     width: 75%;
-    height: 20%;
+    height: 10%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin: 2rem;
+    margin: 1rem;
 }
 .sliders label {
     width: 25%;
@@ -237,13 +237,13 @@ export default defineComponent({
 .checkboxes {
     position: relative;
     width: 80%;
-    height: 35%;
+    height: 30%;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: center;
-    margin: 2rem;
+    margin: 1rem;
 }
 .checkbox {
     width: 25%;
