@@ -72,8 +72,6 @@ export default defineComponent({
             //Settings
             minRarity: 0,
             maxRarity: 5,
-            minRarityString: "Common",
-            maxRarityString: "Exotic/Legendary",
             consumableAmount: 2,
             alwaysGetWeapons: true,
             alwaysGetArmor: true,
