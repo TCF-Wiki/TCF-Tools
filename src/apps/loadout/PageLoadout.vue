@@ -3,14 +3,18 @@
         <div class="settings">
             <h2>Rarity Range</h2>
             <div class="sliders">
-                <label class="left">Min: {{ Object.keys(rarityInfo)[minRarity] }}</label>
-                <img :src="`/calc-images/${rarityInfo[Object.keys(rarityInfo)[minRarity]]}.png`" />
+                <div class="label left">
+                    <label>Min: {{ Object.keys(rarityInfo)[minRarity] }}</label>
+                    <img :src="`/calc-images/${rarityInfo[Object.keys(rarityInfo)[minRarity]]}.png`" />
+                </div>
                 <div class="slider">
                     <input id="minRaritySlider" :class="minRarity == maxRarity ? 'smallMin' : ''" type="range" min="0" max="5" v-model="minRarity" />
                     <input id="maxRaritySlider" :class="minRarity == maxRarity ? 'smallMax' : ''" type="range" min="0" max="5" v-model="maxRarity" />
                 </div>
-                <img :src="`/calc-images/${rarityInfo[Object.keys(rarityInfo)[maxRarity]]}.png`" />
-                <label>Max: {{ Object.keys(rarityInfo)[maxRarity] }}</label>
+                <div class="label">
+                    <img :src="`/calc-images/${rarityInfo[Object.keys(rarityInfo)[maxRarity]]}.png`" />
+                    <label>Max: {{ Object.keys(rarityInfo)[maxRarity] }}</label>
+                </div>
             </div>
             <div class="checkboxes">
                 <div class="checkbox">
@@ -55,7 +59,6 @@
 </template>
 
 <script lang="ts">
-import {offset} from "@floating-ui/core";
 import {defineComponent} from "vue";
 import {useToast} from "vue-toastification";
 const toast = useToast();
@@ -71,9 +74,7 @@ export default defineComponent({
             items: [] as {img: string; amount: number; ign: string; rarity: string}[],
             //Settings
             minRarity: 0,
-            maxRarity: 5,
-            minRarityString: "Common",
-            maxRarityString: "Exotic/Legendary",
+            maxRarity: 4,
             consumableAmount: 2,
             alwaysGetWeapons: true,
             alwaysGetArmor: true,
@@ -184,21 +185,24 @@ export default defineComponent({
 <style scoped>
 .loadoutPage {
     width: 100%;
+    height: 100%;
     margin: none;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    padding: 1rem;
 }
 /* SETTINGS */
 .settings {
-    width: 75%;
-    height: 40vh;
+    width: 40%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     margin: 1rem;
+    padding: 1rem;
 }
 .buttons {
     width: 100%;
@@ -216,7 +220,7 @@ export default defineComponent({
     margin: 2rem;
 }
 .sliders {
-    width: 75%;
+    width: 100%;
     height: 10%;
     display: flex;
     flex-direction: row;
@@ -224,11 +228,18 @@ export default defineComponent({
     align-items: center;
     margin: 0 1rem;
 }
+.sliders .label {
+    width: 30%;
+    height: 30%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
 .sliders label {
     width: 25%;
     text-align: left;
 }
-
 .sliders label.left {
     text-align: right;
 }
@@ -236,7 +247,8 @@ export default defineComponent({
     width: 4rem;
 }
 .slider {
-    width: 30%;
+    width: 40%;
+    min-width: 10rem;
     height: 50%;
     position: relative;
 }
@@ -263,7 +275,7 @@ export default defineComponent({
 }
 .checkboxes {
     position: relative;
-    width: 80%;
+    width: 100%;
     height: 30%;
     display: flex;
     flex-direction: column;
@@ -273,7 +285,7 @@ export default defineComponent({
     margin: 1rem;
 }
 .checkbox {
-    width: 25%;
+    width: 100%;
     height: 20%;
     display: flex;
     flex-direction: row;
@@ -287,56 +299,17 @@ export default defineComponent({
 }
 .checkboxes .slider {
     height: 25%;
-    width: 20%;
+    width: 75%;
     text-align: center;
 }
 .checkboxes .slider input {
     position: relative;
 }
 
-@media screen and (max-width: 1100px) {
-    .settings {
-        width: 85%;
-        height: 100%;
-        margin: 0;
-    }
-    .buttons {
-        width: 100%;
-        height: 20%;
-    }
-    .button {
-        min-width: 50%;
-        height: 20%;
-    }
-    .sliders {
-        width: 100%;
-        height: 20%;
-    }
-    .sliders label {
-        width: 100%;
-    }
-    .slider {
-        width: 80%;
-        height: 50%;
-    }
-    .checkboxes {
-        width: 100%;
-        height: 35%;
-        flex-wrap: nowrap;
-    }
-    .checkboxes .slider {
-        width: 80%;
-    }
-    .checkbox {
-        width: 50%;
-        height: 20%;
-    }
-}
-
 /* LOADOUT */
 .loadout {
     max-width: 100%;
-    margin-bottom: 5vh;
+    height: 100%;
     position: relative;
     display: block;
 }
@@ -434,6 +407,59 @@ export default defineComponent({
 }
 
 @media screen and (max-width: 1100px) {
+    .loadoutPage {
+        flex-direction: column;
+        align-items: center;
+    }
+    .settings {
+        width: 85%;
+        min-height: 30vh;
+        margin: 0;
+    }
+    .buttons {
+        width: 100%;
+        height: 20%;
+    }
+    .button {
+        min-width: 50%;
+        height: 20%;
+    }
+    .sliders {
+        width: 100%;
+        height: 12vh;
+        flex-direction: column;
+    }
+    .sliders .label {
+        width: 75%;
+        justify-content: center;
+        flex-direction: row-reverse;
+    }
+    .sliders .left {
+        flex-direction: row;
+    }
+    .sliders label {
+        text-align: center;
+        width: 50%;
+    }
+    .sliders label.left {
+        text-align: center;
+    }
+    .slider {
+        width: 80%;
+        height: 100%;
+    }
+    .checkboxes {
+        width: 100%;
+        height: 35%;
+        flex-wrap: nowrap;
+    }
+    .checkboxes .slider {
+        width: 80%;
+    }
+    .checkbox {
+        width: 50%;
+        height: 20%;
+    }
     .item p {
         font-size: 1.5vw;
     }
