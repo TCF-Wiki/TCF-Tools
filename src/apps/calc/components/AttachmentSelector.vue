@@ -15,11 +15,11 @@
                     <button @click="isModalOpen = false" class="modal__close-button" aria-label="Close Modal" type="button"><font-awesome-icon icon="fa-solid fa-xmark" /></button>
                     <h2> Attachment Selector </h2>
                     <div class="attachment-container">
-                        <div v-for="(group, key) in groupAttachments(weapon)" class="attachment-selector">
+                        <div v-for="(group, key) in groupAttachments(weapon)" class="attachment-selector" :key="key">
                             <!-- <img :src=" 'images/' + armorImage(key) + '.png'  " class="attachment-image" >  -->
                             <!-- <span> {{  attachmentData[attachment]['IGN'] }} ({{attachmentData[attachment]['rarity']}})</span>  -->
                             <h3> {{ keyNames[key] }} </h3>
-                            <p v-for="(attachment) in group" 
+                            <p v-for="(attachment, key) in group"  :key="key"
                             :class="colourClassGiver(attachment)"
                             @click="selectedAttachments.toggleSelected(weapon, attachment, key)">
                                 {{  attachmentData[attachment]['IGN'] }} ({{attachmentData[attachment]['rarity']}})
@@ -82,7 +82,12 @@ export default {
             let output = ''
             output += attachmentData[attachment]['rarity'].toLowerCase()
 
-            if (selectedAttachments.list[attachment]) output += ' active'
+            console.log(selectedAttachments.list[this.weapon], attachment)
+            if (selectedAttachments.list[this.weapon]) {
+                if (selectedAttachments.list[this.weapon].includes(attachment)) {
+                    output += ' active'
+                }
+            }
             return output
         },
     }
@@ -91,6 +96,10 @@ export default {
 </script>
 
 <style scoped>
+.active {
+    background-color: var(--background-button-color);
+}
+
 .attachment-image {
     width: 12em;
     margin: auto;
