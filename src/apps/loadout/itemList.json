@@ -453,9 +453,9 @@
         "rarity": "Legendary"
     },
     {
-        "name": "HardDrive_common",
-        "ingame": "Common Data Drive",
-        "rarity": "Unknown",
+        "name": "HardDrive",
+        "ingame": "Data Drive",
+        "rarity": "Common",
         "description": "",
         "icon": "Common Data Drive.png"
     },
@@ -649,14 +649,14 @@
         "icon": "Helmet.png"
     },
     {
-        "name": "TOOL_MineralScanner_01",
+        "name": "Scanner",
         "ingame": "Mineral Scanner",
         "rarity": "Common",
         "description": "A highly versatile scanning device that is only able to detect Nickel by default, but can be modded to detect any Minerals on Fortuna.  undefined",
         "icon": "Mineral Scanner.png"
     },
     {
-        "name": "TOOL_Mining_01",
+        "name": "MiningTool",
         "ingame": "Heavy Mining Tool",
         "rarity": "Common",
         "description": "An experimental automatic Mining tool designed by Korolev to allow for more efficient extraction of Minerals from Fortuna III.  undefined",

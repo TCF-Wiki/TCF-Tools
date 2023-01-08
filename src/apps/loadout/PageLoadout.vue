@@ -1,40 +1,65 @@
 <template>
+    <h1>Random Loadout Generator</h1>
     <div class="loadoutPage">
-        <h1 class="title">The Cycle: Frontier - Random Loadout Generator</h1>
-        <div class="buttons">
-            <button class="button loadoutBtn" @click.prevent="RandomLoadout()">Generate</button>
-            <button class="button loadoutBtn" @click.prevent="ShareLoadout(true)">Share</button>
-            <span class="popup" id="sharePopup">Link copied to clipboard</span>
+        <div class="settings">
+            <h2>Settings</h2>
+            <div class="options">
+                <h3>Rarity Range</h3>
+                <div class="raritySlider">
+                    <div class="label left">
+                        <label>
+                            Min: <br />
+                            {{ Object.keys(rarityInfo)[minRarity] }}
+                        </label>
+                        <img :src="`/calc-images/${rarityInfo[Object.keys(rarityInfo)[minRarity]]}.png`" />
+                    </div>
+                    <div class="slider">
+                        <input id="minRaritySlider" :class="minRarity == maxRarity ? 'smallMin' : ''" type="range" min="0" max="5" v-model="minRarity" />
+                        <input id="maxRaritySlider" :class="minRarity == maxRarity ? 'smallMax' : ''" type="range" min="0" max="5" v-model="maxRarity" />
+                    </div>
+                    <div class="label">
+                        <img :src="`/calc-images/${rarityInfo[Object.keys(rarityInfo)[maxRarity]]}.png`" />
+                        <label>
+                            Max: <br />
+                            {{ Object.keys(rarityInfo)[maxRarity] }}
+                        </label>
+                    </div>
+                </div>
+                <div class="consumableSlider">
+                    <p>Amount of consumables: {{ consumableAmount }}</p>
+                    <input id="consumableSlider" type="range" min="0" max="5" v-model="consumableAmount" />
+                </div>
+                <div class="checkbox">
+                    <input type="checkbox" name="weapons" v-model="alwaysGetWeapons" />
+                    <p>Always get 2 weapons</p>
+                </div>
+                <div class="checkbox">
+                    <input type="checkbox" name="armor" v-model="alwaysGetArmor" />
+                    <p>Always get armor</p>
+                </div>
+            </div>
+            <div class="buttons">
+                <button @click.prevent="RandomLoadout()">Generate</button>
+                <button @click.prevent="ShareLoadout()">Share</button>
+            </div>
         </div>
         <div class="loadout">
-            <img class="loadout-image" src="/loadout-images/Inventory.png" />
-            <div class="weapon" id="Weapon1">
-                <img class="weaponImg" src="/loadout-images/None.png" />
+            <img id="inventory" src="/loadout-images/Inventory.png" />
+            <div class="weapon" v-tooltip="{content: weapons[0].ign}" id="Weapon1" v-if="weapons[0]" :style="`background-image: url('/loadout-images/Rarity/${weapons[0].rarity}_Weapon.png');`">
+                <img :src="`/loadout-images/Weapons/${weapons[0].img}.png`" />
             </div>
-            <div class="weapon" id="Weapon2">
-                <img class="weaponImg" src="/loadout-images/None.png" />
+            <div class="weapon" v-tooltip="{content: weapons[1].ign}" id="Weapon2" v-if="weapons[1]" :style="`background-image: url('/loadout-images/Rarity/${weapons[1].rarity}_Weapon.png');`">
+                <img :src="`/loadout-images/Weapons/${weapons[1].img}.png`" />
             </div>
             <div class="gear">
-                <img class="gearImg" id="Backpack" src="/loadout-images/None.png" />
-                <img class="gearImg" id="Shield" src="/loadout-images/None.png" />
-                <img class="gearImg" id="Helmet" src="/loadout-images/None.png" />
+                <img id="backpack" v-if="backpack" v-tooltip="{content: backpack.ign}" :src="`/loadout-images/Backpacks/${backpack.img}.png`" :style="`background-image: url('/loadout-images/Rarity/${backpack.rarity}.png');`" />
+                <img id="shield" v-if="shield" v-tooltip="{content: shield.ign}" :src="`/loadout-images/Armor/${shield.img}.png`" :style="`background-image: url('/loadout-images/Rarity/${shield.rarity}.png');`" />
+                <img id="helmet" v-if="helmet" v-tooltip="{content: helmet.ign}" :src="`/loadout-images/Armor/${helmet.img}.png`" :style="`background-image: url('/loadout-images/Rarity/${helmet.rarity}.png');`" />
             </div>
             <div class="items">
-                <div class="Item">
-                    <img class="itemImg" id="Item1" src="/loadout-images/None.png" />
-                    <p class="itemNumber" id="Item1Number"></p>
-                </div>
-                <div class="Item">
-                    <img class="itemImg" id="Item2" src="/loadout-images/None.png" />
-                    <p class="itemNumber" id="Item2Number"></p>
-                </div>
-                <div class="Item">
-                    <img class="itemImg" id="Item3" src="/loadout-images/None.png" />
-                    <p class="itemNumber" id="Item3Number"></p>
-                </div>
-                <div class="Item">
-                    <img class="itemImg" id="Item4" src="/loadout-images/None.png" />
-                    <p class="itemNumber" id="Item4Number"></p>
+                <div class="item" v-tooltip="{content: item.ign}" v-for="item in items">
+                    <img :src="`/loadout-images/${item.img}.png`" :style="`background-image: url('/loadout-images/Rarity/${item.rarity}.png');`" />
+                    <p>{{ item.amount }}</p>
                 </div>
             </div>
         </div>
@@ -42,73 +67,274 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
-// @ts-ignore
-import {onLoad, ShareLoadout, RandomLoadout} from './loadout.js';
+import {defineComponent} from "vue";
+import {useToast} from "vue-toastification";
+const toast = useToast();
+import {GenerateRandomLoadout, GetRarity} from "./loadout";
 export default defineComponent({
-    data() {},
+    data() {
+        return {
+            //Loadout
+            weapons: [] as {img: string; ign: string; rarity: string}[],
+            backpack: {} as {img: string; ign: string; rarity: string} | null,
+            shield: {} as {img: string; ign: string; rarity: string} | null,
+            helmet: {} as {img: string; ign: string; rarity: string} | null,
+            items: [] as {img: string; amount: number; ign: string; rarity: string}[],
+            //Settings
+            minRarity: 0,
+            maxRarity: 4,
+            consumableAmount: 2,
+            alwaysGetWeapons: true,
+            alwaysGetArmor: true,
+            rarityInfo: {
+                Common: "Helmet_Common",
+                Uncommon: "Helmet_Uncommon",
+                Rare: "Helmet_Rare",
+                Epic: "Helmet_Epic",
+                Exotic: "Helmet_Exotic",
+                Legendary: "Helmet_Legendary",
+            } as any,
+        };
+    },
     methods: {
         RandomLoadout: function () {
-            RandomLoadout();
+            this.ResetLoadout();
+            let newData = GenerateRandomLoadout(this.minRarity, this.maxRarity, this.consumableAmount, this.alwaysGetWeapons, this.alwaysGetArmor);
+            this.weapons = newData.weapons;
+            this.backpack = newData.backpack;
+            this.shield = newData.shield;
+            this.helmet = newData.helmet;
+            this.items = newData.items;
+            window.history.replaceState({}, document.title, "/loadout");
         },
-        ShareLoadout: function (copy: boolean) {
-            ShareLoadout(copy);
+        ResetLoadout: function () {
+            this.weapons = [];
+            this.backpack = null;
+            this.shield = null;
+            this.helmet = null;
+            this.items = [];
+        },
+        ShareLoadout: function () {
+            let shareString = "?";
+            console.log(this.weapons);
+            //Weapons
+            shareString += "weapon=" + this.weapons[0].img;
+            if (this.weapons.length == 2) shareString += "&weapon=" + this.weapons[1].img;
+            //Items
+            this.items.forEach((item) => {
+                shareString += "&item=" + item.img + "-" + item.amount;
+            });
+            //Gear
+            if (this.helmet) shareString += "&helmet=" + this.helmet.img;
+            if (this.shield) shareString += "&shield=" + this.shield.img;
+            if (this.backpack) shareString += "&backpack=" + this.backpack.img;
+
+            //Replace spaces
+            shareString = shareString.replace(/ /g, "_");
+
+            //Copy to clipboard
+            navigator.clipboard.writeText(document.baseURI + shareString);
+            window.history.replaceState({}, document.title, "/loadout" + shareString);
+            toast.success("Link copied to clipboard", {timeout: 3000});
+        },
+        getLoadoutFromURL: function () {
+            //Get loadout values from URL
+            let params = new URLSearchParams(location.search);
+            let weapons = params.getAll("weapon");
+            let rawItems = params.getAll("item");
+            let items = [];
+            let itemNumbers = [];
+            for (let i = 0; i < rawItems.length; i++) {
+                items.push(rawItems[i].split("-")[0]);
+                itemNumbers.push(rawItems[i].split("-")[1]);
+            }
+            let helmet = params.get("helmet");
+            let shield = params.get("shield");
+            let backpack = params.get("backpack");
+            //window.history.replaceState({}, document.title, '/');
+            //Set loadout values
+            if (weapons.length == 0 && items.length == 0) {
+                this.RandomLoadout();
+            } else {
+                for (let i = 0; i < weapons.length; i++) {
+                    let weapon = weapons[i].split("_").join(" ");
+                    this.weapons.push({img: weapon, ign: weapon, rarity: GetRarity(weapon)});
+                }
+                for (let i = 0; i < items.length; i++) {
+                    let item = items[i].split("_").join(" ");
+                    let ign = item.replace("Consumables/", "");
+                    if (ign.includes("Ammo")) ign = ign.replace("Ammo/", "") + " Ammo";
+                    if (ign.includes("Grenade")) ign = ign.replace("Grenade", "") + " Grenade";
+                    if (ign.includes("Medkit")) ign = ign.replace("Medkit", "") + " Medkit";
+                    if (ign.includes("Stim")) ign = ign.replace("Stim", "") + " Stim";
+                    this.items.push({img: item, amount: parseInt(itemNumbers[i]), ign: ign, rarity: GetRarity(item.split("/")[1])});
+                }
+                if (helmet) this.helmet = {img: helmet, ign: helmet.replace("Helmet_", "").split("_").join(" ") + " Helmet", rarity: GetRarity(helmet)};
+                if (shield) this.shield = {img: shield, ign: shield.replace("Shield_", "").split("_").join(" ") + " Shield", rarity: GetRarity(shield)};
+                if (backpack) this.backpack = {img: backpack, ign: backpack.split("_").join(" ") + " Backpack", rarity: GetRarity(backpack)};
+            }
+        },
+    },
+    watch: {
+        minRarity: function (newVal) {
+            if (newVal > this.maxRarity) this.minRarity = this.maxRarity;
+        },
+        maxRarity: function (newVal) {
+            if (newVal < this.minRarity) this.maxRarity = this.minRarity;
         },
     },
     mounted() {
-        onLoad();
+        this.ResetLoadout();
+        this.getLoadoutFromURL();
     },
 });
 </script>
 
 <style scoped>
+h1 {
+    text-align: center;
+}
 .loadoutPage {
     width: 100%;
+    height: 100%;
     margin: none;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    padding: 1rem;
 }
-.title {
-    width: 100%;
-    text-align: center;
-    font-size: 2vw;
-    font-weight: bold;
-    color: #ffffff;
-    font-family: 'Lato', sans-serif;
+/* SETTINGS */
+.settings {
+    width: 40%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem;
+    padding: 1rem;
+}
+h2 {
+    margin-bottom: 1rem;
 }
 .buttons {
     width: 100%;
-    height: 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 1rem;
+    font-size: 2rem;
+}
+button {
+    min-width: 40%;
+    height: 80%;
+}
+.options {
+    position: relative;
+    width: 100%;
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 1rem;
+}
+.raritySlider {
+    width: 100%;
+    height: 10%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin: 2rem;
 }
-
-.loadoutBtn {
-    min-width: 15%;
+.raritySlider .label {
+    width: 30%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: right;
+}
+.raritySlider .left {
+    text-align: left;
+}
+.raritySlider .label img {
+    transform: scaleX(-1);
+}
+.raritySlider .left img {
+    transform: scaleX(1);
+}
+.raritySlider img {
+    width: 4rem;
+}
+.slider {
+    width: 40%;
+    min-width: 10rem;
     height: 100%;
-    margin: 2rem;
+    position: relative;
+}
+.slider [type="range"] {
+    position: absolute;
+    width: 100%;
+    top: 25%;
+}
+[type="range"] {
+    pointer-events: none;
+}
+[type="range"]::-webkit-slider-thumb {
+    cursor: pointer;
+    pointer-events: auto;
+}
+.smallMax::-webkit-slider-thumb {
+    height: 0.8rem;
+    margin-top: -0.5rem;
+}
+.smallMin::-webkit-slider-thumb {
+    height: 0.8rem;
+    margin-top: 0.7rem;
+}
+#maxRaritySlider {
+    background: none;
+}
+.checkbox {
+    width: 40%;
+    height: 20%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0.5rem;
+}
+.checkbox p {
+    text-align: left;
+    width: 80%;
+}
+.options .consumableSlider {
+    height: 25%;
+    width: 40%;
+    text-align: center;
+}
+.options .consumableSlider input {
+    position: relative;
 }
 
+/* LOADOUT */
 .loadout {
     max-width: 100%;
-    margin-bottom: 5vh;
+    height: 100%;
     position: relative;
     display: block;
 }
-.loadout-image {
+#inventory {
     width: auto;
     height: 87.5%;
     display: block;
 }
 .weapon {
     position: absolute;
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
     left: 52.5%;
     width: 45%;
     height: 15%;
@@ -116,8 +342,10 @@ export default defineComponent({
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
 }
-.weaponImg {
+.weapon img {
     position: relative;
     width: auto;
     height: 100%;
@@ -141,7 +369,7 @@ export default defineComponent({
     justify-content: space-between;
     align-content: center;
 }
-.gearImg {
+.gear img {
     background-size: cover;
     background-repeat: no-repeat;
     position: relative;
@@ -151,12 +379,8 @@ export default defineComponent({
     margin: 1%;
     margin-top: 0%;
 }
-#Backpack {
+#backpack {
     margin-left: 0;
-}
-
-#Helmet {
-    margin-right: 0;
 }
 
 .items {
@@ -168,82 +392,92 @@ export default defineComponent({
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: flex-start;
     align-content: flex-start;
 }
 
-.Item {
+.item {
     position: relative;
     width: 31.33%;
     margin: 1%;
+    margin-bottom: 1.5%;
 }
 
-.itemImg {
+.item img {
     background-size: cover;
     background-repeat: no-repeat;
     width: 100%;
     padding: 10%;
 }
 
-.itemNumber {
+.item p {
     position: absolute;
     bottom: 5%;
     right: 10%;
     text-align: right;
-    font-family: 'Noto Sans', sans-serif;
+    font-family: "Noto Sans", sans-serif;
     color: white;
     font-size: 1.5vh;
 }
 
-/*Copy popup*/
-.popup {
-    position: absolute;
-    opacity: 0;
-    visibility: hidden;
-    width: 15vw;
-    text-align: center;
-    padding: 0.5em;
-    top: 2%;
-    left: 41.5vw;
-    background-color: #176e99;
-    border-radius: 0.3em;
-    margin: 10px;
-    text-transform: uppercase;
-    font-size: 1vw;
-    font-family: 'Noto Sans', sans-serif;
-}
-.show {
-    visibility: visible;
-    animation: fade 2s;
-    -webkit-animation: fade 2s;
-}
-@-webkit-keyframes fade {
-    0% {
-        opacity: 0;
+@media screen and (max-width: 1100px) {
+    .loadoutPage {
+        flex-direction: column;
+        align-items: center;
     }
-    45% {
-        opacity: 1;
+    .settings {
+        width: 85%;
+        min-height: 30vh;
+        margin: 0;
     }
-    55% {
-        opacity: 1;
+    .buttons {
+        width: 100%;
+        height: 20%;
     }
-    100% {
-        opacity: 0;
+    .button {
+        min-width: 50%;
+        height: 20%;
     }
-}
-@keyframes fade {
-    0% {
-        opacity: 0;
+    .raritySlider {
+        width: 100%;
+        height: 10vh;
+        flex-direction: column;
+        margin-bottom: 0.5rem;
     }
-    45% {
-        opacity: 1;
+    .raritySlider .label {
+        width: 75%;
+        justify-content: center;
+        flex-direction: row-reverse;
+        text-align: left;
     }
-    55% {
-        opacity: 1;
+    .raritySlider .label img {
+        transform: scaleX(1);
     }
-    100% {
-        opacity: 0;
+    .raritySlider .left {
+        flex-direction: row;
+    }
+    .raritySlider .label {
+        width: 50%;
+    }
+    .slider {
+        width: 80%;
+        height: 100%;
+    }
+    .options {
+        width: 100%;
+        height: 35%;
+        flex-wrap: nowrap;
+    }
+    .options .slider {
+        width: 80%;
+    }
+    .checkbox {
+        width: 50%;
+        height: 20%;
+    }
+    .item p {
+        font-size: 1.5vw;
     }
 }
 </style>
