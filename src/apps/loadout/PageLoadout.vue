@@ -1,13 +1,16 @@
 <template>
     <div class="loadoutPage">
         <div class="settings">
+            <h2> Rarity Range </h2>
             <div class="sliders">
-                <label>Minimum rarity: {{ minRarityString }}</label>
+                <label class="left">Min: {{ Object.keys(rarityInfo)[minRarity] }}</label>
+                <img :src="`/calc-images/${rarityInfo[Object.keys(rarityInfo)[minRarity]]}.png`">
                 <div class="slider">
-                    <input id="minRaritySlider" type="range" min="0" max="4" v-model="minRarity" />
-                    <input id="maxRaritySlider" :class="minRarity == maxRarity ? 'small' : ''" type="range" min="0" max="4" v-model="maxRarity" />
+                    <input id="minRaritySlider" type="range" min="0" max="5" v-model="minRarity" />
+                    <input id="maxRaritySlider" :class="minRarity == maxRarity ? 'small' : ''" type="range" min="0" max="5" v-model="maxRarity" />
                 </div>
-                <label>Maximum rarity: {{ maxRarityString }}</label>
+                <img :src="`/calc-images/${rarityInfo[Object.keys(rarityInfo)[maxRarity]]}.png`">
+                <label>Max: {{ Object.keys(rarityInfo)[maxRarity] }}</label>
             </div>
             <div class="checkboxes">
                 <div class="checkbox">
@@ -24,8 +27,8 @@
                 </div>
             </div>
             <div class="buttons">
-                <button class="button" @click.prevent="RandomLoadout()">Generate</button>
-                <button class="button" @click.prevent="ShareLoadout()">Share</button>
+                <button @click.prevent="RandomLoadout()">Generate</button>
+                <button @click.prevent="ShareLoadout()">Share</button>
             </div>
         </div>
         <div class="loadout">
@@ -73,6 +76,14 @@ export default defineComponent({
             consumableAmount: 2,
             alwaysGetWeapons: true,
             alwaysGetArmor: true,
+            rarityInfo: {
+                "Common": "Helmet_Common",
+                "Uncommon": "Helmet_Uncommon",
+                "Rare": "Helmet_Rare",
+                "Epic": "Helmet_Epic",
+                "Exotic": "Helmet_Exotic",
+                "Legendary": "Helmet_Legendary",
+            } as any
         };
     },
     methods: {
@@ -149,16 +160,6 @@ export default defineComponent({
             }
         },
     },
-    watch: {
-        minRarity: function (newVal) {
-            if (newVal > this.maxRarity) this.minRarity = this.maxRarity;
-            this.minRarityString = newVal == 4 ? 'Exotic/Legendary' : newVal == 3 ? 'Epic' : newVal == 2 ? 'Rare' : newVal == 1 ? 'Uncommon' : 'Common';
-        },
-        maxRarity: function (newVal) {
-            if (newVal < this.minRarity) this.maxRarity = this.minRarity;
-            this.maxRarityString = newVal == 4 ? 'Exotic/Legendary' : newVal == 3 ? 'Epic' : newVal == 2 ? 'Rare' : newVal == 1 ? 'Uncommon' : 'Common';
-        },
-    },
     mounted() {
         this.ResetLoadout();
         this.getLoadoutFromURL();
@@ -183,16 +184,17 @@ export default defineComponent({
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    margin: 2rem;
+    margin: 1rem;
 }
 .buttons {
     width: 100%;
-    height: 10%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     margin: 1rem;
+    gap: 1em;
+    font-size: 2rem;
 }
 .button {
     min-width: 25%;
@@ -206,11 +208,18 @@ export default defineComponent({
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin: 1rem;
+    margin: 0 1rem;
 }
 .sliders label {
     width: 25%;
-    text-align: center;
+    text-align: left;
+}
+
+.sliders label.left {
+    text-align: right;
+}
+.sliders img {
+    width: 4rem;
 }
 .slider {
     width: 30%;

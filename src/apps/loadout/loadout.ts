@@ -98,7 +98,7 @@ export function GenerateRandomLoadout(minRarity: number, maxRarity: number, cons
     let tempWeaponArr = [...allWeapons];
     for (let i = 0; i < 2; i++) {
         if (i == 1 && !alwaysGetWeapons) {
-            if (getRandomRange(1, 100) <= 5) break;
+            if (getRandomRange(1, 100) <= 33) break;
         }
         let rarityNumber = -1;
         let weapon = '';
