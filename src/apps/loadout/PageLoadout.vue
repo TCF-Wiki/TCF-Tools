@@ -1,15 +1,15 @@
 <template>
     <div class="loadoutPage">
         <div class="settings">
-            <h2> Rarity Range </h2>
+            <h2>Rarity Range</h2>
             <div class="sliders">
                 <label class="left">Min: {{ Object.keys(rarityInfo)[minRarity] }}</label>
-                <img :src="`/calc-images/${rarityInfo[Object.keys(rarityInfo)[minRarity]]}.png`">
+                <img :src="`/calc-images/${rarityInfo[Object.keys(rarityInfo)[minRarity]]}.png`" />
                 <div class="slider">
-                    <input id="minRaritySlider" type="range" min="0" max="5" v-model="minRarity" />
-                    <input id="maxRaritySlider" :class="minRarity == maxRarity ? 'small' : ''" type="range" min="0" max="5" v-model="maxRarity" />
+                    <input id="minRaritySlider" :class="minRarity == maxRarity ? 'smallMin' : ''" type="range" min="0" max="5" v-model="minRarity" />
+                    <input id="maxRaritySlider" :class="minRarity == maxRarity ? 'smallMax' : ''" type="range" min="0" max="5" v-model="maxRarity" />
                 </div>
-                <img :src="`/calc-images/${rarityInfo[Object.keys(rarityInfo)[maxRarity]]}.png`">
+                <img :src="`/calc-images/${rarityInfo[Object.keys(rarityInfo)[maxRarity]]}.png`" />
                 <label>Max: {{ Object.keys(rarityInfo)[maxRarity] }}</label>
             </div>
             <div class="checkboxes">
@@ -33,19 +33,19 @@
         </div>
         <div class="loadout">
             <img id="inventory" src="/loadout-images/Inventory.png" />
-            <div class="weapon" id="Weapon1" v-if="weapons[0]" :style="`background-image: url('/loadout-images/Rarity/${weapons[0].rarity}_Weapon.png');`">
+            <div class="weapon" v-tooltip="{content: weapons[0].ign}" id="Weapon1" v-if="weapons[0]" :style="`background-image: url('/loadout-images/Rarity/${weapons[0].rarity}_Weapon.png');`">
                 <img :src="`/loadout-images/Weapons/${weapons[0].img}.png`" />
             </div>
-            <div class="weapon" id="Weapon2" v-if="weapons[1]" :style="`background-image: url('/loadout-images/Rarity/${weapons[1].rarity}_Weapon.png');`">
+            <div class="weapon" v-tooltip="{content: weapons[1].ign}" id="Weapon2" v-if="weapons[1]" :style="`background-image: url('/loadout-images/Rarity/${weapons[1].rarity}_Weapon.png');`">
                 <img :src="`/loadout-images/Weapons/${weapons[1].img}.png`" />
             </div>
             <div class="gear">
-                <img id="backpack" :src="`/loadout-images/Backpacks/${backpack.img}.png`" :style="`background-image: url('/loadout-images/Rarity/${backpack.rarity}.png');`" />
-                <img id="shield" :src="`/loadout-images/Armor/${shield.img}.png`" :style="`background-image: url('/loadout-images/Rarity/${shield.rarity}.png');`" />
-                <img id="helmet" :src="`/loadout-images/Armor/${helmet.img}.png`" :style="`background-image: url('/loadout-images/Rarity/${helmet.rarity}.png');`" />
+                <img id="backpack" v-if="backpack" v-tooltip="{content: backpack.ign}" :src="`/loadout-images/Backpacks/${backpack.img}.png`" :style="`background-image: url('/loadout-images/Rarity/${backpack.rarity}.png');`" />
+                <img id="shield" v-if="shield" v-tooltip="{content: shield.ign}" :src="`/loadout-images/Armor/${shield.img}.png`" :style="`background-image: url('/loadout-images/Rarity/${shield.rarity}.png');`" />
+                <img id="helmet" v-if="helmet" v-tooltip="{content: helmet.ign}" :src="`/loadout-images/Armor/${helmet.img}.png`" :style="`background-image: url('/loadout-images/Rarity/${helmet.rarity}.png');`" />
             </div>
             <div class="items">
-                <div class="item" v-for="item in items">
+                <div class="item" v-tooltip="{content: item.ign}" v-for="item in items">
                     <img :src="`/loadout-images/${item.img}.png`" :style="`background-image: url('/loadout-images/Rarity/${item.rarity}.png');`" />
                     <p>{{ item.amount }}</p>
                 </div>
@@ -55,35 +55,36 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
-import {useToast} from 'vue-toastification';
+import {offset} from "@floating-ui/core";
+import {defineComponent} from "vue";
+import {useToast} from "vue-toastification";
 const toast = useToast();
-import {GenerateRandomLoadout, GetRarity} from './loadout';
+import {GenerateRandomLoadout, GetRarity} from "./loadout";
 export default defineComponent({
     data() {
         return {
             //Loadout
-            weapons: [] as {img: string; rarity: string}[],
-            backpack: {} as {img: string; rarity: string},
-            shield: {} as {img: string; rarity: string},
-            helmet: {} as {img: string; rarity: string},
-            items: [] as {img: string; amount: number; rarity: string}[],
+            weapons: [] as {img: string; ign: string; rarity: string}[],
+            backpack: {} as {img: string; ign: string; rarity: string} | null,
+            shield: {} as {img: string; ign: string; rarity: string} | null,
+            helmet: {} as {img: string; ign: string; rarity: string} | null,
+            items: [] as {img: string; amount: number; ign: string; rarity: string}[],
             //Settings
             minRarity: 0,
-            maxRarity: 4,
-            minRarityString: 'Common',
-            maxRarityString: 'Exotic/Legendary',
+            maxRarity: 5,
+            minRarityString: "Common",
+            maxRarityString: "Exotic/Legendary",
             consumableAmount: 2,
             alwaysGetWeapons: true,
             alwaysGetArmor: true,
             rarityInfo: {
-                "Common": "Helmet_Common",
-                "Uncommon": "Helmet_Uncommon",
-                "Rare": "Helmet_Rare",
-                "Epic": "Helmet_Epic",
-                "Exotic": "Helmet_Exotic",
-                "Legendary": "Helmet_Legendary",
-            } as any
+                Common: "Helmet_Common",
+                Uncommon: "Helmet_Uncommon",
+                Rare: "Helmet_Rare",
+                Epic: "Helmet_Epic",
+                Exotic: "Helmet_Exotic",
+                Legendary: "Helmet_Legendary",
+            } as any,
         };
     },
     methods: {
@@ -95,69 +96,80 @@ export default defineComponent({
             this.shield = newData.shield;
             this.helmet = newData.helmet;
             this.items = newData.items;
-            window.history.replaceState({}, document.title, '/loadout');
+            window.history.replaceState({}, document.title, "/loadout");
         },
         ResetLoadout: function () {
             this.weapons = [];
-            this.backpack = {img: 'None', rarity: 'None'};
-            this.shield = {img: 'None', rarity: 'None'};
-            this.helmet = {img: 'None', rarity: 'None'};
+            this.backpack = null;
+            this.shield = null;
+            this.helmet = null;
             this.items = [];
         },
         ShareLoadout: function () {
-            let shareString = '?';
+            let shareString = "?";
             console.log(this.weapons);
             //Weapons
-            shareString += 'weapon=' + this.weapons[0].img;
-            if (this.weapons.length == 2) shareString += '&weapon=' + this.weapons[1].img;
+            shareString += "weapon=" + this.weapons[0].img;
+            if (this.weapons.length == 2) shareString += "&weapon=" + this.weapons[1].img;
             //Items
             this.items.forEach((item) => {
-                shareString += '&item=' + item.img + '-' + item.amount;
+                shareString += "&item=" + item.img + "-" + item.amount;
             });
             //Gear
-            if (this.helmet) shareString += '&helmet=' + this.helmet.img;
-            if (this.shield) shareString += '&shield=' + this.shield.img;
-            if (this.backpack) shareString += '&backpack=' + this.backpack.img;
+            if (this.helmet) shareString += "&helmet=" + this.helmet.img;
+            if (this.shield) shareString += "&shield=" + this.shield.img;
+            if (this.backpack) shareString += "&backpack=" + this.backpack.img;
 
             //Replace spaces
-            shareString = shareString.replace(/ /g, '_');
+            shareString = shareString.replace(/ /g, "_");
 
             //Copy to clipboard
             navigator.clipboard.writeText(document.baseURI + shareString);
-            window.history.replaceState({}, document.title, '/loadout' + shareString);
-            toast.success('Link copied to clipboard', {timeout: 3000});
+            window.history.replaceState({}, document.title, "/loadout" + shareString);
+            toast.success("Link copied to clipboard", {timeout: 3000});
         },
         getLoadoutFromURL: function () {
             //Get loadout values from URL
             let params = new URLSearchParams(location.search);
-            let weapons = params.getAll('weapon');
-            let rawItems = params.getAll('item');
+            let weapons = params.getAll("weapon");
+            let rawItems = params.getAll("item");
             let items = [];
             let itemNumbers = [];
             for (let i = 0; i < rawItems.length; i++) {
-                items.push(rawItems[i].split('-')[0]);
-                itemNumbers.push(rawItems[i].split('-')[1]);
+                items.push(rawItems[i].split("-")[0]);
+                itemNumbers.push(rawItems[i].split("-")[1]);
             }
-            let helmet = params.get('helmet');
-            let shield = params.get('shield');
-            let backpack = params.get('backpack');
+            let helmet = params.get("helmet");
+            let shield = params.get("shield");
+            let backpack = params.get("backpack");
             //window.history.replaceState({}, document.title, '/');
             //Set loadout values
             if (weapons.length == 0 && items.length == 0) {
                 this.RandomLoadout();
             } else {
                 for (let i = 0; i < weapons.length; i++) {
-                    let weapon = weapons[i].split('_').join(' ');
-                    this.weapons.push({img: weapon, rarity: GetRarity(weapon)});
+                    let weapon = weapons[i].split("_").join(" ");
+                    this.weapons.push({img: weapon, ign: weapon, rarity: GetRarity(weapon)});
                 }
                 for (let i = 0; i < items.length; i++) {
-                    let item = items[i].split('_').join(' ');
-                    this.items.push({img: item, amount: parseInt(itemNumbers[i]), rarity: GetRarity(item.split('/')[1])});
+                    let item = items[i].split("_").join(" ");
+                    let ign = item.replace("Consumables/", "");
+                    if (ign.includes("Ammo")) ign = ign.replace("Ammo/", "") + " Ammo";
+                    if (ign.includes("Grenade")) ign = ign.replace("Grenade", "") + " Grenade";
+                    this.items.push({img: item, amount: parseInt(itemNumbers[i]), ign: ign, rarity: GetRarity(item.split("/")[1])});
                 }
-                if (helmet) this.helmet = {img: helmet, rarity: GetRarity(helmet)};
-                if (shield) this.shield = {img: shield, rarity: GetRarity(shield)};
-                if (backpack) this.backpack = {img: backpack, rarity: GetRarity(backpack)};
+                if (helmet) this.helmet = {img: helmet, ign: helmet.replace("Helmet_", "").split("_").join(" ") + " Helmet", rarity: GetRarity(helmet)};
+                if (shield) this.shield = {img: shield, ign: shield.replace("Shield_", "").split("_").join(" ") + " Shield", rarity: GetRarity(shield)};
+                if (backpack) this.backpack = {img: backpack, ign: backpack.split("_").join(" ") + " Backpack", rarity: GetRarity(backpack)};
             }
+        },
+    },
+    watch: {
+        minRarity: function (newVal) {
+            if (newVal > this.maxRarity) this.minRarity = this.maxRarity;
+        },
+        maxRarity: function (newVal) {
+            if (newVal < this.minRarity) this.maxRarity = this.minRarity;
         },
     },
     mounted() {
@@ -236,9 +248,13 @@ export default defineComponent({
     cursor: pointer;
     pointer-events: auto;
 }
-.small::-webkit-slider-thumb {
-    width: 1.1rem;
-    height: 1.1rem;
+.smallMax::-webkit-slider-thumb {
+    height: 0.8rem;
+    margin-top: -0.5rem;
+}
+.smallMin::-webkit-slider-thumb {
+    height: 0.8rem;
+    margin-top: 0.7rem;
 }
 #maxRaritySlider {
     background: none;
@@ -410,7 +426,7 @@ export default defineComponent({
     bottom: 5%;
     right: 10%;
     text-align: right;
-    font-family: 'Noto Sans', sans-serif;
+    font-family: "Noto Sans", sans-serif;
     color: white;
     font-size: 1.5vh;
 }
