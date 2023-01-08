@@ -3,7 +3,8 @@
     <div class="flex-item header-row">
         <h2> 
             Stats 
-            <span class="collapse-button" @click="collapsed = !collapsed" role="button" aria-label="Collapse this section">
+            <span> Expand  stats </span>
+            <span class="collapse-button" @click="collapsed = !collapsed" role="button" aria-label="Collapse this section" v-tooltip="{ content: 'Collapse/Expand stats' }">
                 <span v-if="!collapsed">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>
                 </span>
@@ -51,50 +52,14 @@
         <p>
             <span> Damage per Bullet (HS) </span>
         </p>
-        <h2> Shots to Kill (Shield) </h2>
+        <h2> Shots to Kill  </h2>
         <p>
-            <span> No Shield </span>
+            <span> Shield </span>
         </p>
         <p>
-            <span class="common"> Common Shield </span>
+            <span> Helmet </span>
         </p>
-        <p>
-            <span class="uncommon"> Uncommon Shield </span>
-        </p>
-        <p>
-            <span class="rare"> Rare Shield </span>
-        </p>
-        <p>
-            <span class="epic"> Epic Shield </span>
-        </p>
-        <p>
-            <span class="exotic"> Exotic Shield </span>
-        </p>
-        <p>
-            <span class="legendary"> Legendary Shield </span>
-        </p>
-        <h2> Shots to Kill (Helmet) </h2>
-        <p>
-            <span> No Helmet </span>
-        </p>
-        <p>
-            <span class="common"> Common Helmet </span>
-        </p>
-        <p>
-            <span class="uncommon"> Uncommon Helmet </span>
-        </p>
-        <p>
-            <span class="rare"> Rare Helmet </span>
-        </p>
-        <p>
-            <span class="epic"> Epic Helmet </span>
-        </p>
-        <p>
-            <span class="exotic"> Exotic Helmet </span>
-        </p>
-        <p>
-            <span class="legendary"> Legendary Helmet </span>
-        </p>
+ 
 
     </div>
     <div class="inner-container">
@@ -111,13 +76,19 @@
             </p>
 
             <h2> {{ weaponData[weapon]['inGameName'] }} <img class="weapon-image" :src=" 'calc-images/' + weaponData[weapon]['inGameName'] + '.png'"> </h2>
-            <p v-for="(value, key) in getDetailedStats(weapon, 'Shield')"> 
-                <span :class="colourClassGiver(key, weapon)"> {{ value }} </span>
+            <p class="small"> 
+                <span 
+                    v-for="(value, key, index) in getDetailedStats(weapon, 'Shield')"
+                    :class="colourClassGiver(key, weapon)" :style="{'--clr': rarity(index)}"> {{ value }} 
+                </span>
             </p>
-            <h2> {{ weaponData[weapon]['inGameName'] }} <img class="weapon-image" :src=" 'calc-images/' + weaponData[weapon]['inGameName'] + '.png'"> </h2>
-            <p v-for="(value, key) in getDetailedStats(weapon, 'Helmet')"> 
-                <span :class="colourClassGiver(key, weapon)"> {{ value }} </span>
+            <p class="small"> 
+                <span 
+                    v-for="(value, key, index) in getDetailedStats(weapon, 'Helmet')"
+                    :class="colourClassGiver(key, weapon)" :style="{'--clr': rarity(index)}"> {{ value }}
+                </span>
             </p>
+
             <div class="button-container">
                 <BodyChart 
                 :weapon="weapon"
@@ -168,10 +139,15 @@ export default {
             compareData: [],
             colourList: {},
             detailedStats: {},
-            collapsed: false
+            collapsed: true
         }
-    },
+    },  
     methods : {
+        rarity(index) {
+            let l = ['none', 'common', 'uncommon', 'rare', 'epic', 'exotic', 'legendary']
+            return 'var(--rarity-color-'+l[index]+')'
+        },
+
         getDetailedStats(weapon, getShotsForType) {
             // This function filters the output based on if we want to have the shots to kill or not.
             // uses the $ in the key name to filter.
@@ -182,7 +158,6 @@ export default {
             }
 
             if (!getShotsForType) {
-                console.log('Hit!')
                 return Object.fromEntries(Object.entries(data).filter(([key]) => !key.includes('%')));
 
             }
@@ -489,28 +464,30 @@ export default {
     background-color: var(--background-stripe-color); 
 }
 .highest-value {
-    color: green !important;
+    color: var(--rarity-color-uncommon) !important;
 }
 
 .highest-value::before {
+    color: var(--rarity-color-uncommon) !important;
     content: "▲ ";
     font-size: .8rem;
 }
 .lowest-value {
-    color: red !important;
+    color: var(--rarity-color-exotic) !important;
 }
 
 .lowest-value::before {
     content: "▼ ";
     font-size: .8rem;
+    color: var(--rarity-color-exotic) !important;
 }
 .equal-value {
-    color: yellow !important;
+    color: var(--rarity-color-legendary) !important;
 }
 .equal-value::before {
+    color: var(--rarity-color-legendary) !important;
     content: "◆ ";
     font-size: .8rem;
-
 }
 .modified {
     text-decoration: underline;
@@ -563,6 +540,24 @@ export default {
 
 svg {
     fill: var(--rarity-color-uncommon);
+}
+
+.small {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.small span{
+    --rarity-color-epic: #9d78c0;
+
+    color: var(--clr) !important;
+}
+
+h2 span {
+    font-size: 16px;
+    font-weight: bolder;
+    font-family: Rajdhani, ui-sans, system-ui, Helvetica, Arial, sans-serif;
+    color: var(--text-color-body-white);
 }
 </style>
 

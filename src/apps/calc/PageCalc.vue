@@ -1,12 +1,12 @@
 <script>
-import AllSelector from './components/Selector.vue';
+import Selector from './components/Selector.vue';
 import WeaponComparer from './components/WeaponComparer.vue';
 import { penetrationChart, falloffChart } from './charts'
 import AccuracySelector from './components/AccuracySelector.vue';
 import DistanceSelector from './components/DistanceSelector.vue';
 export default {
   components: {
-    AllSelector,
+    Selector,
     WeaponComparer,
     AccuracySelector,
     DistanceSelector
@@ -25,7 +25,7 @@ export default {
         <h1> Weapon Calculator </h1>
       </div>
       <div class="main-container">
-        <AllSelector />
+        <Selector />
         <WeaponComparer />
       </div>
     </section>
@@ -72,6 +72,7 @@ section {
 
 h1 {
   font-size: 3rem;
+  padding-left: 0;
 }
 
 .outer-chart-container {
@@ -97,7 +98,7 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding-left: 2rem;
+  padding-left: 1rem;
 }
 
 .selectors {

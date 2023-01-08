@@ -110,7 +110,6 @@ export function createSpecialPopup(type: string, rawName: string, location: any)
     // The following do not have any additional information upon popup,
     // just the same text everywhere
     if (specialDescriptions[type]) {
-        console.log(specialDescriptions[type]);
         // create our paragraph
         const par = document.createElement('p');
         const parText = document.createTextNode(specialDescriptions[type].toString());

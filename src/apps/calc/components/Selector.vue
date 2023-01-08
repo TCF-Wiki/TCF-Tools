@@ -45,16 +45,16 @@ section {
     gap: 2rem;
     flex-wrap: wrap;
     flex-direction: row;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     width: 20rem;
 
-    padding: .5rem 2rem 2rem 2rem;
+    padding: .5rem 1rem 1rem 1rem;
 
 }
 
 div {
     display: flex;
-    gap: 2rem;
+    gap: 1rem;
     flex-wrap: wrap;
     flex-direction: column;
 }
