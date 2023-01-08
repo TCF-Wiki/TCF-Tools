@@ -1,22 +1,34 @@
 <template>
+    <h1>Random Loadout Generator</h1>
     <div class="loadoutPage">
         <div class="settings">
-            <h2>Rarity Range</h2>
-            <div class="sliders">
-                <div class="label left">
-                    <label>Min: {{ Object.keys(rarityInfo)[minRarity] }}</label>
-                    <img :src="`/calc-images/${rarityInfo[Object.keys(rarityInfo)[minRarity]]}.png`" />
+            <h2>Settings</h2>
+            <div class="options">
+                <h3>Rarity Range</h3>
+                <div class="raritySlider">
+                    <div class="label left">
+                        <label>
+                            Min: <br />
+                            {{ Object.keys(rarityInfo)[minRarity] }}
+                        </label>
+                        <img :src="`/calc-images/${rarityInfo[Object.keys(rarityInfo)[minRarity]]}.png`" />
+                    </div>
+                    <div class="slider">
+                        <input id="minRaritySlider" :class="minRarity == maxRarity ? 'smallMin' : ''" type="range" min="0" max="5" v-model="minRarity" />
+                        <input id="maxRaritySlider" :class="minRarity == maxRarity ? 'smallMax' : ''" type="range" min="0" max="5" v-model="maxRarity" />
+                    </div>
+                    <div class="label">
+                        <img :src="`/calc-images/${rarityInfo[Object.keys(rarityInfo)[maxRarity]]}.png`" />
+                        <label>
+                            Max: <br />
+                            {{ Object.keys(rarityInfo)[maxRarity] }}
+                        </label>
+                    </div>
                 </div>
-                <div class="slider">
-                    <input id="minRaritySlider" :class="minRarity == maxRarity ? 'smallMin' : ''" type="range" min="0" max="5" v-model="minRarity" />
-                    <input id="maxRaritySlider" :class="minRarity == maxRarity ? 'smallMax' : ''" type="range" min="0" max="5" v-model="maxRarity" />
+                <div class="consumableSlider">
+                    <p>Amount of consumables: {{ consumableAmount }}</p>
+                    <input id="consumableSlider" type="range" min="0" max="5" v-model="consumableAmount" />
                 </div>
-                <div class="label">
-                    <img :src="`/calc-images/${rarityInfo[Object.keys(rarityInfo)[maxRarity]]}.png`" />
-                    <label>Max: {{ Object.keys(rarityInfo)[maxRarity] }}</label>
-                </div>
-            </div>
-            <div class="checkboxes">
                 <div class="checkbox">
                     <input type="checkbox" name="weapons" v-model="alwaysGetWeapons" />
                     <p>Always get 2 weapons</p>
@@ -24,10 +36,6 @@
                 <div class="checkbox">
                     <input type="checkbox" name="armor" v-model="alwaysGetArmor" />
                     <p>Always get armor</p>
-                </div>
-                <div class="slider">
-                    <p>Amount of consumables: {{ consumableAmount }}</p>
-                    <input id="consumableSlider" type="range" min="0" max="5" v-model="consumableAmount" />
                 </div>
             </div>
             <div class="buttons">
@@ -183,6 +191,9 @@ export default defineComponent({
 </script>
 
 <style scoped>
+h1 {
+    text-align: center;
+}
 .loadoutPage {
     width: 100%;
     height: 100%;
@@ -204,61 +215,76 @@ export default defineComponent({
     margin: 1rem;
     padding: 1rem;
 }
+h2 {
+    margin-bottom: 1rem;
+}
 .buttons {
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     margin: 1rem;
-    gap: 1em;
     font-size: 2rem;
 }
-.button {
-    min-width: 25%;
+button {
+    min-width: 40%;
     height: 80%;
-    margin: 2rem;
 }
-.sliders {
+.options {
+    position: relative;
+    width: 100%;
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 1rem;
+}
+.raritySlider {
     width: 100%;
     height: 10%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    margin: 0 1rem;
 }
-.sliders .label {
+.raritySlider .label {
     width: 30%;
-    height: 30%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-}
-.sliders label {
-    width: 25%;
-    text-align: left;
-}
-.sliders label.left {
     text-align: right;
 }
-.sliders img {
+.raritySlider .left {
+    text-align: left;
+}
+.raritySlider .label img {
+    transform: scaleX(-1);
+}
+.raritySlider .left img {
+    transform: scaleX(1);
+}
+.raritySlider img {
     width: 4rem;
 }
 .slider {
     width: 40%;
     min-width: 10rem;
-    height: 50%;
+    height: 100%;
     position: relative;
 }
-.slider input {
+.slider [type="range"] {
+    position: absolute;
     width: 100%;
     top: 25%;
-    position: absolute;
+}
+[type="range"] {
     pointer-events: none;
 }
-.slider input::-webkit-slider-thumb {
+[type="range"]::-webkit-slider-thumb {
     cursor: pointer;
     pointer-events: auto;
 }
@@ -273,19 +299,8 @@ export default defineComponent({
 #maxRaritySlider {
     background: none;
 }
-.checkboxes {
-    position: relative;
-    width: 100%;
-    height: 30%;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: center;
-    margin: 1rem;
-}
 .checkbox {
-    width: 100%;
+    width: 40%;
     height: 20%;
     display: flex;
     flex-direction: row;
@@ -297,12 +312,12 @@ export default defineComponent({
     text-align: left;
     width: 80%;
 }
-.checkboxes .slider {
+.options .consumableSlider {
     height: 25%;
-    width: 75%;
+    width: 40%;
     text-align: center;
 }
-.checkboxes .slider input {
+.options .consumableSlider input {
     position: relative;
 }
 
@@ -424,36 +439,37 @@ export default defineComponent({
         min-width: 50%;
         height: 20%;
     }
-    .sliders {
+    .raritySlider {
         width: 100%;
-        height: 12vh;
+        height: 10vh;
         flex-direction: column;
+        margin-bottom: 0.5rem;
     }
-    .sliders .label {
+    .raritySlider .label {
         width: 75%;
         justify-content: center;
         flex-direction: row-reverse;
+        text-align: left;
     }
-    .sliders .left {
+    .raritySlider .label img {
+        transform: scaleX(1);
+    }
+    .raritySlider .left {
         flex-direction: row;
     }
-    .sliders label {
-        text-align: center;
+    .raritySlider .label {
         width: 50%;
-    }
-    .sliders label.left {
-        text-align: center;
     }
     .slider {
         width: 80%;
         height: 100%;
     }
-    .checkboxes {
+    .options {
         width: 100%;
         height: 35%;
         flex-wrap: nowrap;
     }
-    .checkboxes .slider {
+    .options .slider {
         width: 80%;
     }
     .checkbox {
