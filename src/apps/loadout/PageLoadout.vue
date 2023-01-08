@@ -71,7 +71,7 @@ export default defineComponent({
             items: [] as {img: string; amount: number; ign: string; rarity: string}[],
             //Settings
             minRarity: 0,
-            maxRarity: 5,
+            maxRarity: 4,
             consumableAmount: 2,
             alwaysGetWeapons: true,
             alwaysGetArmor: true,
