@@ -154,6 +154,8 @@ export default defineComponent({
                     let ign = item.replace("Consumables/", "");
                     if (ign.includes("Ammo")) ign = ign.replace("Ammo/", "") + " Ammo";
                     if (ign.includes("Grenade")) ign = ign.replace("Grenade", "") + " Grenade";
+                    if (ign.includes("Medkit")) ign = ign.replace("Medkit", "") + " Medkit";
+                    if (ign.includes("Stim")) ign = ign.replace("Stim", "") + " Stim";
                     this.items.push({img: item, amount: parseInt(itemNumbers[i]), ign: ign, rarity: GetRarity(item.split("/")[1])});
                 }
                 if (helmet) this.helmet = {img: helmet, ign: helmet.replace("Helmet_", "").split("_").join(" ") + " Helmet", rarity: GetRarity(helmet)};
