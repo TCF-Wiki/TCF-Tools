@@ -17,8 +17,10 @@
                             :class="{active: (selectedTarget.selected == key)}" 
                             @click="selectedTarget.changeSelected(key)"
                             >
-                                <img :src=" 'calc-images/' + key + '.png' " class="target-image" >  
-                                <span> {{ creatureNames[key] }} </span> 
+                                <div v-if="Object.keys(creatureNames).includes(key)">
+                                    <img :src=" 'calc-images/' + key + '.png' " class="target-image" >  
+                                    <span> {{ creatureNames[key] }} </span> 
+                                </div>
                             </div>
                         </div>
                     </div>

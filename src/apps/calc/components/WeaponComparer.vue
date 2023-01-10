@@ -159,7 +159,6 @@ export default {
 
             if (!getShotsForType) {
                 return Object.fromEntries(Object.entries(data).filter(([key]) => !key.includes('%')));
-
             }
 
             if (getShotsForType == "Shield") {
