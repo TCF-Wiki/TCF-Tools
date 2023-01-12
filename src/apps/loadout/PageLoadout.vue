@@ -71,6 +71,9 @@ import {defineComponent} from "vue";
 import {useToast} from "vue-toastification";
 const toast = useToast();
 import {GenerateRandomLoadout, GetRarity} from "./loadout";
+
+import {doneLoading} from "../../constantComponents/all";
+
 export default defineComponent({
     data() {
         return {
@@ -184,8 +187,12 @@ export default defineComponent({
         },
     },
     mounted() {
+        // clear out the url bar
+        window.history.pushState({}, document.title, location.pathname.replace(".html", ""));
         this.ResetLoadout();
         this.getLoadoutFromURL();
+        // done loading
+        doneLoading();
     },
 });
 </script>

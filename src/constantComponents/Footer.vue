@@ -60,7 +60,7 @@
         </div>
         <div class="footerMenu">
             <ul>
-                <li><a href="/index.html">Home</a></li>
+                <li><a href="/">Home</a></li>
                 <li><a href="https://thecyclefrontier.wiki/wiki/Main_Page" target="_blank">Official Wiki</a></li>
                 <li><a href="/map.html">Interactive Map</a></li>
                 <li><a href="https://tracker.thecyclefrontier.wiki">Item Tracker</a></li>

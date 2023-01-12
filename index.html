@@ -49,9 +49,9 @@
                 dataLayer.push(arguments);
             }
             // @ts-ignore
-            gtag('js', new Date());
+            gtag("js", new Date());
             // @ts-ignore
-            gtag('config', 'G-9LEH0T526D');
+            gtag("config", "G-9LEH0T526D");
         </script>
     </head>
     <body>
@@ -59,29 +59,5 @@
         <nav></nav>
         <main></main>
         <footer></footer>
-        <div id="loading" aria-hidden="true"></div>
-
-        <script>
-            const loader = document.getElementById('loading');
-            window.addEventListener('load', (e) => {
-                if (loader) {
-                    loader.style.display = 'none';
-                }
-            });
-        </script>
-
-        <script>
-            window.addEventListener('load', (e) => {
-                document.body.classList.add('loaded');
-            });
-        </script>
-        <style>
-            body {
-                opacity: 0;
-            }
-            body.loaded {
-                opacity: 1;
-            }
-        </style>
     </body>
 </html>

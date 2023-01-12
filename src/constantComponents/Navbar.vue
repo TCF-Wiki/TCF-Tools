@@ -6,12 +6,12 @@
             <div class="nav-items">
                 <a href="/"> Home </a>
                 <a href="https://thecyclefrontier.wiki/wiki/Main_Page" target="_blank"> Wiki </a>
-                <a href="/map"> Interactive Map </a>
-                <a href="/calculator"> Weapon Calculator </a>
+                <a href="/map.html"> Interactive Map </a>
+                <a href="/calculator.html"> Weapon Calculator </a>
                 <a href="https://tracker.thecyclefrontier.wiki"> Item Tracker </a>
-                <a href="/progress"> Progress Tracker </a>
-                <a href="/forge"> Forge Simulator </a>
-                <a href="/loadout"> Loadout Generator </a>
+                <a href="/progress.html"> Progress Tracker </a>
+                <a href="/forge.html"> Forge Simulator </a>
+                <a href="/loadout.html"> Loadout Generator </a>
             </div>
         </div>
     </div>

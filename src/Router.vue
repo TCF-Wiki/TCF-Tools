@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 import {defineComponent} from 'vue';
 
 import Home from './views/home/PageHome.vue';
@@ -81,4 +81,4 @@ export default defineComponent({
 
 <template>
     <component :is="currentView" />
-</template>
+</template> -->

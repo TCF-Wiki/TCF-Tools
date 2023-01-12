@@ -27,7 +27,7 @@ library.add(faBars, faTrash, faRedo, faSave, faMagnifyingGlass, faCircleXmark, f
 
 import './assets/main.css';
 
-import PageHome from './views/home/PageHome.vue';
+import PageQuest from './apps/quest/PageQuest.vue';
 
 import Toast, {useToast} from "vue-toastification";
 import "vue-toastification/dist/index.css";
@@ -35,21 +35,7 @@ import "vue-toastification/dist/index.css";
 import FloatingVue from 'floating-vue'
 import 'floating-vue/dist/style.css'
 
-const path = location.pathname;
-
-if (path == '/map') {
-    location.pathname = '/map.html'
-} else if (path == '/progress') {
-    location.pathname = '/progress.html'
-} else if (path == '/calculator') {
-    location.pathname = '/calculator.html'
-} else if (path == '/forge') {
-    location.pathname = '/forge.html'
-} else if (path == '/loadout') {
-    location.pathname = '/loadout.html'
-}
-
-const RouterApp = createApp(PageHome)
+const RouterApp = createApp(PageQuest)
     .component('font-awesome-icon', FontAwesomeIcon)
     .use(Toast)
     .use(FloatingVue)

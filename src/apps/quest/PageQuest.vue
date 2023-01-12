@@ -400,13 +400,15 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
-import QuestCard from './components/QuestCard.vue';
-import QuestStart from './components/QuestStart.vue';
-import ItemList from './components/ItemList.vue';
-import QuarterList from './components/QuarterList.vue';
-import {missions} from './QuestConstants';
-import {factionProgress} from './trackProgress';
+import {defineComponent} from "vue";
+import QuestCard from "./components/QuestCard.vue";
+import QuestStart from "./components/QuestStart.vue";
+import ItemList from "./components/ItemList.vue";
+import QuarterList from "./components/QuarterList.vue";
+import {missions} from "./QuestConstants";
+import {factionProgress} from "./trackProgress";
+
+import {doneLoading} from "../../constantComponents/all";
 
 export default defineComponent({
     components: {QuestCard, QuestStart, ItemList, QuarterList},
@@ -427,7 +429,7 @@ export default defineComponent({
 
         showSlides(n: number) {
             let i;
-            let slides = document.getElementsByClassName('quest-line__container-inner') as any;
+            let slides = document.getElementsByClassName("quest-line__container-inner") as any;
             if (n > slides.length) {
                 this.slideIndex = 1;
             }
@@ -435,24 +437,28 @@ export default defineComponent({
                 this.slideIndex = slides.length;
             }
             for (i = 0; i < slides.length; i++) {
-                slides[i].style.display = 'none';
+                slides[i].style.display = "none";
             }
 
-            slides[this.slideIndex - 1].style.display = 'block';
+            slides[this.slideIndex - 1].style.display = "block";
         },
         lineColor(faction: string, name: string, part?: number) {
             const progress = this.list.get()[faction][name];
             const length = missions[faction][name].length;
 
             if (part) {
-                if (progress >= part) return 'reached';
+                if (progress >= part) return "reached";
             } else {
-                if (progress >= length) return 'reached';
+                if (progress >= length) return "reached";
             }
         },
     },
     mounted() {
+        // clear out the url bar
+        window.history.pushState({}, document.title, location.pathname.replace(".html", ""));
         this.showSlides(this.slideIndex);
+        //done loading
+        doneLoading();
     },
 });
 </script>
@@ -504,7 +510,7 @@ export default defineComponent({
 }
 
 .quest-list:not(:last-child):not(:nth-child(1)) .quest-list__center::before {
-    content: '';
+    content: "";
     position: absolute;
     width: 50%;
     height: 200%;
@@ -523,7 +529,7 @@ export default defineComponent({
 }
 
 .quest-list__left-line::before {
-    content: '';
+    content: "";
     position: absolute;
     width: 140%;
     top: 0%;
@@ -544,7 +550,7 @@ export default defineComponent({
 }
 
 .quest-list__right-line::before {
-    content: '';
+    content: "";
     position: absolute;
     width: 140%;
     top: 0%;
@@ -570,7 +576,7 @@ export default defineComponent({
     z-index: 0;
 }
 .quest-list__left-line-diagonal::before {
-    content: '';
+    content: "";
     position: absolute;
     width: 120%;
     top: -14%;
@@ -596,7 +602,7 @@ export default defineComponent({
 }
 
 .quest-list__right-line-diagonal::before {
-    content: '';
+    content: "";
     position: absolute;
     width: 120%;
     top: -14%;
@@ -728,7 +734,7 @@ export default defineComponent({
 }
 
 .quest-line__selector div:not(.active-slide)::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 3px;
     left: 0;
@@ -748,7 +754,7 @@ export default defineComponent({
 }
 
 .active-slide::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 3px;
     left: 0;

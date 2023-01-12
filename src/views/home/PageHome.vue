@@ -16,19 +16,18 @@
             </div>
             <div>
                 <h3>The Cycle: Frontier</h3>
-                The Cycle: Frontier is a free-to-play high-stakes PvPvE first-person shooter driven by suspense and danger. Prospect for resources and other riches on an abandoned alien world ravaged by a deadly storm, inhabited by monsters, and
-                frequently raided by other ambitious Prospectors.
+                The Cycle: Frontier is a free-to-play high-stakes PvPvE first-person shooter driven by suspense and danger. Prospect for resources and other riches on an abandoned alien world ravaged by a deadly storm, inhabited by monsters, and frequently raided by other ambitious Prospectors.
             </div>
         </div>
         <div class="navigation">
             <h3>Navigation</h3>
             <div>
-                <a href="/map"><img src="./images/Nav_Map.png" /> Interactive Map </a>
-                <a href="/calculator"><img src="./images/Nav_Calculator.png" /> Weapon Calculator </a>
-                <a href="/forge"><img src="./images/Nav_Forge.png" /> Forge Simulator </a>
-                <a href="/progress"><img src="./images/Nav_Progress.png" /> Progress Tracker </a>
+                <a href="/map.html"><img src="./images/Nav_Map.png" /> Interactive Map </a>
+                <a href="/calculator.html"><img src="./images/Nav_Calculator.png" /> Weapon Calculator </a>
+                <a href="/forge.html"><img src="./images/Nav_Forge.png" /> Forge Simulator </a>
+                <a href="/progress.html"><img src="./images/Nav_Progress.png" /> Progress Tracker </a>
                 <a href="https://tracker.thecyclefrontier.wiki"><img src="./images/Nav_Tracker.png" /> Item Tracker </a>
-                <a href="/loadout"><img src="./images/Nav_Loadout.png" /> Loadout Generator</a>
+                <a href="/loadout.html"><img src="./images/Nav_Loadout.png" /> Loadout Generator</a>
             </div>
         </div>
         <div class="contributors">
@@ -89,7 +88,7 @@
 </template>
 <style scoped>
 /* Main */
-@import url('https://fonts.googleapis.com/css2?family=Sora');
+@import url("https://fonts.googleapis.com/css2?family=Sora");
 .home {
     display: flex;
     flex-direction: column;
@@ -99,7 +98,7 @@
     height: 100%;
 }
 * {
-    font-family: 'Sora', sans-serif;
+    font-family: "Sora", sans-serif;
     color: #edeff0;
 }
 h3 {

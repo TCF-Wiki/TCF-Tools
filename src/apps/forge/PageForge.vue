@@ -5,12 +5,21 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
-import TheForge from './components/TheForge.vue';
+import {defineComponent} from "vue";
+import TheForge from "./components/TheForge.vue";
+
+import {doneLoading} from "../../constantComponents/all";
+
 export default defineComponent({
     components: {
-        TheForge
-    }
+        TheForge,
+    },
+    mounted() {
+        // clear out the url bar
+        window.history.pushState({}, document.title, location.pathname.replace(".html", ""));
+        // done loading
+        doneLoading();
+    },
 });
 </script>
 

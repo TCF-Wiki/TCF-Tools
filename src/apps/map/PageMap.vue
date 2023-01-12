@@ -34,28 +34,31 @@
 <style src="./MarkerCluster.Default.css" />
 
 <script lang="ts">
-import MapSelector from './components/MapSelector.vue';
-import LocationSelector from './components/LocationSelector.vue';
-import ItemSearch from './components/ItemSearch.vue';
-import TierToggler from './components/TierToggler.vue';
-import ClearSearch from './components/ClearSearch.vue';
-import ShareLink from './components/ShareLink.vue';
-import ColorSelector from './components/ColorSelector.vue';
-import ClusterButton from './components/ClusterButton.vue';
-import PercentButton from './components/PercentButton.vue';
+import MapSelector from "./components/MapSelector.vue";
+import LocationSelector from "./components/LocationSelector.vue";
+import ItemSearch from "./components/ItemSearch.vue";
+import TierToggler from "./components/TierToggler.vue";
+import ClearSearch from "./components/ClearSearch.vue";
+import ShareLink from "./components/ShareLink.vue";
+import ColorSelector from "./components/ColorSelector.vue";
+import ClusterButton from "./components/ClusterButton.vue";
+import PercentButton from "./components/PercentButton.vue";
 
-import {defineComponent} from 'vue';
-import L, {Map, type LeafletEvent, type TileLayer} from 'leaflet';
+import {defineComponent} from "vue";
+import L, {Map, type LeafletEvent, type TileLayer} from "leaflet";
 
-import {selectedMap, selectedLocations, selectedItems, selectedTier, clusterEnabled, minimumPercent, selectedCreatures} from './store';
-import {getMapData, getTierData} from './data';
+import {selectedMap, selectedLocations, selectedItems, selectedTier, clusterEnabled, minimumPercent, selectedCreatures} from "./store";
+import {getMapData, getTierData} from "./data";
 
-import {map1TileLayer, map2TileLayer, map3TileLayer, bounds, brightsandsColor, crescentfallsColor} from './mapConstants';
-import {addLeafletStyles, addResponsivePopupScript, addResponsivePopupStyles} from '../../scriptLoader';
-import {mapOneLabels, mapTwoLabels, mapThreeLabels} from './labels';
+import {map1TileLayer, map2TileLayer, map3TileLayer, bounds, brightsandsColor, crescentfallsColor} from "./mapConstants";
+import {addLeafletStyles, addResponsivePopupScript, addResponsivePopupStyles} from "../../scriptLoader";
+import {mapOneLabels, mapTwoLabels, mapThreeLabels} from "./labels";
 
-import {updateLocationLayerGroups, getLocationLayerGroups, updateItemLayerGroups, getItemLayerGroups, getCreatureLayerGroups, updateCreatureLayerGroups} from './layerGroups';
-import {loadInitialStore} from './URLParameterHandler';
+import {updateLocationLayerGroups, getLocationLayerGroups, updateItemLayerGroups, getItemLayerGroups, getCreatureLayerGroups, updateCreatureLayerGroups} from "./layerGroups";
+import {loadInitialStore} from "./URLParameterHandler";
+
+import {doneLoading} from "../../constantComponents/all";
+
 let locationLayerGroups: any;
 let itemLayerGroups: any;
 let creatureLayerGroups: any;
@@ -108,7 +111,7 @@ export default defineComponent({
 
         loadInitialStore();
         // create our map, mounting it on the '#map' element
-        let map = L.map('map', {
+        let map = L.map("map", {
             crs: L.CRS.Simple,
             zoom: 1,
             minZoom: 1,
@@ -123,7 +126,7 @@ export default defineComponent({
             attributionControl: false,
         }).setView([-128, 128], 1);
 
-        map.zoomControl.setPosition('topright');
+        map.zoomControl.setPosition("topright");
         map.fitBounds(bounds);
 
         initiateMapToMapNumber(selectedMap.get()).addTo(map);
@@ -147,7 +150,7 @@ export default defineComponent({
 
         // we must keep our map variable to this file. We musn't mutate it in weird ways or set it to other variables, etc. That is why this is all kept to this file.
         this.$watch(
-            'selectedMap',
+            "selectedMap",
             () => {
                 removeItemTiers();
                 if (selectedTier.get()) {
@@ -164,7 +167,7 @@ export default defineComponent({
         );
 
         this.$watch(
-            'selectedLocations',
+            "selectedLocations",
             () => {
                 removeUnselectedLocationMarkers();
                 placeMarkersForSelectedLocations();
@@ -173,7 +176,7 @@ export default defineComponent({
         );
 
         this.$watch(
-            'selectedItems',
+            "selectedItems",
             () => {
                 removeUnselectedItemMarkers();
                 placeMarkersForSelectedItems();
@@ -182,7 +185,7 @@ export default defineComponent({
         );
 
         this.$watch(
-            'selectedCreatures',
+            "selectedCreatures",
             () => {
                 removeUnselectedCreatureMarkers();
                 placeMarkersForSelectedCreatures();
@@ -191,7 +194,7 @@ export default defineComponent({
         );
 
         this.$watch(
-            'selectedTier',
+            "selectedTier",
             () => {
                 if (selectedTier.get()) {
                     placeItemTiers();
@@ -203,7 +206,7 @@ export default defineComponent({
         );
 
         this.$watch(
-            'clusterEnabled',
+            "clusterEnabled",
             async () => {
                 removeAllMarkers();
 
@@ -217,9 +220,9 @@ export default defineComponent({
         );
 
         this.$watch(
-            'minimumPercent',
+            "minimumPercent",
             async () => {
-                console.log('Hit!');
+                console.log("Hit!");
                 removeAllMarkers();
 
                 await updateItemLayerGroups(clusterEnabled.get(), minimumPercent.get());
@@ -346,20 +349,20 @@ export default defineComponent({
             VM.savedItemMarkers = mapMarkers;
         }
 
-        const tierOneOptions = {color: '#dfe3e8', weight: 0, fillOpacity: 0.2};
-        const tierTwoOptions = {color: '#4cb31b', weight: 0, fillOpacity: 0.3};
-        const tierThreeOptions = {color: '#1da7ec', weight: 0, fillOpacity: 0.3};
-        const tierFourOptions = {color: '#4f0e8b', weight: 0, fillOpacity: 0.3};
-        const tierFiveOptions = {color: '#ee3355', weight: 0, fillOpacity: 0.3};
+        const tierOneOptions = {color: "#dfe3e8", weight: 0, fillOpacity: 0.2};
+        const tierTwoOptions = {color: "#4cb31b", weight: 0, fillOpacity: 0.3};
+        const tierThreeOptions = {color: "#1da7ec", weight: 0, fillOpacity: 0.3};
+        const tierFourOptions = {color: "#4f0e8b", weight: 0, fillOpacity: 0.3};
+        const tierFiveOptions = {color: "#ee3355", weight: 0, fillOpacity: 0.3};
 
-        const mapOneTierOne = L.polygon(this.tierData['1']['1'], tierOneOptions);
-        const mapOneTierTwo = L.polygon(this.tierData['1']['2'], tierTwoOptions);
-        const mapOneTierThree = L.polygon(this.tierData['1']['3'], tierThreeOptions);
-        const mapOneTierFour = L.polygon(this.tierData['1']['4'], tierFourOptions);
+        const mapOneTierOne = L.polygon(this.tierData["1"]["1"], tierOneOptions);
+        const mapOneTierTwo = L.polygon(this.tierData["1"]["2"], tierTwoOptions);
+        const mapOneTierThree = L.polygon(this.tierData["1"]["3"], tierThreeOptions);
+        const mapOneTierFour = L.polygon(this.tierData["1"]["4"], tierFourOptions);
 
-        const mapTwoTierThree = L.polygon(this.tierData['2']['3'], tierThreeOptions);
-        const mapTwoTierFour = L.polygon(this.tierData['2']['4'], tierFourOptions);
-        const mapTwoTierFive = L.polygon(this.tierData['2']['5'], tierFiveOptions);
+        const mapTwoTierThree = L.polygon(this.tierData["2"]["3"], tierThreeOptions);
+        const mapTwoTierFour = L.polygon(this.tierData["2"]["4"], tierFourOptions);
+        const mapTwoTierFive = L.polygon(this.tierData["2"]["5"], tierFiveOptions);
 
         function placeItemTiers() {
             if (selectedTier.get()) {
@@ -430,6 +433,9 @@ export default defineComponent({
         placeMarkersForSelectedLocations();
         placeMarkersForSelectedItems();
         placeItemTiers();
+
+        //Done loading
+        doneLoading();
     },
     methods: {
         showModal() {
@@ -439,9 +445,9 @@ export default defineComponent({
             this.isModalVisible = false;
         },
         toggleSidebar() {
-            let content = document.querySelector('#page-content');
-            content?.classList.toggle('collapsed');
-            content?.classList.toggle('add-keyframe');
+            let content = document.querySelector("#page-content");
+            content?.classList.toggle("collapsed");
+            content?.classList.toggle("add-keyframe");
             this.isExpanded = !this.isExpanded;
         },
     },
