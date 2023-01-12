@@ -8,7 +8,7 @@
                 <h3>The Cycle: Frontier Wiki:</h3>
                 <p>The Cycle: Frontier Wiki brings you the player up to date information for The Cycle: Frontier</p>
                 <p>Get the most up to date information from the official Wiki</p>
-                <p>Enhance your gaming experience with our websites and apps</p>
+                <p>Enhance your gaming experience with our websites and tools</p>
                 <p>All for free without any ads!</p>
             </div>
             <div>

@@ -20,8 +20,8 @@ const routes = {
     '/progress.html': Progress,
 };
 const names = {
-    '/': 'Apps',
-    '/index.html': 'Apps',
+    '/': 'Tools',
+    '/index.html': 'Tools',
     '/calculator.html': 'Weapon Calculator',
     '/loadout.html': 'Loadout Generator',
     '/map.html': 'Interactive Map',
