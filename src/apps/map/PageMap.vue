@@ -542,7 +542,7 @@ section:not(:last-child) {
 
 #sidebar-toggler {
     position: absolute;
-    left: -3.75rem;
+    left: -2.1rem;
     width: 2.5rem;
 
     font-size: var(--space-xl);

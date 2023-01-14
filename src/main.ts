@@ -56,7 +56,7 @@ const RouterApp = createApp(PageHome)
 RouterApp.mount('main');
 
 import Navbar from './constantComponents/Navbar.vue';
-const NavbarApp = createApp(Navbar).component('font-awesome-icon', FontAwesomeIcon);
+const NavbarApp = createApp(Navbar).component('font-awesome-icon', FontAwesomeIcon).use(FloatingVue, {skidding: 50});
 NavbarApp.mount('#header');
 
 import Footer from './constantComponents/Footer.vue';
