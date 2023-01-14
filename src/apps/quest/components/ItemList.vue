@@ -377,7 +377,7 @@ export default defineComponent({
 <style scoped>
 p {
     text-align: center;
-    font-size: 2rem;
+    font-size: var(--space-xl);
     margin-bottom: .3rem;
 }
 
@@ -388,7 +388,7 @@ p.complete {
 .list__container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 1rem;
+    gap: var(--space-md);
 }
 
 .item__row {
@@ -396,18 +396,18 @@ p.complete {
     grid-template-columns: 1fr 5fr;
     gap: .5rem;
 
-    height: 2rem;
+    height: var(--space-xl);
 }
 
 .item__row span {
     text-overflow: ellipsis;
     display: flex;
     align-items: center;
-    gap: .3rem;
+    gap: var(--space-xs);
 }
 
 .item__image {
-    height: 2rem;
+    height: var(--space-xl);
 }
 
 @media screen and (max-width: 1500px) {
@@ -455,7 +455,7 @@ p.complete {
     width: 100%;
     text-align: center;
 
-    margin: 0 0 1rem;
+    margin: 0 0 var(--space-md);
 
 
     cursor: pointer;
@@ -470,7 +470,7 @@ p.complete {
 
     position: relative;
     border-collapse: collapse;
-    border: 3px solid var(--background-button-color);
+    border: 1px solid var(--border-color-base)
 }
 
 @media screen and (max-width: 900px) {
@@ -513,11 +513,10 @@ p.complete {
 }
 
 .quarter-line__selector div:hover:not(.active-slide)::before {
-    border-bottom-color: var(--link-body-color);
-    color: red;
+    border-bottom-color: var(--color-base--subtle);
 }
 .active-slide::before:hover {
-    border-bottom-color: var(--link-body-color) !important;
+    border-bottom-color: var(--color-base--subtle) !important;
 }
 
 .active-slide::before {
@@ -527,19 +526,19 @@ p.complete {
     left: 0;
     width: 100%;
     height: 100%;
-    border-bottom: 2px solid var(--link-body-color);
+    border-bottom: 2px solid var(--color-base--subtle);
 
     transition: .4s ease-in-out;
 }
 
 .active-slide:hover::before {
-    border-bottom-color: var(--button-accent-color);
+    border-bottom-color: var(--color-base--subtle);
 }
 
 .matching {
     transition: all .2s linear;
-    background-color: var(--background-menu-color);
-    color: var(--link-footer-color);
+    background-color: var(--color-surface-1);
+    color: var(--color-base--subtle);
 }
 
 .search-container {
@@ -552,7 +551,7 @@ p.complete {
     padding-bottom: 1rem;
     margin-bottom: 1rem;
 
-    border-bottom: 2px dotted var(--text-color-body-white);
+    border-bottom: 1px solid var(--border-color-base);
 }
 
 .search-container input {

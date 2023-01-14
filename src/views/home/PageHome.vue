@@ -97,10 +97,7 @@
     width: 100%;
     height: 100%;
 }
-* {
-    font-family: "Sora", sans-serif;
-    color: #edeff0;
-}
+
 h3 {
     font-size: 2em;
     margin-bottom: 1em;
@@ -125,13 +122,13 @@ h3 {
     text-align: center;
     display: flex;
     vertical-align: middle;
-    padding: 0 1em 0 1em;
-    margin: 2em 0 2em 0;
+    padding: 0 var(--space-md) 0 var(--space-md);
+    margin: var(--space-xl) 0 2em 0;
 }
 
 .about div {
     width: 33%;
-    margin: 0em 2em 0em 2em;
+    margin: 0em var(--space-xl) 0em var(--space-xl);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -147,7 +144,7 @@ h3 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 2em 0 2em 0;
+    margin: var(--space-xl) 0 var(--space-xl) 0;
 }
 .navigation div {
     display: flex;
@@ -158,7 +155,7 @@ h3 {
 }
 .navigation a {
     width: 12.5%;
-    padding: 0 1rem 0 1rem;
+    padding: 0 var(--space-md) 0 var(--space-md);
     text-align: center;
 }
 
@@ -173,18 +170,18 @@ h3 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 2em 0 2em 0;
+    margin: var(--space-xl) 0 var(--space-xl) 0;
 }
 .contrib-container {
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-bottom: 2em;
+    margin-bottom: var(--space-xl);
 }
 .contrib-item {
     width: 20%;
-    padding: 0 1em 0 1em;
+    padding: 0 var(--space-md) 0 var(--space-md);
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -196,12 +193,12 @@ h3 {
     text-align: center;
     font-size: 1.5em;
     font-weight: 600;
-    margin: 0.5em 0 0.5em 0;
+    margin: var(--space-sm) 0 var(--space-sm) 0;
 }
 .contrib-item img {
     margin: 0;
     border-radius: 50%;
-    border: 1px solid #484848;
+    border: 1px solid var(--border-color-base);
     height: 12em;
     width: 12em;
 }
@@ -221,7 +218,7 @@ h3 {
     }
     .about div {
         width: 100%;
-        margin: 0em 0em 2em 0em;
+        margin: 0em 0em var(--space-xl) 0em;
     }
 
     .navigation {
@@ -236,13 +233,13 @@ h3 {
 
     .navigation a {
         width: 23%;
-        padding: 0 0.5rem 0 0.5rem;
+        padding: 0 var(--space-sm) 0 var(--space-sm);
     }
 
     .contrib-container {
-        margin: 0em 1em 0em 1em;
+        margin: 0em var(--space-md) 0em var(--space-md);
         flex-direction: column;
-        gap: 2em;
+        gap: var(--space-xl);
         width: 75%;
     }
 
@@ -252,11 +249,11 @@ h3 {
     }
 
     .contrib-item img {
-        margin: auto auto 1em auto;
+        margin: auto auto var(--space-md) auto;
         border-radius: 50%;
-        border: 1px solid #484848;
-        height: 6em;
-        width: 6em;
+        border: 1px solid var(--border-color-base);
+        height: 6rem;
+        width: 6rem;
     }
 }
 </style>

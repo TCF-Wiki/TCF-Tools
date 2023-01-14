@@ -26,6 +26,6 @@ export default {
 .container {
  display: flex;
  flex-direction: column;
- gap: .5rem
+ gap: var(--space-sm);
 }
 </style>

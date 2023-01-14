@@ -26,13 +26,13 @@
     .container {
      display: flex;
      flex-direction: column;
-     gap: .5rem
+     gap: var(--space-sm)
     }
     
     .inner-container {
         display: flex;
         flex-direction: row;
-        gap: 1rem
+        gap: var(--space-md)
     }
     
     

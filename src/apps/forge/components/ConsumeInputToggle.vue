@@ -24,7 +24,7 @@ export default defineComponent({
 div {
     display: inline-block;
     color: var(--rarity-color-exotic);
-    border: 1px solid var(--background-button-color);
+    border: 1px solid var(--border-color-base);
     text-align: center;
     padding: .2rem .4rem;
     transition: background-color .2s ease-in-out;

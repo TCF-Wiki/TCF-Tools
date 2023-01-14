@@ -209,7 +209,7 @@ h1 {
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
-    padding: 1rem;
+    padding: var(--space-md);
 }
 /* SETTINGS */
 .settings {
@@ -219,11 +219,11 @@ h1 {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    margin: 1rem;
-    padding: 1rem;
+    margin: var(--space-md);
+    padding: var(--space-md);
 }
 h2 {
-    margin-bottom: 1rem;
+    margin-bottom: var(--space-md);
 }
 .buttons {
     width: 100%;
@@ -231,8 +231,8 @@ h2 {
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
-    margin: 1rem;
-    font-size: 2rem;
+    margin: var(--space-md);
+    font-size: var(--space-xl);
 }
 button {
     min-width: 40%;
@@ -247,7 +247,7 @@ button {
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: center;
-    margin: 1rem;
+    margin: var(--space-md);
 }
 .raritySlider {
     width: 100%;
@@ -313,7 +313,7 @@ button {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin: 0.5rem;
+    margin: var(--space-sm);
 }
 .checkbox p {
     text-align: left;
@@ -423,8 +423,7 @@ button {
     bottom: 5%;
     right: 10%;
     text-align: right;
-    font-family: "Noto Sans", sans-serif;
-    color: white;
+    color: var(--color-base--emphasized);
     font-size: 1.5vh;
 }
 

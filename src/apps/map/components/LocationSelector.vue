@@ -360,6 +360,13 @@ export default defineComponent({
 
 
 <style scoped>
+header {
+    border-bottom: 1px solid var(--border-color-base);
+    margin: auto;
+    margin-bottom: var(--space-sm);
+    width: 77%;
+}
+
 h2 {
     text-align: center;
 }
@@ -394,13 +401,13 @@ p {
 
 .button-container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: .6rem;
 }
 
 @media screen  and (max-width: 900px){
     .button-container {
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr;
         width: 100%;
         font-size: .9rem;
     }
@@ -415,7 +422,7 @@ p {
 
 .enable-all,
 .disable-all {
-    width: 	16px;
+    width: 	var(--space-md);
     cursor: pointer;
 }
 
@@ -436,13 +443,13 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: .4em;
+    gap: var(--space-xs);
 }
 
 section {
     background-color: var(--background-body-color);
-    padding: 1rem;
-    margin-bottom: 1rem;
+    padding: var(--space-md);
+    margin-bottom: var(--space-md);
 }
 
 .small {

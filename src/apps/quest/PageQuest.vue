@@ -471,10 +471,10 @@ export default defineComponent({
 }
 
 .quest-line .quest-list:first-child {
-    margin-bottom: 2rem;
+    margin-bottom: var(--space-xl);
 }
 .quest-line .quest-list:nth-child(2) {
-    margin-top: 0.5rem;
+    margin-top: var(--space-sm);
 }
 .quest-line__container-inner {
     display: none;
@@ -485,7 +485,7 @@ export default defineComponent({
     grid-template-columns: 3fr 1fr 3fr 1fr 3fr;
     gap: 0.3rem;
     height: 100%;
-    margin: 2rem 2rem;
+    margin: var(--space-xl) var(--space-xl);
 }
 
 .quest-list:first-child {
@@ -683,7 +683,7 @@ export default defineComponent({
 
     text-align: center;
 
-    margin: 0 2rem 1rem;
+    margin: 0 var(--space-xl) var(--space-md);
 
     cursor: pointer;
     border-collapse: collapse;
@@ -693,11 +693,11 @@ export default defineComponent({
     text-transform: uppercase;
     letter-spacing: 0.4rem;
 
-    padding: 0.5rem;
+    padding: var(--space-sm);
 
     position: relative;
     border-collapse: collapse;
-    border: 3px solid var(--background-button-color);
+    border: 1px solid var(--border-color-base)
 }
 
 @media screen and (max-width: 900px) {
@@ -717,14 +717,14 @@ export default defineComponent({
     justify-content: center;
     align-items: center;
     text-align: center;
-    gap: 1rem;
+    gap: var(--space-md);
 }
 
 .quest-line__selector-tab span {
     text-align: center;
 }
 .quest-line__selector-tab img {
-    width: 2rem;
+    width: var(--space-xl);
 }
 
 @media screen and (max-width: 900px) {
@@ -747,10 +747,10 @@ export default defineComponent({
 
 .quest-line__selector div:hover:not(.active-slide)::before {
     border-bottom-color: var(--link-body-color);
-    color: red;
+    color: var(--color-warning);
 }
 .active-slide::before:hover {
-    border-bottom-color: var(--link-body-color) !important;
+    border-bottom-color: var(--color-primary) !important;
 }
 
 .active-slide::before {
@@ -760,20 +760,20 @@ export default defineComponent({
     left: 0;
     width: 100%;
     height: 100%;
-    border-bottom: 2px solid var(--link-body-color);
+    border-bottom: 2px solid var(--color-base--subtle);
 
     transition: 0.4s ease-in-out;
 }
 
 .active-slide:hover::before {
-    border-bottom-color: var(--button-accent-color);
+    border-bottom-color: var(--color-base--subtle);
 }
 
 .back-to-top-text {
     width: 100%;
     text-align: center;
     font-size: 1.6rem;
-    background-color: var(--background-stripe-color);
+    background-color: var(--color-surface-3);
     padding: 0.3rem;
     text-transform: uppercase;
     letter-spacing: 0.3rem;
@@ -786,7 +786,7 @@ a.back-to-top {
 }
 
 a.back-to-top:hover {
-    color: var(--link-body-color);
+    color: var(--color-link);
 }
 
 @media screen and (max-width: 900px) {

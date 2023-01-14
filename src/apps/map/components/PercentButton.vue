@@ -80,11 +80,11 @@ export default defineComponent({
 }
 
 .container {
-    margin-top: 2rem;
+    margin-top: var(--space-xl);
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
+    gap: var(--space-md);
     font-size: 1.6rem;
 }
 
@@ -93,19 +93,19 @@ input[type='range'] {
     -webkit-appearance: none;
     appearance: none;
     width: 100%;
-    height: 1rem;
+    height: var(--space-md);
     background: #d6d6d6;
     outline: none;
     transition: all 0.2s ease;
 
-    border-radius: 2rem;
+    border-radius: var(--space-xl);
 }
 
 input[type='range']::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 2rem;
-    height: 2rem;
+    width: var(--space-xl);
+    height: var(--space-xl);
     background: var(--color);
     cursor: pointer;
 
@@ -124,7 +124,7 @@ input[type='range']::-moz-range-thumb {
 }
 
 .container strong {
-    width: 2rem;
+    width: var(--space-xl);
 }
 
 warning {

@@ -420,7 +420,6 @@ export default {
     display: flex;
     flex-direction: row;
     flex: none;
-    background-color: var(--background-body-color);
     position: relative;
 }
 
@@ -432,22 +431,27 @@ export default {
     flex: none;
     height: fit-content;
 
-    max-width: 50vw;
+    max-width: 60vw;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
+    border-collapse: collapse;
 }
 
 .inner-container > div {
    scroll-snap-align: start; 
 }
 .flex-item {
-    border: 2px solid var(--primary-accent);
-    padding: .5rem 1rem 2rem 1rem;
+    border: 1px solid var(--border-color-base);
+    border-bottom: none;
+    border-right: none;
+    padding:  var(--space-md);
     width: fit-content;
     flex: none;
     -webkit-flex: none;
-    line-height: 1.2;
+}
 
+.flex-item:last-of-type {
+    border-right: 1px solid var(--border-color-base)
 }
 
 .flex-item p,
@@ -455,12 +459,17 @@ export default {
     white-space: nowrap;
 }
 
+.flex-item h2 {
+    border-bottom: 1px solid var(--border-color-base);
+    margin-bottom: var(--space-sm);
+}
+
 .flex-item span {
-    color: var(--text-color-body-white);
+    color: var(--color-base);
 }
 
 .flex-item p:nth-child(even) { 
-    background-color: var(--background-stripe-color); 
+    background-color: var(--color-surface-4); 
 }
 .highest-value {
     color: var(--rarity-color-uncommon) !important;
@@ -501,9 +510,9 @@ export default {
     width: 12rem;
     display: grid;
     grid-template-columns: repeat(2, 1fr);   
-    grid-gap: 1rem;
+    grid-gap: var(--space-md);
     margin: auto;
-    margin-top: 1rem;      
+    margin-top: var(--space-md);      
 }
 
 
@@ -511,7 +520,7 @@ export default {
 .delete-button {
     display: flex;
     justify-content: center;
-    margin-top: 1em;
+    margin-top: var(--space-md);
 }
 
 .delete-button button {

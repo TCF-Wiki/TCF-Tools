@@ -38,7 +38,7 @@ export default {
         </section>
         <section>
             <div class="header">
-                <h1>Charts</h1>
+                <header> <h1>Charts</h1> </header>
                 <p>The following charts show the detailed stats above in a visual way. More charts will be added in the future.</p>
             </div>
             <div class="outer-chart-container">
@@ -81,7 +81,7 @@ h1 {
 .outer-chart-container {
     display: flex;
     flex-direction: row;
-    gap: 1rem;
+    gap: var(--space-md);
     flex-wrap: wrap;
 }
 
@@ -91,32 +91,31 @@ h1 {
     height: 30rem;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    padding-left: 2rem;
+    gap: var(--space-md);
+    padding-left: var(--space-md);
 }
 
 .header {
     position: relative;
-    width: 40vw;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    padding-left: 1rem;
+    gap: var(--space-md);
+    padding-left: var(--space-md);
 }
 
 .selectors {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--space-md);
     flex-wrap: wrap;
 }
 
 .inner-selector-container {
     display: flex;
     flex-direction: row;
-    gap: 1rem;
+    gap: md;
     flex-wrap: wrap;
-    padding-left: 2rem;
+    padding-left: var(--space-xl);
 }
 
 .main-container {

@@ -97,7 +97,7 @@ export default {
 
 <style scoped>
 .active {
-    background-color: var(--background-button-color);
+    background-color: var(--color-surface-1);
 }
 
 .attachment-image {
@@ -107,19 +107,19 @@ export default {
 
 
 p, span {
-    color: var(--text-color-body-white);
+    color: var(--color-base);
     transition: all .1s ease-in-out;
 }
 
 p:hover {
-    background-color: var(--background-stripe-color);
+    background-color: var(--color-surface-2);
 }
 
 .attachment-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: .5rem;
-    margin-top: 1rem;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
 }
 
 .attachment-selector {
