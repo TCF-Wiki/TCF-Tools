@@ -80,7 +80,9 @@ export default {
 </script>
 
 <style scoped>
-
+.active {
+    background-color: var(--color-surface-0);
+}
 .weapon-image {
     width: 10rem;
     margin: auto;
