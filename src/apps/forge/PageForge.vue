@@ -8,7 +8,7 @@
 import {defineComponent} from "vue";
 import TheForge from "./components/TheForge.vue";
 
-import {doneLoading} from "../../constantComponents/all";
+import {doneLoading} from "../../all";
 
 export default defineComponent({
     components: {

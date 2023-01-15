@@ -408,7 +408,7 @@ import QuarterList from "./components/QuarterList.vue";
 import {missions} from "./QuestConstants";
 import {factionProgress} from "./trackProgress";
 
-import {doneLoading} from "../../constantComponents/all";
+import {doneLoading} from "../../all";
 
 export default defineComponent({
     components: {QuestCard, QuestStart, ItemList, QuarterList},
@@ -697,7 +697,7 @@ export default defineComponent({
 
     position: relative;
     border-collapse: collapse;
-    border: 1px solid var(--border-color-base)
+    border: 1px solid var(--border-color-base);
 }
 
 @media screen and (max-width: 900px) {

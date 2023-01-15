@@ -5,7 +5,7 @@ import {penetrationChart, falloffChart} from "./charts";
 import AccuracySelector from "./components/AccuracySelector.vue";
 import DistanceSelector from "./components/DistanceSelector.vue";
 
-import {doneLoading} from "../../constantComponents/all";
+import {doneLoading} from "../../all";
 
 export default {
     components: {
@@ -38,7 +38,7 @@ export default {
         </section>
         <section>
             <div class="header">
-                <header> <h1>Charts</h1> </header>
+                <header><h1>Charts</h1></header>
                 <p>The following charts show the detailed stats above in a visual way. More charts will be added in the future.</p>
             </div>
             <div class="outer-chart-container">
