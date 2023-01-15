@@ -44,13 +44,13 @@ export default defineComponent({
 }
 
 .button-content {
-    background-color: var(--background-button-color);
+    background-color: var(--color-surface-4);
     width: 33%;
     display: flex;
     justify-content: space-between;
     cursor: pointer;
     padding: 1rem;
-    border: 0.1rem solid var(--button-accent-color);
+    border: 1px solid var(--border-color-base);
     transition: all 0.2s ease-in-out;
 }
 

@@ -99,7 +99,7 @@ export default defineComponent({
 .info {
     text-align: center;
     margin-top: 2rem;
-    border-top: 2px solid var(--rarity-color-common);
+    border-top: 1px solid var(--border-color-base);
 }
 .container * {
     user-select: none;

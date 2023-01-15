@@ -5,7 +5,7 @@
                 <ItemSearch />
                 <LocationSelector />
                 <section>
-                    <h2>Options</h2>
+                <header> <h2>Options</h2> </header>
                     <div class="setting-container">
                         <ClusterButton />
                         <PercentButton />
@@ -455,19 +455,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
-/* .page-content {
-    display: flex;
-    flex-direction: row;
-    height: 100%;
-    margin-right: 1.5vw;
-    max-width: 100%;
-    gap: 12rem;
-} */
-
 .left {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--space-md);
     /* width: 40%; */
     position: relative;
     overflow: hidden;
@@ -493,7 +484,7 @@ export default defineComponent({
 
 .selectors {
     display: flex;
-    gap: 2rem;
+    gap: var(--space-xl);
     flex-direction: column;
 }
 
@@ -505,19 +496,25 @@ h2 {
     margin: auto;
 }
 
+header {
+    border-bottom: 1px solid var(--border-color-base);
+    margin: auto;
+    margin-bottom: var(--space-sm);
+    width: 77%;
+}
+
 section {
-    background-color: var(--background-body-color);
-    padding: 1rem;
+    padding: var(--space-md);
     position: relative;
 }
 
 section:not(:last-child) {
-    margin-bottom: 1rem;
+    margin-bottom: var(--space-md);
 }
 .setting-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 1rem;
+    gap: var(--space-md);
     position: relative;
 }
 
@@ -528,10 +525,9 @@ section:not(:last-child) {
 .page-content {
     display: grid;
     grid-template-columns: 1fr 2fr;
-    gap: 5rem;
+    gap: calc(5 * var(--space-md));
 
     transition: all 0.4s ease-in-out;
-    padding: 1rem;
 }
 
 .page-content.collapsed {
@@ -546,10 +542,10 @@ section:not(:last-child) {
 
 #sidebar-toggler {
     position: absolute;
-    left: -3.75rem;
+    left: -2.1rem;
     width: 2.5rem;
 
-    font-size: 2rem;
+    font-size: var(--space-xl);
 
     background-color: transparent;
     border: transparent;
@@ -568,7 +564,7 @@ section:not(:last-child) {
     }
 
     #map {
-        margin-top: 1rem;
+        margin-top: var(--space-md);
         margin-right: 0;
         padding: 0;
         width: 100%;

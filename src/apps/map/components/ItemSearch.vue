@@ -151,8 +151,8 @@ export default defineComponent({
 <style scoped>
 .outer-container {
     background-color: var(--background-body-color);
-    padding: 1rem;
-    margin-bottom: 1rem;
+    padding: var(--space-md);
+    margin-bottom: var(--space-md);
 }
 
 /* h2 {
@@ -160,7 +160,7 @@ export default defineComponent({
 } */
 
 h3 {
-    border-bottom: 2px dotted var(--text-color-body-white-dark);
+    border-bottom: 1px solid var(--border-color-base);
     width: 60%;
 
     display: flex;
@@ -171,20 +171,20 @@ h3 {
 form {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--space-md);
 }
 
 .search-container {
     display: grid;
     grid-template-columns: 9fr 1fr 1fr;
-    gap: 1rem;
-    height: 2rem;
+    gap: var(--space-md);
+    height: var(--space-xl);
 }
 
 .autocomplete {
     isolation: isolate;
     overflow: unset;
-    margin-top: 0.5rem;
+    margin-top: var(--space-sm);
     position: absolute;
     max-width: 100%;
     width: 70%;
@@ -192,8 +192,8 @@ form {
     max-height: 40%;
     overflow-y: auto;
     overflow-x: hidden;
-    background-image: linear-gradient(180deg, var(--rarity-color-common) 0%, var(--text-color-body-white-dark) 100%);
-
+    background-color: var(--color-surface-1);
+    
     overscroll-behavior: contain;
 
     opacity: 0;
@@ -202,7 +202,7 @@ form {
 .autocomplete.has-items {
     border-radius: 5px;
 
-    border: 2px solid var(--background-dark-color);
+    border: 1px solid var(--border-color-base--darker);
     opacity: 1;
 }
 
@@ -214,27 +214,27 @@ form {
     flex-direction: row;
     justify-content: space-between;
     z-index: 1;
-    padding: 0.3rem;
+    padding: var(--space-xs);
 
-    transition: all 0.2s ease-in-out;
+    transition: all 0.15s ease-in-out;
 }
 
 .autocomplete-item:hover {
-    background-color: var(--rarity-color-legendary);
+    background-color: var(--color-surface-2);
 }
 
 .autocomplete-item > span {
-    height: 2rem;
+    height: var(--space-xl);
     padding-top: 0.2rem;
     padding-left: 0.1rem;
 }
 
 .item-image {
-    width: 2rem;
+    width: var(--space-xl);
 }
 
 .item-list {
-    margin-top: 1rem;
+    margin-top: var(--space-md);
 }
 
 .item-container {

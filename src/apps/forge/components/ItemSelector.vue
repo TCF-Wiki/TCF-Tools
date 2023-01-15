@@ -150,7 +150,7 @@ export default defineComponent({
     flex-wrap: wrap;
     width: 100%;
     margin: 0 2rem;
-    gap: 2rem;
+    gap: var(--space-xl);
 }
 
 .selector {
@@ -166,7 +166,7 @@ p {
     user-select: none;
 }
 p:hover {
-  background-color: var(--background-button-color);
+  background-color: var(--color-surface-1);
 }
 .item-icon {
     display: inline-block;
@@ -235,9 +235,9 @@ p:hover {
     display: grid;
     grid-template-rows: 1fr;
     gap: .5rem;
-    border: 2px solid var(--background-button-color);
+    border: 1px solid var(--border-color-base);
     text-align: center;
-    padding: .05rem .2rem;
+    padding: var(--space-xs);
 }
 
 .item-name {

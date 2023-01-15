@@ -648,7 +648,7 @@ export default defineComponent({
     width: 100%;
     text-align: center;
 
-    margin: 0 0 1rem;
+    margin: 0 0 var(--space-md);
 
 
     cursor: pointer;
@@ -659,11 +659,11 @@ export default defineComponent({
     text-transform: uppercase;
     letter-spacing: .4rem;
 
-    padding: .5rem;
+    padding: var(--space-sm);
 
     position: relative;
     border-collapse: collapse;
-    border: 3px solid var(--background-button-color);
+    border: 1px solid var(--border-color-base)
 }
 
 @media screen and (max-width: 900px) {
@@ -684,7 +684,7 @@ export default defineComponent({
     text-align: center;
 }
 .quarter-line__selector-tab img {
-    width: 2rem;
+    width: var(--space-xl);
 }
 
 @media screen and (max-width: 900px) {
@@ -706,11 +706,11 @@ export default defineComponent({
 }
 
 .quarter-line__selector div:hover:not(.active-slide)::before {
-    border-bottom-color: var(--link-body-color);
-    color: red;
+    border-bottom-color: var(--color-base--subtle);
+    color: var(--color-base--subtle);
 }
 .active-slide::before:hover {
-    border-bottom-color: var(--link-body-color) !important;
+    border-bottom-color: var(--color-base--subtle) !important;
 }
 
 .active-slide::before {
@@ -720,13 +720,8 @@ export default defineComponent({
     left: 0;
     width: 100%;
     height: 100%;
-    border-bottom: 2px solid var(--link-body-color);
+    border-bottom: 2px solid var(--color-base--subtle);
 
     transition: .4s ease-in-out;
 }
-
-.active-slide:hover::before {
-    border-bottom-color: var(--button-accent-color);
-}
-
 </style>

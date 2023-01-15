@@ -1,5 +1,5 @@
 <template>
-<h2> Outline </h2> 
+<header> <h2> Outline </h2> </header>
 <div> 
     <input 
     type="color" 
@@ -77,10 +77,17 @@ h2 {
     margin: auto;
 }
 
+header {
+    border-bottom: 1px solid var(--border-color-base);
+    margin: auto;
+    margin-bottom: var(--space-sm);
+    width: 77%;
+}
+
 div {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 1rem;
+    gap: var(--space-md);
     position: relative;
 }
 

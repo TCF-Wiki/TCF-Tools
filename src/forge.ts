@@ -42,10 +42,10 @@ const RouterApp = createApp(PageForge)
 RouterApp.mount('main');
 
 import Navbar from './constantComponents/Navbar.vue';
-const NavbarApp = createApp(Navbar).component('font-awesome-icon', FontAwesomeIcon);
-NavbarApp.mount('nav');
+const NavbarApp = createApp(Navbar).component('font-awesome-icon', FontAwesomeIcon).use(FloatingVue);
+NavbarApp.mount('#header');
 
 import Footer from './constantComponents/Footer.vue';
 const FooterApp = createApp(Footer);
-FooterApp.mount('footer');
+FooterApp.mount('#footer');
 

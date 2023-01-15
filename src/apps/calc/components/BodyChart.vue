@@ -107,7 +107,7 @@ section {
     background-repeat: no-repeat;
     user-select: none;
     margin: auto;
-    margin-top: 2em;
+    margin-top: var(--space-xl);
 }
 
 #head::before {
@@ -152,7 +152,7 @@ section {
 }
 
 .button {
-    margin: 2rem 0 1rem;
+    margin: var(--space-xl) 0 var(--space-md);
     font-size: smaller;
     padding: .4rem;
     width: 100%;

@@ -48,20 +48,20 @@ section {
     margin-bottom: 1rem;
     width: 20rem;
 
-    padding: .5rem 1rem 1rem 1rem;
+    padding: var(--space-sm) var(--space-md) var(--space-md) var(--space-md);
 
 }
 
 div {
     display: flex;
-    gap: 1rem;
     flex-wrap: wrap;
     flex-direction: column;
+    gap: calc(1.5* var(--space-md));
 }
 
 h2 {
-    font-size: 2rem;
-    line-height: 1.2;
+    line-height: 1;
+    border-bottom: 1px solid var(--border-color-base);
 }
 
 @media screen and (max-width: 900px) {
