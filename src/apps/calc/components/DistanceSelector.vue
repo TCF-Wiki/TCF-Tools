@@ -23,11 +23,15 @@
     </script>
     
     <style scoped>
-    .container {
-     display: flex;
-     flex-direction: column;
-     gap: var(--space-sm)
-    }
+h2 {
+    line-height: 1;
+    border-bottom: 1px solid var(--border-color-base);
+}
+
+.container {
+ display: flex;
+ flex-direction: column;
+}
     
     .inner-container {
         display: flex;

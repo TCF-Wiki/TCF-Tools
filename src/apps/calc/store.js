@@ -22,6 +22,7 @@ export const selectedTarget = reactive({
     selected: 'PlayerDefault',
     changeSelected(target) {
         this.selected = target;
+        selectedWeakspotValue.changeValue(1)
     }
 })
 
@@ -62,5 +63,12 @@ export const selectedAttachments = reactive({
             this.typeList[weapon] = {}
             this.typeList[weapon][type] = attachment
         }
+    }
+})
+
+export const selectedWeakspotValue = reactive({
+    value: 1,
+    changeValue(value) {
+        this.value = value;
     }
 })

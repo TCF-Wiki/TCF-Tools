@@ -108,7 +108,7 @@
 </template>
 
 <script> 
-import { selectedWeapons, selectedArmor, selectedTarget, selectedHSValue, selectedDistance, selectedAttachments } from '../store';
+import { selectedWeapons, selectedArmor, selectedTarget, selectedHSValue, selectedDistance, selectedAttachments, selectedWeakspotValue } from '../store';
 import { armorData, weaponData as wepData} from '../data';
 import { keyObject, detailedKeyObject, flippedKeys as flippedKeysData, roundToThree } from '../utils';
 import { calculate } from '../calculate';
@@ -132,6 +132,7 @@ export default {
             selectedHSValue,
             selectedDistance,
             selectedAttachments,
+            selectedWeakspotValue,
             weaponData: wepData,
             keyNames: keyObject,
             detailedKeyNames: detailedKeyObject,
@@ -269,22 +270,22 @@ export default {
                 detailedStats[wepName]['dmgPerBulletHS'] = roundToThree(calculate.dmgPerBulletHS(wepName))
 
                 // shield shots to kill
-                detailedStats[wepName]['noShield$%']       = Math.round(calculate.shotsToKill(wepName, 0, 0))
-                detailedStats[wepName]['commonShield$%']   = Math.round(calculate.shotsToKill(wepName, armorData['Shield_01']['armorAmount'], 0 ))
-                detailedStats[wepName]['uncommonShield$%'] = Math.round(calculate.shotsToKill(wepName, armorData['Shield_02']['armorAmount'], 0 ))
-                detailedStats[wepName]['rareShield$%']     = Math.round(calculate.shotsToKill(wepName, armorData['Shield_03']['armorAmount'], 0 ))
-                detailedStats[wepName]['epicShield$%']     = Math.round(calculate.shotsToKill(wepName, armorData['Shield_04']['armorAmount'], 0 ))
-                detailedStats[wepName]['exoticShield$%']   = Math.round(calculate.shotsToKill(wepName, armorData['Shield_05']['armorAmount'], 0 ))
-                detailedStats[wepName]['legendaryShield$%']= Math.round(calculate.shotsToKill(wepName, armorData['Shield_Altered_03']['armorAmount'], 0))
+                detailedStats[wepName]['noShield$%']       = Math.round(calculate.shotsToKill(wepName, 0, 0, 'special'))
+                detailedStats[wepName]['commonShield$%']   = Math.round(calculate.shotsToKill(wepName, armorData['Shield_01']['armorAmount'], 0, 'special' ))
+                detailedStats[wepName]['uncommonShield$%'] = Math.round(calculate.shotsToKill(wepName, armorData['Shield_02']['armorAmount'], 0, 'special' ))
+                detailedStats[wepName]['rareShield$%']     = Math.round(calculate.shotsToKill(wepName, armorData['Shield_03']['armorAmount'], 0, 'special' ))
+                detailedStats[wepName]['epicShield$%']     = Math.round(calculate.shotsToKill(wepName, armorData['Shield_04']['armorAmount'], 0, 'special' ))
+                detailedStats[wepName]['exoticShield$%']   = Math.round(calculate.shotsToKill(wepName, armorData['Shield_05']['armorAmount'], 0, 'special' ))
+                detailedStats[wepName]['legendaryShield$%']= Math.round(calculate.shotsToKill(wepName, armorData['Shield_Altered_03']['armorAmount'], 0, 'special'))
 
                 // Helmet shots to kill
-                detailedStats[wepName]['noHelmet&%']       = Math.round(calculate.shotsToKill(wepName, 0, 100 ))
-                detailedStats[wepName]['commonHelmet&%']   = Math.round(calculate.shotsToKill(wepName, helmetData['Helmet_01']['armorAmount'], 100 ))
-                detailedStats[wepName]['uncommonHelmet&%'] = Math.round(calculate.shotsToKill(wepName, helmetData['Helmet_02']['armorAmount'], 100 ))
-                detailedStats[wepName]['rareHelmet&%']     = Math.round(calculate.shotsToKill(wepName, helmetData['Helmet_03']['armorAmount'], 100 ))
-                detailedStats[wepName]['epicHelmet&%']     = Math.round(calculate.shotsToKill(wepName,helmetData['Helmet_04']['armorAmount'],  100 ))
-                detailedStats[wepName]['exoticHelmet&%']   = Math.round(calculate.shotsToKill(wepName, helmetData['Helmet_05']['armorAmount'], 100 ))
-                detailedStats[wepName]['legendaryHelmet&%']= Math.round(calculate.shotsToKill(wepName, helmetData['Helmet_Altered_03']['armorAmount'], 100))
+                detailedStats[wepName]['noHelmet&%']       = Math.round(calculate.shotsToKill(wepName, 0, 100, 'special' ))
+                detailedStats[wepName]['commonHelmet&%']   = Math.round(calculate.shotsToKill(wepName, helmetData['Helmet_01']['armorAmount'], 100, 'special' ))
+                detailedStats[wepName]['uncommonHelmet&%'] = Math.round(calculate.shotsToKill(wepName, helmetData['Helmet_02']['armorAmount'], 100, 'special' ))
+                detailedStats[wepName]['rareHelmet&%']     = Math.round(calculate.shotsToKill(wepName, helmetData['Helmet_03']['armorAmount'], 100, 'special' ))
+                detailedStats[wepName]['epicHelmet&%']     = Math.round(calculate.shotsToKill(wepName,helmetData['Helmet_04']['armorAmount'],  100, 'special' ))
+                detailedStats[wepName]['exoticHelmet&%']   = Math.round(calculate.shotsToKill(wepName, helmetData['Helmet_05']['armorAmount'], 100, 'special' ))
+                detailedStats[wepName]['legendaryHelmet&%']= Math.round(calculate.shotsToKill(wepName, helmetData['Helmet_Altered_03']['armorAmount'], 100, 'special'))
                 // a % indicates it is a special data set we want to filter out seperately later.
                 // $ is armour, & is helmet
             }
@@ -401,6 +402,12 @@ export default {
             handler() {
                 this.updateDetailedStats();
                 falloffChart()
+            }
+        },
+        selectedWeakspotValue : {
+            deep: true,
+            handler() {
+                this.updateDetailedStats();
             }
         }
     },
