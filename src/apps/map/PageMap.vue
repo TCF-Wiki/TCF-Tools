@@ -5,7 +5,7 @@
                 <ItemSearch />
                 <LocationSelector />
                 <section>
-                <header> <h2>Options</h2> </header>
+                    <header><h2>Options</h2></header>
                     <div class="setting-container">
                         <ClusterButton />
                         <PercentButton />
@@ -57,7 +57,7 @@ import {mapOneLabels, mapTwoLabels, mapThreeLabels} from "./labels";
 import {updateLocationLayerGroups, getLocationLayerGroups, updateItemLayerGroups, getItemLayerGroups, getCreatureLayerGroups, updateCreatureLayerGroups} from "./layerGroups";
 import {loadInitialStore} from "./URLParameterHandler";
 
-import {doneLoading} from "../../constantComponents/all";
+import {doneLoading} from "../../all";
 
 let locationLayerGroups: any;
 let itemLayerGroups: any;
@@ -526,7 +526,7 @@ section:not(:last-child) {
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: calc(5 * var(--space-md));
-
+    padding-right: 1.5%;
     transition: all 0.4s ease-in-out;
 }
 

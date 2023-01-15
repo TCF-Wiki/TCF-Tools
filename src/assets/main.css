@@ -1,4 +1,4 @@
-@import './base.css';
+@import "./base.css";
 body {
     font-family: Rajdhani, ui-sans, system-ui, Helvetica, Arial, sans-serif;
     color: var(--text-color-body-white);
@@ -15,8 +15,8 @@ body {
 }
 
 main {
-    max-width: 100vw;
-    min-height: 70vh;
+    width: 100vw;
+    min-height: 85vh;
     background-color: var(--color-surface-0);
 }
 
@@ -24,7 +24,7 @@ main {
     main {
         padding-left: calc(var(--padding-page) * 4);
         padding-right: var(--padding-page);
-        margin-top: var(--space-md)
+        margin-top: var(--space-md);
     }
 
 }
@@ -122,11 +122,11 @@ button {
 }
 
 .active {
-    background-color: var(--color-surface-0);
+    background-color: var(--color-surface-3);
 }
 
 /* SLIDER */
-input[type='range'] {
+input[type="range"] {
     -webkit-appearance: none;
     appearance: none;
     width: 14rem;
@@ -136,7 +136,7 @@ input[type='range'] {
     transition: all 0.2s ease;
 }
 
-input[type='range']::-webkit-slider-thumb {
+input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
     width: 1.7rem;
@@ -146,7 +146,7 @@ input[type='range']::-webkit-slider-thumb {
     cursor: pointer;
 }
 
-input[type='range']::-moz-range-thumb {
+input[type="range"]::-moz-range-thumb {
     width: 1.7rem;
     height: 1.7rem;
     background: var(--button-body-color);
@@ -154,9 +154,8 @@ input[type='range']::-moz-range-thumb {
     cursor: pointer;
 }
 
-
 /* CHECKBOX */
-input[type='checkbox'] {
+input[type="checkbox"] {
     -webkit-appearance: none;
     appearance: none;
     position: relative;
@@ -167,12 +166,12 @@ input[type='checkbox'] {
     cursor: pointer;
     transition: all 0.2s ease;
 }
-input[type='checkbox']:checked {
+input[type="checkbox"]:checked {
     background-color: var(--color-base--subtle);
 }
-input[type='checkbox']:checked::before {
+input[type="checkbox"]:checked::before {
     position: absolute;
-    content: '✔';
+    content: "✔";
     color: var(--color-surface-0);
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
     top: -25%;

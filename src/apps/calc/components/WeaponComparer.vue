@@ -448,7 +448,9 @@ export default {
    scroll-snap-align: start; 
 }
 .flex-item {
-    border-left: 1px solid var(--border-color-base);
+    border: 1px solid var(--border-color-base);
+    border-bottom: none;
+    border-right: none;
     padding:  var(--space-md);
     width: fit-content;
     flex: none;

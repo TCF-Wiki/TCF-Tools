@@ -72,7 +72,7 @@ import {useToast} from "vue-toastification";
 const toast = useToast();
 import {GenerateRandomLoadout, GetRarity} from "./loadout";
 
-import {doneLoading} from "../../constantComponents/all";
+import {doneLoading} from "../../all";
 
 export default defineComponent({
     data() {

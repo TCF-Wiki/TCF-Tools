@@ -131,7 +131,6 @@ export function GenerateRandomLoadout(minRarity: number, maxRarity: number, cons
     while (rarityNumber < minRarity || rarityNumber > maxRarity) {
         backpack = Backpacks[Math.floor(Math.random() * Backpacks.length)];
         rarityNumber = rarityToInt(GetRarity(backpack));
-        console.log(backpack, rarityNumber);
     }
     //Add the backpack to the data
     data.backpack = {img: backpack, ign: backpack.split("_").join(" ") + " Backpack", rarity: GetRarity(backpack)};
