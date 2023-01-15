@@ -2,7 +2,7 @@
 <header class="mw-header citizen-header">
 	<div class="header-outer">
         <div class="header-item" v-tooltip.right="{content: 'Official Wiki'}"> 
-            <a href="https://thecyclefrontier.wiki/wiki/Main_Page"> 
+            <a href="https://thecyclefrontier.wiki/wiki/Main_Page" target="_blank"> 
                 <img  src="/wiki_logo_notext.png">
             </a>
         </div>

@@ -2,7 +2,6 @@ import {createApp} from "vue";
 import Page from "./apps/forge/PageForge.vue";
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
-
 import FloatingVue from "floating-vue";
 import "floating-vue/dist/style.css";
 
