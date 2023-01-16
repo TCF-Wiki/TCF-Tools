@@ -33,7 +33,7 @@ export default defineComponent({
     border-radius: 50%;
     text-align: center;
     cursor: pointer;
-    z-index: 2;
+    z-index: 0;
     position: absolute;
 }
 

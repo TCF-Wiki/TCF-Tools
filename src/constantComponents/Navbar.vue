@@ -36,8 +36,72 @@
             </a>
         </div>
     </div>
+	<div class="header-outer">
+		<div class="header-item" v-tooltip.right="{content: 'Save a preset'}" @click="isSaveModalOpen = true">
+			<span>
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 416c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z"/></svg>
+			</span>
+		</div>
+		<div class="header-item" v-tooltip.right="{content: 'Load a preset'}" @click="isLoadModalOpen = true">
+			<span>
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M40 48C26.7 48 16 58.7 16 72v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V72c0-13.3-10.7-24-24-24H40zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zM16 232v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V232c0-13.3-10.7-24-24-24H40c-13.3 0-24 10.7-24 24zM40 368c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V392c0-13.3-10.7-24-24-24H40z"/></svg>			</span>
+		</div>
+	</div>
 </header>
+
+<Teleport to="#modal">
+    <Transition name="modal"> 
+        <div class="modal__bg" v-if="isSaveModalOpen">
+            <section class="modal__content modal__small" ref="modal">  
+                <button @click="isSaveModalOpen = false" class="modal__close-button" aria-label="Close Modal" type="button"><font-awesome-icon icon="fa-solid fa-xmark" /></button>
+
+                <header class="modal__header"> 
+                    <h2>  
+                        Save a Preset
+                    </h2>
+                </header>
+
+				<SaveState />
+
+            </section>
+        </div>
+    </Transition>
+</Teleport>
+
+<Teleport to="#modal">
+    <Transition name="modal"> 
+        <div class="modal__bg" v-if="isLoadModalOpen">
+            <section class="modal__content modal__small" ref="modal2">  
+                <button @click="isLoadModalOpen = false" class="modal__close-button" aria-label="Close Modal" type="button"><font-awesome-icon icon="fa-solid fa-xmark" /></button>
+
+                <header class="modal__header"> 
+                    <h2>  
+                        Load a preset
+                    </h2>
+                </header>
+
+				<LoadState />
+
+            </section>
+        </div>
+    </Transition>
+</Teleport>
 </template>
+<script setup lang="ts">
+import { ref } from 'vue'
+/* @ts-ignore */
+import { onClickOutside } from '@vueuse/core';
+import SaveState from './SaveState.vue';
+import LoadState from './LoadState.vue';
+
+const isSaveModalOpen = ref(false)
+const modal = ref(null)
+onClickOutside(modal, () => (isSaveModalOpen.value = false))
+    
+const isLoadModalOpen = ref(false)
+const modal2 = ref(null)
+onClickOutside(modal2, () => (isLoadModalOpen.value = false))
+</script>
 
 <style scoped lang="less">
 .citizen-header {
@@ -55,6 +119,7 @@
 	border-top: 1px solid var( --border-color-base );
 	background-color: var( --color-surface-0 );
 	gap: var( --space-xxs );
+	justify-content: space-between;
 
 	&__item {
 		display: flex;
@@ -165,7 +230,7 @@
         height: calc(1.2 * var(--space-xl) );
         aspect-ratio: 1 / 1;
 
-        a {
+        a, span {
             height: 100%;
             width: 100%;
             margin: auto;

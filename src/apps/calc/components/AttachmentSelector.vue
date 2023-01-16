@@ -82,7 +82,6 @@ export default {
             let output = ''
             output += attachmentData[attachment]['rarity'].toLowerCase()
 
-            console.log(selectedAttachments.list[this.weapon], attachment)
             if (selectedAttachments.list[this.weapon]) {
                 if (selectedAttachments.list[this.weapon].includes(attachment)) {
                     output += ' active'

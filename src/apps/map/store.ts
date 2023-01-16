@@ -156,11 +156,11 @@ export const clusterEnabled = reactive({
 })
 
 export const minimumPercent = reactive({
-    distance: 0,
+    value: 0,
     get() {
-        return this.distance
+        return this.value
     },
     set(value: number) {
-        this.distance = value;
+        this.value = value;
     }
 })

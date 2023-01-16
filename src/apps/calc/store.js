@@ -2,6 +2,9 @@ import { reactive } from 'vue'
 
 export const selectedWeapons = reactive({
     list: ['WP_D_AR_Bullet_01','WP_G_Sniper_Energy_01'],
+    set(data) {
+        this.list = data
+    },
     toggleSelected(weapon) {
         if (this.list.includes(weapon)) {
         this.list = this.list.filter( a => a !== weapon)
@@ -43,6 +46,12 @@ export const selectedDistance = reactive({
 export const selectedAttachments = reactive({
     list: {},
     typeList: {},
+    setList(data) {
+        this.list = data
+    },
+    setTypeList(data) {
+        this.typeList = data
+    },
     toggleSelected(weapon, attachment, type) {
         if (this.list[weapon]) {
             if (this.list[weapon].includes(attachment)) {
