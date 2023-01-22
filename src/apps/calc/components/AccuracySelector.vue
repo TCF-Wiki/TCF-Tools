@@ -24,14 +24,15 @@
                 class="radioButton"
                 :name="selectedTarget.selected + '-weakspotRadios'" 
                 :key="key" :id="selectedTarget.selected+key" 
-                @input="selectedWeakspotValue.changeValue(value * targetData[selectedTarget.selected]['weakSpotMultiplier'])"
-                ><label :for="selectedTarget.selected+key">{{ key }} ({{ value * targetData[selectedTarget.selected]['weakSpotMultiplier']}}×)</label>
+                @input="selectedWeakspotValue.changeValue(getWeakspotValue(value))"
+                ><label :for="selectedTarget.selected+key">{{ key }} ({{ getWeakspotValue(value) }}×)</label>
         </div>
     </div> 
 </div>
 </template>
 
 <script>
+import { onKeyUp } from '@vueuse/core'
 import { targetData } from '../data'
 import { selectedHSValue, selectedTarget, selectedWeakspotValue } from '../store'
 export default {
@@ -49,6 +50,7 @@ export default {
             // this is to delete duplicate weakspots which have similar names
             let output = {}
             for (let key in data) {
+                if (key.includes('Ankle') && !key.includes('WeakSpot')) continue;
                 // split it to just the first word
                 let realKey = key.split('_')[0]
                 // remove numbers
@@ -64,6 +66,12 @@ export default {
                 output[realKey] = data[key]
             }
             return output
+        },
+        getWeakspotValue(value) {
+            let weakSpotMultiplier = targetData[selectedTarget.selected]['weakSpotMultiplier']
+
+            if (value == 1) return 1 * weakSpotMultiplier
+            return value
         }
     },
     watch: {
