@@ -187,8 +187,6 @@ export default defineComponent({
         },
     },
     mounted() {
-        // clear out the url bar
-        window.history.pushState({}, document.title, location.pathname.replace(".html", ""));
         this.ResetLoadout();
         this.getLoadoutFromURL();
         // done loading

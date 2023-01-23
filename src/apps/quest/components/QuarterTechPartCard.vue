@@ -1,92 +1,74 @@
 <template>
-<section class="card">
-    <div class="card__image">
-        <img class="card__image-img" :src="'quest-images/Quarters/' + image + '.png'">
-    </div>
-    <div class="card__level">
-        {{ index+1 }}
-    </div>
-
-    <div class="card__costs">
-        <div v-for="amount, item in m" :key="item" class="item__row">
-            <img :src="'/map-images/item-images/' + itemName(item.toString(), true) + '.png'" class="item__image"> 
-            <span>
-                {{ amount }}
-                {{ itemName(item.toString()) }}
-            </span> 
+    <section class="card">
+        <div class="card__image">
+            <img class="card__image-img" :src="'quest-images/Quarters/' + image + '.png'" />
         </div>
-    </div>
-
-    <div class="card__button" role="button" @click.stop.prevent="handleProgress()">
-        <div class="card__button-text">
-            <svg  v-if="progress.get()[upgrade] >= index+1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M211.8 339.8C200.9 350.7 183.1 350.7 172.2 339.8L108.2 275.8C97.27 264.9 97.27 247.1 108.2 236.2C119.1 225.3 136.9 225.3 147.8 236.2L192 280.4L300.2 172.2C311.1 161.3 328.9 161.3 339.8 172.2C350.7 183.1 350.7 200.9 339.8 211.8L211.8 339.8zM0 96C0 60.65 28.65 32 64 32H384C419.3 32 448 60.65 448 96V416C448 451.3 419.3 480 384 480H64C28.65 480 0 451.3 0 416V96zM48 96V416C48 424.8 55.16 432 64 432H384C392.8 432 400 424.8 400 416V96C400 87.16 392.8 80 384 80H64C55.16 80 48 87.16 48 96z"/></svg>          
-
-            <svg v-else xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M384 32C419.3 32 448 60.65 448 96V416C448 451.3 419.3 480 384 480H64C28.65 480 0 451.3 0 416V96C0 60.65 28.65 32 64 32H384zM384 80H64C55.16 80 48 87.16 48 96V416C48 424.8 55.16 432 64 432H384C392.8 432 400 424.8 400 416V96C400 87.16 392.8 80 384 80z"/></svg>
+        <div class="card__level">
+            {{ index + 1 }}
         </div>
-    </div>
-</section>
 
+        <div class="card__costs">
+            <div v-for="(amount, item) in m" :key="item" class="item__row">
+                <img :src="'/map-images/item-images/' + itemName(item.toString(), true) + '.png'" class="item__image" />
+                <span>
+                    {{ amount }}
+                    {{ itemName(item.toString()) }}
+                </span>
+            </div>
+        </div>
+
+        <div class="card__button" role="button" @click.stop.prevent="handleProgress()">
+            <div class="card__button-text">
+                <svg v-if="progress.get()[upgrade] >= index + 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                    <path
+                        d="M211.8 339.8C200.9 350.7 183.1 350.7 172.2 339.8L108.2 275.8C97.27 264.9 97.27 247.1 108.2 236.2C119.1 225.3 136.9 225.3 147.8 236.2L192 280.4L300.2 172.2C311.1 161.3 328.9 161.3 339.8 172.2C350.7 183.1 350.7 200.9 339.8 211.8L211.8 339.8zM0 96C0 60.65 28.65 32 64 32H384C419.3 32 448 60.65 448 96V416C448 451.3 419.3 480 384 480H64C28.65 480 0 451.3 0 416V96zM48 96V416C48 424.8 55.16 432 64 432H384C392.8 432 400 424.8 400 416V96C400 87.16 392.8 80 384 80H64C55.16 80 48 87.16 48 96z"
+                    />
+                </svg>
+
+                <svg v-else xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                    <path d="M384 32C419.3 32 448 60.65 448 96V416C448 451.3 419.3 480 384 480H64C28.65 480 0 451.3 0 416V96C0 60.65 28.65 32 64 32H384zM384 80H64C55.16 80 48 87.16 48 96V416C48 424.8 55.16 432 64 432H384C392.8 432 400 424.8 400 416V96C400 87.16 392.8 80 384 80z" />
+                </svg>
+            </div>
+        </div>
+    </section>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { itemData } from '../../forge/data';
+import {defineComponent} from "vue";
+import {itemName} from "../utils";
 
-import { quarterProgress } from '../trackProgress';
+import {quarterProgress} from "../trackProgress";
 export default defineComponent({
-    props: ['index', 'name','m','image', 'upgrade'],
+    props: ["index", "name", "m", "image", "upgrade"],
     data() {
         return {
-            progress: quarterProgress
-        }
+            progress: quarterProgress,
+        };
     },
     methods: {
-        itemName(item: string, urlFormat? : boolean) : string {
-            // This function gets the name of the image when given an item name. Handles edge cases.
-            if (item.includes('SoftCurrency'))    item = 'K-Marks'
-            else if (item.includes('ShockGrenade_02')) item =  'Frag Grenade'
-            else if (item.includes('HardDrive_common'))  item = 'Data Drive Tier 1'
-            else if (item.includes('HardDrive_uncommon'))  item = 'Data Drive Tier 2'
-            else if (item.includes('HardDrive_rare'))  item = 'Data Drive Tier 3'
-            else if (item.includes('HardDrive_epic'))  item = 'Data Drive Tier 4'
-            else if (item.includes('HardDrive_legendary'))  item = 'Data Drive Tier 5'
-            else if (item.includes('ICAScrip')) item = "ICA Scrip"
-            else if (item.includes('OsirisScrip')) item = "Osiris Scrip"
-            else if (item.includes('KorolevScrip')) item = "Korolev Scrip"
-            else if (item.includes('KeyCard')) {
-                if (item.includes('Map01'))       item = 'Bright_Sands_Key_Card'
-                if (item.includes('Map02'))       item = 'Crescent_Falls_Key_Card'
-                if (item.includes('Map03'))       item = 'Tharis_Island_Key_Card'
-            } else {
-                if (itemData[item]) {
-                    item = itemData[item]['ingamename']
-                }
-            }
-            if (item.includes('Fusion Cartridge')) item = 'Fusion_Cartridge_Batteries'
-            if (item.includes('OrbitalCanonTarget')) item = 'Orbital_Cannon_Beacon'
-            
-            if (urlFormat)  return item.split(' ').join('_').replace('#', '%23')
-
-            return item
+        itemName(item: string, urlFormat?: boolean): string {
+            return itemName(item, urlFormat);
         },
 
-        handleProgress() : void {
+        handleProgress(): void {
             // This function handles the progress upon click of the part toggler.
-            const currentProgress = this.progress.get()[this.upgrade]
+            const currentProgress = this.progress.get()[this.upgrade];
 
             // if the current progress is equal to the current part
             // progress starts at one, index at 0
             if (currentProgress == this.index + 1) {
                 // then that means we click it and want to undo it, setting the current
                 // progress to the card before it
-                this.progress.setPart(this.upgrade, this.index, 'upgrade')
+                this.progress.setPart(this.upgrade, this.index, "upgrade");
             } else {
                 // otherwise, set it to the card we click
-                this.progress.setPart(this.upgrade, this.index+1, 'upgrade')
+                this.progress.setPart(this.upgrade, this.index + 1, "upgrade");
             }
         },
-    }
-})
+    },
+});
 </script>
 
 <style scoped>
@@ -101,16 +83,15 @@ export default defineComponent({
     overflow: hidden;
     border-radius: var(--border-radius);
 
-
     background: rgba(0, 0, 0, 0.3);
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     cursor: pointer;
 
     --padding: 4%;
-    --border-radius: .5rem;
-    --duration: .3s;
+    --border-radius: 0.5rem;
+    --duration: 0.3s;
     --timing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    --delay: .0s;
+    --delay: 0s;
 
     transition: all var(--duration) var(--timing) var(--delay);
 }
@@ -130,7 +111,7 @@ export default defineComponent({
     max-width: 100%;
     overflow: hidden;
 
-    opacity: .1;
+    opacity: 0.1;
     z-index: -2;
 
     transition: all var(--duration) var(--timing) var(--delay);
@@ -153,7 +134,7 @@ export default defineComponent({
     transition: all var(--duration) var(--timing) var(--delay);
 }
 
-.card:hover .card__image-img{
+.card:hover .card__image-img {
     transform: scale(1.1) !important;
 }
 
@@ -176,7 +157,7 @@ export default defineComponent({
 }
 
 .card__button:hover {
-    scale: 1.2
+    scale: 1.2;
 }
 
 .card__button-text {
@@ -195,7 +176,7 @@ export default defineComponent({
 }
 
 .card__button-text svg {
-    fill: var(--rarity-color-rare)
+    fill: var(--rarity-color-rare);
 }
 
 .card__costs {
@@ -210,7 +191,7 @@ export default defineComponent({
     grid-template-columns: 1fr 5fr;
     gap: 1rem;
 
-    margin-bottom: .7rem;
+    margin-bottom: 0.7rem;
 
     height: 1.6rem;
 }
@@ -222,13 +203,13 @@ export default defineComponent({
 
 .item__image {
     height: 100%;
-    translate: 0 -5px
+    translate: 0 -5px;
 }
 
 @media screen and (max-width: 900px) {
     .card__costs {
         font-size: 2rem;
-        width: fit-content
+        width: fit-content;
     }
     .item__image {
         opacity: 0;
