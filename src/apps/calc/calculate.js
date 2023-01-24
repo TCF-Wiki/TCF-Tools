@@ -60,7 +60,9 @@ export const calculate = {
     },
 
     damagePerSecond: function(weapon) {
-        return (this.roundsPerMinute(weapon) / 60) * ((this.s(weapon,'directDamage') + this.s(weapon,'radialDamage')) * this.s(weapon,'amountOfImmediateFires') * this.getShotModifiers(weapon));
+        let totalDamage = this.damagePerMag(weapon)
+        let totalTime = this.timeToEmpty(weapon)
+        return totalDamage / totalTime
     },
 
     adjustedDPS: function(weapon) {
@@ -108,6 +110,8 @@ export const calculate = {
 
         let DPM = this.damagePerMag(weapon);
         let ratio = hp / DPM;
+
+        if (ratio <=1) return hp / this.damagePerSecond(weapon)
 
         if (weapon == 'WP_G_HVY_Beam_01') {
             return this.s(weapon,'refireTime') * (shots - Math.ceil(ratio)) + Math.floor(ratio) * (this.s(weapon,'reloadTime') + this.s(weapon,'spinupTime'));

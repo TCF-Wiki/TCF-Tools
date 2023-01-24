@@ -32,7 +32,6 @@
 </template>
 
 <script>
-import { onKeyUp } from '@vueuse/core'
 import { targetData } from '../data'
 import { selectedHSValue, selectedTarget, selectedWeakspotValue } from '../store'
 export default {
