@@ -28,18 +28,18 @@ let allWeapons = [
     "Komrad",
 ];
 //Based on ammo
-let LightWeapons = ["Asp Flechette Gun", "KM-9 Scrapper", "S-576 PDW", "Voltaic Brute", "K-28", "Scarab"];
-let MediumWeapons = ["Advocate", "Gorgon", "KOR-47", "Manticore", "AR-55 Autorifle", "Phasic Lancer", "ICA Guarantee", "Zeus Beam", "Hammer"];
+let LightWeapons = ["Asp Flechette Gun", "KM-9 Scrapper", "S-576 PDW", "Voltaic Brute", "K-28", "Scarab", "Hammer"];
+let MediumWeapons = ["Advocate", "Gorgon", "KOR-47", "Manticore", "AR-55 Autorifle", "Phasic Lancer", "ICA Guarantee"];
 let HeavyWeapons = ["Lacerator", "KBR Longshot", "Basilisk", "C-32 Bolt Action", "Kinetic Arbiter", "KARMA-1"];
 let ShotgunWeapons = ["PKR Maelstrom", "Shattergun", "B9 Trenchgun", "Bulldog"];
-let SpecialWeapons = ["Komrad"];
+let SpecialWeapons = ["Komrad", "Zeus Beam"];
 
 //Other Arrays
 let Consumables = ["GrenadeLight", "GrenadeStandard", "GrenadeAssault", "GrenadeGas", "GrenadeSmoke", "GrenadeSound", "MedkitCombat", "MedkitStrong", "MedkitWeak", "StimCombat", "StimStrong", "StimWeak"];
 let OtherItems = ["Mineral Scanner", "Heavy Mining Tool", "Data Drive"];
 let Backpacks = ["Common", "Uncommon", "Rare", "Epic", "Epic_Forged", "Exotic_Forged", "Legendary_Forged"];
-let Shields = ["Common", "Common_Tactical", "Common_Restoration", "Uncommon", "Uncommon_Tactical", "Uncommon_Restoration", "Rare", "Rare_Tactical", "Rare_Restoration", "Epic", "Exotic", "Epic_Forged", "Exotic_Forged", "Legendary_Forged"];
-let Helmets = ["Common", "Common_Tactical", "Common_Restoration", "Uncommon", "Uncommon_Tactical", "Uncommon_Restoration", "Rare", "Rare_Tactical", "Rare_Restoration", "Epic", "Exotic", "Epic_Forged", "Exotic_Forged", "Legendary_Forged", "Nightvision"];
+let Shields = ["Common", "Common_Tactical", "Uncommon", "Uncommon_Tactical", "Uncommon_Restoration", "Rare", "Rare_Tactical", "Rare_Restoration", "Epic", "Exotic", "Epic_Forged", "Exotic_Forged", "Legendary_Forged"];
+let Helmets = ["Common", "Common_Tactical", "Uncommon", "Uncommon_Tactical", "Uncommon_Restoration", "Rare", "Rare_Tactical", "Rare_Restoration", "Epic", "Exotic", "Epic_Forged", "Exotic_Forged", "Legendary_Forged", "Nightvision"];
 
 import itemList from "./itemList.json";
 
