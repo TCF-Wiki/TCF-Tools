@@ -53,8 +53,11 @@
             </div>
             <div class="gear">
                 <img id="backpack" v-if="backpack" v-tooltip="{content: backpack.ign}" :src="`/loadout-images/Backpacks/${backpack.img}.png`" :style="`background-image: url('/loadout-images/Rarity/${backpack.rarity}.png');`" />
+                <img id="backpack" v-if="!backpack" :src="`/loadout-images/None.png`" />
                 <img id="shield" v-if="shield" v-tooltip="{content: shield.ign}" :src="`/loadout-images/Armor/${shield.img}.png`" :style="`background-image: url('/loadout-images/Rarity/${shield.rarity}.png');`" />
+                <img id="shield" v-if="!shield" :src="`/loadout-images/None.png`" />
                 <img id="helmet" v-if="helmet" v-tooltip="{content: helmet.ign}" :src="`/loadout-images/Armor/${helmet.img}.png`" :style="`background-image: url('/loadout-images/Rarity/${helmet.rarity}.png');`" />
+                <img id="helmet" v-if="!helmet" :src="`/loadout-images/None.png`" />
             </div>
             <div class="items">
                 <div class="item" v-tooltip="{content: item.ign}" v-for="item in items">
@@ -373,14 +376,14 @@ button {
     height: 13.5%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-content: center;
 }
 .gear img {
     background-size: cover;
     background-repeat: no-repeat;
     position: relative;
-    width: 33.3%;
+    width: 32%;
     height: 100%;
     padding: 2%;
     margin: 1%;
