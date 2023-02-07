@@ -138,6 +138,7 @@ export const resolveIngotForge = (item: string) => {
 }
 
 export function getPerkStrength(perk: string) : string {
+    if (!perk) return '0';
     const data = perkData[perk]['AttributeOverrides']
     if (!data) return  '0'
 
@@ -295,8 +296,8 @@ export function resolveGearForge(item: string) {
             const firstRandomPerk = matchingPerks[firstRandomIndex]
 
             //  now, check if the item that we used still has enough amounts left to be used for a second recipe
-            const itemAmountAvailable = selectedItems.get()[itemsInOrder[firstRandomIndex]]
-            const itemAmountUsed = settingData["RarityAmount"][itemData[itemsInOrder[firstRandomIndex]]['rarity']] 
+            // const itemAmountAvailable = selectedItems.get()[itemsInOrder[firstRandomIndex]]
+            // const itemAmountUsed = settingData["RarityAmount"][itemData[itemsInOrder[firstRandomIndex]]['rarity']] 
 
             // Patch 2.4.0 made this no longer possible.
             // if (itemAmountAvailable >= itemAmountUsed*2) {
