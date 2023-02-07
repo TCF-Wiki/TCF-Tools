@@ -1,7 +1,7 @@
 import {githubURL} from "../constants.json";
 
 async function get_weapon_data() {
-    const response = await fetch("https://raw.githubusercontent.com/TCF-Wiki/TCF-Information/test/weapons.json", {});
+    const response = await fetch("https://raw.githubusercontent.com/TCF-Wiki/TCF-Information/main/allWeapons.json", {});
     const json = await response.json();
 
     return json;
@@ -23,7 +23,7 @@ for (let wep in tempWeaponData) {
 export const weaponData = tempWeaponData;
 
 async function get_attachment_data() {
-    const response = await fetch("https://raw.githubusercontent.com/TCF-Wiki/TCF-Information/test/attachments.json", {});
+    const response = await fetch("https://raw.githubusercontent.com/TCF-Wiki/TCF-Information/main/allAttachments.json", {});
     const json = await response.json();
 
     return json;
@@ -32,7 +32,7 @@ async function get_attachment_data() {
 const tempAttachmentData = await get_attachment_data();
 
 export const attachmentData = tempAttachmentData;
-
+console.log(attachmentData)
 async function get_armor_data() {
     const response = await fetch("https://raw.githubusercontent.com/TCF-Wiki/TCF-Information/test/shields.json");
     const json = await response.json();
