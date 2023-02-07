@@ -35,10 +35,10 @@
                 <span> Reload Adjust RPM </span>
             </p>
             <p>
-                <span> Damage per Second </span>
+                <span> Damage per Second (Approx)</span>
             </p>
             <p>
-                <span> Reload Adjusted DPS </span>
+                <span> Reload Adjusted DPS (Approx)</span>
             </p>
             <p>
                 <span> Damage per Mag </span>
