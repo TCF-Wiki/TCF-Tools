@@ -1,7 +1,7 @@
-import {githubURL} from '../constants.json';
+import {githubURL} from "../constants.json";
 
 async function get_weapon_data() {
-    const response = await fetch(githubURL + 'allWeapons.json', {});
+    const response = await fetch(githubURL + "weapons.json", {});
     const json = await response.json();
 
     return json;
@@ -10,19 +10,20 @@ async function get_weapon_data() {
 const tempWeaponData = await get_weapon_data();
 
 for (let wep in tempWeaponData) {
-    delete tempWeaponData[wep]['weakDamageMultiplierEnemy'];
-    delete tempWeaponData[wep]['directDamagePlayerMultiplier'];
-    delete tempWeaponData[wep]['directDamageEnemyMultiplier'];
-    delete tempWeaponData[wep]['radialDamagePlayerMultiplier'];
-    delete tempWeaponData[wep]['radialDamageEnemyMultiplier'];
-    delete tempWeaponData[wep]['m_immediateFireIncreasesSpread'];
-    delete tempWeaponData[wep]['animationEquipTime'];
+    delete tempWeaponData[wep]['description']
+    delete tempWeaponData[wep]["weakDamageMultiplierEnemy"];
+    delete tempWeaponData[wep]["directDamagePlayerMultiplier"];
+    delete tempWeaponData[wep]["directDamageEnemyMultiplier"];
+    delete tempWeaponData[wep]["radialDamagePlayerMultiplier"];
+    delete tempWeaponData[wep]["radialDamageEnemyMultiplier"];
+    delete tempWeaponData[wep]["immediateFireIncreasesSpread"];
+    delete tempWeaponData[wep]["animationEquipTime"];
 }
 
 export const weaponData = tempWeaponData;
 
 async function get_attachment_data() {
-    const response = await fetch(githubURL + 'allAttachments.json', {});
+    const response = await fetch(githubURL + "attachments.json", {});
     const json = await response.json();
 
     return json;
@@ -30,15 +31,10 @@ async function get_attachment_data() {
 
 const tempAttachmentData = await get_attachment_data();
 
-tempAttachmentData['NoMagazine']['IGN'] = 'No Magazine';
-tempAttachmentData['NoBarrel']['IGN'] = 'No Barrel';
-tempAttachmentData['NoStock']['IGN'] = 'No Stock';
-tempAttachmentData['NoGrip']['IGN'] = 'No Grip';
-
 export const attachmentData = tempAttachmentData;
 
 async function get_armor_data() {
-    const response = await fetch(githubURL + 'shields.json');
+    const response = await fetch(githubURL + "shields.json");
     const json = await response.json();
 
     return json;
@@ -47,7 +43,7 @@ async function get_armor_data() {
 export const armorData = await get_armor_data();
 
 async function get_target_data() {
-    const response = await fetch(githubURL + 'creatureInfo.json');
+    const response = await fetch(githubURL + "creatures.json");
     const json = await response.json();
 
     return json;
@@ -55,8 +51,7 @@ async function get_target_data() {
 
 const tempTargetData = await get_target_data();
 
-delete tempTargetData['AIfriendly'];
-tempTargetData['PlayerDefault'] = {
+tempTargetData["PlayerDefault"] = {
     health: 100,
     minDamageReduction: 0.35,
     maxDamageReduction: 2.0,
@@ -69,4 +64,6 @@ tempTargetData['PlayerDefault'] = {
     },
 };
 
+delete tempTargetData['AI_GlowBeetle_Blast']
+delete tempTargetData['AI_GlowBeetle_Acid']
 export const targetData = tempTargetData;
