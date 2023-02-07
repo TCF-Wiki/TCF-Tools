@@ -253,15 +253,15 @@ export default {
 
                 detailedStats[wepName]["penetrationMultiplier"] = roundToThree(calculate.penetrationMultiplier(wepName));
                 detailedStats[wepName]["roundsPerMinute"] = Math.round(calculate.roundsPerMinute(wepName));
-                detailedStats[wepName]["adjustedRPM"] = Math.round(calculate.adjustedRPM(wepName));
+                detailedStats[wepName]["adjustedRPM"] = Math.round(calculate.roundsPerMinuteReloadAdjusted(wepName));
                 detailedStats[wepName]["damagePerSecond"] = Math.round(calculate.damagePerSecond(wepName));
-                detailedStats[wepName]["adjustedDPS"] = Math.round(calculate.adjustedDPS(wepName));
+                detailedStats[wepName]["adjustedDPS"] = Math.round(calculate.damagePerSecondReloadAdjusted(wepName));
                 detailedStats[wepName]["damagePerMag"] = Math.round(calculate.damagePerMag(wepName));
-                detailedStats[wepName]["timeToEmpty"] = roundToThree(calculate.timeToEmpty(wepName));
+                detailedStats[wepName]["timeToEmpty"] = roundToThree(calculate.totalTimeToEmptyMag(wepName));
                 detailedStats[wepName]["shotsToKill"] = Math.round(calculate.shotsToKill(wepName));
                 detailedStats[wepName]["timeToKill"] = roundToThree(calculate.timeToKill(wepName));
-                detailedStats[wepName]["dmgPerBullet"] = roundToThree(calculate.dmgPerBullet(wepName));
-                detailedStats[wepName]["dmgPerBulletHS"] = roundToThree(calculate.dmgPerBulletHS(wepName));
+                detailedStats[wepName]["dmgPerBullet"] = roundToThree(calculate.damageOnBodyShot(wepName));
+                detailedStats[wepName]["dmgPerBulletHS"] = roundToThree(calculate.damageOnWeakSpotShot(wepName));
 
                 // shield shots to kill
                 detailedStats[wepName]["noShield$%"] = Math.round(calculate.shotsToKill(wepName, 0, 0, "special"));
@@ -436,8 +436,9 @@ export default {
     border-right: none;
     padding: var(--space-md);
     width: fit-content;
-    flex: none;
     -webkit-flex: none;
+    flex: none;
+    max-width: 20rem;
 }
 
 .flex-item:last-of-type {

@@ -1,7 +1,189 @@
 import { weaponData, targetData, armorData } from "./data";
 import { selectedTarget, selectedArmor, selectedHSValue, selectedDistance, selectedWeakspotValue } from "./store";
 import { attachment } from './attachment'
+
 export const calculate = {
+    damagePerMag: function(weapon, armorOverride) {
+        return ( 
+            this.totalClicksPerMag(weapon)
+            * this.totalDamagePerClick(weapon, armorOverride)
+        )
+    },
+
+    roundsPerMinute: function(weapon) {
+        // this function is NOT reload adjusted. Calculates the rounds per minute
+        // a round is a bullet which is fired at one exact moment
+        // shotgun pellets are counted as 1 total round.
+        const roundsPerMagazine = this.roundsPerClick(weapon) * this.totalClicksPerMag(weapon)
+        const magazinesPerMinute = 60 / this.totalTimeToEmptyMag(weapon)
+
+        return magazinesPerMinute * roundsPerMagazine
+    },
+
+    roundsPerMinuteReloadAdjusted: function(weapon) {
+        // like rounds per minute, but takes reloads into account.
+        const roundsPerMagazine = this.roundsPerClick(weapon) * this.totalClicksPerMag(weapon)
+        const magazinesPerMinute = 60 / ( this.totalTimeToEmptyMag(weapon) + this.s(weapon, 'reloadTime') )
+
+        return magazinesPerMinute * roundsPerMagazine
+
+    },
+
+    damagePerSecond: function(weapon) {
+        // calculates 'averaged' damage in a second (rather than calculating damage in the first second)
+        return this.damagePerMag(weapon) /  this.totalTimeToEmptyMag(weapon) 
+    },
+
+    damagePerSecondReloadAdjusted: function(weapon) {
+        // calculates 'averaged' damage in a second, accounting for reloads
+        return this.damagePerMag(weapon) /  ( this.totalTimeToEmptyMag(weapon) + this.s(weapon, 'reloadTime') )
+    },
+
+    totalTimeToEmptyMag: function(weapon) {
+        // calculates the time it takes to empty a magazine
+        // automatic weapon + chargeup, where 1 click = all bullets in a mag
+        if (weapon == 'WP_G_HVY_Beam_01') {
+            return (
+                (
+                    // true mag size
+                    ( this.s(weapon, 'ammoInClip') / this.s(weapon, 'ammoPerBullet') )
+                    * this.s(weapon, 'refireTime')
+                )
+                + this.s(weapon, 'spinupTime')
+                - this.s(weapon, 'refireTime')
+            )
+        }
+
+        return (
+            (
+            this.totalTimePerClick(weapon) 
+            * this.totalClicksPerMag(weapon)
+            ) 
+            - this.s(weapon, 'refireTime')
+        )
+    },
+
+    shotsToKill: function(weapon, armorOverride, hsMultiplier, source='normal') {
+        let hp;
+        if (armorOverride !== undefined) {
+            hp = targetData['PlayerDefault'].health
+        } else {
+            hp = targetData[selectedTarget.selected].health;
+        }
+
+        let clicks = hp / this.totalDamagePerClick(weapon, armorOverride, hsMultiplier, source)
+        let shots = clicks * ( this.s(weapon, 'amountOfBurst') + 1 )
+
+        // adjust for small JS rounding errors (e.g. PDW vs exotic armor)
+        let remaining = shots % Math.floor(shots)
+        if (remaining < 0.000001) return Math.floor(shots)
+        
+        return Math.ceil(shots)
+    },
+
+    timeToKill: function(weapon) {
+        let hp = targetData[selectedTarget.selected].health;
+        let clicks = this.shotsToKill(weapon) / ( this.s(weapon, 'amountOfBurst') + 1 )
+
+        if (clicks == 1) return this.s(weapon, 'spinupTime')
+
+        // amount of 'full' shots we need to kill
+        let fullBurstTime = Math.floor(clicks) * this.totalTimePerClick(weapon)
+
+        // amount of bullets per burst, divided by the remaining part of a burst makes the burst bullets left to finish them off
+        let remainingBurstTime =  ( 
+            ( this.s(weapon, 'amountOfBurst') + 1 ) / ( clicks - Math.floor(clicks) ) 
+            * this.s(weapon, 'burstInterval') > 0 ? this.s(weapon, 'burstInterval') : 0
+            + this.s(weapon, 'spinupTime')
+        );
+
+        // time for all bullets to be shot, ignoring reloads.
+        let time = fullBurstTime + remainingBurstTime
+
+        // adjust for reloads in case it takes more then one reload
+        // which mostly happens with creatures
+        let DPM = this.damagePerMag(weapon);
+        let ratio = hp / DPM;
+        time += Math.floor(ratio) * this.s(weapon, 'reloadTime');
+
+        // adjust for zeus beam. Since it is automatic with charge up, the math is a bit different
+        // for each magazine, there is 1 spinup time, instead of for each shot.
+        if (weapon == 'WP_G_HVY_Beam_01') {
+            time = (
+                ( clicks * this.s(weapon, 'refireTime') )
+                + ( Math.ceil(ratio)) * this.s(weapon, 'spinupTime')
+                + Math.floor(ratio) * this.s(weapon, 'reloadTime')
+            )
+        }
+
+        return time;
+    },
+
+    roundsPerClick: function(weapon) {
+        return (
+            ( this.s(weapon, 'amountOfBurst') + 1 )
+            // * this.s(weapon, 'amountOfImmediateFires')
+        )
+    },
+    totalDamagePerClick: function(weapon, armorOverride, hsMultiplier, source) {
+        return (
+            // raw bullet damage
+            ( 
+                ( this.s(weapon, 'directDamage') + this.s(weapon, 'radialDamage') )
+                * this.getShotModifiers(weapon, armorOverride, hsMultiplier, source)
+            )
+            // adjust for burst and shotguns.
+            * this.s(weapon, 'amountOfImmediateFires')
+            * ( this.s(weapon, 'amountOfBurst') + 1 )
+        )
+    },
+
+    totalTimePerClick: function(weapon) {
+        // Zeus beam is a special case (since it is automatic + chargeup), 
+        // so is not handled by this function. Should be handled in the appropiate calc instead.
+        return (
+            // burst time
+            ( ( this.s(weapon, 'amountOfBurst') + 1 ) 
+            * this.s(weapon, 'burstInterval') > 0 ? this.s(weapon, 'burstInterval') : 0
+            )
+            // general time
+            + this.s(weapon, 'refireTime')
+            + this.s(weapon, 'spinupTime')
+        )
+    },
+
+    totalClicksPerMag: function(weapon ) {
+        return (
+            // true mag size
+            this.s(weapon, 'ammoInClip') / this.s(weapon, 'ammoPerBullet')
+            // accounting for burst amount
+            / ( this.s(weapon, 'amountOfBurst') + 1 )
+        )
+    },
+
+    damageOnBodyShot: function(weapon, armorOverride) {
+        // To get damage on a body shot
+        return (
+            // raw bullet damage
+            (this.s(weapon, 'directDamage') + this.s(weapon, 'radialDamage') * this.s(weapon, 'amountOfImmediateFires')) 
+            // modifiers, excluding headshot
+            * this.penetrationMultiplier(weapon, armorOverride) 
+            * this.falloffMultiplier(weapon, armorOverride) 
+            * this.creatureDamageMult(weapon)
+        )
+    },
+    damageOnWeakSpotShot: function(weapon, armorOverride) {
+        // To get damage on a weakspot hit
+        return (
+            // raw bullet damage
+            (this.s(weapon, 'directDamage') + this.s(weapon, 'radialDamage') * this.s(weapon, 'amountOfImmediateFires')) 
+            // modifiers
+            * this.penetrationMultiplier(weapon, armorOverride) 
+            * this.falloffMultiplier(weapon, armorOverride) 
+            * this.creatureDamageMult(weapon)
+            * this.s(weapon, 'weakDamageMultiplier')
+        )
+    },
     penetrationMultiplier: function(weapon, armorOverride) {
         let target = targetData[selectedTarget.selected]
         let penDiff;
@@ -31,100 +213,6 @@ export const calculate = {
         return ratio;
     },
 
-    roundsPerMinute: function(weapon) {
-        if (weapon == 'WP_G_HVY_Beam_01') return ( 60 - this.s(weapon,'spinupTime') ) / this.s(weapon,'refireTime');
-
-        return (60 / ((this.s(weapon,'spinupTime') + this.s(weapon,'refireTime') + ((this.s(weapon,'amountOfBurst') + 1 ) * (this.s(weapon,'burstInterval') != -1 ? this.s(weapon,'burstInterval') : 0 ) ) )  ) * (this.s(weapon,'amountOfBurst') + 1) );
-    },
-
-    adjustedRPM: function(weapon) {
-        if (this.s(weapon,'amountOfBurst') > 0) {
-            let timePerBurst = this.s(weapon,'refireTime') + this.s(weapon,'spinupTime') + ((this.s(weapon,'amountOfBurst') + 1 ) * this.s(weapon,'burstInterval') );
-            let burstPerMag =  ( this.s(weapon,'ammoInClip') / this.s(weapon,'ammoPerBullet') ) / (this.s(weapon,'amountOfBurst') + 1);
-            let timePerMag = timePerBurst * burstPerMag + this.s(weapon,'reloadTime');
-            let magsPerMinute = 60 / timePerMag;
-            return magsPerMinute * ( this.s(weapon,'ammoInClip') / this.s(weapon,'ammoPerBullet') );
-        }
-
-        let timePerMag = (( this.s(weapon,'ammoInClip') / this.s(weapon,'ammoPerBullet') )) * (this.s(weapon,'refireTime') + this.s(weapon,'spinupTime')) + this.s(weapon,'reloadTime');
-
-        if (weapon == 'WP_G_HVY_Beam_01') {
-            timePerMag = (( this.s(weapon,'ammoInClip') / this.s(weapon,'ammoPerBullet') )) * this.s(weapon,'refireTime') + this.s(weapon,'spinupTime') + this.s(weapon,'reloadTime');
-        }
-
-        if (weapon == 'WP_A_Sniper_Gauss_01') {
-            timePerMag = this.s(weapon,'ammoInClip') * this.s(weapon,'spinupTime') + (this.s(weapon,'ammoInClip') - 1) * this.s(weapon,'refireTime') + this.s(weapon,'reloadTime');
-        }
-
-        return (60 / timePerMag) * ( this.s(weapon,'ammoInClip') / this.s(weapon,'ammoPerBullet') );
-    },
-
-    damagePerSecond: function(weapon) {
-        return (this.roundsPerMinute(weapon) / 60) * ((this.s(weapon,'directDamage') + this.s(weapon,'radialDamage')) * this.s(weapon,'amountOfImmediateFires') * this.getShotModifiers(weapon));
-    },
-
-    adjustedDPS: function(weapon) {
-        return (this.adjustedRPM(weapon) / 60) * ((this.s(weapon,'directDamage') + this.s(weapon,'radialDamage')) * this.s(weapon,'amountOfImmediateFires') * this.getShotModifiers(weapon));
-    },
-
-    damagePerMag: function(weapon) {
-        return ( this.s(weapon,'ammoInClip') / this.s(weapon,'ammoPerBullet') ) * (this.s(weapon,'directDamage') + this.s(weapon,'radialDamage')) * this.s(weapon,'amountOfImmediateFires') * this.getShotModifiers(weapon);
-    },
-
-    timeToEmpty: function(weapon) {
-        let timeAMag = ((( this.s(weapon,'ammoInClip') / this.s(weapon,'ammoPerBullet') ) / (this.s(weapon,'amountOfBurst') + 1) )) * (this.s(weapon,'refireTime') + this.s(weapon,'spinupTime') + ( (this.s(weapon,'amountOfBurst') + 1 ) * (this.s(weapon,'burstInterval') != -1 ? this.s(weapon,'burstInterval') : 0 ) ) );
-
-
-        if (weapon == 'WP_G_HVY_Beam_01') {
-            return (timeAMag = (( this.s(weapon,'ammoInClip') / this.s(weapon,'ammoPerBullet') ) - 1) * this.s(weapon,'refireTime') + this.s(weapon,'spinupTime'));
-        }
-
-        if (weapon == 'WP_A_Sniper_Gauss_01') {
-            return (timeAMag = ( this.s(weapon,'ammoInClip') / this.s(weapon, 'ammoPerBullet') ) * this.s(weapon, 'spinupTime') + (( this.s(weapon,'ammoInClip') / this.s(weapon,'ammoPerBullet') ) - 1) * this.s(weapon,'refireTime'));
-        }
-        return timeAMag;
-    },
-
-    shotsToKill: function(weapon, armorOverride, hsMultiplier, source='normal') {
-        let hp;
-        if (armorOverride !== undefined) {
-            hp = targetData['PlayerDefault'].health
-        } else {
-            hp = targetData[selectedTarget.selected].health;
-        }
-
-        let shots = hp / ((this.s(weapon, "directDamage") + this.s(weapon, 'radialDamage') ) * Math.max(this.s(weapon, "amountOfBurst") + 1, 1) * this.s(weapon, 'amountOfImmediateFires') * this.getShotModifiers(weapon, armorOverride, hsMultiplier, source)) * Math.max(this.s(weapon, 'amountOfBurst') + 1, 1)
-
-        // adjust for small JS rounding errors (e.g. PDW vs exotic armor)
-        let remaining = shots % Math.floor(shots)
-        if (remaining < 0.000001) return Math.floor(shots)
-        
-        return Math.ceil(shots)
-    },
-
-    timeToKill: function(weapon) {
-        let hp = targetData[selectedTarget.selected].health;
-        let shots = this.shotsToKill(weapon) / Math.max(this.s(weapon,'amountOfBurst') + 1, 1);
-
-        let DPM = this.damagePerMag(weapon);
-        let ratio = hp / DPM;
-
-        if (weapon == 'WP_G_HVY_Beam_01') {
-            return this.s(weapon,'refireTime') * (shots - Math.ceil(ratio)) + Math.floor(ratio) * (this.s(weapon,'reloadTime') + this.s(weapon,'spinupTime'));
-        }
-
-        if (shots == 1) return this.s(weapon,'spinupTime');
-
-        return this.s(weapon,'spinupTime') + this.s(weapon,'refireTime') * (shots - Math.ceil(ratio)) + Math.floor(ratio) * this.s(weapon,'reloadTime');
-    },
-    dmgPerBullet : function(weapon) {
-        return ( (this.s(weapon, 'directDamage') + this.s(weapon, 'radialDamage') ) * this.falloffMultiplier(weapon) * this.penetrationMultiplier(weapon) )
-    },
-    
-    dmgPerBulletHS : function(weapon) {
-        return ( (this.s(weapon, 'directDamage') + this.s(weapon, 'radialDamage') ) * this.falloffMultiplier(weapon) * this.penetrationMultiplier(weapon) * ( selectedTarget.selected === 'PlayerDefault' ? this.s(weapon, 'weakDamageMultiplier') :1 ) )
-
-    },
     falloffMultiplier: function(weapon) {
         let distance = parseInt(selectedDistance.distance) * 100;
         
@@ -166,7 +254,12 @@ export const calculate = {
 
     },
     getShotModifiers: function(weapon, armorOverride, hsMultiplier, source = 'normal') {
-        return this.headShotMult(weapon, hsMultiplier, source) * this.penetrationMultiplier(weapon, armorOverride) * this.falloffMultiplier(weapon) * this.creatureDamageMult(weapon);
+        return ( 
+            this.headShotMult(weapon, hsMultiplier, source) 
+            * this.penetrationMultiplier(weapon, armorOverride) 
+            * this.falloffMultiplier(weapon) 
+            * this.creatureDamageMult(weapon)
+        )
     },
 
     savedWeaponData: {},

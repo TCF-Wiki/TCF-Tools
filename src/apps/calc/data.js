@@ -10,6 +10,7 @@ async function get_weapon_data() {
 const tempWeaponData = await get_weapon_data();
 
 for (let wep in tempWeaponData) {
+    delete tempWeaponData[wep]['description']
     delete tempWeaponData[wep]["weakDamageMultiplierEnemy"];
     delete tempWeaponData[wep]["directDamagePlayerMultiplier"];
     delete tempWeaponData[wep]["directDamageEnemyMultiplier"];
@@ -63,4 +64,6 @@ tempTargetData["PlayerDefault"] = {
     },
 };
 
+delete tempTargetData['AI_GlowBeetle_Blast']
+delete tempTargetData['AI_GlowBeetle_Acid']
 export const targetData = tempTargetData;
