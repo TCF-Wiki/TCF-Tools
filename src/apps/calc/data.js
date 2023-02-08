@@ -16,7 +16,7 @@ for (let wep in tempWeaponData) {
     delete tempWeaponData[wep]["directDamageEnemyMultiplier"];
     delete tempWeaponData[wep]["radialDamagePlayerMultiplier"];
     delete tempWeaponData[wep]["radialDamageEnemyMultiplier"];
-    delete tempWeaponData[wep]["immediateFireIncreasesSpread"];
+    delete tempWeaponData[wep]["m_immediateFireIncreasesSpread"];
     delete tempWeaponData[wep]["animationEquipTime"];
 }
 

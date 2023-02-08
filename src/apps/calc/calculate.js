@@ -116,6 +116,8 @@ export const calculate = {
             )
         }
 
+        // remove trailing refire time which occur after the last shot of a magazine (or last shot which killed)
+        time = time - ( Math.ceil(ratio) * this.s(weapon, 'refireTime') )
         return time;
     },
 
