@@ -83,19 +83,29 @@ export const calculate = {
 
     timeToKill: function(weapon) {
         let hp = targetData[selectedTarget.selected].health;
-        let clicks = this.shotsToKill(weapon) / ( this.s(weapon, 'amountOfBurst') + 1 )
-
+        let shots = this.shotsToKill(weapon);
+        let clicks = shots / ( this.s(weapon, 'amountOfBurst') + 1 )
         if (clicks == 1) return this.s(weapon, 'spinupTime')
 
         // amount of 'full' shots we need to kill
         let fullBurstTime = Math.floor(clicks) * this.totalTimePerClick(weapon)
 
-        // amount of bullets per burst, divided by the remaining part of a burst makes the burst bullets left to finish them off
-        let remainingBurstTime =  ( 
-            ( this.s(weapon, 'amountOfBurst') + 1 ) / ( clicks - Math.floor(clicks) ) 
-            * this.s(weapon, 'burstInterval') > 0 ? this.s(weapon, 'burstInterval') : 0
-            + this.s(weapon, 'spinupTime')
-        );
+        // figure out the remaining amount of burst bullets we need to shoot. 
+        // count the total time that partial burst takes to shoot.
+        // removing the trailing interval, as that occurs after the shot kills.
+        let remainingBurstBullets = shots % ( this.s(weapon, 'amountOfBurst') + 1 )
+        let remainingBurstTime = 0;
+        if (remainingBurstBullets) {
+            remainingBurstTime = (
+                this.s(weapon, 'spinupTime')
+                + (
+                    remainingBurstBullets
+                    * this.s(weapon, 'burstInterval')
+                )
+                - this.s(weapon, 'burstInterval')
+            )
+        }
+        
 
         // time for all bullets to be shot, ignoring reloads.
         let time = fullBurstTime + remainingBurstTime
@@ -117,7 +127,10 @@ export const calculate = {
         }
 
         // remove trailing refire time which occur after the last shot of a magazine (or last shot which killed)
-        time = time - ( Math.ceil(ratio) * this.s(weapon, 'refireTime') )
+        if (remainingBurstBullets === 0) {
+            time = time - ( Math.ceil(ratio) * this.s(weapon, 'refireTime') )
+        }
+
         return time;
     },
 
@@ -145,8 +158,8 @@ export const calculate = {
         // so is not handled by this function. Should be handled in the appropiate calc instead.
         return (
             // burst time
-            ( ( this.s(weapon, 'amountOfBurst') + 1 ) 
-            * this.s(weapon, 'burstInterval') > 0 ? this.s(weapon, 'burstInterval') : 0
+            ( ( this.s(weapon, 'amountOfBurst') ) 
+            * ( this.s(weapon, 'burstInterval') > 0 ? this.s(weapon, 'burstInterval') : 0 )
             )
             // general time
             + this.s(weapon, 'refireTime')
