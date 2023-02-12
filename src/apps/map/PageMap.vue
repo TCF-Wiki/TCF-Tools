@@ -210,7 +210,7 @@ export default defineComponent({
             async () => {
                 removeAllMarkers();
 
-                await updateItemLayerGroups(clusterEnabled.get());
+                await updateItemLayerGroups(clusterEnabled.get(), minimumPercent.get());
                 itemLayerGroups = getItemLayerGroups();
 
                 placeMarkersForSelectedLocations();
