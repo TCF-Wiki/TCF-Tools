@@ -128,7 +128,7 @@ export default defineComponent({
             if (item.includes('KorolevScrip')) item = "Korolev Scrip"
             else if (item.includes('Helmet_'))    item = this.helmetData[item]['ingamename']
             else if (item.includes('Bag_'))       item =  this.backpackData[item]['ingamename']
-            else if (item.includes('ShockGrenade_02')) item =  'Frag Grenade'
+            else if (item.includes('ShockGrenade_02')) item =  'Light Grenade'
             else if (item.includes('SmokeGrenade_01')) item = 'Smoke Grenade'
             else if (item.includes('Consumable_Health')) item = 'Weak Medkit'
             else if (item.includes('Scrip'))      item = item
