@@ -8,7 +8,6 @@
                     <header><h2>Options</h2></header>
                     <div class="setting-container">
                         <ClusterButton />
-                        <PercentButton />
                         <TierToggler />
                         <ClearSearch />
                         <ShareLink />
@@ -215,6 +214,7 @@ export default defineComponent({
 
                 placeMarkersForSelectedLocations();
                 placeMarkersForSelectedItems();
+                placeMarkersForSelectedCreatures();
             },
             {deep: true}
         );
@@ -222,7 +222,6 @@ export default defineComponent({
         this.$watch(
             "minimumPercent",
             async () => {
-                console.log("Hit!");
                 removeAllMarkers();
 
                 await updateItemLayerGroups(clusterEnabled.get(), minimumPercent.get());
@@ -230,6 +229,7 @@ export default defineComponent({
 
                 placeMarkersForSelectedLocations();
                 placeMarkersForSelectedItems();
+                placeMarkersForSelectedCreatures();
             },
             {deep: true}
         );
@@ -513,7 +513,7 @@ section:not(:last-child) {
 }
 .setting-container {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: var(--space-md);
     position: relative;
 }

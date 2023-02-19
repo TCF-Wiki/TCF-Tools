@@ -286,12 +286,13 @@ export default defineComponent({
             let nameList = Object.keys(this.mapData['locations'][selectedMap.get()]['other'])
             let newLocations : string[] = []
 
-            if (nameList) {
-                for (let loc in nameList) {
-                    newLocations.push(nameList[loc])
-                }
-                selectedLocations.set(newLocations)
-            }
+            selectedLocations.set(Object.keys(alphabeticalSpecialLocations))
+            // if (nameList) {
+            //     for (let loc in nameList) {
+            //         newLocations.push(nameList[loc])
+            //     }
+            //     selectedLocations.set(newLocations)
+            // }
         },
         disableAllSpecial() : void {
             // disables all special locations

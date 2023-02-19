@@ -20,13 +20,16 @@
             </TransitionGroup>
         </div>
 
+        <PercentButton />
+
         <div class="item-list">
             <div class="item-container">
                 <p v-for="item in selectedItems.get()" @click="selectedItems.remove(item)" v-if="Object.keys(items).length > 0">
+                    <font-awesome-icon icon="fas fa-trash" />
                     <span :class="colourClassGiver(item)">
+                        <img :src="'map-images/item-images/' + itemImage(items[item]['name']) + '.png'" class="item-image-list" />
                         {{ items[item]['name'] }}
                     </span>
-                    <font-awesome-icon icon="fas fa-trash" />
                 </p>
             </div>
             <div class="item-container-notice">
@@ -41,7 +44,7 @@
 import {defineComponent} from 'vue';
 import {getMapData} from '../data';
 import {selectedItems} from '../store';
-
+import PercentButton from './PercentButton.vue';
 export default defineComponent({
     data() {
         return {
@@ -55,6 +58,9 @@ export default defineComponent({
             shake: false as boolean,
         };
     },
+    components: {
+        PercentButton
+    },  
     methods: {
         matchInputs: function () {
             const input = this.searchInput.toLowerCase();
@@ -152,7 +158,7 @@ export default defineComponent({
 .outer-container {
     background-color: var(--background-body-color);
     padding: var(--space-md);
-    margin-bottom: var(--space-md);
+    padding-bottom: 0;
 }
 
 /* h2 {
@@ -172,6 +178,9 @@ form {
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid var(--border-color-base);
+
 }
 
 .search-container {
@@ -204,6 +213,7 @@ form {
 
     border: 1px solid var(--border-color-base--darker);
     opacity: 1;
+    z-index: 1;
 }
 
 .autocomplete-item {
@@ -233,6 +243,15 @@ form {
     width: var(--space-xl);
 }
 
+.item-image-list {
+    width: 21px;
+
+    display: inline;
+    translate: 0 5px;
+    z-index: -100;
+    
+}
+
 .item-list {
     margin-top: var(--space-md);
 }
@@ -246,7 +265,7 @@ form {
     margin-top: 0rem;
 }
 .item-container p {
-    text-align: center;
+    text-align: left;
     cursor: pointer;
 }
 
