@@ -257,7 +257,7 @@ input[type="checkbox"]:checked::before {
 
 .epic {
     /* This color is hard to read on dark backgrounds, so we change it a little bit. */
-    color: #733aa8 !important;
+    color: #b85fd2 !important;
 }
 
 .exotic {
