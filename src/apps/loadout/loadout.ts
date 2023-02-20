@@ -1,51 +1,86 @@
-import {itemList, weaponData, shieldData, helmetData, backpackData, consumableData} from "./data";
+//Weapons
+let allWeapons = [
+    "S-576 PDW",
+    "K-28",
+    "AR-55 Autorifle",
+    "C-32 Bolt Action",
+    "B9 Trenchgun",
+    "KM-9 Scrapper",
+    "Scarab",
+    "Manticore",
+    "Bulldog",
+    "ICA Guarantee",
+    "Lacerator",
+    "PKR Maelstrom",
+    "Phasic Lancer",
+    "Asp Flechette Gun",
+    "Advocate",
+    "Gorgon",
+    "KBR Longshot",
+    "Shattergun",
+    "Voltaic Brute",
+    "KOR-47",
+    "Basilisk",
+    "Kinetic Arbiter",
+    "Hammer",
+    "Zeus Beam",
+    "KARMA-1",
+    "Komrad",
+];
+//Based on ammo
+let LightWeapons = ["Asp Flechette Gun", "KM-9 Scrapper", "S-576 PDW", "Voltaic Brute", "K-28", "Scarab", "Hammer"];
+let MediumWeapons = ["Advocate", "Gorgon", "KOR-47", "Manticore", "AR-55 Autorifle", "Phasic Lancer", "ICA Guarantee"];
+let HeavyWeapons = ["Lacerator", "KBR Longshot", "Basilisk", "C-32 Bolt Action", "Kinetic Arbiter", "KARMA-1"];
+let ShotgunWeapons = ["PKR Maelstrom", "Shattergun", "B9 Trenchgun", "Bulldog"];
+let SpecialWeapons = ["Komrad", "Zeus Beam"];
 
-//Other Array
-let OtherItems = ["Mineral Scanner", "Heavy Mining Tool", "Data Drive Tier 1"];
+//Other Arrays
+let Consumables = ["GrenadeLight", "GrenadeStandard", "GrenadeAssault", "GrenadeGas", "GrenadeSmoke", "GrenadeSound", "MedkitCombat", "MedkitStrong", "MedkitWeak", "StimCombat", "StimStrong", "StimWeak"];
+let OtherItems = ["Mineral Scanner", "Heavy Mining Tool", "Data Drive"];
+let Backpacks = ["Common", "Uncommon", "Rare", "Epic", "Epic_Forged", "Exotic_Forged", "Legendary_Forged"];
+let Shields = ["Common", "Common_Tactical", "Uncommon", "Uncommon_Tactical", "Uncommon_Restoration", "Rare", "Rare_Tactical", "Rare_Restoration", "Epic", "Exotic", "Epic_Forged", "Exotic_Forged", "Legendary_Forged"];
+let Helmets = ["Common", "Common_Tactical", "Uncommon", "Uncommon_Tactical", "Uncommon_Restoration", "Rare", "Rare_Tactical", "Rare_Restoration", "Epic", "Exotic", "Epic_Forged", "Exotic_Forged", "Legendary_Forged", "Nightvision"];
 
-export function GetRarity(key: string | null, IGN?: string | null) {
-    if (!IGN) {
-        if (!key) return "None";
-        return itemList[key].rarity;
-    } else {
-        //Item List
-        for (var item in itemList) {
-            if (itemList[item]["inGameName"] == IGN) {
-                return itemList[item]["rarity"];
-            }
-        }
-        //Items
-        if (IGN.includes("Mineral Scanner") || IGN.includes("Heavy Mining Tool") || IGN.includes("Data Drive Tier 1")) return "Common";
+import itemList from "./itemList.json";
 
-        //Medkit/Stim
-        if (IGN.includes("Medkit") || IGN.includes("Stim")) {
-            if (IGN.includes("Weak")) return "Common";
-            if (IGN.includes("Strong")) return "Uncommon";
-            if (IGN.includes("Combat")) return "Rare";
-        }
+export function GetRarity(IGN: string) {
+    if (!IGN) return "";
 
-        //Grenade
-        if (IGN.includes("Grenade")) {
-            if (IGN == "GrenadeSmoke") return "Common";
-            if (IGN == "GrenadeSound" || IGN == "GrenadeGas" || IGN == "GrenadeLight") return "Uncommon";
-            if (IGN == "GrenadeStandard") return "Rare";
-            if (IGN == "GrenadeAssault") return "Exotic";
-        }
-
-        //Gear
-        if (IGN.includes("Common")) return "Common";
-        if (IGN.includes("Uncommon")) return "Uncommon";
-        if (IGN.includes("Rare")) return "Rare";
-        if (IGN.includes("Epic")) return "Epic";
-        if (IGN.includes("Exotic")) return "Exotic";
-        if (IGN.includes("Legendary")) return "Legendary";
-        if (IGN.includes("Nightvision")) return "Legendary";
-
-        //Ammo
-        if (IGN.includes("Light") || IGN.includes("Medium")) return "Common";
-        if (IGN.includes("Heavy") || IGN.includes("Shotgun")) return "Uncommon";
-        if (IGN.includes("Special")) return "Rare";
+    //Medkit/Stim
+    if (IGN.includes("Medkit") || IGN.includes("Stim")) {
+        if (IGN.includes("Weak")) return "Common";
+        if (IGN.includes("Strong")) return "Uncommon";
+        if (IGN.includes("Combat")) return "Rare";
     }
+
+    //Grenade
+    if (IGN.includes("Grenade")) {
+        if (IGN == "GrenadeSmoke") return "Common";
+        if (IGN == "GrenadeSound" || IGN == "GrenadeGas" || IGN == "GrenadeLight") return "Uncommon";
+        if (IGN == "GrenadeStandard") return "Rare";
+        if (IGN == "GrenadeAssault") return "Exotic";
+    }
+
+    //Gear
+    if (IGN.includes("Common")) return "Common";
+    if (IGN.includes("Uncommon")) return "Uncommon";
+    if (IGN.includes("Rare")) return "Rare";
+    if (IGN.includes("Epic")) return "Epic";
+    if (IGN.includes("Exotic")) return "Exotic";
+    if (IGN.includes("Legendary")) return "Legendary";
+    if (IGN.includes("Nightvision")) return "Legendary";
+
+    //Item List
+    for (var item in itemList) {
+        if (itemList[item]["ingame"] == IGN) {
+            return itemList[item]["rarity"];
+        }
+    }
+
+    //Ammo
+    if (IGN.includes("Light") || IGN.includes("Medium")) return "Common";
+    if (IGN.includes("Heavy") || IGN.includes("Shotgun")) return "Uncommon";
+    if (IGN.includes("Special")) return "Rare";
 
     //None found
     return "None";
@@ -62,7 +97,7 @@ export function GenerateRandomLoadout(minRarity: number, maxRarity: number, cons
 
     //Weapons
     let totalAmmo = [];
-    let tempWeaponArr = Object.keys(weaponData);
+    let tempWeaponArr = [...allWeapons];
     for (let i = 0; i < 2; i++) {
         if (i == 1 && !alwaysGetWeapons) {
             if (getRandomRange(1, 100) <= 33) break;
@@ -73,7 +108,6 @@ export function GenerateRandomLoadout(minRarity: number, maxRarity: number, cons
         while (rarityNumber < minRarity || rarityNumber > maxRarity) {
             weapon = tempWeaponArr[Math.floor(Math.random() * tempWeaponArr.length)];
             rarityNumber = rarityToInt(GetRarity(weapon));
-            if (weapon.includes("_scrappy")) rarityNumber = -1;
         }
         //Remove the weapon from the array so it can't be picked again
         tempWeaponArr = tempWeaponArr.filter((w) => w != weapon);
@@ -81,43 +115,37 @@ export function GenerateRandomLoadout(minRarity: number, maxRarity: number, cons
         let Ammo = getAmmoType(weapon);
         totalAmmo.push({type: Ammo, amount: getAmmoAmount(Ammo)});
         //Add the weapon to the data
-        data.weapons.push({img: weaponData[weapon].inGameName, ign: weaponData[weapon].inGameName, rarity: GetRarity(weapon)});
+        data.weapons.push({img: weapon, ign: weapon, rarity: GetRarity(weapon)});
     }
 
     //Ammo
     let ammo = splitAmmo(totalAmmo);
     ammo.forEach((a) => {
-        data.items.push({img: "Ammo/" + a.type, ign: a.type + " Ammo", amount: a.amount, rarity: GetRarity(null, a.type)});
+        data.items.push({img: "Ammo/" + a.type, ign: a.type + " Ammo", amount: a.amount, rarity: GetRarity(a.type)});
     });
 
     //Backpack
     let rarityNumber = -1;
     let backpack = "";
     //Find a backpack that is within the rarity range
-    let tempBackpackArr = Object.keys(backpackData);
     while (rarityNumber < minRarity || rarityNumber > maxRarity) {
-        backpack = tempBackpackArr[Math.floor(Math.random() * tempBackpackArr.length)];
+        backpack = Backpacks[Math.floor(Math.random() * Backpacks.length)];
         rarityNumber = rarityToInt(GetRarity(backpack));
-        if (backpack.includes("_broken")) rarityNumber = -1;
     }
     //Add the backpack to the data
-    let ign = backpackData[backpack].inGameName;
-    data.backpack = {img: ign, ign: ign, rarity: GetRarity(backpack)};
+    data.backpack = {img: backpack, ign: backpack.split("_").join(" ") + " Backpack", rarity: GetRarity(backpack)};
 
     //Shield
     if (getRandomRange(1, 100) > 33 || alwaysGetArmor) {
         let rarityNumber = -1;
         let shield = "";
         //Find a shield that is within the rarity range
-        let tempArr = Object.keys(shieldData);
         while (rarityNumber < minRarity || rarityNumber > maxRarity) {
-            shield = tempArr[Math.floor(Math.random() * tempArr.length)];
+            shield = "Shield_" + Shields[Math.floor(Math.random() * Shields.length)];
             rarityNumber = rarityToInt(GetRarity(shield));
-            if (shield.includes("Default")) rarityNumber = -1;
         }
         //Add the shield to the data
-        let ign = shieldData[shield].inGameName;
-        data.shield = {img: "Shield_" + ign.replaceAll(" ", "_").replace("_Shield", ""), ign: ign, rarity: GetRarity(shield)};
+        data.shield = {img: shield, ign: shield.replace("Shield_", "").split("_").join(" ") + " Shield", rarity: GetRarity(shield)};
     } else {
         //No shield
         data.shield = null;
@@ -128,45 +156,46 @@ export function GenerateRandomLoadout(minRarity: number, maxRarity: number, cons
         let rarityNumber = -1;
         let helmet = "";
         //Find a helmet that is within the rarity range
-        let tempArr = Object.keys(helmetData);
         while (rarityNumber < minRarity || rarityNumber > maxRarity) {
-            helmet = tempArr[Math.floor(Math.random() * tempArr.length)];
+            helmet = "Helmet_" + Helmets[Math.floor(Math.random() * Helmets.length)];
             rarityNumber = rarityToInt(GetRarity(helmet));
         }
-        let ign = helmetData[helmet].inGameName;
-        data.helmet = {img: "Helmet_" + ign.replaceAll(" ", "_").replace("_Helmet", ""), ign: ign, rarity: GetRarity(helmet)};
+        //Add the helmet to the data
+        data.helmet = {img: helmet, ign: helmet.replace("Helmet_", "").split("_").join(" ") + " Helmet", rarity: GetRarity(helmet)};
     } else {
         //No helmet
         data.helmet = null;
     }
 
     //Consumables:
-    let tempArr = Object.keys(consumableData);
+    let C = [...Consumables];
     for (let i = 1; i <= consumableAmount; i++) {
-        let consumable;
+        let Consumable;
         let rarityNumber = -1;
         //Find a consumable that is within the rarity range
         while (rarityNumber < (minRarity >= 3 ? 2 : minRarity) || rarityNumber > maxRarity) {
-            let r = Math.floor(Math.random() * tempArr.length);
-            consumable = tempArr[r];
-            rarityNumber = rarityToInt(GetRarity(consumable));
-            tempArr.splice(r, 1);
+            let r = Math.floor(Math.random() * C.length);
+            Consumable = C[r];
+            rarityNumber = rarityToInt(GetRarity(Consumable));
+            C.splice(r, 1);
         }
-        if (consumable) {
-            let ign = consumableData[consumable].inGameName;
-            if (ign.includes("Medkit")) {
-                addConsumable(consumable, Math.floor(Math.random() * 1) + 1);
-            } else if (ign.includes("Stim")) {
-                addConsumable(consumable, Math.floor(Math.random() * 4) + 1);
-                addConsumable(consumable, Math.floor(Math.random() * 4) + 1);
-            } else if (ign.includes("Grenade")) {
-                addConsumable(consumable, Math.floor(Math.random() * 3) + 1);
+        if (Consumable) {
+            if (Consumable.includes("Medkit")) {
+                addConsumable(Consumable, Math.floor(Math.random() * 1) + 1);
+            } else if (Consumable.includes("Stim")) {
+                addConsumable(Consumable, Math.floor(Math.random() * 4) + 1);
+                addConsumable(Consumable, Math.floor(Math.random() * 4) + 1);
+            } else if (Consumable.includes("Grenade")) {
+                addConsumable(Consumable, Math.floor(Math.random() * 3) + 1);
             }
         }
     }
-    function addConsumable(consumable: string, amount: number) {
-        let ign = consumableData[consumable].inGameName;
-        data.items.push({img: "Consumables/" + ign, ign: ign, amount: amount, rarity: GetRarity(consumable)});
+    function addConsumable(Consumable: string, amount: number) {
+        let ign = Consumable.split("_").join(" ");
+        if (ign.includes("Medkit")) ign = ign.replace("Medkit", "") + " Medkit";
+        if (ign.includes("Stim")) ign = ign.replace("Stim", "") + " Stim";
+        if (ign.includes("Grenade")) ign = ign.replace("Grenade", "") + " Grenade";
+        data.items.push({img: "Consumables/" + Consumable, ign: ign, amount: amount, rarity: GetRarity(Consumable)});
     }
 
     //Other items:
@@ -174,7 +203,7 @@ export function GenerateRandomLoadout(minRarity: number, maxRarity: number, cons
         //Find an item
         let item = OtherItems[Math.floor(Math.random() * OtherItems.length)];
         //Add the item to the data
-        data.items.push({img: item, ign: item, amount: 1, rarity: GetRarity(null, item)});
+        data.items.push({img: item, ign: item, amount: 1, rarity: GetRarity(item)});
     }
 
     //Return the data
@@ -182,7 +211,12 @@ export function GenerateRandomLoadout(minRarity: number, maxRarity: number, cons
 }
 
 function getAmmoType(weapon: string): string {
-    return weaponData[weapon].ammoType;
+    if (LightWeapons.includes(weapon)) return "Light";
+    if (MediumWeapons.includes(weapon)) return "Medium";
+    if (HeavyWeapons.includes(weapon)) return "Heavy";
+    if (ShotgunWeapons.includes(weapon)) return "Shotgun";
+    if (SpecialWeapons.includes(weapon)) return "Special";
+    return "";
 }
 function getAmmoAmount(type: string): number {
     let total;
@@ -239,5 +273,5 @@ function rarityToInt(rarity: string): number {
     if (rarity == "Epic") return 3;
     if (rarity == "Exotic") return 4;
     if (rarity == "Legendary") return 5;
-    return 0;
+    return -1;
 }

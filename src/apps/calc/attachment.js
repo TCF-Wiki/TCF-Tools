@@ -15,7 +15,7 @@ export const attachment = {
 
         // The tags or the weapon type may be used to check if something is compatible
         let category = wData['tags'].concat(['Weapon.Ammo.'+ wData['ammoType']])
-
+        console.log(category)
         let attachments = []
         for (let attachment in attachmentData) {
             let compatible = attachmentData[attachment]['compatible']
@@ -34,7 +34,7 @@ export const attachment = {
                 attachments.push(attachment)
             } 
         }
-        
+        console.log(attachments)
         // save it to reuse...
         this.savedAttachmentList[weapon] = attachments
         // and return it
