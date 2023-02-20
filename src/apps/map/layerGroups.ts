@@ -5,6 +5,7 @@ import 'leaflet-responsive-popup';
 import {getMapData} from './data';
 import {alphabeticalCreatures, specialLocations} from './mapConstants';
 import {createLootPopup, createSpecialPopup} from './popup';
+import { clusterEnabled, minimumPercent, selectedItems, selectedMap } from './store';
 let locationLayerGroups: any = {};
 
 export function getLocationLayerGroups(): any {
@@ -125,48 +126,49 @@ export function getItemLayerGroups(): any {
 }
 const mapData = await getMapData();
 
-export async function updateItemLayerGroups(disableCluster = false, minimumPercent = 0) {
-    if (disableCluster) {
+export async function updateItemLayerGroups() {
+    if (clusterEnabled.get()) {
         itemLayerGroups = {}
-    }  
-    for (let map in mapData['itemSpawns']) {
-        if (!itemLayerGroups[map]) itemLayerGroups[map] = {};
-        for (let item in mapData['itemSpawns'][map]) {
-            let data : any;
-            
-            // optional feature: If a user wants to filter out spawns from below a certain percentage.
-            // Performance heavy (it is a long list)
-            if (minimumPercent) {
-                let tempData = []
-                const spawns = mapData['itemSpawns'][map][item]
+    }
 
-                for (let spawn in spawns) {
-                    const pool = spawns[spawn]['lootPool']
-                    if (!pool) continue
-
-                    const loot = mapData['lootPools'][pool]['items']
-                    if (!loot) continue
-
-                    const itemPercent = loot[item]
-                    if (!itemPercent) continue
-
-                    if (itemPercent >= minimumPercent) tempData.push(spawns[spawn])
-                }
-
-                data = tempData
+    if (!itemLayerGroups[selectedMap.get()]) itemLayerGroups[selectedMap.get()] = {};
+    for (let item in mapData['itemSpawns'][selectedMap.get()]) {
+        if (!selectedItems.get().includes(item)) continue
     
-            } else {
-                data =  mapData['itemSpawns'][map][item]
+        let data : any;
+
+        // optional feature: If a user wants to filter out spawns from below a certain percentage.
+        // Performance heavy (it is a long list)
+        if (minimumPercent.get()) {
+            let tempData = []
+            const spawns = mapData['itemSpawns'][selectedMap.get()][item]
+
+            for (let spawn in spawns) {
+                const pool = spawns[spawn]['lootPool']
+                if (!pool) continue
+
+                const loot = mapData['lootPools'][pool]['items']
+                if (!loot) continue
+
+                const itemPercent = loot[item]
+                if (!itemPercent) continue
+
+                if (itemPercent >= minimumPercent.get()) tempData.push(spawns[spawn])
             }
-            createGroups(map, item, data);
+
+            data = tempData
+
+        } else {
+            data =  mapData['itemSpawns'][selectedMap.get()][item]
         }
+        createGroups(selectedMap.get().toString(), item, data);
     }
     function createGroups(map: string, item: string, locationData: any) {
         let locationGroup = L.markerClusterGroup({
             showCoverageOnHover: false,
             spiderfyOnMaxZoom: false,
             // disables clustering if the users wants that by setting zoom value to something impossible.
-            disableClusteringAtZoom: disableCluster ? -10 : 5,
+            disableClusteringAtZoom: clusterEnabled.get() ? -10 : 5,
             iconCreateFunction: function (cluster) {
                 let childCount = cluster.getChildCount();
 
