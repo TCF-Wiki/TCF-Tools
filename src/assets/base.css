@@ -1,4 +1,9 @@
 @import "https://fonts.googleapis.com/css2?family=Rajdhani";
+@import 'https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap';
+
+body {
+  --font-family-base: 'Atkinson Hyperlegible'
+}
 
 :root{
     --color-surface-0: #121c25;
@@ -19,7 +24,7 @@
     --color-link: #79c6f2;
     --border-color-base: rgba(255,255,255,0.2);
     --shadow-strength: 0.3;
-    --font-family-base: 'Rajdhani',system-ui,-apple-system,sans-serif;
+    --font-family-base: 'Atkinson Hyperlegible', system-ui,-apple-system,sans-serif;
 
 
     --rarity-color-common: #dfe3e8;

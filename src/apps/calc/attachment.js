@@ -5,6 +5,7 @@ import { selectedAttachments } from './store'
 export const attachment = {
     savedAttachmentList : {},
     getAttachments: function(weapon) {
+        console.log(attachmentData)
         //let us not repeat this more then we need to do...
         if (this.savedAttachmentList[weapon]) {
             return this.savedAttachmentList[weapon]
@@ -21,8 +22,8 @@ export const attachment = {
             let compatible = attachmentData[attachment]['compatible']
 
             // filter out mods without effects / effects we do not use
-            if(!wData['modSlots'].includes(attachmentData[attachment]['modType'])) continue
-            if (unusableAttachments.includes(attachmentData[attachment]['modType'])) continue
+            if(!wData['modSlots'].includes(attachmentData[attachment]['type'])) continue
+            if (unusableAttachments.includes(attachmentData[attachment]['type'])) continue
             
             // If it is compatible with everything, we save it
             if (compatible.length === 0) {
@@ -58,7 +59,7 @@ export const attachment = {
             if (attach.startsWith('No')) continue
 
             // get the category of the mod 
-            let newCategory = attachmentData[attach]['modType']
+            let newCategory = attachmentData[attach]['type']
             // save it to our object
             if(!attachmentGroups[newCategory]) attachmentGroups[newCategory] = [];
             attachmentGroups[newCategory].push(attach);
