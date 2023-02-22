@@ -71,7 +71,7 @@ export default defineComponent({
     },
     async mounted() {
         async function get_meta_data() {
-            const response = await fetch(githubURL + 'META.json', {});
+            const response = await fetch(githubURL.replace("min/", "") + 'META.json', {});
             const json = await response.json();
 
             return json;

@@ -68,7 +68,7 @@ import {defineComponent} from "vue";
 import {shieldData, backpackData, helmetData, itemData} from "../../forge/data";
 import {stringTables, missionData} from "../data";
 import {keyCardInfo} from "../../map/mapConstants";
-import {locationNameManager, killCreatureOrPlayer} from "../utils";
+import {locationNameManager, killCreatureOrPlayer, itemName} from "../utils";
 import {factionProgress} from "../trackProgress";
 import {missions} from "../QuestConstants";
 
@@ -102,49 +102,11 @@ export default defineComponent({
             }
         },
         rewardImageNamer(reward: string, urlFormat = false): string {
-            // This function gets the name of the image when given an item name. Handles edge cases.
-            let orig = reward;
-            if (reward.includes("SoftCurrency")) reward = "SoftCurrency";
-            else if (reward.includes("Reputation")) reward = `${this.faction}_Reputation`;
-            else if (reward.includes("Shield_")) reward = this.shieldData[reward]["inGameName"];
-            else if (reward.includes("Helmet_")) reward = this.helmetData[reward]["inGameName"];
-            else if (reward.includes("Bag_")) reward = this.backpackData[reward]["inGameName"];
-            else if (reward.includes("ShockGrenade_02")) reward = "Frag Grenade";
-            else if (reward.includes("ICAScrip")) reward = "ICA Scrip";
-            else if (reward.includes("OsirisScrip")) reward = "Osiris Scrip";
-            else if (reward.includes("KorolevScrip")) reward = "Korolev Scrip";
-            else if (reward.includes("HardDrive_common")) reward = "Data Drive Tier 1";
-            else if (reward.includes("HardDrive_uncommon")) reward = "Data Drive Tier 2";
-            else if (reward.includes("HardDrive_rare")) reward = "Data Drive Tier 3";
-            else if (reward.includes("HardDrive_epic")) reward = "Data Drive Tier 4";
-            else if (reward.includes("HardDrive_legendary")) reward = "Data Drive Tier 5";
-            else if (reward.includes("KeyCard")) {
-                if (reward.includes("Map01")) reward = "Bright_Sands_Key_Card";
-                if (reward.includes("Map02")) reward = "Crescent_Falls_Key_Card";
-                if (reward.includes("Map03")) reward = "Tharis_Island_Key_Card";
-            } else {
-                if (itemData[reward]) {
-                    reward = itemData[reward]["inGameName"];
-                }
+            let name = itemName(reward, urlFormat);
+            if (name == "Reputation") {
+                name = this.faction + "_Reputation";
             }
-            for (let key in keyCardInfo) {
-                if (keyCardInfo[key]["name"] == reward) {
-                    if (key.includes("Map01")) reward = "Bright_Sands_Key_Card";
-                    if (key.includes("Map02")) reward = "Crescent_Falls_Key_Card";
-                    if (key.includes("Map03")) reward = "Tharis_Island_Key_Card";
-                }
-            }
-            if (reward.includes("Fusion Cartridge")) reward = "Fusion_Cartridge_Batteries";
-            if (reward.includes("OrbitalCanonTarget")) reward = "Orbital_Cannon_Beacon";
-            if (stringTables["Materials"][reward]) reward = stringTables["Materials"][reward]["name"];
-
-            if (urlFormat) return reward.split(" ").join("_").replace("#", "%23");
-
-            if (reward.includes("Reputation")) reward = "Reputation";
-            if (reward.includes("SoftCurrency")) reward = "K-Marks";
-            if (reward.includes("Key_Card") && stringTables["Equipment"]["Equip_Keys_" + orig.replace("KeyCard_", "Key")]) reward = stringTables["Equipment"]["Equip_Keys_" + orig.replace("KeyCard_", "Key")]["name"];
-
-            return reward.split("_").join(" ");
+            return name;
         },
         currencyDisplay(r: any): string {
             // Gets a string representing the reward amount for a mission
@@ -225,7 +187,7 @@ export default defineComponent({
 
                     // goofy ahh edge case
                     if (['Main-Osiris-Caverns-13.1'].includes(mission)) {
-                        console.log(this.stringTable[newKeys[index]], index)
+                        ///console.log(this.stringTable[newKeys[index]], index)
                         if (index == 1) {
                             text = this.stringTable[newKeys[2]]
                         }

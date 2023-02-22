@@ -75,7 +75,6 @@ export default defineComponent({
     computed: {},
     methods: {
         getItems() {
-            console.log("Get items");
             const mission = missions[this.faction][this.name];
             const length = mission.length;
             const progress = this.progress.get()[this.faction][this.name];
