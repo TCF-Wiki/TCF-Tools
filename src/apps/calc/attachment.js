@@ -34,7 +34,6 @@ export const attachment = {
                 attachments.push(attachment)
             } 
         }
-        
         // save it to reuse...
         this.savedAttachmentList[weapon] = attachments
         // and return it

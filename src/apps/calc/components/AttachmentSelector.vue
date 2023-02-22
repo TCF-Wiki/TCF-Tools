@@ -19,7 +19,7 @@
                             <!-- <img :src=" 'images/' + armorImage(key) + '.png'  " class="attachment-image" >  -->
                             <!-- <span> {{  attachmentData[attachment]['IGN'] }} ({{attachmentData[attachment]['rarity']}})</span>  -->
                             <h3> {{ keyNames[key] }} </h3>
-                            <p v-for="(attachment, key) in group"  :key="key"
+                            <p v-for="(attachment, key2) in group"  :key="key2"
                             :class="colourClassGiver(attachment)"
                             @click="selectedAttachments.toggleSelected(weapon, attachment, key)">
                                 {{  attachmentData[attachment]['IGN'] }} ({{attachmentData[attachment]['rarity']}})
@@ -82,7 +82,6 @@ export default {
             let output = ''
             output += attachmentData[attachment]['rarity'].toLowerCase()
 
-            console.log(selectedAttachments.list[this.weapon], attachment)
             if (selectedAttachments.list[this.weapon]) {
                 if (selectedAttachments.list[this.weapon].includes(attachment)) {
                     output += ' active'

@@ -223,6 +223,16 @@ export default defineComponent({
                     // another edge case
                     if (["Main-ICA-MeteorReactor-5"].includes(mission)) text = this.stringTable[newKeys[newKeys.length - index - 1]];
 
+                    // goofy ahh edge case
+                    if (['Main-Osiris-Caverns-13.1'].includes(mission)) {
+                        console.log(this.stringTable[newKeys[index]], index)
+                        if (index == 1) {
+                            text = this.stringTable[newKeys[2]]
+                        }
+                        if (index == 2) {
+                            text = this.stringTable[newKeys[1]]
+                        }
+                    }
                     // and another one we are not going to talk about...
                     if (["Main-ICA-OilPump-1"].includes(mission)) {
                         if (index == 0) {

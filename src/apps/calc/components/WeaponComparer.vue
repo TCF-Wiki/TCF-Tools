@@ -110,6 +110,7 @@ import {penetrationChart, falloffChart} from "../charts";
 import AttachmentSelector from "./AttachmentSelector.vue";
 import BodyChart from "./BodyChart.vue";
 import {helmetData} from "@/apps/forge/data";
+
 export default {
     components: {
         AttachmentSelector,
@@ -142,6 +143,7 @@ export default {
         getDetailedStats(weapon, getShotsForType) {
             // This function filters the output based on if we want to have the shots to kill or not.
             // uses the $ in the key name to filter.
+
             const data = this.detailedStats[weapon];
             if (!data) {
                 return {};
@@ -199,6 +201,7 @@ export default {
             for (const key in selectedWeaponData[0]) {
                 const value = calculate.s(selectedWeapons.list[0], key);
                 if (typeof value != "number") continue;
+
                 let colorData = [];
                 for (const wep in selectedWeapons.list) {
                     const tempVal = calculate.s(selectedWeapons.list[wep], key);
@@ -248,6 +251,7 @@ export default {
                 detailedStats[wepName]["timeToKill"] = roundToThree(calculate.timeToKill(wepName));
                 detailedStats[wepName]["dmgPerBullet"] = roundToThree(calculate.damageOnBodyShot(wepName));
                 detailedStats[wepName]["dmgPerBulletHS"] = roundToThree(calculate.damageOnWeakSpotShot(wepName));
+
                 // shield shots to kill
                 detailedStats[wepName]["noShield$%"] = Math.round(calculate.shotsToKill(wepName, 0, 0, "special"));
                 detailedStats[wepName]["commonShield$%"] = Math.round(calculate.shotsToKill(wepName, armorData["Shield_01"]["armorAmount"], 0, "special"));
@@ -256,6 +260,7 @@ export default {
                 detailedStats[wepName]["epicShield$%"] = Math.round(calculate.shotsToKill(wepName, armorData["Shield_04"]["armorAmount"], 0, "special"));
                 detailedStats[wepName]["exoticShield$%"] = Math.round(calculate.shotsToKill(wepName, armorData["Shield_05"]["armorAmount"], 0, "special"));
                 detailedStats[wepName]["legendaryShield$%"] = Math.round(calculate.shotsToKill(wepName, armorData["Shield_Altered_03"]["armorAmount"], 0, "special"));
+
                 // Helmet shots to kill
                 detailedStats[wepName]["noHelmet&%"] = Math.round(calculate.shotsToKill(wepName, 0, 100, "special"));
                 detailedStats[wepName]["commonHelmet&%"] = Math.round(calculate.shotsToKill(wepName, helmetData["Helmet_01"]["armorAmount"], 100, "special"));
@@ -267,7 +272,9 @@ export default {
                 // a % indicates it is a special data set we want to filter out seperately later.
                 // $ is armour, & is helmet
             }
+
             this.detailedStats = detailedStats;
+
             let colourListHolder = {};
             for (let key in detailedStats[selectedWeapons.list[0]]) {
                 let detailedStatsData = [];
@@ -308,6 +315,7 @@ export default {
             if (effect["type"] == "Additive") {
                 return "+ " + effect["value"] + " = " + this.stat(weapon, stat);
             }
+
             if (effect["type"] == "Multiplicitive_PreAdd") {
                 let oldValue = this.weaponData[weapon][stat];
                 let newValue = this.stat(weapon, stat);
@@ -318,6 +326,7 @@ export default {
                 }
                 return (change > 0 ? "+" + change : change) + " (" + (modPercentage > 0 ? "+" + modPercentage : modPercentage) + "%) = " + this.stat(weapon, stat);
             }
+
             if (effect["type"] == "Override") {
                 return "→ " + effect["value"] + " = " + this.stat(weapon, stat);
             }
@@ -390,6 +399,7 @@ export default {
     flex: none;
     position: relative;
 }
+
 .inner-container {
     display: flex;
     flex-direction: row;
@@ -427,6 +437,7 @@ export default {
 .flex-item span {
     color: var(--color-base);
 }
+
 .flex-item p:nth-child(even) {
     background-color: var(--color-surface-4);
 }
@@ -469,6 +480,7 @@ export default {
     margin: auto;
     margin-top: var(--space-md);
 }
+
 .delete-button {
     display: flex;
     justify-content: center;
@@ -500,6 +512,7 @@ svg {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
 }
+
 .small span {
     --rarity-color-epic: #9d78c0;
     color: var(--clr) !important;
@@ -510,4 +523,5 @@ h2 span {
     font-family: Rajdhani, ui-sans, system-ui, Helvetica, Arial, sans-serif;
     color: var(--text-color-body-white);
 }
+
 </style>

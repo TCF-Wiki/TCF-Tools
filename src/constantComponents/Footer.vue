@@ -35,6 +35,7 @@
             </section>
             <section class="citizen-footer__bottom">
                 <div id="footer-tagline">Check out the <a href="https://thecyclefrontier.wiki/"> Official Wiki </a> as well!</div>
+                <div> Tools Version {{  META['TOOLS_VERSION'] }} || Updated for {{ META['GAME_DATA_VERSION'] }} </div>
                 <nav id="footer-icons">
                     <ul>
                         <li>
@@ -58,7 +59,29 @@
         </div>
     </footer>
 </template>
+<script lang="ts">
+import { defineComponent } from 'vue';
+import {githubURL} from '../apps/constants.json';
 
+export default defineComponent({
+    data() {
+        return {
+            META: {} as any
+        }
+    },
+    async mounted() {
+        async function get_meta_data() {
+            const response = await fetch(githubURL + 'META.json', {});
+            const json = await response.json();
+
+            return json;
+        }
+
+        const META = await get_meta_data();
+        this.META = META;
+    }
+})
+</script>
 <style scoped lang="less">
 .citizen-footer {
     padding: var(--space-xl) var(--padding-page);
@@ -164,12 +187,10 @@
 
     &-tagline {
         padding: var(--space-xs) 0;
-        width: 30%;
     }
 
     &-icons {
         display: flex;
-        width: 60%;
         justify-content: flex-end;
 
         ul {

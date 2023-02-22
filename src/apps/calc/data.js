@@ -32,7 +32,7 @@ async function get_attachment_data() {
 const tempAttachmentData = await get_attachment_data();
 
 export const attachmentData = tempAttachmentData;
-
+console.log(attachmentData)
 async function get_armor_data() {
     const response = await fetch(githubURL + "shields.json");
     const json = await response.json();

@@ -1,53 +1,18 @@
 <template>
-<button class="btn" @click="openModal()" 
-v-tooltip="{ content: 'Set minimum spawn percentage', html: true }">
-    <font-awesome-icon icon="fa-solid fa-percent" />
-</button>
-
-<Teleport to="#modal">
-    <Transition name="modal"> 
-        <div class="modal__bg" v-if="isModalOpen">
-            <section class="modal__content modal__small" ref="modal">  
-                <button @click="isModalOpen = false" class="modal__close-button" aria-label="Close Modal" type="button"><font-awesome-icon icon="fa-solid fa-xmark" /></button>
-
-                <header class="modal__header"> 
-                    <h2>  
-                        Minimum Spawn Percentage
-                    </h2>
-                </header>
-
-                <p> You can filter out spawns below a certain percentage with this slider.  </p>
-
-                <p> <span class="exotic"> WARNING: </span> Putting this value above 0 has impact on performance of the site. </p>
-
-                <div class="container"> 
-                    <input type="range" min="0" max="100" @change="minimumPercent.set(value)" v-model="value" :style="{'--color': colorValue()}"> <strong> {{ value }}% </strong>
-                </div>
-            </section>
-        </div>
-    </Transition>
-</Teleport>
+<div class="container"> 
+    <input 
+        type="range" 
+        min="0" 
+        max="100" 
+        @input="minimumPercent.set(value)" 
+        v-model="value" 
+        :style="{'--color': colorValue()}"
+    > 
+    <span> {{ value }}% </span>
+</div>
+<p> Removes item spawns that are lower than the given percentage.</p>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue'
-/* @ts-ignore */
-import { onClickOutside } from '@vueuse/core';
-
-const isModalOpen = ref(false)
-const modal = ref(null)
-onClickOutside(modal, () => (isModalOpen.value = false))
-    
-const openModal = () => {
-    isModalOpen.value = true
-
-    const body = document.body
-    
-    body.style.pointerEvents = 'none'
-
-    setTimeout( () => { body.style.pointerEvents = 'all'},600)
-}
-</script>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
@@ -58,6 +23,7 @@ export default defineComponent({
     data() {
         return {
             minimumPercent,
+            toggleInputUpdate: false,
             value: 0
         }
     },
@@ -72,22 +38,27 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.btn {
-    color: var(--rarity-color-rare);
-    appearance: none;
-    background: none;
-    border: none;
-}
-
 .container {
-    margin-top: var(--space-xl);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 8.9fr 1fr;
+    width: 100%;
+    margin: 1rem auto 0;
     gap: var(--space-md);
-    font-size: 1.6rem;
 }
 
+span {
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+p {
+    font-size: .875rem;
+    text-align: left;
+    padding-bottom: .7rem;
+    border-bottom: 1px solid var(--border-color-base);
+    width: 100%;
+    margin: auto;
+}
 
 input[type='range'] {
     -webkit-appearance: none;
@@ -97,7 +68,7 @@ input[type='range'] {
     background: #d6d6d6;
     outline: none;
     transition: all 0.2s ease;
-
+    display: inline;
     border-radius: var(--space-xl);
 }
 
@@ -121,13 +92,5 @@ input[type='range']::-moz-range-thumb {
 
     border-radius: 50rem;
     border: none;
-}
-
-.container strong {
-    width: var(--space-xl);
-}
-
-warning {
-    color: var(--rarity-color-exotic);
 }
 </style>

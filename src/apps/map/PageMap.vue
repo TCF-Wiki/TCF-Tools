@@ -8,7 +8,6 @@
                     <header><h2>Options</h2></header>
                     <div class="setting-container">
                         <ClusterButton />
-                        <PercentButton />
                         <TierToggler />
                         <ClearSearch />
                         <ShareLink />
@@ -151,14 +150,18 @@ export default defineComponent({
         // we must keep our map variable to this file. We musn't mutate it in weird ways or set it to other variables, etc. That is why this is all kept to this file.
         this.$watch(
             "selectedMap",
-            () => {
+            async () => {
                 removeItemTiers();
                 if (selectedTier.get()) {
                     placeItemTiers();
                 }
                 removeAllMarkers();
-                placeMarkersForSelectedLocations();
+
+                await updateItemLayerGroups();
+                itemLayerGroups = getItemLayerGroups();
+
                 placeMarkersForSelectedItems();
+                placeMarkersForSelectedLocations();
                 placeMarkersForSelectedCreatures();
                 initiateMapToMapNumber(selectedMap.get()).addTo(map);
                 addMapLabels();
@@ -177,8 +180,12 @@ export default defineComponent({
 
         this.$watch(
             "selectedItems",
-            () => {
-                removeUnselectedItemMarkers();
+            async () => {
+                removeItemMarkers();
+
+                await updateItemLayerGroups();
+                itemLayerGroups = getItemLayerGroups();
+
                 placeMarkersForSelectedItems();
             },
             {deep: true}
@@ -208,12 +215,11 @@ export default defineComponent({
         this.$watch(
             "clusterEnabled",
             async () => {
-                removeAllMarkers();
+                removeItemMarkers();
 
-                await updateItemLayerGroups(clusterEnabled.get());
+                await updateItemLayerGroups();
                 itemLayerGroups = getItemLayerGroups();
 
-                placeMarkersForSelectedLocations();
                 placeMarkersForSelectedItems();
             },
             {deep: true}
@@ -222,13 +228,11 @@ export default defineComponent({
         this.$watch(
             "minimumPercent",
             async () => {
-                console.log("Hit!");
-                removeAllMarkers();
+                removeItemMarkers();
 
-                await updateItemLayerGroups(clusterEnabled.get(), minimumPercent.get());
+                await updateItemLayerGroups();
                 itemLayerGroups = getItemLayerGroups();
 
-                placeMarkersForSelectedLocations();
                 placeMarkersForSelectedItems();
             },
             {deep: true}
@@ -281,6 +285,10 @@ export default defineComponent({
                     if (layers) layers.removeFrom(map);
                 }
             }
+            removeItemMarkers();
+        }
+
+        function removeItemMarkers(): void {
             for (let oldMap in itemLayerGroups) {
                 for (let group in itemLayerGroups[oldMap]) {
                     let layers = itemLayerGroups[oldMap][group];
@@ -288,6 +296,7 @@ export default defineComponent({
                 }
             }
         }
+
         function removeUnselectedLocationMarkers(): void {
             //console.log('Removing unselected markers');
             for (let locationType in VM.savedLocationMarkers) {
@@ -298,14 +307,14 @@ export default defineComponent({
             }
         }
 
-        function removeUnselectedItemMarkers(): void {
-            for (let item in VM.savedItemMarkers) {
-                if (selectedItems.get().includes(VM.savedItemMarkers[item])) continue;
-                let layers = itemLayerGroups[VM.selectedMap.get()][VM.savedItemMarkers[item]];
-                if (layers) layers.removeFrom(map);
-                delete VM.savedItemMarkers[item];
-            }
-        }
+        // function removeUnselectedItemMarkers(): void {
+        //     for (let item in VM.savedItemMarkers) {
+        //         if (selectedItems.get().includes(VM.savedItemMarkers[item])) continue;
+        //         let layers = itemLayerGroups[VM.selectedMap.get()][VM.savedItemMarkers[item]];
+        //         if (layers) layers.removeFrom(map);
+        //         delete VM.savedItemMarkers[item];
+        //     }
+        // }
 
         function removeUnselectedCreatureMarkers(): void {
             //console.log('Removing unselected markers');
@@ -513,7 +522,7 @@ section:not(:last-child) {
 }
 .setting-container {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: var(--space-md);
     position: relative;
 }
