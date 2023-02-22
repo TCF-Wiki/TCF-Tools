@@ -1,18 +1,18 @@
 <template>
     <div class="container">
-        <button class="" type="button" @click.prevent="isModalOpen = true"> 
-            <img src="/calc-images/Weapon_Icon.png"> 
+        <button class="" type="button" @click.prevent="isModalOpen = true">
+            <img src="/calc-images/Weapon_Icon.png" />
         </button>
     </div>
     <Teleport to="#modal">
-        <Transition name="modal"> 
+        <Transition name="modal">
             <div class="modal__bg" v-if="isModalOpen">
-                <section class="modal__content modal__small" ref="modal">  
+                <section class="modal__content modal__small" ref="modal">
                     <button @click="isModalOpen = false" class="modal__close-button" aria-label="Close Modal" type="button"><font-awesome-icon icon="fa-solid fa-xmark" /></button>
                     <div class="weapon-container">
                         <div v-for="weapon in sortedData" class="weapon-selector" :class="{active: selectedWeapons.list.includes(weapon[1])}" @click="selectedWeapons.toggleSelected(weapon[1])">
-                            <img :src=" 'calc-images/' + weapon[0] + '.png' " class="weapon-image" > 
-                            <span class="weapon-name"> {{ weapon[0] }} </span> 
+                            <img :src="'calc-images/' + weapon[0] + '.png'" class="weapon-image" />
+                            <span class="weapon-name"> {{ weapon[0] }} </span>
                         </div>
                     </div>
                 </section>
@@ -22,28 +22,30 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import {ref} from "vue";
 /* @ts-ignore */
-import { onClickOutside } from '@vueuse/core';
+import {onClickOutside} from "@vueuse/core";
 
-const isModalOpen = ref(false)
-const modal = ref(null)
-onClickOutside(modal, () => (isModalOpen.value = false))
-    
+const isModalOpen = ref(false);
+const modal = ref(null);
+onClickOutside(modal, () => (isModalOpen.value = false));
+
 const openModal = () => {
-    isModalOpen.value = true
+    isModalOpen.value = true;
 
-    const body = document.body
-    
-    body.style.pointerEvents = 'none'
+    const body = document.body;
 
-    setTimeout( () => { body.style.pointerEvents = 'all'},600)
-}
+    body.style.pointerEvents = "none";
+
+    setTimeout(() => {
+        body.style.pointerEvents = "all";
+    }, 600);
+};
 </script>
 
 <script>
-import { weaponData as wepData } from '../data';
-import { selectedWeapons } from '../store';
+import {weaponData as wepData} from "../data";
+import {selectedWeapons} from "../store";
 export default {
     name: "WeaponSelector",
     data() {
@@ -52,29 +54,29 @@ export default {
             sortedData: [],
             selectedWeapons,
             showWeaponModal: false,
-        }
+        };
     },
     mounted() {
         // Filter out weapons from our data we not show
         let filtered = [];
         for (const [k, v] of Object.entries(this.weaponData)) {
-            if (!v) continue
-            if (!v['tags'] || v['tags'].length == 0 || v['tags'][0] === 'Tools' || k.includes('scrappy') ) continue
-            if (v['inGameName'] == 'HAZE' || v['inGameName'] == 'KARLA' || v['inGameName'] == 'FF4 Detonator') continue
-            filtered.push(k)
+            if (!v) continue;
+            if (!v["tags"] || v["tags"].length == 0 || v["tags"][0] === "Tools" || k.includes("scrappy")) continue;
+            if (v["inGameName"] == "HAZE" || v["inGameName"] == "KARLA" || v["inGameName"] == "FF4 Detonator") continue;
+            filtered.push(k);
         }
 
         // sort our array of items alphabetically
         let sorted = [];
         for (const weapon in filtered) {
-            const wData = this.weaponData[filtered[weapon]]  
-            if (wData == undefined) continue
-            let pushedData = [ wData['inGameName'], filtered[weapon] ]
-            sorted.push(pushedData)
+            const wData = this.weaponData[filtered[weapon]];
+            if (wData == undefined) continue;
+            let pushedData = [wData["inGameName"], filtered[weapon]];
+            sorted.push(pushedData);
         }
-        sorted.sort()
+        sorted.sort();
         // put our sorted names of items into our data
-        this.sortedData = sorted
+        this.sortedData = sorted;
     },
 };
 </script>
@@ -86,7 +88,7 @@ export default {
 .weapon-image {
     width: 10rem;
     margin: auto;
-    transition: all .2s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 
 .weapon-container {
@@ -95,20 +97,19 @@ export default {
     margin: auto;
 }
 
-
-@media screen  and (max-width: 900px){
+@media screen and (max-width: 900px) {
     .weapon-image {
         display: none;
     }
     .weapon-name {
-        font-size: .8rem;
+        font-size: 0.8rem;
     }
     .weapon-container {
-        grid-template-columns: 1fr 1fr
+        grid-template-columns: 1fr 1fr;
     }
 }
 .weapon-selector {
-    margin: .2em;
+    margin: 0.2em;
     text-align: center;
     cursor: pointer;
 }

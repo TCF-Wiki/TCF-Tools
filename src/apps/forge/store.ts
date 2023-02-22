@@ -1,52 +1,51 @@
-import { reactive} from "vue";
+import {reactive} from "vue";
 
-const MAX_PER_SLOT = 9
+const MAX_PER_SLOT = 9;
 export const selectedItems = reactive({
     /* {
         "ForgeIron": 1
     } */
     list: {} as any,
     get() {
-        return this.list
+        return this.list;
     },
-    set(newItems: any) : void {
-        this.list = newItems
+    set(newItems: any): void {
+        this.list = newItems;
     },
-    add(itemName: string, amount = 1) : void {
+    add(itemName: string, amount = 1): void {
         if (Object.keys(this.list).includes(itemName)) {
             if (this.list[itemName] < MAX_PER_SLOT) {
-                if ((this.list[itemName] + amount) <= MAX_PER_SLOT) {
-                    this.list[itemName] = this.list[itemName] + amount
+                if (this.list[itemName] + amount <= MAX_PER_SLOT) {
+                    this.list[itemName] = this.list[itemName] + amount;
                 } else {
-                    this.list[itemName] = amount
+                    this.list[itemName] = amount;
                 }
             }
         } else {
             if (Object.keys(this.list).length < 5) {
                 if (amount <= MAX_PER_SLOT) {
-                    this.list[itemName] = amount
+                    this.list[itemName] = amount;
                 } else {
-                    this.list[itemName] = MAX_PER_SLOT
+                    this.list[itemName] = MAX_PER_SLOT;
                 }
             }
         }
     },
-    remove(removeItem: string, amount = 0) : void {
+    remove(removeItem: string, amount = 0): void {
         if (amount > 0) {
-            if ((this.list[removeItem] - amount) <= 0) {
-                delete this.list[removeItem]
+            if (this.list[removeItem] - amount <= 0) {
+                delete this.list[removeItem];
             } else {
-                this.list[removeItem] = this.list[removeItem] - amount
+                this.list[removeItem] = this.list[removeItem] - amount;
             }
-
         } else {
-            delete this.list[removeItem]
+            delete this.list[removeItem];
         }
     },
     clear() {
-        this.list = {} as any
-    }
-})
+        this.list = {} as any;
+    },
+});
 
 export const outputItems = reactive({
     /* {
@@ -65,51 +64,51 @@ export const outputItems = reactive({
     } */
     list: {} as any,
     get() {
-        return this.list
+        return this.list;
     },
-    set(newItems: any) : void {
-        this.list = newItems
+    set(newItems: any): void {
+        this.list = newItems;
     },
-    add(itemName: string, amount = 1, itemData? : any, stackable = false) : void {
+    add(itemName: string, amount = 1, itemData?: any, stackable = false): void {
         if (Object.keys(this.list).includes(itemName) && stackable) {
-            if (this.list[itemName]['amount'] < MAX_PER_SLOT) {
-                if ((this.list[itemName]['amount'] + amount) <= MAX_PER_SLOT) {
-                    this.list[itemName]['amount'] + amount
+            if (this.list[itemName]["amount"] < MAX_PER_SLOT) {
+                if (this.list[itemName]["amount"] + amount <= MAX_PER_SLOT) {
+                    this.list[itemName]["amount"] + amount;
                 } else {
-                    this.list[itemName]['amount'] = amount
+                    this.list[itemName]["amount"] = amount;
                 }
             }
         } else {
             if (Object.keys(this.list).length < 5) {
                 if (amount <= MAX_PER_SLOT) {
-                    this.list[itemName] = {...itemData, amount: amount}
+                    this.list[itemName] = {...itemData, amount: amount};
                 } else {
-                    this.list[itemName] = {...itemData, amount: MAX_PER_SLOT}
+                    this.list[itemName] = {...itemData, amount: MAX_PER_SLOT};
                 }
             }
         }
     },
-    remove(itemName: string, amount : number = 0 ) : void {
-        if (amount !== 0 && (this.list[itemName]['amount'] - amount) > 0) {
-            this.list[itemName] = this.list[itemName]['amount'] - amount
+    remove(itemName: string, amount: number = 0): void {
+        if (amount !== 0 && this.list[itemName]["amount"] - amount > 0) {
+            this.list[itemName] = this.list[itemName]["amount"] - amount;
         } else {
-            delete this.list[itemName]
+            delete this.list[itemName];
         }
     },
     clear() {
-        this.list = {} as any
-    }
-})
+        this.list = {} as any;
+    },
+});
 
 export const consumeInput = reactive({
     consume: true as boolean,
     get() {
-        return this.consume
+        return this.consume;
     },
     set(consume: boolean) {
-        this.consume = consume
+        this.consume = consume;
     },
     toggle() {
-        this.consume = !this.consume
-    }
-})
+        this.consume = !this.consume;
+    },
+});

@@ -7,7 +7,7 @@
             <header class="card__header"><h3 class="card__header-text">{{}}</h3></header>
             <section class="card__desc">
                 <div class="card__desc-text">
-                    {{ missionData[mission]['description'].replaceAll('"', '') }}
+                    {{ missionData[mission]["description"].replaceAll('"', "") }}
                 </div>
             </section>
             <section class="card__tasks">
@@ -42,9 +42,7 @@
 
                     <svg v-else xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                         <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
-                        <path
-                            d="M384 32C419.3 32 448 60.65 448 96V416C448 451.3 419.3 480 384 480H64C28.65 480 0 451.3 0 416V96C0 60.65 28.65 32 64 32H384zM384 80H64C55.16 80 48 87.16 48 96V416C48 424.8 55.16 432 64 432H384C392.8 432 400 424.8 400 416V96C400 87.16 392.8 80 384 80z"
-                        />
+                        <path d="M384 32C419.3 32 448 60.65 448 96V416C448 451.3 419.3 480 384 480H64C28.65 480 0 451.3 0 416V96C0 60.65 28.65 32 64 32H384zM384 80H64C55.16 80 48 87.16 48 96V416C48 424.8 55.16 432 64 432H384C392.8 432 400 424.8 400 416V96C400 87.16 392.8 80 384 80z" />
                     </svg>
                 </div>
             </div>
@@ -56,9 +54,9 @@
     </section>
 </template>
 <script setup lang="ts">
-import {ref} from 'vue';
+import {ref} from "vue";
 /* @ts-ignore */
-import {onClickOutside} from '@vueuse/core';
+import {onClickOutside} from "@vueuse/core";
 
 const isExpanded = ref(false);
 const card = ref(null);
@@ -66,21 +64,21 @@ onClickOutside(card, () => (isExpanded.value = false));
 </script>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
-import {shieldData, backpackData, helmetData, itemData} from '../../forge/data';
-import {stringTables, missionData} from '../data';
-import {keyCardInfo} from '../../map/mapConstants';
-import {locationNameManager, killCreatureOrPlayer} from '../utils';
-import {factionProgress} from '../trackProgress';
-import {missions} from '../QuestConstants';
+import {defineComponent} from "vue";
+import {shieldData, backpackData, helmetData, itemData} from "../../forge/data";
+import {stringTables, missionData} from "../data";
+import {keyCardInfo} from "../../map/mapConstants";
+import {locationNameManager, killCreatureOrPlayer, itemName} from "../utils";
+import {factionProgress} from "../trackProgress";
+import {missions} from "../QuestConstants";
 
 export default defineComponent({
-    props: ['zIndex', 'index', 'mission', 'faction', 'name'],
+    props: ["zIndex", "index", "mission", "faction", "name"],
     data() {
         return {
             missions: missions,
             missionData: missionData,
-            stringTable: stringTables['Objectives'],
+            stringTable: stringTables["Objectives"],
             helmetData: helmetData,
             shieldData: shieldData,
             backpackData: backpackData,
@@ -104,107 +102,69 @@ export default defineComponent({
             }
         },
         rewardImageNamer(reward: string, urlFormat = false): string {
-            // This function gets the name of the image when given an item name. Handles edge cases.
-            let orig = reward;
-            if (reward.includes('SoftCurrency')) reward = 'SoftCurrency';
-            else if (reward.includes('Reputation')) reward = `${this.faction}_Reputation`;
-            else if (reward.includes('Shield_')) reward = this.shieldData[reward]['ingamename'];
-            else if (reward.includes('Helmet_')) reward = this.helmetData[reward]['ingamename'];
-            else if (reward.includes('Bag_')) reward = this.backpackData[reward]['ingamename'];
-            else if (reward.includes('ShockGrenade_02')) reward = 'Frag Grenade';
-            else if (reward.includes('ICAScrip')) reward = 'ICA Scrip';
-            else if (reward.includes('OsirisScrip')) reward = 'Osiris Scrip';
-            else if (reward.includes('KorolevScrip')) reward = 'Korolev Scrip';
-            else if (reward.includes('HardDrive_common')) reward = 'Data Drive Tier 1';
-            else if (reward.includes('HardDrive_uncommon')) reward = 'Data Drive Tier 2';
-            else if (reward.includes('HardDrive_rare')) reward = 'Data Drive Tier 3';
-            else if (reward.includes('HardDrive_epic')) reward = 'Data Drive Tier 4';
-            else if (reward.includes('HardDrive_legendary')) reward = 'Data Drive Tier 5';
-            else if (reward.includes('KeyCard')) {
-                if (reward.includes('Map01')) reward = 'Bright_Sands_Key_Card';
-                if (reward.includes('Map02')) reward = 'Crescent_Falls_Key_Card';
-                if (reward.includes('Map03')) reward = 'Tharis_Island_Key_Card';
-            } else {
-                if (itemData[reward]) {
-                    reward = itemData[reward]['ingamename'];
-                }
+            let name = itemName(reward, urlFormat);
+            if (name == "Reputation") {
+                name = this.faction + "_Reputation";
             }
-            for (let key in keyCardInfo) {
-                if (keyCardInfo[key]['name'] == reward) {
-                    if (key.includes('Map01')) reward = 'Bright_Sands_Key_Card';
-                    if (key.includes('Map02')) reward = 'Crescent_Falls_Key_Card';
-                    if (key.includes('Map03')) reward = 'Tharis_Island_Key_Card';
-                }
-            }
-            if (reward.includes('Fusion Cartridge')) reward = 'Fusion_Cartridge_Batteries';
-            if (reward.includes('OrbitalCanonTarget')) reward = 'Orbital_Cannon_Beacon';
-            if (stringTables['Materials'][reward]) reward = stringTables['Materials'][reward]['name'];
-
-            if (urlFormat) return reward.split(' ').join('_').replace('#', '%23');
-
-            if (reward.includes('Reputation')) reward = 'Reputation';
-            if (reward.includes('SoftCurrency')) reward = 'K-Marks';
-            if (reward.includes('Key_Card') && stringTables['Equipment']['Equip_Keys_' + orig.replace('KeyCard_', 'Key')]) reward = stringTables['Equipment']['Equip_Keys_' + orig.replace('KeyCard_', 'Key')]['name'];
-
-            return reward.split('_').join(' ');
+            return name;
         },
         currencyDisplay(r: any): string {
             // Gets a string representing the reward amount for a mission
-            if (r['item'] !== 'SoftCurrency' || !r['item'].includes('Reputation')) {
+            if (r["item"] !== "SoftCurrency" || !r["item"].includes("Reputation")) {
                 // save some space by shortening the text
-                if (r['amount'] > 999) return r['amount'] / 1000 + 'k';
+                if (r["amount"] > 999) return r["amount"] / 1000 + "k";
             }
-            return r['amount'];
+            return r["amount"];
         },
         taskText(task: any, mission: string, index: number): string {
             // This function returns the text for a task. Handles edge cases.
-            const type = task['type'];
+            const type = task["type"];
 
-            if (type == 'OwnNumOfItem') {
-                let item = task['itemToOwn'];
+            if (type == "OwnNumOfItem") {
+                let item = task["itemToOwn"];
                 if (itemData[item]) {
-                    return `Deliver ${task['maxProgress']} ${itemData[item]['ingamename']}`;
+                    return `Deliver ${task["maxProgress"]} ${itemData[item]["inGameName"]}`;
                 }
 
-                if (stringTables['Materials'][item]) item = stringTables['Materials'][item]['name'];
+                if (stringTables["Materials"][item]) item = stringTables["Materials"][item]["name"];
                 item = item
-                    .replace('HardDrive_uncommon', 'Data Drive Tier 2')
-                    .replace('HardDrive_rare', 'Data Drive Tier 3')
-                    .replace('HardDrive_epic', 'Data Drive Tier 4')
-                    .replace('HardDrive_legendary', 'Data Drive Tier 5')
-                    .replace('the Tharis Files', "Gregor's Dossier")
-                    .replace('Bag_Altered_01', 'Huge Forge Backpack');
+                    .replace("HardDrive_uncommon", "Data Drive Tier 2")
+                    .replace("HardDrive_rare", "Data Drive Tier 3")
+                    .replace("HardDrive_epic", "Data Drive Tier 4")
+                    .replace("HardDrive_legendary", "Data Drive Tier 5")
+                    .replace("the Tharis Files", "Gregor's Dossier")
+                    .replace("Bag_Altered_01", "Huge Forge Backpack");
 
-                return `Deliver ${task['maxProgress']} ${item}`;
+                return `Deliver ${task["maxProgress"]} ${item}`;
             }
 
-            if (type == 'VisitArea') {
+            if (type == "VisitArea") {
                 let keys = Object.keys(this.stringTable);
                 let newKeys: string[] = [];
                 newKeys = keys.filter((a) => a.toLowerCase().includes(mission.toLowerCase()));
 
                 if (newKeys.length == 1) {
-                    if (this.stringTable[newKeys[0]] !== '') {
+                    if (this.stringTable[newKeys[0]] !== "") {
                         let text = this.stringTable[newKeys[0]];
-                        text.replace('the Tharis Files', "Gregor's Dossier");
+                        text.replace("the Tharis Files", "Gregor's Dossier");
 
                         if (text) return this.stringTable[newKeys[0]];
                     }
                 } else if (newKeys.length > 1) {
-                    if (this.stringTable[newKeys[index]] !== '') {
-                        return this.stringTable[newKeys[index]].replace('the Tharis Files', "Gregor's Dossier");
+                    if (this.stringTable[newKeys[index]] !== "") {
+                        return this.stringTable[newKeys[index]].replace("the Tharis Files", "Gregor's Dossier");
                     }
                 }
 
-                let location = '';
-                if (task['locationConditions']) location = locationNameManager(task['locationConditions']);
-                return 'Visit ' + location;
+                let location = "";
+                if (task["locationConditions"]) location = locationNameManager(task["locationConditions"]);
+                return "Visit " + location;
             }
 
-            if (type == 'Kills') {
+            if (type == "Kills") {
                 return killCreatureOrPlayer(task, this.faction);
             }
-            if (type == 'DeadDrop') {
+            if (type == "DeadDrop") {
                 // find the corresponding stringtable for this task
                 let keys = Object.keys(this.stringTable);
 
@@ -213,21 +173,21 @@ export default defineComponent({
 
                 if (newKeys.length == 1) {
                     let text = this.stringTable[newKeys[0]];
-                    if (text.includes('Stash an')) return text;
+                    if (text.includes("Stash an")) return text;
                     // add how many items you have to stash in the text
-                    return text.replace('Stash ', `Stash ${task['maxProgress']} `);
+                    return text.replace("Stash ", `Stash ${task["maxProgress"]} `);
                 } else if (newKeys.length > 1) {
                     // Handle edge cases..
-                    if (['Main-KOR-LetiumResearch-4', 'Main-KOR-Caverns-13', 'Main-ICA-GruntWork-5', 'Main-ICA-GruntWork-8'].includes(mission)) index = index - 1;
+                    if (["Main-KOR-LetiumResearch-4", "Main-KOR-Caverns-13", "Main-ICA-GruntWork-5", "Main-ICA-GruntWork-8"].includes(mission)) index = index - 1;
 
                     let text = this.stringTable[newKeys[index]];
 
                     // another edge case
-                    if (['Main-ICA-MeteorReactor-5'].includes(mission)) text = this.stringTable[newKeys[newKeys.length - index - 1]];
+                    if (["Main-ICA-MeteorReactor-5"].includes(mission)) text = this.stringTable[newKeys[newKeys.length - index - 1]];
 
                     // goofy ahh edge case
                     if (['Main-Osiris-Caverns-13.1'].includes(mission)) {
-                        console.log(this.stringTable[newKeys[index]], index)
+                        ///console.log(this.stringTable[newKeys[index]], index)
                         if (index == 1) {
                             text = this.stringTable[newKeys[2]]
                         }
@@ -236,7 +196,7 @@ export default defineComponent({
                         }
                     }
                     // and another one we are not going to talk about...
-                    if (['Main-ICA-OilPump-1'].includes(mission)) {
+                    if (["Main-ICA-OilPump-1"].includes(mission)) {
                         if (index == 0) {
                             text = this.stringTable[newKeys[1]];
                         }
@@ -245,35 +205,35 @@ export default defineComponent({
                         }
                     }
 
-                    if (text.includes('Stash an')) return text;
+                    if (text.includes("Stash an")) return text;
 
                     // Stringtable is incomplete T_T
-                    if (mission == 'Main-ICA-OilPump-1') text += ' at Nutrion Office';
+                    if (mission == "Main-ICA-OilPump-1") text += " at Nutrion Office";
 
                     // Add how many items there are, plus handle another edge case
-                    return text.replace('Stash ', `Stash ${task['maxProgress']} `).replace('the Tharis Files', "Gregor's Dossier");
+                    return text.replace("Stash ", `Stash ${task["maxProgress"]} `).replace("the Tharis Files", "Gregor's Dossier");
                 }
-                return task['locationConditions'];
+                return task["locationConditions"];
             }
 
             return type;
         },
         taskImage(task: any) {
             // This function gets the name of the image that shows in the tasks info
-            const type = task['type'];
-            if (type == 'OwnNumOfItem') {
-                return this.rewardImageNamer(task['itemToOwn'], true).split('"').join('');
+            const type = task["type"];
+            if (type == "OwnNumOfItem") {
+                return this.rewardImageNamer(task["itemToOwn"], true).split('"').join("");
             }
 
-            if (type == 'VisitArea') {
-                return 'VisitArea';
+            if (type == "VisitArea") {
+                return "VisitArea";
             }
 
-            if (type == 'Kills') {
-                let killType = task['killConditions']['m_killTarget'];
+            if (type == "Kills") {
+                let killType = task["killConditions"]["m_killTarget"];
 
-                if (killType.includes('Creatures')) return 'KillCreature';
-                else return 'KillPlayer';
+                if (killType.includes("Creatures")) return "KillCreature";
+                else return "KillPlayer";
             }
 
             return type;
@@ -283,11 +243,11 @@ export default defineComponent({
             let newList: any = [];
 
             for (let r in rewardList) {
-                if (rewardList[r]['item'] === 'SoftCurrency') {
+                if (rewardList[r]["item"] === "SoftCurrency") {
                     newList.splice(0, 0, rewardList[r]);
-                } else if (rewardList[r]['item'].includes('Reputation')) {
+                } else if (rewardList[r]["item"].includes("Reputation")) {
                     newList.splice(1, 0, rewardList[r]);
-                } else if (rewardList[r]['item'].includes('Scrip')) {
+                } else if (rewardList[r]["item"].includes("Scrip")) {
                     newList.splice(2, 0, rewardList[r]);
                 } else {
                     newList.push(rewardList[r]);
@@ -393,7 +353,7 @@ export default defineComponent({
     }
 }
 .card__header-text::before {
-    content: '';
+    content: "";
     width: 100%;
     height: 2%;
     bottom: 0;
@@ -638,7 +598,7 @@ export default defineComponent({
 }
 
 .card__rewards-container:not(:last-child) div::before {
-    content: '';
+    content: "";
 
     position: absolute;
     width: 2px;
