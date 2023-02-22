@@ -12,7 +12,7 @@
                 <p>All for free without any ads!</p>
             </div>
             <div>
-                <img class="partnerImg" src="/Partner_Logo.png" />
+                <img class="partnerImg" src="/Favored_Badge.png" />
             </div>
             <div>
                 <h3>The Cycle: Frontier</h3>

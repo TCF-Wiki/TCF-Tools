@@ -40,7 +40,7 @@ export const keyObject = {
     "Muzzle": "Muzzle",
     "AmmoConverter": "Converter",
     "ForeGrip": "Foregrip",
-    "RearGrip": "Reargrip",
+    "RearGrip": "Rear grip",
     "Stock": "Stock"
 }
 

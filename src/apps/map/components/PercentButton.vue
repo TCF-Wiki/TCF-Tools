@@ -4,23 +4,11 @@
         type="range" 
         min="0" 
         max="100" 
-        @change="toggleInputUpdate ? () => {} : minimumPercent.set(value)" 
-        @input="toggleInputUpdate ? minimumPercent.set(value) : () => {}" 
+        @input="minimumPercent.set(value)" 
         v-model="value" 
         :style="{'--color': colorValue()}"
     > 
     <span> {{ value }}% </span>
-
-    <div 
-        class="toggle-button" 
-        role="button"
-        aria-label="Click to toggle if input items are consumed or not."
-        @click="toggleInputUpdate = !toggleInputUpdate" 
-        :class="{'selected': toggleInputUpdate}"
-        v-tooltip="{html: true, placement: 'bottom', content: 'Toggles whether it updates whenever it is changed,<br> or only when the slider is let go.<br> The former is more performance intensive.'}"
-    >
-     {{toggleInputUpdate ? '✔' : '✖'}} 
-    </div>
 </div>
 <p> Removes item spawns that are lower than the given percentage.</p>
 </template>
@@ -52,16 +40,14 @@ export default defineComponent({
 <style scoped>
 .container {
     display: grid;
-    grid-template-columns: 8.9fr 1fr 1fr;
+    grid-template-columns: 8.9fr 1fr;
     width: 100%;
     margin: 1rem auto 0;
     gap: var(--space-md);
 }
 
 span {
-    width: 20px;
     text-align: center;
-    padding-left: 4px;
     font-size: 1.2rem;
 }
 
@@ -106,33 +92,5 @@ input[type='range']::-moz-range-thumb {
 
     border-radius: 50rem;
     border: none;
-}
-
-.container strong {
-    width: var(--space-xl);
-}
-
-warning {
-    color: var(--rarity-color-exotic);
-}
-
-.toggle-button {
-    display: inline-block;
-    color: var(--rarity-color-exotic);
-    border: 1px solid var(--border-color-base);
-    text-align: center;
-    padding: .2rem .4rem;
-    transition: background-color .2s ease-in-out;
-    cursor: pointer;
-
-    width: 2rem
-}
-
-.toggle-button:hover {
-    background-color: var(--background-button-color);
-}
-.selected {
-    content: '✔ ';
-    color: var(--rarity-color-uncommon);
 }
 </style>

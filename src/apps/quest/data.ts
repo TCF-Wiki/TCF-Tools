@@ -20,9 +20,7 @@ export const itemData = await get_item_data();
 
 async function get_string_tables() {
     const response = await fetch(githubURL + "localization.json");
-    console.log(response);
     const json = await response.json();
-    console.log(json);
 
     return json;
 }

@@ -55,6 +55,7 @@ export const selectedAttachments = reactive({
     toggleSelected(weapon, attachment, type) {
         if (this.list[weapon]) {
             if (this.list[weapon].includes(attachment)) {
+                // Toggles something off if it already exists.
                 this.list[weapon] = this.list[weapon].filter( a => a !== attachment)
                 delete this.typeList[weapon][type]
             } else {

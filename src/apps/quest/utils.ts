@@ -138,7 +138,8 @@ export function itemName(item: string, urlFormat?: boolean): string {
     else if (item.includes("ICAScrip")) item = "ICA Scrip";
     else if (item.includes("OsirisScrip")) item = "Osiris Scrip";
     else if (item.includes("KorolevScrip")) item = "Korolev Scrip";
-    else if (item.includes("KeyCard")) {
+    else if (item.includes("Reputation")) item = "Reputation";
+    else if (item.includes("Key")) {
         if (item.includes("Map01")) item = "Bright_Sands_Key_Card";
         if (item.includes("Map02")) item = "Crescent_Falls_Key_Card";
         if (item.includes("Map03")) item = "Tharis_Island_Key_Card";

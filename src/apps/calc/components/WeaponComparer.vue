@@ -107,7 +107,6 @@ import {keyObject, detailedKeyObject, flippedKeys as flippedKeysData, roundToThr
 import {calculate} from "../calculate";
 import {attachment} from "../attachment";
 import {penetrationChart, falloffChart} from "../charts";
-
 import AttachmentSelector from "./AttachmentSelector.vue";
 import BodyChart from "./BodyChart.vue";
 import {helmetData} from "@/apps/forge/data";
@@ -250,7 +249,6 @@ export default {
             for (let wep in selectedWeapons.list) {
                 let wepName = selectedWeapons.list[wep];
                 detailedStats[wepName] = {};
-
                 detailedStats[wepName]["penetrationMultiplier"] = roundToThree(calculate.penetrationMultiplier(wepName));
                 detailedStats[wepName]["roundsPerMinute"] = Math.round(calculate.roundsPerMinute(wepName));
                 detailedStats[wepName]["adjustedRPM"] = Math.round(calculate.roundsPerMinuteReloadAdjusted(wepName));
@@ -556,4 +554,5 @@ h2 span {
     font-family: Rajdhani, ui-sans, system-ui, Helvetica, Arial, sans-serif;
     color: var(--text-color-body-white);
 }
+
 </style>
