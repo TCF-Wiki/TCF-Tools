@@ -72,7 +72,7 @@ export const attachment = {
     },
 
     getAttachmentEffects: function(weapon) {
-        // this function creates an object of each weapon's effects, converted to a format we can use in this.s()
+        // this function creates an object of each weapon's effects, converted to a format we can use in calculate.s()
         // and to use the same keys 
 
         // get the used mods for this weapon
@@ -83,12 +83,12 @@ export const attachment = {
         for (let attachment in attachmentList) {
             let effects = attachmentData[attachmentList[attachment]]['effects']
             for (let e in effects) {
-                effectList.push(effects[e])
+                effectList.push(effects[    e])
             }
         }
 
         // put it in an object with
-        let effectUsableObject = {}
+        let usableInList = {}
         for (let eff in effectList) {
             let a = effectList[eff]['attribute'] 
             if (ignoredEffects.includes(a)) continue
@@ -100,12 +100,49 @@ export const attachment = {
             if (a=='amountOfShots') a = "amountOfImmediateFires"
             if (a=='damageDirect') a = 'directDamage'
             if (a=='damageRange') {
-                effectUsableObject['FalloffStart'] = {'value': effectList[eff]['value'] + weaponData[weapon]['FalloffStart'], 'type': effectList[eff]['type']}
-                effectUsableObject['FalloffEnd'] = {'value': effectList[eff]['value'] + weaponData[weapon]['FalloffStart'], 'type': effectList[eff]['type']}   
+                usableInList['FalloffStart'] = {'value': effectList[eff]['value'] + weaponData[weapon]['FalloffStart'], 'type': effectList[eff]['type']}
+                usableInList['FalloffEnd'] = {'value': effectList[eff]['value'] + weaponData[weapon]['FalloffStart'], 'type': effectList[eff]['type']}   
             }
 
-            effectUsableObject[a] = {'value': effectList[eff]['value'], 'type': effectList[eff]['type']}
+            // no situation has both multiplicative and additive, so this is fine to do, nor does any thing have multiple Additive effects
+            // if this stat is already altered, alter the new value. 
+
+            if (!usableInList[a]) {
+                usableInList[a] = []
+            }
+            usableInList[a].push({'value': effectList[eff]['value'], 'type': effectList[eff]['type']})
+
         }
-        return effectUsableObject
+        let effectUsableObject = {}
+        for (let stat in usableInList) {
+            if (usableInList[stat].length == 1) {
+                effectUsableObject[stat] = usableInList[stat][0]
+                continue;
+            }
+
+            let runningTotal = 0;
+            let type = '';
+            for (let effect in usableInList[stat]) {
+                if (usableInList[stat][effect]['type'] == 'Additive') {
+                    runningTotal += usableInList[stat][effect]['value']
+                    type = 'Additive'
+                }
+                if (usableInList[stat][effect]['type'] == "Multiplicitive_PreAdd") {
+                    runningTotal += (usableInList[stat][effect]['value']-1)
+                    type = 'Multiplicitive_PreAdd'
+                }
+                if (usableInList[stat][effect]['type'] == "Override") {
+                    effectUsableObject[stat] = usableInList[stat][effect]
+                    break;
+                }
+                
+            }
+            if (type == 'Additive') {
+                effectUsableObject[stat] = {'value': runningTotal, 'type': 'Additive'}
+            } else if (type == 'Multiplicitive_PreAdd') {
+                effectUsableObject[stat] = {'value': 1+runningTotal, 'type': 'Multiplicitive_PreAdd'}
+            }
+        }
+        return effectUsableObject;
     }
 }
