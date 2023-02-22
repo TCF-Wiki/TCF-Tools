@@ -339,7 +339,7 @@ export default {
                 if (stat == "ammoInClip") {
                     return (change > 0 ? "+" + Math.round(change) : Math.round(change)) + " (" + (modPercentage > 0 ? "+" + modPercentage : modPercentage) + "%) = " + Math.round(this.stat(weapon, stat));
                 }
-                return (change > 0 ? "+" + change : change) + " (" + (modPercentage > 0 ? "+" + modPercentage : modPercentage) + "%) = " + this.stat(weapon, stat);
+                return (change > 0 ? "+" + change : change) + " (" + (modPercentage > 0 ? "+" + modPercentage : modPercentage) + "%) = " + roundToThree(this.stat(weapon, stat));
             }
 
             if (effect["type"] == "Override") {
