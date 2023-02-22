@@ -18,7 +18,7 @@
         <div v-if="perks[0].length > 0">
             <p v-for="(perk, index) in perks[0]">
                 <img width="24" class="item-icon" :src="'map-images/item-images/' + itemData[perks[1][index]]['inGameName'].replaceAll(' ', '_') + '.png'" />
-                {{ perkData[perk]["Description"] }}
+                {{ perkData[perk]["description"] }}
             </p>
         </div>
 

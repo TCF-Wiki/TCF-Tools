@@ -70,6 +70,7 @@ export const outputItems = reactive({
         this.list = newItems;
     },
     add(itemName: string, amount = 1, itemData?: any, stackable = false): void {
+        console.log(itemData)
         if (Object.keys(this.list).includes(itemName) && stackable) {
             if (this.list[itemName]["amount"] < MAX_PER_SLOT) {
                 if (this.list[itemName]["amount"] + amount <= MAX_PER_SLOT) {

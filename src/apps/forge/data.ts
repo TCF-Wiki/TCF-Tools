@@ -19,7 +19,7 @@ async function get_settings_data() {
 export const settingData = await get_settings_data();
 
 async function get_perk_data() {
-    const response = await fetch(githubURL + "perks.json", {});
+    const response = await fetch(githubURL + "forgePerks.json", {});
     const json = await response.json();
 
     return json;

@@ -53,9 +53,9 @@ export const resolveIngotForge = (item: string) => {
     const wantedIngredients: string[] = []
 
     for (let recipe in data) {
-        const allIngredients = Object.keys(data[recipe]['Ingredients'])
+        const allIngredients = Object.keys(data[recipe]['ingredients'])
         console.log(allIngredients)
-        for (let ingredient in data[recipe]['Ingredients']) {
+        for (let ingredient in data[recipe]['ingredients']) {
             // check if passed item is one of the ingredients
             if (item === ingredient) {
                 // push the appropriate ingredients based on what the item is
@@ -82,7 +82,7 @@ export const resolveIngotForge = (item: string) => {
         wantedIngredients.every(wantedIngredient => {
             for (let recipe in data) {
     
-                for (let ingredient in data[recipe]['Ingredients']) {
+                for (let ingredient in data[recipe]['ingredients']) {
                     
                     if (wantedIngredient === ingredient) currentRecipe = data[recipe]
                 }
@@ -93,9 +93,9 @@ export const resolveIngotForge = (item: string) => {
 
     if (!currentRecipe) return;
 
-    const rewardChances = currentRecipe['RewardChance']
-    const rewardAmount = currentRecipe['RewardAmount']
-    const ingredients = currentRecipe['Ingredients']
+    const rewardChances = currentRecipe['rewardChance']
+    const rewardAmount = currentRecipe['rewardAmount']
+    const ingredients = currentRecipe['ingredients']
 
     // First lets check if we have the required items for this recipe
     for (let i in ingredients) {
@@ -172,7 +172,8 @@ export function getPerkStrength(perk: string) : string {
 
 
 export function resolveAbyssToken() : any {
-    const chances = settingData["Probability_Lottery"]
+    const chances = settingData["probability_Lottery"]
+    console.log(chances)
 
     // generate a random rarity
     const randomRarity = Math.random() * 100
@@ -235,14 +236,14 @@ export function resolveGearForge(item: string) {
     if (data['rarity'] == 'Rare') wantedCatalyst = 'ForgeIronIngot'
     else if (data['rarity'] == 'Epic') wantedCatalyst = 'ChargedForgeIronIngot'
     else if (data['rarity'] == 'Exotic') wantedCatalyst = 'SuperChargedForgeIronIngot'
-    else return toast.error('You do not the required Forge Iron Ingot!', {timeout: 3000});;
+    else return toast.error('You do not have the required Forge Iron Ingot!', {timeout: 3000});;
     
     // check if we have the required ingot and amount...
-    if (!(selectedItems.get()[wantedCatalyst] >= settingData['CatalystAmount'])) return toast.error(`You need ${settingData['CatalystAmount']} ${itemData[wantedCatalyst]['ingamename']}`)
+    if (!(selectedItems.get()[wantedCatalyst] >= settingData['catalystAmount'])) return toast.error(`You need ${settingData['catalystAmount']} ${itemData[wantedCatalyst]['inGameName']}`)
 
     // now, check if there is the possibility of there being a perk added to it by checking if the input has any overlap with items used in perk recipes.
     const possiblePerkItems = Object.keys(selectedItems.get()).filter(x => validItems.perkRecipes.includes(x))
-    
+    console.log(possiblePerkItems)
     let type : string;
     if (item.includes('Shield_')) type = 'Shield'
     else if (item.includes('Helmet_')) type = 'Helmet'
@@ -255,7 +256,7 @@ export function resolveGearForge(item: string) {
         outputItems.clear()
         if (consumeInput.get()){
             selectedItems.remove(item)
-            selectedItems.remove(wantedCatalyst, settingData['CatalystAmount'])
+            selectedItems.remove(wantedCatalyst, settingData['catalystAmount'])
         } 
         
         // construct the information for our output item
@@ -277,6 +278,7 @@ export function resolveGearForge(item: string) {
 
         // create a list of matching perks with current input
         let result = getMatchingPerks(perks)
+        console.log(result)
         let matchingPerks = result[0]
         let itemsInOrder  = result[1]
 
@@ -349,9 +351,7 @@ export function resolveGearForge(item: string) {
             foundPerks.push(matchingPerks[foundPerkIndexes[perk]])
         }
 
-        
-
-        // now we are going to create the perkInfo for this item.
+                // now we are going to create the perkInfo for this item.
 
         let perkInfo = []
         for (let perk in foundPerks) {
@@ -367,13 +367,13 @@ export function resolveGearForge(item: string) {
         if (consumeInput.get()) {
             selectedItems.remove(item)
             // catalyst
-            selectedItems.remove(wantedCatalyst, settingData['CatalystAmount'])
+            selectedItems.remove(wantedCatalyst, settingData['catalystAmount'])
         }
 
         // and the items that we ended up using...
         for (let perkItem in foundPerkIndexes) {
             const item = itemsInOrder[foundPerkIndexes[perkItem]]
-            const amount = settingData['RarityAmount'][itemData[item]['rarity']]
+            const amount = settingData['rarityAmount'][itemData[item]['rarity']]
             if (consumeInput.get()) selectedItems.remove(item, amount)
         }
 
@@ -401,21 +401,20 @@ export function getMatchingPerks(perks: string[]) : [string[], string[]]{
     for (let perk in perks) {
         // go through each compatible perk and check if any of the items are found in input
         // and if the input has the required amount, add it to the possible matching perks
-        let data = perkData[perks[perk]]['Items']
+        let data = perkData[perks[perk]]['items']
         for (let perkItem in data) {
-            if ((selectedItems.get()[data[perkItem]] >= settingData['RarityAmount'][itemData[data[perkItem]]['rarity']] )) {
+            if ((selectedItems.get()[perkItem] >= settingData['rarityAmount'][itemData[perkItem]['rarity']] )) {
                 matchingPerks.push(perks[perk])
-                itemsInOrder.push(data[perkItem])
+                itemsInOrder.push(perkItem)
             }
         }
     }
-
     return [matchingPerks, itemsInOrder]
 }
 
 export function resolveLotteryItems() : void {
     // this function adds possible lottery items to the output result
-    const lotteryItems = settingData["SideProducts"]
+    const lotteryItems = settingData["sideProducts"]
 
     for (let item in lotteryItems) {
         const randomChance = Math.random() * 100

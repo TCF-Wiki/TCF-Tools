@@ -4,8 +4,8 @@
             <div v-if="data['perkInfo']">Altered {{ rarities[data["rarity"]] }} {{ data["type"] }}</div>
             <div v-if="data['perkInfo']">
                 <p v-for="perk in data['perkInfo']">
-                    {{ perk["strength"] }}
-                    {{ perkData[perk["perk"]]["Description"] }}
+                    {{ data['perkInfo']["strength"] }}
+                    {{ perkData[perk["perk"]]["description"] }}
                 </p>
             </div>
 
