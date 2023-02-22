@@ -1,6 +1,6 @@
 @import "./base.css";
 body {
-    font-family: Rajdhani, ui-sans, system-ui, Helvetica, Arial, sans-serif;
+    font-family: var(--font-family-base);
     color: var(--text-color-body-white);
 }
 
@@ -281,6 +281,7 @@ input[type="checkbox"]:checked::before {
     text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
     font-size: 0.7rem;
     font-weight: 500;
+    font-family: var(--font-family-base);
 }
 
 .leaflet-tooltip {

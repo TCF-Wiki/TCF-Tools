@@ -3,7 +3,7 @@
     <!-- <p> Stats modified by <br> an attachment will<br>  be <span style="text-decoration: underline"> underlined </span> </p>  -->
     <div class="attachment-list"> 
         <p> Selected attachments: </p>
-        <p v-for="attachment in selectedAttachments.list[weapon]" > {{ attachmentData[attachment]['IGN'] }} ({{attachmentData[attachment]['rarity']}})</p>
+        <p v-for="attachment in selectedAttachments.list[weapon]" > {{ attachmentData[attachment]['inGameName'] }} ({{attachmentData[attachment]['rarity']}})</p>
         <p v-if="!selectedAttachments.list[weapon] || selectedAttachments.list[weapon].length==0"> None </p>
 
     </div>

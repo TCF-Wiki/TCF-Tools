@@ -5,7 +5,6 @@ import { selectedAttachments } from './store'
 export const attachment = {
     savedAttachmentList : {},
     getAttachments: function(weapon) {
-        console.log(attachmentData)
         //let us not repeat this more then we need to do...
         if (this.savedAttachmentList[weapon]) {
             return this.savedAttachmentList[weapon]
