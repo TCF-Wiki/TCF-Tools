@@ -96,7 +96,12 @@ export async function updateCreatureLayerGroups() {
             }
         } else {
             // @ts-ignore
-            url = `map-images/item-images/${alphabeticalCreatures[creature].replaceAll(' ', '_')}_Head.png`
+            if(alphabeticalCreatures[creature] != null) {
+                // @ts-ignore
+                url = `map-images/item-images/${alphabeticalCreatures[creature].replaceAll(' ', '_')}_Head.png`;
+            } else {
+                url = `map-images/item-images/${creature.replaceAll(' ', '_')}_Head.png`;
+            }
         }
         
         let LocationMarker = L.icon({

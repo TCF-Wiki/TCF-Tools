@@ -85,7 +85,6 @@ export const alphabeticalSpecialLocations = {
     HealingPlant: 'Healing Plant',
     keyDoor: 'Key Door',
     LaserDrill: 'Laser Drill',
-    AIFriendly_SpawnLocation: 'Leafman',
     Meteor: 'Meteor Location',
     NoiseTrap_Birds: 'Noise Birds',
     OilPump: 'Oil Well',
