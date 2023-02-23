@@ -99,26 +99,18 @@ export const attachment = {
             if (a=='amountOfShots') a = "amountOfImmediateFires"
             if (a=='damageDirect') a = 'directDamage'
             if (a=='damageRange') {
-                usableInList['FalloffStart'] = {'value': effectList[eff]['value'] + weaponData[weapon]['FalloffStart'], 'type': effectList[eff]['type']}
-                usableInList['FalloffEnd'] = {'value': effectList[eff]['value'] + weaponData[weapon]['FalloffStart'], 'type': effectList[eff]['type']}   
+                usableInList['FalloffStart'] = {'value': effectList[eff]['value'] + weaponData[weapon]['FalloffStart'], 'type': effectList[eff]['modifierType']}
+                usableInList['FalloffEnd'] = {'value': effectList[eff]['value'] + weaponData[weapon]['FalloffStart'], 'type': effectList[eff]['modifierType']}   
             }
-
-            // no situation has both multiplicative and additive, so this is fine to do, nor does any thing have multiple Additive effects
-            // if this stat is already altered, alter the new value. 
 
             if (!usableInList[a]) {
                 usableInList[a] = []
             }
-            usableInList[a].push({'value': effectList[eff]['value'], 'type': effectList[eff]['type']})
+            usableInList[a].push({'value': effectList[eff]['value'], 'type': effectList[eff]['modifierType']})
 
         }
         let effectUsableObject = {}
         for (let stat in usableInList) {
-            if (usableInList[stat].length == 1) {
-                effectUsableObject[stat] = usableInList[stat][0]
-                continue;
-            }
-
             let runningTotal = 0;
             let type = '';
             for (let effect in usableInList[stat]) {
@@ -134,14 +126,16 @@ export const attachment = {
                     effectUsableObject[stat] = usableInList[stat][effect]
                     break;
                 }
-                
             }
+
             if (type == 'Additive') {
                 effectUsableObject[stat] = {'value': runningTotal, 'type': 'Additive'}
+
             } else if (type == 'Multiplicitive_PreAdd') {
                 effectUsableObject[stat] = {'value': 1+runningTotal, 'type': 'Multiplicitive_PreAdd'}
             }
         }
+
         return effectUsableObject;
     }
 }
