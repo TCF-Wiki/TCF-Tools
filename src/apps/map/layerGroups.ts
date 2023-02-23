@@ -121,9 +121,14 @@ export async function updateCreatureLayerGroups() {
 
 
 let itemLayerGroups: any = {};
+let itemAmounts: any = {};
 export function getItemLayerGroups(): any {
     return itemLayerGroups;
 }
+export function getItemAmounts() : any {
+    return itemAmounts;
+}
+
 const mapData = await getMapData();
 
 export async function updateItemLayerGroups() {
@@ -161,6 +166,9 @@ export async function updateItemLayerGroups() {
         } else {
             data =  mapData['itemSpawns'][selectedMap.get()][item]
         }
+        
+        itemAmounts[item] = data.length
+
         createGroups(selectedMap.get().toString(), item, data);
     }
     function createGroups(map: string, item: string, locationData: any) {

@@ -29,6 +29,7 @@
                     <span :class="colourClassGiver(item)">
                         <img :src="'map-images/item-images/' + itemImage(items[item]['name']) + '.png'" class="item-image-list" />
                         {{ items[item]['name'] }}
+                        <span class="small">{{ amounts[item]+1 ? '(' + amounts[item] + ')' : '' }}</span>
                     </span>
                 </p>
             </div>
@@ -43,12 +44,15 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
 import {getMapData} from '../data';
-import {selectedItems} from '../store';
+import { getItemAmounts } from '../layerGroups';
+import {selectedItems, selectedMap, minimumPercent} from '../store';
 import PercentButton from './PercentButton.vue';
 export default defineComponent({
     data() {
         return {
             selectedItems,
+            minimumPercent,
+            selectedMap,
             searchInput: '' as string,
             matchingItems: [] as string[],
             data: {} as any,
@@ -56,11 +60,12 @@ export default defineComponent({
             searchTerms: [] as string[],
             lowerCaseSearchTerms: [] as string[],
             shake: false as boolean,
+            amounts: {} as any
         };
     },
     components: {
         PercentButton
-    },  
+    },
     methods: {
         matchInputs: function () {
             const input = this.searchInput.toLowerCase();
@@ -135,7 +140,7 @@ export default defineComponent({
             if (foundItem?.includes('Flechette Gun')) return 'ASP Flechette Gun';
 
             return item.replaceAll(' ', '_').replaceAll('#', '#');
-        },
+        }
     },
     async mounted() {
         this.data = await getMapData();
@@ -150,6 +155,21 @@ export default defineComponent({
         this.searchTerms = tempData;
         this.lowerCaseSearchTerms = tempLowerData;
 
+        this.$watch(
+            "minimumPercent",
+            () => {
+                this.amounts = {}
+                this.amounts = getItemAmounts()
+            },
+            {deep: true}
+        );
+        this.$watch(
+            "selectedItems",
+            () => {
+                this.amounts = getItemAmounts()
+            },
+            {deep: true}
+        );
     },
 });
 </script>
@@ -346,5 +366,9 @@ button[type='submit'] {
 .list-leave-to {
     opacity: 0;
     translate: 0 -100%;
+}
+.small {
+    font-size: small;
+    text-decoration-line: none !important;
 }
 </style>

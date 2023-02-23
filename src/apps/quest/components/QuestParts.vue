@@ -18,9 +18,6 @@
             <div v-for="(m, index) in missions" class="container">
                 <QuestCardPart :mission="m" :zIndex="missions.length - index" :index="index" :faction="faction" :name="name" />
             </div>
-        </section>
-
-        <section class="quest-parts">
             <div class="container" v-if="Object.keys(items).length">
                 <p>Items needed to finish this mission:</p>
                 <div class="item-list">
