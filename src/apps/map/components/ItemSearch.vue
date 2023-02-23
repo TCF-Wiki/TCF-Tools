@@ -158,15 +158,14 @@ export default defineComponent({
         this.$watch(
             "minimumPercent",
             () => {
-                this.amounts = {}
-                this.amounts = getItemAmounts()
+                this.amounts = {...getItemAmounts()}
             },
             {deep: true}
         );
         this.$watch(
             "selectedItems",
             () => {
-                this.amounts = getItemAmounts()
+                this.amounts = {...getItemAmounts()}
             },
             {deep: true}
         );

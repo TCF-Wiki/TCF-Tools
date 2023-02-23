@@ -138,14 +138,14 @@ export default defineComponent({
         }, 5);
 
         // utility function used for development. Uncomment it when you need it.
-        // map.on('click', function (e) {
-        //     let coords = e.latlng,
-        //         popup = L.popup()
-        //             .setLatLng(coords)
-        //             .setContent('<p>' + coords + '</p>')
-        //             .openOn(map);
-        //     navigator.clipboard.writeText(coords.toString());
-        // });
+        map.on('click', function (e) {
+            let coords = e.latlng,
+                popup = L.popup()
+                    .setLatLng(coords)
+                    .setContent('<p>' + coords + '</p>')
+                    .openOn(map);
+            navigator.clipboard.writeText(coords.toString());
+        });
 
         // we must keep our map variable to this file. We musn't mutate it in weird ways or set it to other variables, etc. That is why this is all kept to this file.
         this.$watch(
