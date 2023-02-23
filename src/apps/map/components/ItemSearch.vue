@@ -29,6 +29,7 @@
                     <span :class="colourClassGiver(item)">
                         <img :src="'map-images/item-images/' + itemImage(items[item]['name']) + '.png'" class="item-image-list" />
                         {{ items[item]['name'] }}
+                        <span class="small">{{ getSpawnAmount(item) }}</span>
                     </span>
                 </p>
             </div>
@@ -43,12 +44,13 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
 import {getMapData} from '../data';
-import {selectedItems} from '../store';
+import {selectedItems, selectedMap} from '../store';
 import PercentButton from './PercentButton.vue';
 export default defineComponent({
     data() {
         return {
             selectedItems,
+            selectedMap,
             searchInput: '' as string,
             matchingItems: [] as string[],
             data: {} as any,
@@ -56,6 +58,7 @@ export default defineComponent({
             searchTerms: [] as string[],
             lowerCaseSearchTerms: [] as string[],
             shake: false as boolean,
+            itemLayerGroups: {} as any
         };
     },
     components: {
@@ -136,6 +139,11 @@ export default defineComponent({
 
             return item.replaceAll(' ', '_').replaceAll('#', '#');
         },
+        getSpawnAmount(item: string) {
+            if (this.data['itemSpawns'][selectedMap.get()][item]) {
+                return '(' + this.data['itemSpawns'][selectedMap.get()][item].length + ')';
+            }
+        }
     },
     async mounted() {
         this.data = await getMapData();
@@ -149,7 +157,6 @@ export default defineComponent({
         }
         this.searchTerms = tempData;
         this.lowerCaseSearchTerms = tempLowerData;
-
     },
 });
 </script>
@@ -346,5 +353,9 @@ button[type='submit'] {
 .list-leave-to {
     opacity: 0;
     translate: 0 -100%;
+}
+.small {
+    font-size: small;
+    text-decoration-line: none !important;
 }
 </style>
