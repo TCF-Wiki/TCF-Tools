@@ -53,21 +53,30 @@ export const selectedAttachments = reactive({
         this.typeList = data
     },
     toggleSelected(weapon, attachment, type) {
-        if (this.list[weapon]) {
+        if (attachment == null) {
+            let currentAttachment = this.typeList[weapon][type]
+            delete this.typeList[weapon][type]
+            this.list[weapon] = this.list[weapon].filter( a => a !== currentAttachment)
+            // if this weapon already exists
+        } else if (this.list[weapon]) {
             if (this.list[weapon].includes(attachment)) {
                 // Toggles something off if it already exists.
                 this.list[weapon] = this.list[weapon].filter( a => a !== attachment)
                 delete this.typeList[weapon][type]
             } else {
+                // add the attachment
                 this.list[weapon].push(attachment)
                 if (this.typeList[weapon][type]) {
+                    // remove any other attachments in that cateogry
                     this.list[weapon] = this.list[weapon].filter( a => a !== this.typeList[weapon][type])
                     this.typeList[weapon][type] = attachment
                 } else {
+                // or simply set the category to this attachment
                     this.typeList[weapon][type] = attachment
                 }
             }
         } else {
+            // otherwise, save the data for this weapon for the first time
             this.list[weapon] = []
             this.list[weapon].push(attachment)
             this.typeList[weapon] = {}

@@ -3,7 +3,10 @@
     <!-- <p> Stats modified by <br> an attachment will<br>  be <span style="text-decoration: underline"> underlined </span> </p>  -->
     <div class="attachment-list"> 
         <p> Selected attachments: </p>
-        <p v-for="attachment in selectedAttachments.list[weapon]" > {{ attachmentData[attachment]['inGameName'] }} ({{attachmentData[attachment]['rarity']}})</p>
+        <p v-for="(key, group) in selectedAttachments.typeList[weapon]" @click="selectedAttachments.toggleSelected(weapon, null, group)"> 
+                <font-awesome-icon icon="fas fa-trash" />
+                {{ attachmentData[key]['inGameName'] }} 
+        </p>
         <p v-if="!selectedAttachments.list[weapon] || selectedAttachments.list[weapon].length==0"> None </p>
 
     </div>
@@ -15,13 +18,20 @@
                     <button @click="isModalOpen = false" class="modal__close-button" aria-label="Close Modal" type="button"><font-awesome-icon icon="fa-solid fa-xmark" /></button>
                     <h2> Attachment Selector </h2>
                     <div class="attachment-container">
-                        <div v-for="(group, key) in groupAttachments(weapon)" class="attachment-selector" :key="key">
-                            <!-- <img :src=" 'images/' + armorImage(key) + '.png'  " class="attachment-image" >  -->
-                            <!-- <span> {{  attachmentData[attachment]['IGN'] }} ({{attachmentData[attachment]['rarity']}})</span>  -->
+                        <div v-for="(key, group) in groupAttachments(weapon)" class="attachment-selector" :key="key">
                             <h3> {{ keyNames[key] }} </h3>
-                            <p v-for="(attachment, key2) in group"  :key="key2"
-                            :class="colourClassGiver(attachment)"
-                            @click="selectedAttachments.toggleSelected(weapon, attachment, key)">
+                            <p  
+                                @click="selectedAttachments.toggleSelected(weapon, null, group)"
+                                :class="colourClassGiver(null, group)"
+                                class="attachment-item"
+                            > 
+                                None 
+                            </p>
+                            <p v-for="(attachment, key2) in key"  :key="key2"
+                                :class="colourClassGiver(attachment, group)"
+                                @click="selectedAttachments.toggleSelected(weapon, attachment, group)"
+                                class="attachment-item"
+                            >
                                 {{  attachmentData[attachment]['inGameName'] }} ({{attachmentData[attachment]['rarity']}})
                             </p>
                         </div>
@@ -68,7 +78,7 @@ export default {
             attachmentData: attachmentData,
             showModal: false,
             selectedAttachments,
-            keyNames: keyObject
+            keyNames: keyObject,
         }
     },
     methods: {
@@ -78,14 +88,22 @@ export default {
         getAttachments(weapon) {
             return attachment.getAttachments(weapon)
         },
-        colourClassGiver(attachment) {
+        colourClassGiver(attachment, category) {
             let output = ''
-            output += attachmentData[attachment]['rarity'].toLowerCase()
+            if (attachment != null) output += attachmentData[attachment]['rarity'].toLowerCase()
 
-            if (selectedAttachments.list[this.weapon]) {
-                if (selectedAttachments.list[this.weapon].includes(attachment)) {
-                    output += ' active'
+            if (selectedAttachments.typeList[this.weapon]) {
+                if (selectedAttachments.typeList[this.weapon][category]) {
+                    if (selectedAttachments.typeList[this.weapon][category] == attachment) {
+                        output += ' active'
+                    }
+                } else {
+                    if (attachment == null) {
+                        return 'active'
+                    }
                 }
+            } else if (attachment == null) {
+                return 'active'
             }
             return output
         },
@@ -105,20 +123,26 @@ export default {
 }
 
 
-p, span {
+.attachment-item, span {
     color: var(--color-base);
     transition: all .1s ease-in-out;
 }
 
-p:hover {
+.attachment-item:not(.active):hover {
     background-color: var(--color-surface-2);
 }
 
 .attachment-container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: var(--space-sm);
     margin-top: var(--space-md);
+}
+
+@media screen and (max-width: 900px) {
+    .attachment-container {
+        grid-template-columns: 1fr;
+    }
 }
 
 .attachment-selector {
@@ -153,5 +177,22 @@ button img {
     filter: invert(1);    
     width: 100%;
     height: 100%
+}
+
+.attachment-list p {
+    padding: var(--space-xs) 0
+}
+.attachment-list p:not(:last-of-type) {
+    border-bottom: 1px solid var(--border-color-base);
+}
+.attachment-list p > svg {
+    color: var(--rarity-color-exotic);
+    padding-left: 0.2rem;
+
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+
+    display: inline-flex;
 }
 </style>
