@@ -19,7 +19,7 @@
                     <h2> Attachment Selector </h2>
                     <div class="attachment-container">
                         <div v-for="(key, group) in groupAttachments(weapon)" class="attachment-selector" :key="key">
-                            <h3> {{ keyNames[key] }} </h3>
+                            <h3> {{ keyNames[group] }} </h3>
                             <p  
                                 @click="selectedAttachments.toggleSelected(weapon, null, group)"
                                 :class="colourClassGiver(null, group)"
