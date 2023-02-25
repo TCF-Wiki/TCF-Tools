@@ -28,6 +28,7 @@
                 <a href="/progress.html"><img src="./images/Nav_Progress.png" /> Progress Tracker </a>
                 <a href="https://tracker.thecyclefrontier.wiki"><img src="./images/Nav_Tracker.png" /> Item Tracker </a>
                 <a href="/loadout.html"><img src="./images/Nav_Loadout.png" /> Loadout Generator</a>
+                <a href="/timer.html"><img src="./images/Nav_Loadout.png" /> Cycle Timer</a>
             </div>
         </div>
         <div class="contributors">
