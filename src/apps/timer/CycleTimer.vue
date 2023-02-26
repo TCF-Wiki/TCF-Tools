@@ -100,7 +100,7 @@ doneLoading();
   order: 9999;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   margin: 0;
   padding: 0;
 }
@@ -110,7 +110,7 @@ doneLoading();
   margin-bottom: 1.5rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   justify-content: center;
 }
 .cycle-tracker__buttons button {
@@ -132,7 +132,7 @@ doneLoading();
 .cycle-tracker__start-message {
   margin-top: auto;
   margin-bottom: auto;
-  color: var(--color-surface-4);
+  color: var(--color-base);
 }
 .cycle-tracker__timeline {
   display: flex;
@@ -140,12 +140,12 @@ doneLoading();
   width: 100%;
 }
 .cycle-tracker__current-message {
-  margin-left: 1rem /* 16px */;
-  margin-right: 1rem /* 16px */;
-  margin-top: 0.5rem /* 8px */;
-  margin-bottom: 0.5rem /* 8px */;
-  padding-top: 0.5rem /* 8px */;
-  padding-bottom: 0.5rem /* 8px */;
+  margin-left: var(--space-md) /* 16px */;
+  margin-right: var(--space-md) /* 16px */;
+  margin-top: var(--space-sm) /* 8px */;
+  margin-bottom: var(--space-sm) /* 8px */;
+  padding-top: var(--space-sm) /* 8px */;
+  padding-bottom: var(--space-sm) /* 8px */;
   text-align: center;
   background-color: var(--color-base--subtle);
   color: var(--color-surface-4);
@@ -159,9 +159,9 @@ doneLoading();
     padding-bottom: var(--space-sm);
   }
   .cycle-tracker__buttons {
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
-    gap: 1rem;
+    margin-top: var(--space-sm);
+    margin-bottom: var(--space-sm);
+    gap: var(--space-md);
   }
 
   .cycle-tracker__timeline {
@@ -170,7 +170,7 @@ doneLoading();
     margin-bottom: auto;
     margin-left: 4rem;
     margin-right: 4rem;
-    height: 2rem;
+    height: var(--space-lg);
     background-color: var(--color-base--subtle);
   }
 
@@ -182,7 +182,7 @@ doneLoading();
     padding-top: 0px;
     padding-bottom: 0px;
     font-size: 1.25rem;
-    line-height: 2rem;
+    line-height: var(--space-lg);
   }
 
   .cycle-tracker__timer-list {

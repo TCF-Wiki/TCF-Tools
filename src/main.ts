@@ -10,6 +10,8 @@ if (path == "/map") {
     location.pathname = "/forge.html";
 } else if (path == "/loadout") {
     location.pathname = "/loadout.html";
+} else if (path == "/timer") {
+    location.pathname = "/timer.html";
 }
 
 import {createApp} from "vue";
