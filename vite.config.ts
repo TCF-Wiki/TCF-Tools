@@ -23,6 +23,7 @@ export default defineConfig({
                 progress: resolve(__dirname, 'progress.html'),
                 loadout: resolve(__dirname, 'loadout.html'),
                 calculator: resolve(__dirname, 'calculator.html'),
+                timer: resolve(__dirname, 'timer.html')
             }
         }
     },
