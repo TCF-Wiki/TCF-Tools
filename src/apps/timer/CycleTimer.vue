@@ -29,6 +29,7 @@ doneLoading();
 
 <template>
   <div class="cycle-tracker__navbars">
+    <div class="cycle-tracker__note">Current Map</div>
     <div class="cycle-tracker__buttons">
       <button
         v-for="(map, index) in mapNames"
@@ -40,6 +41,7 @@ doneLoading();
         {{ map.name }}
       </button>
     </div>
+    <div class="cycle-tracker__note">Time Offset</div>
     <div class="cycle-tracker__buttons">
       <button
         v-for="(offset, index) in offsets"
@@ -51,6 +53,7 @@ doneLoading();
         +{{ offset }} seconds
       </button>
     </div>
+    <div class="cycle-tracker__note">Event in-game</div>
     <div class="cycle-tracker__buttons">
       <button
         v-for="timing in buttons"
@@ -104,10 +107,13 @@ doneLoading();
   margin: 0;
   padding: 0;
 }
-
+.cycle-tracker__note {
+  display: flex;
+  justify-content: center;
+}
 .cycle-tracker__buttons {
-  margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
+  margin-top: var(--space-xs);
+  margin-bottom: var(--space-sm);
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-sm);
@@ -140,12 +146,12 @@ doneLoading();
   width: 100%;
 }
 .cycle-tracker__current-message {
-  margin-left: var(--space-md) /* 16px */;
-  margin-right: var(--space-md) /* 16px */;
-  margin-top: var(--space-sm) /* 8px */;
-  margin-bottom: var(--space-sm) /* 8px */;
-  padding-top: var(--space-sm) /* 8px */;
-  padding-bottom: var(--space-sm) /* 8px */;
+  margin-left: var(--space-md);
+  margin-right: var(--space-md);
+  margin-top: var(--space-sm);
+  margin-bottom: var(--space-sm);
+  padding-top: var(--space-sm);
+  padding-bottom: var(--space-sm);
   text-align: center;
   background-color: var(--color-base--subtle);
   color: var(--color-surface-4);
@@ -159,8 +165,6 @@ doneLoading();
     padding-bottom: var(--space-sm);
   }
   .cycle-tracker__buttons {
-    margin-top: var(--space-sm);
-    margin-bottom: var(--space-sm);
     gap: var(--space-md);
   }
 
