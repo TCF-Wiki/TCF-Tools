@@ -1,10 +1,9 @@
 @import "./base.css";
+
 body {
     font-family: var(--font-family-base);
     color: var(--text-color-body-white);
-}
-
-body {
+    
     position: relative;
     width: 100%;
     background-color: var(--color-surface-0);

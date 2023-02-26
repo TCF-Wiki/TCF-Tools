@@ -1,10 +1,4 @@
-@import "https://fonts.googleapis.com/css2?family=Rajdhani";
-@import 'https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap';
-
-body {
-  --font-family-base: 'Atkinson Hyperlegible'
-}
-
+@import 'https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700';
 :root{
     --color-surface-0: #121c25;
     --color-surface-1: #2b3b42;
