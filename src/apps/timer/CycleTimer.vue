@@ -53,7 +53,7 @@ doneLoading();
         +{{ offset }} seconds
       </button>
     </div>
-    <div class="cycle-tracker__note">Event in-game</div>
+    <div class="cycle-tracker__note">Event In-game</div>
     <div class="cycle-tracker__buttons">
       <button
         v-for="timing in buttons"
