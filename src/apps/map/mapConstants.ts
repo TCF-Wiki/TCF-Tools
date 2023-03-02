@@ -97,6 +97,7 @@ export const alphabeticalCreatures = {
     GlowBeetle_Blast: "Blast Tick",
     Crusher: "Crusher",
     Strider_3: "Heavy Strider",
+    Howler: "Howler",
     Leafman: "Leafman",
     Weremole: "Marauder",
     Rattler_2: "Mature Rattler",
