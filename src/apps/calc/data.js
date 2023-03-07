@@ -19,6 +19,7 @@ for (let wep in tempWeaponData) {
     delete tempWeaponData[wep]["immediateFireIncreasesSpread"];
     delete tempWeaponData[wep]["animationEquipTime"];
 }
+delete tempWeaponData['WP_A_Sniper_Shard_01']
 
 export const weaponData = tempWeaponData;
 
