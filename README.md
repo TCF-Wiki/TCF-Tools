@@ -1,5 +1,5 @@
-# TCF Tools
-Webpage for the cycle frontier wiki tools pages, found here: https://tools.thecyclefrontier.wiki
+# TCF Special Tools
+Webpage for the cycle frontier wiki tools pages, found here: https://special-tools.thecyclefrontier.wiki
 
 [![](https://img.shields.io/static/v1?label=Donate%20Ko-fi&message=%E2%9D%A4&logo=KoFi&color=%23fe8e86)](https://ko-fi.com/tcfwiki)
 [![](https://img.shields.io/static/v1?label=Donate%20GitHub&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/tcf-wiki)
@@ -7,7 +7,7 @@ Webpage for the cycle frontier wiki tools pages, found here: https://tools.thecy
 To run site locally, do:
 
 ```sh
-$ git clone https://github.com/TCF-Wiki/TCF-Tools
+$ git clone https://github.com/TCF-Wiki/TCF-Special-Tools
 $ cd TCF-Tools
 $ npm install --save
 $ npm run dev
