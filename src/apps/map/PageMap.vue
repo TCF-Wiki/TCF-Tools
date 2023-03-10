@@ -441,6 +441,7 @@ export default defineComponent({
 
         placeMarkersForSelectedLocations();
         placeMarkersForSelectedItems();
+        placeMarkersForSelectedCreatures();
         placeItemTiers();
 
         //Done loading
