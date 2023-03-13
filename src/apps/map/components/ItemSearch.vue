@@ -169,6 +169,13 @@ export default defineComponent({
             },
             {deep: true}
         );
+        this.$watch(
+            "selectedMap",
+            () => {
+                this.amounts = {...getItemAmounts()}
+            },
+            {deep: true}
+        );
     },
 });
 </script>
