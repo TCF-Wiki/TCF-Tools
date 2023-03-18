@@ -69,6 +69,10 @@ import Footer from "./constantComponents/Footer.vue";
 const FooterApp = createApp(Footer).component("font-awesome-icon", FontAwesomeIcon);
 FooterApp.mount("#footer");
 
+import SiteNotice from "./constantComponents/SiteNotice.vue";
+const NoticeApp = createApp(SiteNotice).component("font-awesome-icon", FontAwesomeIcon);
+NoticeApp.mount("#site-notice");
+
 //Stop Loading
 export function doneLoading() {
     let element = document.getElementById("loading");
