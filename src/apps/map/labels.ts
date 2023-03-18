@@ -1,6 +1,6 @@
-import L from 'leaflet';
+import L, { Marker } from 'leaflet';
 
-function mapLabel(text: string, y: number, x: number) {
+function mapLabel(text: string, y: number, x: number) : Marker<any> {
     let content = '<span class="map-label-text">' + text + '</span>';
 
     const locationIcon = L.divIcon({
@@ -38,6 +38,11 @@ export const mapOneLabels = [
     mapLabel('Waterfalls', -35.62, 199.141),
     mapLabel('East Caverns', -101.869, 206.141),
     mapLabel('Base Camp', -135.812, 125.115),
+    mapLabel('SOS Sign', -232.382, 116.588),
+    mapLabel('Fossil Area East Caverns', -94.180, 213.437),
+    mapLabel('Old Drill Head', -114.426, 166.876),
+    mapLabel('House on Stilts', -108.902, 146.387),
+    mapLabel('Horse Cave', -29.701, 206.393)
 ];
 
 export const mapTwoLabels = [
@@ -62,6 +67,13 @@ export const mapTwoLabels = [
     mapLabel('Starport Landing Pad', -68.598, 126.747),
     mapLabel('Starport Warehouse', -74.598, 164.994),
     mapLabel('Lagoon Thermal Ponds', -175.945, 118.74),
+    mapLabel('Extinct Creatures Lab', -93.655, 193.152),
+    mapLabel('Lost Scientist', -223.981, 80.705),
+    mapLabel('Frozen Engineer', -38.985, 203.868),
+    mapLabel('Abandoned Oil Field', -43.791, 188.151),
+    mapLabel('Missing Engineer Body', -98.940, 162.291),
+    mapLabel('Forest Crystal Seal', -183.647, 39.538),
+    mapLabel('Crystal Cave', -188.170, 12.786)
 ];
 
 export const mapThreeLabels = [
