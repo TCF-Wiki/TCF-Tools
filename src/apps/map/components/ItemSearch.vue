@@ -15,7 +15,7 @@
             <TransitionGroup name="list" tag="ul">
                 <li v-for="(item, index) in matchingItems" class="autocomplete-item" @click="setSearchItem(item)" :key="index">
                     <span> {{ item }} </span>
-                    <img :src="'map-images/item-images/' + itemImage(item)" class="item-image" />
+                    <img :src="'map-images/item-images/' + itemImage(item).replace('_-_Mk.II', '').replace('_-_Mk.I', '')" class="item-image" />
                 </li>
             </TransitionGroup>
         </div>
@@ -27,7 +27,7 @@
                 <p v-for="item in selectedItems.get()" @click="selectedItems.remove(item)" v-if="Object.keys(items).length > 0">
                     <font-awesome-icon icon="fas fa-trash" />
                     <span :class="colourClassGiver(item)">
-                        <img :src="'map-images/item-images/' + itemImage(items[item]['name'])" class="item-image-list" />
+                        <img :src="'map-images/item-images/' + itemImage(items[item]['name']).replace('_-_Mk.II', '').replace('_-_Mk.I', '')" class="item-image-list" />
                         {{ items[item]['name'] }}
                         <span class="small">{{ amounts[item]+1 ? '(' + amounts[item] + ')' : '' }}</span>
                     </span>

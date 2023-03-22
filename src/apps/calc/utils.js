@@ -79,7 +79,9 @@ export const creatureNames = {
     "AI_Weremole": "Marauder",
     "AI_Weremole_2": "Savage Marauder",
     "AI_Crusher": "Crusher",
-    "AI_Crusher_2": "Alpha Crusher"
+    "AI_Crusher_2": "Alpha Crusher",
+    "AI_Howler": "Howler",
+    "AI_Howler_2": "Elite Howler"
 }
 
 export const unusableAttachments = [

@@ -67,4 +67,14 @@ tempTargetData["PlayerDefault"] = {
 
 delete tempTargetData['AI_GlowBeetle_Blast']
 delete tempTargetData['AI_GlowBeetle_Acid']
+delete tempTargetData['AI_Howler_2']
 export const targetData = tempTargetData;
+
+async function get_item_data() {
+    const response = await fetch(githubURL + "items.json");
+    const json = await response.json();
+
+    return json;
+}
+
+export const itemData = await get_item_data();

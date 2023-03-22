@@ -62,14 +62,14 @@ export default {
                 if (realKey == 'EggSack') realKey = 'Egg Sack'
                 if (['Neck', 'Spine'].includes(realKey)) continue
 
-                output[realKey] = data[key]
+                output[realKey] = data[key]['m_damageMultiplier']
             }
             return output
         },
         getWeakspotValue(value) {
-            let weakSpotMultiplier = targetData[selectedTarget.selected]['weakSpotMultiplier']
+            // let weakSpotMultiplier = targetData[selectedTarget.selected]['weakSpotMultiplier']
 
-            if (value == 1) return 1 * weakSpotMultiplier
+            // if (value == 1) return 1 * weakSpotMultiplier
             return value
         }
     },

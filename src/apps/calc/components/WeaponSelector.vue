@@ -11,7 +11,7 @@
                     <button @click="isModalOpen = false" class="modal__close-button" aria-label="Close Modal" type="button"><font-awesome-icon icon="fa-solid fa-xmark" /></button>
                     <div class="weapon-container">
                         <div v-for="weapon in sortedData" class="weapon-selector" :class="{active: selectedWeapons.list.includes(weapon[1])}" @click="selectedWeapons.toggleSelected(weapon[1])">
-                            <img :src="'calc-images/' + weapon[0] + '.png'" class="weapon-image" />
+                            <img :src="'calc-images/' + weapon[0].replace(' - Mk.II', '').replace(' - Mk.I', '') + '.png'" class="weapon-image" />
                             <span class="weapon-name"> {{ weapon[0] }} </span>
                         </div>
                     </div>

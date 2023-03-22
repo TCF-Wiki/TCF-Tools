@@ -81,7 +81,7 @@ export function GenerateRandomLoadout(minRarity: number, maxRarity: number, cons
         let Ammo = getAmmoType(weapon);
         totalAmmo.push({type: Ammo, amount: getAmmoAmount(Ammo)});
         //Add the weapon to the data
-        data.weapons.push({img: weaponData[weapon].inGameName, ign: weaponData[weapon].inGameName, rarity: GetRarity(weapon)});
+        data.weapons.push({img: weaponData[weapon].inGameName.replace(' - Mk.I', '').replace(' - Mk.II', ''), ign: weaponData[weapon].inGameName, rarity: GetRarity(weapon)});
     }
 
     //Ammo
