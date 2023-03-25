@@ -118,7 +118,7 @@ export function createSpecialPopup(type: string, rawName: string, location: any)
         // and add it to our output
         section.appendChild(par);
     } else {
-        // key doors, dead drops, mission items, etc
+        // key doors, dead drops
         if (type == 'keyDoor') {
             const keyData = keyCardInfo[rawName];
             if (keyData) {

@@ -138,7 +138,7 @@ export default defineComponent({
             if (foundItem?.includes('Map02_KeyCard')) return 'Crescent_Falls_Key_Card.png';
             if (foundItem?.includes('Map03_KeyCard')) return 'Tharis_Island_Key_Card.png';
 
-            return item.replaceAll(' ', '_').replaceAll('#', '#');
+            return item.replaceAll(' ', '_').replaceAll('#', '%23');
         }
     },
     async mounted() {
