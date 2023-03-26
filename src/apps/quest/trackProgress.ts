@@ -7,8 +7,7 @@ type progressionList = {
 
 type quarterList = {
     [key: string]:  number
-            // which part the user is on
-    
+    // which part the user is on
 }
 
 
@@ -22,6 +21,14 @@ if (localStorage.getItem('date-created')) {
         localStorage.removeItem('quarters')
         localStorage.removeItem('date-created')
     }
+    // if old format
+    if (localStorage.getItem('progress')) {
+        let storage = JSON.parse(localStorage.getItem('progress') ?? '')
+        if (storage && storage['ica'] && storage['kor'] && storage['osi']) {
+            localStorage.removeItem('progress')
+            localStorage.removeItem('date-created')
+        }
+    }
 }
 
 let storage = {};
@@ -31,6 +38,7 @@ if (!localStorage.getItem('progress') || localStorage.getItem('progress') === '{
     for (let m in missionListData) { 
         progressList[m] = 0
     }
+    
     localStorage.setItem('progress', JSON.stringify(progressList))
     localStorage.setItem('date-created', date.toString())
     storage = progressList

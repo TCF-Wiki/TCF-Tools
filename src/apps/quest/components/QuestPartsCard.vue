@@ -67,7 +67,7 @@ onClickOutside(card, () => (isExpanded.value = false));
 import {defineComponent} from "vue";
 import {shieldData, backpackData, helmetData, itemData} from "../../forge/data";
 import {stringTables, missionData, missionListData} from "../data";
-import {keyCardInfo} from "../../map/mapConstants";
+import {alphabeticalContainers} from "../../map/mapConstants";
 import {locationNameManager, killCreatureOrPlayer, itemName, getFactionOfMission} from "../utils";
 import {factionProgress} from "../trackProgress";
 import {missions} from "../QuestConstants";
@@ -166,59 +166,16 @@ export default defineComponent({
                 return killCreatureOrPlayer(task, this.faction);
             }
             if (type == "DeadDrop") {
-                // find the corresponding stringtable for this task
-                let keys = Object.keys(this.stringTable);
-
-                let newKeys: string[] = [];
-                newKeys = keys.filter((a) => a.toLowerCase().includes(mission.toLowerCase()));
-
-                if (newKeys.length == 1) {
-                    let text = this.stringTable[newKeys[0]];
-                    if (text.includes("Stash an")) return text;
-                    // add how many items you have to stash in the text
-                    return text.replace("Stash ", `Stash ${task["maxProgress"]} `);
-                } else if (newKeys.length > 1) {
-                    // Handle edge cases..
-                    if (["Main-KOR-LetiumResearch-4", "Main-KOR-Caverns-13", "Main-ICA-GruntWork-5", "Main-ICA-GruntWork-8"].includes(mission)) index = index - 1;
-
-                    let text = this.stringTable[newKeys[index]];
-
-                    // another edge case
-                    if (["Main-ICA-MeteorReactor-5"].includes(mission)) text = this.stringTable[newKeys[newKeys.length - index - 1]];
-
-                    // goofy ahh edge case
-                    if (['Main-Osiris-Caverns-13.1'].includes(mission)) {
-                        ///console.log(this.stringTable[newKeys[index]], index)
-                        if (index == 1) {
-                            text = this.stringTable[newKeys[2]]
-                        }
-                        if (index == 2) {
-                            text = this.stringTable[newKeys[1]]
-                        }
-                    }
-                    // and another one we are not going to talk about...
-                    if (["Main-ICA-OilPump-1"].includes(mission)) {
-                        if (index == 0) {
-                            text = this.stringTable[newKeys[1]];
-                        }
-                        if (index == 1) {
-                            text = this.stringTable[newKeys[0]];
-                        }
-                    }
-
-                    if (text.includes("Stash an")) return text;
-
-                    // Stringtable is incomplete T_T
-                    if (mission == "Main-ICA-OilPump-1") text += " at Nutrion Office";
-
-                    // Add how many items there are, plus handle another edge case
-                    return text.replace("Stash ", `Stash ${task["maxProgress"]} `).replace("the Tharis Files", "Gregor's Dossier");
-                }
-                return task["locationConditions"];
+                let amountString = task['maxProgress'] > 1 ? 's' : ''
+                return 'Stash ' + task['maxProgress']  + ' ' + itemName(task['deadDropItem']) + amountString + ' in the dead drop at ' + task['deadDropLocation']
             }
             if (type == 'LootContainer') {
                 let amountString = task['maxProgress'] > 1 ? 's' : ''
-                let container = task['container'] ?? 'container'
+                let container = task['container']
+                if (container == 'PowerupContainer') return 'Loot ' + task['maxProgress'] + ' ' + 'Powerup Container' + amountString
+
+                // @ts-ignore
+                container = alphabeticalContainers[container] ?? 'Container'
                 return 'Loot ' + task['maxProgress'] + ' ' + container + amountString
             }
             if (type == 'FactionLevel') {
@@ -261,6 +218,7 @@ export default defineComponent({
             let newList: any = [];
 
             for (let r in rewardList) {
+                if (rewardList[r]["amount"] <= 0) continue;
                 if (rewardList[r]["item"] === "SoftCurrency") {
                     newList.splice(0, 0, rewardList[r]);
                 } else if (rewardList[r]["item"].includes("Reputation")) {
@@ -670,6 +628,11 @@ export default defineComponent({
 .kor {
     outline-color: #d65c1f;
     fill: #d65c1f;
+}
+
+.bad {
+    outline-color: #b85fd2;
+    fill: #b85fd2;
 }
 
 @media screen and (max-width: 900px) {

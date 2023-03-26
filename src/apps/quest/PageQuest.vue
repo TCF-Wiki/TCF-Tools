@@ -20,12 +20,18 @@
             </div>
 
             <div @click="currentSlide(4)" :class="{'active-slide': slideIndex === 4}" class="quest-line__selector-tab">
+                <img src="/map-images/item-images/bad_Reputation.png" class="modal__header-image" />
+                <span> Badum </span>
+                <img src="/map-images/item-images/bad_Reputation.png" class="modal__header-image" />
+            </div>
+
+            <div @click="currentSlide(5)" :class="{'active-slide': slideIndex === 5}" class="quest-line__selector-tab">
                 <img src="/quest-images/Quarters/QuarterLevel.png" class="modal__header-image" />
                 <span> Quarters </span>
                 <img src="/quest-images/Quarters/QuarterLevel.png" class="modal__header-image" />
             </div>
 
-            <div @click="currentSlide(5)" :class="{'active-slide': slideIndex === 5}" class="quest-line__selector-tab">
+            <div @click="currentSlide(6)" :class="{'active-slide': slideIndex === 6}" class="quest-line__selector-tab">
                 <img src="/quest-images/Quarters/ItemList.png" class="modal__header-image" />
                 <span> Items </span>
                 <img src="/quest-images/Quarters/ItemList.png" class="modal__header-image" />
@@ -381,6 +387,24 @@
             </div>
         </div>
 
+        <div class="quest-line__container-inner fade">
+            <div class="quest-line">
+                <div class="quest-list">
+                    <div class="quest-list__center">
+                        <QuestStart />
+                    </div>
+                </div>
+
+
+                <div class="quest-list">
+                    <div class="quest-list__center">
+                        <QuestCard name="Fortuna's Favored"  />
+                    </div>
+                </div>
+
+    
+            </div>
+        </div>
         <!-- QUARTERS -->
         <div class="quest-line__container-inner fade">
             <div class="quest-line">
@@ -422,7 +446,7 @@ export default defineComponent({
     components: {QuestCard, QuestStart, ItemList, QuarterList},
     data() {
         return {
-            slideIndex: 3,
+            slideIndex: 2,
             list: factionProgress,
         };
     },
@@ -685,7 +709,7 @@ export default defineComponent({
 
 .quest-line__selector {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
 
     text-align: center;
 
@@ -742,18 +766,18 @@ export default defineComponent({
 .quest-line__selector div:not(.active-slide)::before {
     content: "";
     position: absolute;
-    top: 3px;
+    top: 0px;
     left: 0;
     width: 100%;
     height: 100%;
-    border-bottom: 2px solid transparent;
+    border: 2px solid transparent;
 
     transition: 0.4s ease-in-out;
 }
 
 .quest-line__selector div:hover:not(.active-slide)::before {
-    border-bottom-color: var(--link-body-color);
-    color: var(--color-warning);
+    border-color: var(--link-body-color);
+    color: var(--color-success);
 }
 .active-slide::before:hover {
     border-bottom-color: var(--color-primary) !important;
@@ -762,17 +786,17 @@ export default defineComponent({
 .active-slide::before {
     content: "";
     position: absolute;
-    top: 3px;
+    top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    border-bottom: 2px solid var(--color-base--subtle);
+    border: 2px solid var(--color-base--subtle);
 
     transition: 0.4s ease-in-out;
 }
 
 .active-slide:hover::before {
-    border-bottom-color: var(--color-base--subtle);
+    border-color: var(--color-base--subtle);
 }
 
 .back-to-top-text {

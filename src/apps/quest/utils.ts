@@ -55,7 +55,10 @@ export function killCreatureOrPlayer(task: any, faction: string): string {
         let specificCreature = killInfo['m_specificAIEnemyTypeToKill'].replace('EYEnemyType::', '')
         let specificCreatureVariant = killInfo['m_specificVariationToKill']['RowName']
 
-        if (specificCreature == 'None') targetString = 'Creatures'
+        if (specificCreature == 'None' && specificCreatureVariant !== 'None' && killInfo['m_specificVariationToKill']['DataTable'] !== null) {
+            specificCreature = specificCreatureVariant.replace('_2', '').replace('_3', '')
+        }
+        if (specificCreature == 'None') targetString = 'Creature' + amountString
         else if (specificCreature == 'Weremole') {
             if (specificCreatureVariant && specificCreatureVariant.includes('2')) targetString = 'Savage Marauder' + amountString
             if (!targetString) targetString = 'Marauder' + amountString
@@ -69,8 +72,12 @@ export function killCreatureOrPlayer(task: any, faction: string): string {
         else if (specificCreature == 'Strider') {
             if (specificCreatureVariant && specificCreatureVariant.includes('3')) targetString = 'Heavy Strider' + amountString
             if (!targetString) targetString = 'Strider' + amountString
+        } else if (specificCreature == 'Crusher') {
+            if (specificCreatureVariant && specificCreatureVariant.includes('2')) targetString = 'Alpha Crusher' + amountString
+            if (!targetString) targetString = 'Crusher' + amountString
         }
-        else targetString = specificCreature 
+        else targetString = specificCreature + amountString
+        if (!targetString) targetString = 'Creature' + amountString
 
     } else if (target == 'Players') targetString = 'Prospector' + amountString
     else if (target == 'All') targetString = 'Creatures or Prospectors'
@@ -85,9 +92,9 @@ export function killCreatureOrPlayer(task: any, faction: string): string {
     } else if (killInfo['m_allowedSpecificWeapons'].length > 0) {
         let weapons = killInfo['m_allowedSpecificWeapons']
         if (weapons.length == 1) weaponString = itemName(weapons[0]['RowName'])
-        else if (weapons[0]['RowName'] == 'WP_A_Pistol_Bullet_01') weaponString = ' with a Korolev weapon'
-        else if (weapons[0]['RowName'] == 'WP_G_Pistol_Energy_01') weaponString = ' with an Osiris weapon'
-        else if (weapons[0]['RowName'] == 'WP_D_Pistol_Bullet_01') weaponString = ' with an ICA weapon'
+        else if (weapons[0]['RowName'].includes('WP_A')) weaponString = ' with a Korolev weapon'
+        else if (weapons[0]['RowName'].includes('WP_G')) weaponString = ' with an Osiris weapon'
+        else if (weapons[0]['RowName'].includes('WP_D')) weaponString = ' with an ICA weapon'
     }
             
     // location info
