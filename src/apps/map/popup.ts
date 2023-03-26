@@ -52,17 +52,21 @@ export function createLootPopup(type: string) {
     tableheaderRowContent.appendChild(tableheaderText)
     row.appendChild(tableheaderRowContent)
 
-    tableheaderRowContent = document.createElement('th');
-    tableheaderText = document.createTextNode('Max Qty')
-    tableheaderRowContent.appendChild(tableheaderText)
-    row.appendChild(tableheaderRowContent)
+    // tableheaderRowContent = document.createElement('th');
+    // tableheaderText = document.createTextNode('Max Qty')
+    // tableheaderRowContent.appendChild(tableheaderText)
+    // row.appendChild(tableheaderRowContent)
 
     tableHeader.appendChild(row)
 
     // creating all cells
     const tableBody = document.createElement('tbody');
     for (let item in data) {
-        let cellData = [item, data[item].chance, data[item].amount];
+        let cellData = [
+            item, 
+            data[item].chance, 
+            // data[item].amount
+        ];
 
         // creates a table row
         const row = document.createElement('tr');

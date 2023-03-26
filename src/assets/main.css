@@ -363,14 +363,17 @@ input[type="checkbox"]:checked::before {
     text-align: center;
 }
 
-.leaflet-popup-content table tbody tr td:nth-child(2) {
+.leaflet-popup-content table tbody tr td {
     border-left: 1px solid var(--border-color-base);
+
+}
+.leaflet-popup-content table tbody tr td:nth-child(2) {
     border-right: 1px solid var(--border-color-base);
-    padding: 0 .2rem;
+    padding: 0 .4rem;
 }
 
 .leaflet-popup-content table tbody tr td:nth-child(3) {
-    padding-left: .2rem;
+    padding-left: .4rem;
 }
 
 .leaflet-tile {
