@@ -37,7 +37,7 @@ export function createLootPopup(type: string) {
 
     // creating all cells
     for (let item in data) {
-        let cellData = [item, data[item]];
+        let cellData = [item, data[item].chance];
 
         // creates a table row
         const row = document.createElement('tr');
