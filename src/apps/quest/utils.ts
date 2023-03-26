@@ -1,5 +1,5 @@
 import {weaponData} from "../calc/data";
-import {locationData, itemData} from "./data";
+import {locationData, itemData, missionListData} from "./data";
 import {creatureNames} from "./QuestConstants";
 
 export function locationNameManager(name: string): string {
@@ -43,60 +43,65 @@ export function mapNameManager(name: string): string {
 }
 
 export function killCreatureOrPlayer(task: any, faction: string): string {
-    // utility function to get a string describing a type=kills task.
+    let killInfo = task['killConditions']
+    let amount = task['maxProgress']
 
-    // type of kill
-    let killType = task["killConditions"]["m_killTarget"];
-    let creature: string = task["killConditions"]["m_specificAIEnemyTypeToKill"].replace("EYEnemyType::", "");
+    // target
+    let targetString = ''
+    let amountString = amount > 1 ? 's' : ''
+    let target = killInfo['m_killTarget'].replace('EYKillTypeAction::', '') 
 
-    // set up the name of the target
-    if (killType.includes("Players")) {
-        creature = "Player";
-    } else if (creature == "None" || !creature) {
-        creature = "Creature";
-    } else {
-        creature = creatureNames[creature];
-    }
+    if (target == 'Creatures') {
+        let specificCreature = killInfo['m_specificAIEnemyTypeToKill'].replace('EYEnemyType::', '')
+        let specificCreatureVariant = killInfo['m_specificVariationToKill']['RowName']
 
-    // Plural.
-    if (task["maxProgress"] > 1) creature += "s";
-
-    // set up our conditional locations
-    let location = "";
-    let map = "";
-    if (task["locationConditions"]) {
-        location = locationNameManager(task["locationConditions"]);
-    } else if (task["killConditions"]["m_mapName"]) {
-        map = mapNameManager(task["killConditions"]["m_mapName"]);
-    }
-
-    // set up our weapons you can kill with
-    let weapon = "";
-    const category = task["killConditions"]["m_allowedWeaponCategories"];
-    const weapons = task["killConditions"]["m_allowedSpecificWeapons"];
-    if (category.length == 1) {
-        // Never longer then 1 entry, so just
-
-        const weaponString = category[0].replace("EYDeviceCategory::", "").replace("SniperRifle", "Sniper").replace("AssaultRifle", "AR");
-        weapon += ` with a ${weaponString}`;
-    } else if (weapons.length > 0) {
-        if (weapons.length > 1) {
-            let factionString = faction.replace("kor", "Korolev Weapon").replace("osi", "Osiris Weapon").replace("ica", "ICA Weapon");
-
-            weapon += ` with a ${factionString}`;
-        } else {
-            weapon += ` with the  ${weaponData[weapons[0]["RowName"]]["inGameName"]}`;
+        if (specificCreature == 'None') targetString = 'Creatures'
+        else if (specificCreature == 'Weremole') {
+            if (specificCreatureVariant && specificCreatureVariant.includes('2')) targetString = 'Savage Marauder' + amountString
+            if (!targetString) targetString = 'Marauder' + amountString
+        } 
+        else if (specificCreature == 'GlowBeetle_Blast')targetString = 'Blast Tick' + amountString
+        else if (specificCreature == 'GlowBeetle_Acid') targetString = 'Acid Tick' + amountString
+        else if (specificCreature == 'Rattler') {
+            if (specificCreatureVariant && specificCreatureVariant.includes('2')) targetString = 'Mature Rattler' + amountString
+            if (!targetString) targetString = 'Rattler' + amountString
         }
+        else if (specificCreature == 'Strider') {
+            if (specificCreatureVariant && specificCreatureVariant.includes('3')) targetString = 'Heavy Strider' + amountString
+            if (!targetString) targetString = 'Strider' + amountString
+        }
+        else targetString = specificCreature 
+
+    } else if (target == 'Players') targetString = 'Prospector' + amountString
+    else if (target == 'All') targetString = 'Creatures or Prospectors'
+    
+    // weapon info 
+    let weaponString = ''
+    if (killInfo['m_allowedWeaponCategories'].length > 0) {
+        let categoryString = killInfo['m_allowedWeaponCategories'][0].replace('EYDeviceCategory::', '');
+        if (categoryString == 'AssaultRifle') categoryString = 'Assault Rifle'
+        else if (categoryString == 'SniperRifle') categoryString = 'Sniper Rifle'
+        weaponString = ' with a ' + categoryString
+    } else if (killInfo['m_allowedSpecificWeapons'].length > 0) {
+        let weapons = killInfo['m_allowedSpecificWeapons']
+        if (weapons.length == 1) weaponString = itemName(weapons[0]['RowName'])
+        else if (weapons[0]['RowName'] == 'WP_A_Pistol_Bullet_01') weaponString = ' with a Korolev weapon'
+        else if (weapons[0]['RowName'] == 'WP_G_Pistol_Energy_01') weaponString = ' with an Osiris weapon'
+        else if (weapons[0]['RowName'] == 'WP_D_Pistol_Bullet_01') weaponString = ' with an ICA weapon'
+    }
+            
+    // location info
+    let locationString = ''
+    let stormString = ''
+    if (killInfo['m_onlyDuringStorm']) stormString = ' during an active Storm'
+    if (task['locationConditions'].lenght > 0) locationString = ' at ' + locationNameManager(task['locationConditions'[0]])
+    else if (killInfo['m_mapName']) {
+        locationString = ' on ' + mapNameManager(killInfo['m_mapName'])
     }
 
-    // build our final string
-    let returnInfo = "Kill " + task["maxProgress"] + " " + creature;
-    if (task["killConditions"]["m_onlyDuringStorm"]) returnInfo += " during storm";
-    if (location) returnInfo += ` at ${location}`;
-    if (map) returnInfo += ` on ${map}`;
-    if (weapon) returnInfo += weapon;
-
-    return returnInfo;
+    // final string
+    const killString = 'Kill ' + amount + ' ' + targetString + weaponString + locationString + stormString
+    return killString;
 }
 
 export function getItemsOfMission(data: any): any {
@@ -154,4 +159,9 @@ export function itemName(item: string, urlFormat?: boolean): string {
     if (urlFormat) return item.split(" ").join("_").replace("#", "%23");
 
     return item;
+}
+
+
+export function getFactionOfMission(mission: string) {
+    return missionListData[mission]['faction'].substring(0, 3).toLowerCase()
 }

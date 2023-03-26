@@ -43,89 +43,89 @@
 
                 <div class="quest-list">
                     <div class="quest-list__left">
-                        <QuestCard name="Audiophiles Beware" faction="ica" />
+                        <QuestCard name="Audiophiles Beware"  />
                     </div>
 
-                    <div class="quest-list__left-line" :class="lineColor('ica', 'Your Civic Duty', 5)">
+                    <div class="quest-list__left-line" :class="lineColor('Your Civic Duty', 5)">
                         <div class="quest-list__left-line-content">Part 5</div>
                     </div>
 
-                    <div class="quest-list__center" :class="lineColor('ica', 'Your Civic Duty')">
-                        <QuestCard name="Your Civic Duty" faction="ica" footer="Part 5 unlocks Crescent Falls" />
+                    <div class="quest-list__center" :class="lineColor('Your Civic Duty')">
+                        <QuestCard name="Your Civic Duty"  footer="Part 5 unlocks Crescent Falls" />
                     </div>
                 </div>
 
                 <div class="quest-list">
-                    <div class="quest-list__center" :class="lineColor('ica', 'Doing the Work')">
-                        <QuestCard name="Doing the Work" faction="ica" />
+                    <div class="quest-list__center" :class="lineColor('Doing the Work')">
+                        <QuestCard name="Doing the Work"  />
                     </div>
 
-                    <div class="quest-list__right-line" :class="lineColor('ica', 'Doing the Work', 6)">
+                    <div class="quest-list__right-line" :class="lineColor('Doing the Work', 6)">
                         <div class="quest-list__right-line-content">Part 6</div>
                     </div>
                     <div class="quest-list__right">
-                        <QuestCard name="Toxic Love" faction="ica" unlock="Gas Grenade" />
+                        <QuestCard name="Toxic Love"  unlock="Gas Grenade" />
                     </div>
                 </div>
 
                 <div class="quest-list">
-                    <div class="quest-list__left">
-                        <QuestCard name="Race to the Bottom" faction="ica" />
-                    </div>
+                    <!-- <div class="quest-list__left">
+                        <QuestCard name="Race to the Bottom"  />
+                    </div> 
 
-                    <div class="quest-list__left-line" :class="lineColor('ica', 'Project Fireball', 7)">
+                    <div class="quest-list__left-line" :class="lineColor('Project Fireball', 7)">
                         <div class="quest-list__left-line-content">Part 7</div>
+                    </div> -->
+
+                    <div class="quest-list__center" :class="lineColor('Project Fireball')">
+                        <QuestCard name="Project Fireball"  footer="Part 7 unlocks Tharis Island" />
                     </div>
 
-                    <div class="quest-list__center" :class="lineColor('ica', 'Project Fireball')">
-                        <QuestCard name="Project Fireball" faction="ica" footer="Part 7 unlocks Tharis Island" />
-                    </div>
-
-                    <div class="quest-list__right-line" :class="lineColor('ica', 'Project Fireball', 5)">
+                    <div class="quest-list__right-line" :class="lineColor('Project Fireball', 5)">
                         <div class="quest-list__right-line-content">Part 5</div>
                     </div>
                     <div class="quest-list__right">
-                        <QuestCard name="Working for the Community" faction="ica" />
+                        <QuestCard name="Working for the Community"  />
                     </div>
                 </div>
 
                 <div class="quest-list">
                     <div class="quest-list__left">
-                        <QuestCard name="Private Business" faction="ica" />
+                        <QuestCard name="Private Business"  />
                     </div>
 
-                    <div class="quest-list__left-line" :class="lineColor('ica', 'Never Give Up', 3)">
+                    <div class="quest-list__left-line" :class="lineColor('Never Give Up', 3)">
                         <div class="quest-list__left-line-content">Part 3</div>
                     </div>
 
-                    <div class="quest-list__center" :class="lineColor('ica', 'Never Give Up')">
-                        <QuestCard name="Never Give Up" faction="ica" />
+                    <div class="quest-list__center" :class="lineColor('Never Give Up')">
+                        <QuestCard name="Never Give Up"  />
                     </div>
                 </div>
 
                 <div class="quest-list">
-                    <div class="quest-list__center" :class="lineColor('ica', 'Back to Basics')">
-                        <QuestCard name="Back to Basics" faction="ica" unlock="Oil Pump Beacon" />
+                    <div class="quest-list__center" :class="lineColor('Back to Basics')">
+                        <QuestCard name="Back to Basics"  unlock="Oil Pump Beacon" />
                     </div>
 
-                    <div class="quest-list__right-line" :class="lineColor('ica', 'Back to Basics', 4)">
+                    <div class="quest-list__right-line" :class="lineColor('Back to Basics', 4)">
                         <div class="quest-list__right-line-content">Part 4</div>
                     </div>
 
                     <div class="quest-list__right">
-                        <QuestCard name="The Community Needs You" faction="ica" />
+                        <QuestCard name="The Community Needs You"  />
                     </div>
                 </div>
 
                 <div class="quest-list">
-                    <div class="quest-list__center" :class="lineColor('ica', 'An Eye for Oil')">
-                        <QuestCard name="An Eye for Oil" faction="ica" unlock="Oil Scanning Module" />
+                    <div class="quest-list__center" :class="lineColor('An Eye for Oil')">
+                        <QuestCard name="An Eye for Oil"  unlock="Oil Scanning Module" />
                     </div>
                 </div>
 
-                <div class="quest-list" :class="lineColor('ica', 'Put to the Test')">
+                <div class="quest-list" :class="lineColor('Put to the Test')">
                     <div class="quest-list__center">
-                        <QuestCard name="Put to the Test" faction="ica" />
+                        <QuestCard name="Put to the Test"  />
                     </div>
                 </div>
             </div>
@@ -141,109 +141,109 @@
                 </div>
 
                 <div class="quest-list">
-                    <div class="quest-list__center" :class="lineColor('kor', 'Time to Punch In')">
-                        <QuestCard name="Time to Punch In" faction="kor" footer="Part 5 unlocks Crescent Falls" />
+                    <div class="quest-list__center" :class="lineColor('Time to Punch In')">
+                        <QuestCard name="Time to Punch In"  footer="Part 5 unlocks Crescent Falls" />
                     </div>
 
-                    <div class="quest-list__right-line" :class="lineColor('kor', 'Time to Punch In', 5)">
+                    <div class="quest-list__right-line" :class="lineColor('Time to Punch In', 5)">
                         <div class="quest-list__right-line-content">Part 5</div>
                     </div>
                     <div class="quest-list__right">
-                        <QuestCard name="What a Tool!" faction="kor" unlock="Heavy Mining Tool" />
+                        <QuestCard name="What a Tool!"  unlock="Heavy Mining Tool" />
                     </div>
                 </div>
 
                 <div class="quest-list">
                     <div class="quest-list__left">
-                        <QuestCard name="Veltecite for the Masses" faction="kor" unlock="Veltecite Scanning Module" />
+                        <QuestCard name="Veltecite for the Masses"  unlock="Veltecite Scanning Module" />
                     </div>
 
-                    <div class="quest-list__left-line" :class="lineColor('kor', 'Good Honest Work', 1)">
+                    <div class="quest-list__left-line" :class="lineColor('Good, Honest Work', 1)">
                         <div class="quest-list__left-line-content">Part 1</div>
                     </div>
 
-                    <div class="quest-list__center" :class="lineColor('kor', 'Good Honest Work')">
-                        <QuestCard name="Good Honest Work" faction="kor" />
+                    <div class="quest-list__center" :class="lineColor('Good, Honest Work')">
+                        <QuestCard name="Good, Honest Work"  />
                     </div>
 
-                    <div class="quest-list__right-line" :class="lineColor('kor', 'Good Honest Work', 2)">
+                    <div class="quest-list__right-line" :class="lineColor('Good, Honest Work', 2)">
                         <div class="quest-list__right-line-content">Part 2</div>
                     </div>
 
                     <div class="quest-list__right">
-                        <QuestCard name="Titan Hunter" faction="kor" unlock="Titan Ore Scanning Module" />
+                        <QuestCard name="Titan Hunter"  unlock="Titan Ore Scanning Module" />
                     </div>
                 </div>
 
                 <div class="quest-list">
                     <div class="quest-list__left">
-                        <QuestCard name="Focused on Crystals" faction="kor" unlock="Focus Crystal Scanning Module" />
+                        <QuestCard name="Focused on Crystals"  unlock="Focus Crystal Scanning Module" />
                     </div>
 
-                    <div class="quest-list__left-line-diagonal" :class="lineColor('kor', 'Good Honest Work', 7)">
+                    <div class="quest-list__left-line-diagonal" :class="lineColor('Good, Honest Work', 7)">
                         <div class="quest-list__left-line-diagonal-content">Part 7</div>
                     </div>
 
-                    <div class="quest-list__center" :class="lineColor('kor', 'A Powerful Discovery')">
-                        <QuestCard name="A Powerful Discovery" faction="kor" />
+                    <div class="quest-list__center" :class="lineColor('A Powerful Discovery')">
+                        <QuestCard name="A Powerful Discovery"  />
                     </div>
 
-                    <div class="quest-list__right-line-diagonal" :class="lineColor('kor', 'Good Honest Work', 5)">
+                    <div class="quest-list__right-line-diagonal" :class="lineColor('Good, Honest Work', 5)">
                         <div class="quest-list__right-line-diagonal-content">Part 5</div>
                     </div>
 
                     <div class="quest-list__right">
-                        <QuestCard name="Uncharted Territory" faction="kor" />
+                        <QuestCard name="Uncharted Territory"  />
                     </div>
                 </div>
 
                 <div class="quest-list">
-                    <div class="quest-list__left">
-                        <QuestCard name="In a Deep Dark Hole" faction="kor" />
-                    </div>
+                    <!-- <div class="quest-list__left">
+                        <QuestCard name="In a Deep Dark Hole"  />
+                    </div> 
 
-                    <div class="quest-list__left-line" :class="lineColor('kor', 'Research Costs', 5)">
+                    <div class="quest-list__left-line" :class="lineColor('Research Costs', 5)">
                         <div class="quest-list__left-line-content">Part 5</div>
+                    </div> -->
+
+                    <div class="quest-list__center" :class="lineColor('Research Costs')">
+                        <QuestCard name="Research Costs"  footer="Part 5 unlocks Tharis Island" />
                     </div>
 
-                    <div class="quest-list__center" :class="lineColor('kor', 'Research Costs')">
-                        <QuestCard name="Research Costs" faction="kor" footer="Part 5 unlocks Tharis Island" />
-                    </div>
-
-                    <div class="quest-list__right-line-diagonal" :class="lineColor('kor', 'A Powerful Discovery', 2)">
+                    <div class="quest-list__right-line-diagonal" :class="lineColor('A Powerful Discovery', 2)">
                         <div class="quest-list__right-line-diagonal-content">Part 2</div>
                     </div>
 
                     <div class="quest-list__right">
-                        <QuestCard name="Time for More Work" faction="kor" />
+                        <QuestCard name="Time for More Work"  />
                     </div>
                 </div>
 
                 <div class="quest-list">
                     <div class="quest-list__left">
-                        <QuestCard name="Crush Hazard" faction="kor" />
+                        <QuestCard name="Crush Hazard"  />
                     </div>
 
-                    <div class="quest-list__left-line" :class="lineColor('kor', 'Heavy Construction', 6)">
+                    <div class="quest-list__left-line" :class="lineColor('Heavy Construction', 6)">
                         <div class="quest-list__left-line-content">Part 6</div>
                     </div>
 
-                    <div class="quest-list__center" :class="lineColor('kor', 'Heavy Construction')">
-                        <QuestCard name="Heavy Construction" faction="kor" unlock="Laser Drill Beacon" />
+                    <div class="quest-list__center" :class="lineColor('Heavy Construction')">
+                        <QuestCard name="Heavy Construction"  unlock="Laser Drill Beacon" />
                     </div>
 
-                    <div class="quest-list__right-line-diagonal" :class="lineColor('kor', 'Research Costs', 3)">
+                    <div class="quest-list__right-line-diagonal" :class="lineColor('Research Costs', 3)">
                         <div class="quest-list__right-line-diagonal-content">Part 3</div>
                     </div>
 
                     <div class="quest-list__right">
-                        <QuestCard name="Crafting Better Bags" faction="kor" unlock="Heavy-Duty Backpack" />
+                        <QuestCard name="Crafting Better Bags"  unlock="Heavy-Duty Backpack" />
                     </div>
                 </div>
 
                 <div class="quest-list">
-                    <div class="quest-list__center" :class="lineColor('kor', 'The Test Run')">
-                        <QuestCard name="The Test Run" faction="kor" />
+                    <div class="quest-list__center" :class="lineColor('The Test Run')">
+                        <QuestCard name="The Test Run"  />
                     </div>
                 </div>
             </div>
@@ -259,115 +259,123 @@
                 </div>
 
                 <div class="quest-list">
-                    <div class="quest-list__center" :class="lineColor('osi', 'Dangerous Science')">
-                        <QuestCard name="Dangerous Science" faction="osi" footer="Part 5 unlocks Crescent Falls" />
+                    <div class="quest-list__center" :class="lineColor('Dangerous Science')">
+                        <QuestCard name="Dangerous Science"  footer="Part 5 unlocks Crescent Falls" />
+                    </div>
+
+                    <div class="quest-list__right-line" :class="lineColor('Dangerous Science', 5)">
+                        <div class="quest-list__right-line-content">Part 5</div>
+                    </div>
+
+                    <div class="quest-list__right">
+                        <QuestCard name="Howling Skies" />
                     </div>
                 </div>
 
                 <div class="quest-list">
                     <div class="quest-list__left">
-                        <QuestCard name="A Whole New Ecosystem" faction="osi" />
+                        <QuestCard name="A Whole New Ecosystem"  />
                     </div>
 
-                    <div class="quest-list__left-line" :class="lineColor('osi', 'Field Research', 5)">
+                    <div class="quest-list__left-line" :class="lineColor('Field Research', 5)">
                         <div class="quest-list__left-line-content">Part 5</div>
                     </div>
 
-                    <div class="quest-list__center" :class="lineColor('osi', 'Field Research')">
-                        <QuestCard name="Field Research" faction="osi" />
+                    <div class="quest-list__center" :class="lineColor('Field Research')">
+                        <QuestCard name="Field Research"  />
                     </div>
 
-                    <div class="quest-list__right-line" :class="lineColor('osi', 'Field Research', 2)">
+                    <div class="quest-list__right-line" :class="lineColor('Field Research', 2)">
                         <div class="quest-list__right-line-content">Part 2</div>
                     </div>
 
                     <div class="quest-list__right">
-                        <QuestCard name="Stimulating Developments" faction="osi" unlock="Strong_Stim" />
+                        <QuestCard name="Stimulating Developments"  unlock="Strong_Stim" />
                     </div>
                 </div>
 
                 <div class="quest-list">
-                    <div class="quest-list__left">
-                        <QuestCard name="The Progenitor Device" faction="osi" />
+                    <!-- <div class="quest-list__left">
+                        <QuestCard name="The Progenitor Device"  />
                     </div>
 
-                    <div class="quest-list__left-line" :class="lineColor('osi', 'Lost Knowledge', 5)">
+                    <div class="quest-list__left-line" :class="lineColor('Lost Knowledge', 5)">
                         <div class="quest-list__left-line-content">Part 5</div>
+                    </div> -->
+
+                    <div class="quest-list__center" :class="lineColor('Lost Knowledge')">
+                        <QuestCard name="Lost Knowledge"  footer="Part 5 unlocks Tharis Island" />
                     </div>
 
-                    <div class="quest-list__center" :class="lineColor('osi', 'Lost Knowledge')">
-                        <QuestCard name="Lost Knowledge" faction="osi" footer="Part 5 unlocks Tharis Island" />
-                    </div>
-
-                    <div class="quest-list__right-line-diagonal" :class="lineColor('osi', 'Field Research', 10)">
+                    <div class="quest-list__right-line-diagonal" :class="lineColor('Field Research', 10)">
                         <div class="quest-list__right-line-diagonal-content">Part 10</div>
                     </div>
 
                     <div class="quest-list__right">
-                        <QuestCard name="Storm Rider" faction="osi" />
+                        <QuestCard name="Storm Rider"  />
                     </div>
                 </div>
 
                 <div class="quest-list">
                     <div class="quest-list__left">
-                        <QuestCard name="The Needs of the One" faction="osi" />
+                        <QuestCard name="The Needs of the One"  />
                     </div>
 
-                    <div class="quest-list__left-line" :class="lineColor('osi', 'Explosive Delivery', 2)">
+                    <div class="quest-list__left-line" :class="lineColor('Explosive Delivery', 2)">
                         <div class="quest-list__left-line-content">Part 2</div>
                     </div>
 
-                    <div class="quest-list__center" :class="lineColor('osi', 'Explosive Delivery')">
-                        <QuestCard name="Explosive Delivery" faction="osi" />
+                    <div class="quest-list__center" :class="lineColor('Explosive Delivery')">
+                        <QuestCard name="Explosive Delivery"  />
                     </div>
                 </div>
 
                 <div class="quest-list">
-                    <div class="quest-list__center" :class="lineColor('osi', 'Laser Show')">
-                        <QuestCard name="Laser Show" faction="osi" />
+                    <div class="quest-list__center" :class="lineColor('Laser Show')">
+                        <QuestCard name="Laser Show"  />
                     </div>
-                    <div class="quest-list__right-line" :class="lineColor('osi', 'Laser Show', 2)">
+                    <div class="quest-list__right-line" :class="lineColor('Laser Show', 2)">
                         <div class="quest-list__right-line-content">Part 2</div>
                     </div>
-                    <div class="quest-list__right" :class="lineColor('osi', 'Path to Strong Medkits')">
-                        <QuestCard name="Path to Strong Medkits" faction="osi" unlock="Strong Medkit" />
+                    <div class="quest-list__right" :class="lineColor('Path to Strong Medkits')">
+                        <QuestCard name="Path to Strong Medkits"  unlock="Strong Medkit" />
                     </div>
                 </div>
                 <div class="quest-list">
-                    <div class="quest-list__center" :class="lineColor('osi', 'Everything is Crystals')">
-                        <QuestCard name="Everything is Crystals" faction="osi" />
-                    </div>
-                </div>
-
-                <div class="quest-list">
-                    <div class="quest-list__center" :class="lineColor('osi', 'Building a better Death Ray')">
-                        <QuestCard name="Building a better Death Ray" faction="osi" />
+                    <div class="quest-list__center" :class="lineColor('Everything is Crystals')">
+                        <QuestCard name="Everything is Crystals"  />
                     </div>
                 </div>
 
                 <div class="quest-list">
-                    <div class="quest-list__center" :class="lineColor('osi', 'Satellite Master')">
-                        <QuestCard name="Satellite Master" faction="osi" />
+                    <div class="quest-list__center" :class="lineColor('Building a better Death Ray')">
+                        <QuestCard name="Building a better Death Ray"  />
+                    </div>
+                </div>
+
+                <div class="quest-list">
+                    <div class="quest-list__center" :class="lineColor('Satellite Master')">
+                        <QuestCard name="Satellite Master"  />
                     </div>
 
-                    <div class="quest-list__right-line" :class="lineColor('osi', 'Satellite Master', 3)">
+                    <div class="quest-list__right-line" :class="lineColor('Satellite Master', 3)">
                         <div class="quest-list__right-line-content">Part 3</div>
                     </div>
 
                     <div class="quest-list__right">
-                        <QuestCard name="Combat Ready" faction="osi" unlock="Combat Stim" />
+                        <QuestCard name="Combat Ready"  unlock="Combat Stim" />
                     </div>
                 </div>
 
                 <div class="quest-list">
-                    <div class="quest-list__center" :class="lineColor('osi', 'Orbital Repairs')">
-                        <QuestCard name="Orbital Repairs" faction="osi" unlock="Orbital Cannon Beacon" />
+                    <div class="quest-list__center" :class="lineColor('Orbital Repairs')">
+                        <QuestCard name="Orbital Repairs"  unlock="Orbital Cannon Beacon" />
                     </div>
                 </div>
 
                 <div class="quest-list">
-                    <div class="quest-list__center" :class="lineColor('osi', 'Breaking and Entering')">
-                        <QuestCard name="Breaking and Entering" faction="osi" />
+                    <div class="quest-list__center" :class="lineColor('Breaking and Entering')">
+                        <QuestCard name="Breaking and Entering"  />
                     </div>
                 </div>
             </div>
@@ -405,9 +413,9 @@ import QuestCard from "./components/QuestCard.vue";
 import QuestStart from "./components/QuestStart.vue";
 import ItemList from "./components/ItemList.vue";
 import QuarterList from "./components/QuarterList.vue";
-import {missions} from "./QuestConstants";
+import {missionListData} from "./data";
 import {factionProgress} from "./trackProgress";
-
+import { getFactionOfMission } from "./utils";
 import {doneLoading} from "../../all";
 
 export default defineComponent({
@@ -442,10 +450,10 @@ export default defineComponent({
 
             slides[this.slideIndex - 1].style.display = "block";
         },
-        lineColor(faction: string, name: string, part?: number) {
-            const progress = this.list.get()[faction][name];
-            const length = missions[faction][name].length;
-
+        lineColor(name: string, part?: number) {
+            const faction = getFactionOfMission(name);
+            const progress = this.list.get()[name];
+            const length = missionListData[name]['missions'].length;
             if (part) {
                 if (progress >= part) return "reached";
             } else {
