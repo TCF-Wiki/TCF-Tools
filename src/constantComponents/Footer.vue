@@ -70,7 +70,7 @@ export default defineComponent({
     },
     async mounted() {
         async function get_meta_data() {
-            const response = await fetch("https://raw.githubusercontent.com/TCF-Wiki/TCF-Information/test/META.json", {});
+            const response = await fetch("https://raw.githubusercontent.com/TCF-Wiki/TCF-Information/main/META.json", {});
             const json = await response.json();
 
             return json;
