@@ -92,9 +92,9 @@ export const alphabeticalSpecialLocations = {
 };
 
 export const alphabeticalCreatures = {
-    GlowBeetle_Acid: "Acid Tick",
+    GlowBeetleAcid: "Acid Tick",
     Crusher_2: "Alpha Crusher",
-    GlowBeetle_Blast: "Blast Tick",
+    GlowBeetleBlast: "Blast Tick",
     Crusher: "Crusher",
     Strider_3: "Heavy Strider",
     Howler: "Howler",
