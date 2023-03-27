@@ -329,6 +329,11 @@ export default defineComponent({
     fill: #d65c1f;
 }
 
+.bad {
+    outline-color: var(--rarity-color-epic);
+    fill: var(--rarity-color-epic);
+}
+
 @keyframes rotate {
     10%,
     90% {
