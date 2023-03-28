@@ -42,7 +42,7 @@ export const calculate = {
     totalTimeToEmptyMag: function(weapon) {
         // calculates the time it takes to empty a magazine
         // automatic weapon + chargeup, where 1 click = all bullets in a mag
-        if (weapon == 'WP_G_HVY_Beam_01') {
+        if (weapon.includes('WP_G_HVY_Beam')) {
             return (
                 (
                     // true mag size
@@ -118,7 +118,7 @@ export const calculate = {
 
         // adjust for zeus beam. Since it is automatic with charge up, the math is a bit different
         // for each magazine, there is 1 spinup time, instead of for each shot.
-        if (weapon == 'WP_G_HVY_Beam_01') {
+        if (weapon.includes('WP_G_HVY_Beam')) {
             time = (
                 ( clicks * this.s(weapon, 'refireTime') )
                 + ( Math.ceil(ratio)) * this.s(weapon, 'spinupTime')
