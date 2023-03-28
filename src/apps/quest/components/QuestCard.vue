@@ -330,8 +330,8 @@ export default defineComponent({
 }
 
 .bad {
-    outline-color: var(--rarity-color-epic);
-    fill: var(--rarity-color-epic);
+    outline-color: #b85fd2;
+    fill: #b85fd2;
 }
 
 @keyframes rotate {

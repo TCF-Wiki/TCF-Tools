@@ -184,18 +184,18 @@ export default defineComponent({
                     return 'Reach level ' + task['maxProgress'] + ' in ' + faction
                 }
             }
+            if (type == 'CompletedMission') {
+                return 'Complete ' + missionData[task['missionToComplete']]['inGameName']
+            }
 
             return type;
         },
         taskImage(task: any) {
-            // This function gets the name of the image that shows in the tasks info
+            // This function gets the name of the image that shows in the tasks info. 
+            // Unless returned otherwise by this function, is simply the type of objective
             const type = task["type"];
             if (type == "OwnNumOfItem") {
                 return this.rewardImageNamer(task["itemToOwn"], true).split('"').join("");
-            }
-
-            if (type == "VisitArea") {
-                return "VisitArea";
             }
 
             if (type == "Kills") {

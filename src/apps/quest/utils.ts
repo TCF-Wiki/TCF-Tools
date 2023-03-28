@@ -89,12 +89,21 @@ export function killCreatureOrPlayer(task: any, faction: string): string {
         if (categoryString == 'AssaultRifle') categoryString = 'Assault Rifle'
         else if (categoryString == 'SniperRifle') categoryString = 'Sniper Rifle'
         weaponString = ' with a ' + categoryString
-    } else if (killInfo['m_allowedSpecificWeapons'].length > 0) {
+    } else if (killInfo['m_allowedSpecificWeapons'].length > 4) {
         let weapons = killInfo['m_allowedSpecificWeapons']
         if (weapons.length == 1) weaponString = itemName(weapons[0]['RowName'])
         else if (weapons[0]['RowName'].includes('WP_A')) weaponString = ' with a Korolev weapon'
         else if (weapons[0]['RowName'].includes('WP_G')) weaponString = ' with an Osiris weapon'
         else if (weapons[0]['RowName'].includes('WP_D')) weaponString = ' with an ICA weapon'
+    } else if (killInfo['m_allowedSpecificWeapons'].length == 1) {
+        weaponString = ' with the ' + itemName(killInfo['m_allowedSpecificWeapons'][0]['RowName'])
+    } else if (killInfo['m_allowedSpecificWeapons'].length < 5 && killInfo['m_allowedSpecificWeapons'].length > 0) {
+        let weapons = killInfo['m_allowedSpecificWeapons']
+        weaponString += ' with any of: '
+        for (let wep in weapons) {
+            weaponString += itemName(weapons[wep]['RowName'])
+            if (parseInt(wep) != weapons.length-1) weaponString += ', '
+        }
     }
             
     // location info
