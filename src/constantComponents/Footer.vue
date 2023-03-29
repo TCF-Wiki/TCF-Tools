@@ -4,7 +4,7 @@
             <section class="citizen-footer__content">
                 <div class="citizen-footer__siteinfo">
                     <div id="footer-sitetitle" class="mw-wiki-title">TC:F Wiki Special Tools</div>
-                    <p id="footer-desc">Welcome to the Official The Cycle: Frontier Wiki Special Tools, the official source of documentation for special versions of The Cycle: Frontier.</p>
+                    <p id="footer-desc">Welcome to the Official The Cycle: Frontier Wiki Tools, the official source of documentation for of The Cycle: Frontier.</p>
                 </div>
                 <nav id="footer-places">
                     <ul>
@@ -36,7 +36,6 @@
             <section class="citizen-footer__bottom">
                 <div id="footer-tagline">Check out the <a href="https://thecyclefrontier.wiki/"> Official Wiki </a> as well!</div>
                 <div> Tools Version {{  META['TOOLS_VERSION'] }} || Updated for {{  META['GAME_DATA_VERSION'] }}</div>
-                <div> Check out the normal <a href="https://tools.thecyclefrontier.wiki/"> Wiki Tools </a></div>
                 <nav id="footer-icons">
                     <ul>
                         <li>
