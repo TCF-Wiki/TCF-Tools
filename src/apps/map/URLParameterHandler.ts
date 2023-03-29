@@ -1,6 +1,6 @@
-import { selectedItems, selectedLocations, selectedMap, selectedTier } from "./store";
+import { selectedCreatures, selectedItems, selectedLocations, selectedMap, selectedTier } from "./store";
 import { getMapData } from "./data";
-import { locationNames } from "./mapConstants";
+import { locationNames, alphabeticalCreatures } from "./mapConstants";
 export async function loadInitialStore() {
     // get all the search params
     const params = (new URL(document.location.toString())).searchParams
@@ -81,6 +81,37 @@ export async function loadInitialStore() {
             selectedLocations.set(locationList)
         }
     } 
+
+    let creatures : string[] | string | null = params.getAll('creature')
+    console.log(creatures)
+    if (creatures.length > 0) {
+        // first we clear any default creatures
+        selectedCreatures.clear()
+
+        // create an object with the real names of the creatures as key and the code name as values
+        let swappedCreatureNames : any = {};
+        for(let key in alphabeticalCreatures){
+            swappedCreatureNames[alphabeticalCreatures[key].toString()] = key;
+        }
+
+        let creatureList : string[] = []
+        for (let loc in creatures) {
+            // make our parameter the same as the real name
+            let name = creatures[loc].split('_').join(' ')
+
+            // if it exists...
+            if (swappedCreatureNames[name]) {
+                // add it
+                creatureList.push(swappedCreatureNames[name])
+            }
+
+        }
+        console.log(creatureList)
+        if (creatureList) {
+            // and set our selected creatures
+            selectedCreatures.set(creatureList)
+        }
+    } 
 }
 
 export async function getShareLink() {
@@ -105,6 +136,11 @@ export async function getShareLink() {
         name = name.toString().split(' ').join('_')
         resultString += `&loc=${name}`
     }
-    
+
+    for (let loc in selectedCreatures.get()) {
+        let name = alphabeticalCreatures[selectedCreatures.get()[loc]]
+        name = name.toString().split(' ').join('_')
+        resultString += `&creature=${name}`
+    }    
     return resultString
 }

@@ -31,7 +31,6 @@ export default defineComponent({
     },
     methods: {
         deleteSaveObject(key: string): void {
-            console.log('Hit!')
             // todo
             if (location.pathname.includes('map')) {
                 let current  = localStorage.getItem('mapPresets')

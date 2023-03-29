@@ -99,9 +99,10 @@ export const attachment = {
             if (a=='amountOfShots') a = "amountOfImmediateFires"
             if (a=='damageDirect') a = 'directDamage'
             if (a=='damageRange') {
-                usableInList['FalloffStart'] = {'value': effectList[eff]['value'] + weaponData[weapon]['FalloffStart'], 'type': effectList[eff]['modifierType']}
-                usableInList['FalloffEnd'] = {'value': effectList[eff]['value'] + weaponData[weapon]['FalloffStart'], 'type': effectList[eff]['modifierType']}   
+                usableInList['FalloffStart'] = [{'value': effectList[eff]['value'] + weaponData[weapon]['FalloffStart'], 'type': effectList[eff]['modifierType']}]
+                usableInList['FalloffEnd'] = [{'value': effectList[eff]['value'] + weaponData[weapon]['FalloffStart'], 'type': effectList[eff]['modifierType']}]   
             }
+            console.log(a)
 
             if (!usableInList[a]) {
                 usableInList[a] = []

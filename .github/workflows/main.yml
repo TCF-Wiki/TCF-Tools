@@ -17,6 +17,6 @@ jobs:
               uses: xRealNeon/VuePagesAction@1.0.1
               with:
                   username: "TCF-Wiki"
-                  reponame: "TCF-Special-Tools"
+                  reponame: "TCF-Tools"
                   token: ${{ secrets.GITHUB_TOKEN }}
-                  cname: special-tools.thecyclefrontier.wiki
+                  cname: tools.thecyclefrontier.wiki

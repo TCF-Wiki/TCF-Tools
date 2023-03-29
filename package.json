@@ -25,6 +25,7 @@
     "leaflet-draw": "^1.0.4",
     "leaflet-responsive-popup": "^1.0.0",
     "leaflet.markercluster": "^1.5.3",
+    "marked": "^4.3.0",
     "npm": "^8.18.0",
     "vue": "^3.2.37",
     "vue-long-click": "^0.1.0",

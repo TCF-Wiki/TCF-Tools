@@ -267,19 +267,21 @@ input[type="checkbox"]:checked::before {
 }
 
 .map-label {
-    background-color: rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 1);
     border: none;
     box-shadow: none;
 }
 
 .map-label-text {
-    z-index: 20 !important;
+    z-index: 2000 !important;
     color: var(--color-base);
-    letter-spacing: 0.2ch;
-    text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
-    font-size: 0.7rem;
-    font-weight: 500;
+    font-size: 0.6rem;
+    /* font-weight: 500; */
     font-family: var(--font-family-base);
+    background-color: var(--color-surface-0);
+    padding: 4px;
+    border-radius: var(--space-sm);
+    box-shadow: 0 0 2px black;
 }
 
 .leaflet-tooltip {

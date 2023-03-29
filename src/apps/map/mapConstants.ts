@@ -91,10 +91,10 @@ export const alphabeticalSpecialLocations = {
     Uplink: 'Uplink',
 };
 
-export const alphabeticalCreatures = {
-    GlowBeetleAcid: "Acid Tick",
+export const alphabeticalCreatures : any = {
+    GlowBeetle_Acid: "Acid Tick",
     Crusher_2: "Alpha Crusher",
-    GlowBeetleBlast: "Blast Tick",
+    GlowBeetle_Blast: "Blast Tick",
     Crusher: "Crusher",
     Strider_3: "Heavy Strider",
     Howler: "Howler",
