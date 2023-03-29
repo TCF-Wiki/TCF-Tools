@@ -205,7 +205,7 @@ export async function updateItemLayerGroups() {
         if (item?.includes('Map01_KeyCard')) icon = 'Bright_Sands_Key_Card.png'
         else if (item?.includes('Map02_KeyCard')) icon = 'Crescent_Falls_Key_Card.png'
         else if (item?.includes('Map03_KeyCard')) icon = 'Tharis_Island_Key_Card.png'
-        else icon = mapData['descriptions'][item]['icon'].replace(' - Mk.II', '').replace(' - Mk.I', '').replaceAll(' ', '_').replaceAll('#', '%23');
+        else icon = mapData['descriptions'][item]['icon'].replace(' - Mk.II', '').replace(' - Prototype', '').replaceAll(' ', '_').replaceAll('#', '%23');
 
         let ItemMarker = L.icon({
             iconUrl: `map-images/item-images/${icon}`,

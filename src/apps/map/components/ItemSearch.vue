@@ -15,7 +15,7 @@
             <TransitionGroup name="list" tag="ul">
                 <li v-for="(item, index) in matchingItems" class="autocomplete-item" @click="setSearchItem(item)" :key="index">
                     <span> {{ item }} </span>
-                    <img :src="'map-images/item-images/' + itemImage(item).replace('_-_Mk.II', '').replace('_-_Mk.I', '')" class="item-image" />
+                    <img :src="'map-images/item-images/' + itemImage(item).replace('_-_Mk.II', '').replace(' - Prototype', '')" class="item-image" />
                 </li>
             </TransitionGroup>
         </div>
@@ -27,7 +27,7 @@
                 <p v-for="item in selectedItems.get()" @click="selectedItems.remove(item)" v-if="Object.keys(items).length > 0">
                     <font-awesome-icon icon="fas fa-trash" />
                     <span :class="colourClassGiver(item)">
-                        <img :src="'map-images/item-images/' + itemImage(items[item]['name']).replace('_-_Mk.II', '').replace('_-_Mk.I', '')" class="item-image-list" />
+                        <img :src="'map-images/item-images/' + itemImage(items[item]['name']).replace('_-_Mk.II', '').replace(' - Prototype', '')" class="item-image-list" />
                         {{ items[item]['name'] }}
                         <span class="small">{{ amounts[item]+1 ? '(' + amounts[item] + ')' : '' }}</span>
                     </span>
@@ -138,7 +138,7 @@ export default defineComponent({
             if (foundItem?.includes('Map02_KeyCard')) return 'Crescent_Falls_Key_Card.png';
             if (foundItem?.includes('Map03_KeyCard')) return 'Tharis_Island_Key_Card.png';
 
-            return item.replace(' - Mk.II', '').replace(' - Mk.I', '').replaceAll(' ', '_').replaceAll('#', '%23');
+            return item.replace(' - Mk.II', '').replace(' - Prototype', '').replaceAll(' ', '_').replaceAll('#', '%23');
         }
     },
     async mounted() {

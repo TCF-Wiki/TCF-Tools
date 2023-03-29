@@ -108,7 +108,7 @@ export function createLootPopup(type: string) {
                 } else if (cellData[x].includes('Flechette Gun')) {
                     img.src = `map-images/item-images/ASP_Flechette_Gun.png`
                 } else {
-                    img.src = `map-images/item-images/${itemData[cellData[x]]['name'].replace(' - Mk.II', '').replace(' - Mk.I', '').replaceAll(' ', '_')}.png`;
+                    img.src = `map-images/item-images/${itemData[cellData[x]]['name'].replace(' - Mk.II', '').replace(' - Prototype', '').replaceAll(' ', '_')}.png`;
                 }
                 img.classList.add('item-image');
                 cell.appendChild(img);
