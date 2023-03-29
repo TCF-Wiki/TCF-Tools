@@ -68,18 +68,18 @@
         </div>
         <div class="inner-container">
             <div v-for="weapon in selectedWeapons.list" class="flex-item">
-                <h2>{{ weaponData[weapon]["inGameName"] }} <img class="weapon-image" :src="'calc-images/' + weaponData[weapon]['inGameName'] + '.png'" /></h2>
+                <h2>{{ weaponData[weapon]["inGameName"] }} <img class="weapon-image" :src="'calc-images/' + weaponData[weapon]['inGameName'].replace(' - Mk.II', '').replace(' - Prototype', '') + '.png'" /></h2>
                 <div class="stats-wrapper" :class="{collapsed: collapsed}">
                     <p v-for="(value, key) in filter(weaponData[weapon])">
                         <span :class="colourClassGiver(key, weapon)"> {{ value }} {{ attachmentStat(weapon, key) }}</span>
                     </p>
                 </div>
-                <h2>{{ weaponData[weapon]["inGameName"] }} <img class="weapon-image" :src="'calc-images/' + weaponData[weapon]['inGameName'] + '.png'" /></h2>
+                <h2>{{ weaponData[weapon]["inGameName"] }} <img class="weapon-image" :src="'calc-images/' + weaponData[weapon]['inGameName'].replace(' - Mk.II', '').replace(' - Prototype', '') + '.png'" /></h2>
                 <p v-for="(value, key) in getDetailedStats(weapon, undefined)">
                     <span :class="colourClassGiver(key, weapon)"> {{ value }} </span>
                 </p>
 
-                <h2>{{ weaponData[weapon]["inGameName"] }} <img class="weapon-image" :src="'calc-images/' + weaponData[weapon]['inGameName'] + '.png'" /></h2>
+                <h2>{{ weaponData[weapon]["inGameName"] }} <img class="weapon-image" :src="'calc-images/' + weaponData[weapon]['inGameName'].replace(' - Mk.II', '').replace(' - Prototype', '') + '.png'" /></h2>
                 <p class="small">
                     <span v-for="(value, key, index) in getDetailedStats(weapon, 'Shield')" :class="colourClassGiver(key, weapon)" :style="{'--clr': rarity(index)}"> {{ value }} </span>
                 </p>
@@ -436,7 +436,7 @@ export default {
     width: fit-content;
     -webkit-flex: none;
     flex: none;
-    max-width: 20rem;
+    max-width: 30rem;
 }
 
 .flex-item:last-of-type {
