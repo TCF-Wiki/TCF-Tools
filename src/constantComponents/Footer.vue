@@ -3,8 +3,8 @@
         <div class="citizen-footer__container">
             <section class="citizen-footer__content">
                 <div class="citizen-footer__siteinfo">
-                    <div id="footer-sitetitle" class="mw-wiki-title">TC:F Wiki Tools</div>
-                    <p id="footer-desc">Welcome to the Official The Cycle: Frontier Wiki Tools, the official source of documentation for The Cycle: Frontier.</p>
+                    <div id="footer-sitetitle" class="mw-wiki-title">TC:F Wiki Special Tools</div>
+                    <p id="footer-desc">Welcome to the Official The Cycle: Frontier Wiki Special Tools, the official source of documentation for special versions of The Cycle: Frontier.</p>
                 </div>
                 <nav id="footer-places">
                     <ul>
@@ -35,7 +35,8 @@
             </section>
             <section class="citizen-footer__bottom">
                 <div id="footer-tagline">Check out the <a href="https://thecyclefrontier.wiki/"> Official Wiki </a> as well!</div>
-                <div> Tools Version {{  META['TOOLS_VERSION'] }} || Updated for {{ META['GAME_DATA_VERSION'] }} </div>
+                <div> Tools Version {{  META['TOOLS_VERSION'] }} || Updated for {{  META['GAME_DATA_VERSION'] }}</div>
+                <div> Check out the normal <a href="https://tools.thecyclefrontier.wiki/"> Wiki Tools </a></div>
                 <nav id="footer-icons">
                     <ul>
                         <li>
@@ -61,6 +62,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
+import {githubURL} from '../apps/constants.json';
 
 export default defineComponent({
     data() {
@@ -70,7 +72,7 @@ export default defineComponent({
     },
     async mounted() {
         async function get_meta_data() {
-            const response = await fetch("https://raw.githubusercontent.com/TCF-Wiki/TCF-Information/main/META.json", {});
+            const response = await fetch(githubURL.replace("min/","") + "META.json", {});
             const json = await response.json();
 
             return json;

@@ -9,6 +9,16 @@ async function get_mission_data() {
 
 export const missionData = await get_mission_data();
 
+async function get_mission_list_data() {
+    const response = await fetch(githubURL + "missionList.json", {});
+    const json = await response.json();
+
+    return json;
+}
+
+export const missionListData = await get_mission_list_data();
+
+
 async function get_item_data() {
     const response = await fetch(githubURL + "items.json", {});
     const json = await response.json();

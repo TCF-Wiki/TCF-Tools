@@ -20,8 +20,7 @@ export function createLootPopup(type: string) {
     }
     // creates a <section> element, <table> element and a <tbody> element
     const section = document.createElement('section');
-    const table = document.createElement('table');
-    const tableBody = document.createElement('tbody');
+
 
     // create the header
     const header = document.createElement('h2');
@@ -35,9 +34,39 @@ export function createLootPopup(type: string) {
 
     header.appendChild(headerText);
 
+    // creating the table 
+    const table = document.createElement('table');
+    // creating the table header 
+    const tableHeader = document.createElement('thead')
+
+    // row
+    let row = document.createElement('tr');
+    // content 
+    let tableheaderRowContent = document.createElement('th')
+    let tableheaderText = document.createTextNode('Item')
+    tableheaderRowContent.appendChild(tableheaderText)
+    row.appendChild(tableheaderRowContent)
+
+    tableheaderRowContent = document.createElement('th');
+    tableheaderText = document.createTextNode('Spawn %')
+    tableheaderRowContent.appendChild(tableheaderText)
+    row.appendChild(tableheaderRowContent)
+
+    // tableheaderRowContent = document.createElement('th');
+    // tableheaderText = document.createTextNode('Max Qty')
+    // tableheaderRowContent.appendChild(tableheaderText)
+    // row.appendChild(tableheaderRowContent)
+
+    tableHeader.appendChild(row)
+
     // creating all cells
+    const tableBody = document.createElement('tbody');
     for (let item in data) {
-        let cellData = [item, data[item]];
+        let cellData = [
+            item, 
+            data[item].chance, 
+            // data[item].amount
+        ];
 
         // creates a table row
         const row = document.createElement('tr');
@@ -50,12 +79,14 @@ export function createLootPopup(type: string) {
             let text;
             if (parseInt(x) === 0) {
                 text = itemData[cellData[x]]['name'] ?? 'Something went wrong';
-            } else {
+            } else if (parseInt(x) === 1) {
                 let percent: number | string = roundToThree(cellData[x]);
                 if (percent === 0) {
                     percent = '<0.001';
                 }
                 text = percent + '%';
+            } else if (parseInt(x) === 2) {
+                text = cellData[x] + '×'
             }
             const cellText = document.createTextNode(text);
             if (parseInt(x) === 0) {
@@ -77,7 +108,7 @@ export function createLootPopup(type: string) {
                 } else if (cellData[x].includes('Flechette Gun')) {
                     img.src = `map-images/item-images/ASP_Flechette_Gun.png`
                 } else {
-                    img.src = `map-images/item-images/${itemData[cellData[x]]['name'].replaceAll(' ', '_')}.png`;
+                    img.src = `map-images/item-images/${itemData[cellData[x]]['name'].replace(' - Mk.II', '').replace(' - Mk.I', '').replaceAll(' ', '_')}.png`;
                 }
                 img.classList.add('item-image');
                 cell.appendChild(img);
@@ -90,6 +121,7 @@ export function createLootPopup(type: string) {
     }
 
     // put the <tbody> in the <table>
+    table.appendChild(tableHeader)
     table.appendChild(tableBody);
 
     section.appendChild(header);
@@ -118,7 +150,7 @@ export function createSpecialPopup(type: string, rawName: string, location: any)
         // and add it to our output
         section.appendChild(par);
     } else {
-        // key doors, dead drops, mission items, etc
+        // key doors, dead drops
         if (type == 'keyDoor') {
             const keyData = keyCardInfo[rawName];
             if (keyData) {

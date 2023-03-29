@@ -201,14 +201,14 @@ export async function updateItemLayerGroups() {
         });
 
         // get name of item, adjusting for possible items with wrong name
-        let name : string;
-        if (item?.includes('Map01_KeyCard')) name = 'Bright_Sands_Key_Card'
-        else if (item?.includes('Map02_KeyCard')) name = 'Crescent_Falls_Key_Card'
-        else if (item?.includes('Map03_KeyCard')) name = 'Tharis_Island_Key_Card'
-        else name = mapData['descriptions'][item]['name'].replaceAll(' ', '_').replaceAll('#', '%23')
+        let icon : string;
+        if (item?.includes('Map01_KeyCard')) icon = 'Bright_Sands_Key_Card.png'
+        else if (item?.includes('Map02_KeyCard')) icon = 'Crescent_Falls_Key_Card.png'
+        else if (item?.includes('Map03_KeyCard')) icon = 'Tharis_Island_Key_Card.png'
+        else icon = mapData['descriptions'][item]['icon'].replace(' - Mk.II', '').replace(' - Mk.I', '').replaceAll(' ', '_').replaceAll('#', '%23');
 
         let ItemMarker = L.icon({
-            iconUrl: `map-images/item-images/${name}.png`,
+            iconUrl: `map-images/item-images/${icon}`,
             iconSize: [25, 25],
             className: 'marker',
         });

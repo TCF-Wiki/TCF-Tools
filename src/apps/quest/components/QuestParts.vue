@@ -39,48 +39,46 @@
 
 <script lang="ts">
 import {defineComponent} from "vue";
-import {missionData, stringTables, locationData} from "../data";
+import {missionData, stringTables, locationData, missionListData} from "../data";
 import QuestCardPart from "./QuestPartsCard.vue";
-import {missions} from "../QuestConstants";
 import {factionProgress} from "../trackProgress";
-import {getItemsOfMission, itemName} from "../utils";
+import {getFactionOfMission, getItemsOfMission, itemName} from "../utils";
 import {itemData} from "../../forge/data";
 import {__onlyVue3} from "@vueuse/shared";
 export default defineComponent({
-    props: ["name", "faction"],
+    props: ["name"],
     components: {
         QuestCardPart,
     },
     data() {
         return {
             missionData: missionData,
-            missions: missions[this.faction][this.name],
+            missions: missionListData[this.name]['missions'],
             stringTable: stringTables["Objectives"],
             locations: locationData,
             desc: "" as string,
             progress: factionProgress,
             itemData: itemData,
             items: {} as any,
+            faction: getFactionOfMission(this.name)
         };
     },
     mounted() {
-        const mission = missions[this.faction][this.name];
-        if (mission) {
-            this.desc = this.missionData[mission[0]]["chainDescription"];
-        }
-
+        const mission = missionListData[this.name];
+        this.desc = mission['description']
+        
         this.getItems();
     },
     computed: {},
     methods: {
         getItems() {
-            const mission = missions[this.faction][this.name];
+            const mission = missionListData[this.name]['missions'];
             const length = mission.length;
-            const progress = this.progress.get()[this.faction][this.name];
+            const progress = this.progress.get()[this.name];
 
             let newData: any = {};
-            for (let p in missions[this.faction][this.name]) {
-                const part = missions[this.faction][this.name][p];
+            for (let p in this.missions) {
+                const part = this.missions[p];
 
                 // we have not completed this part of the mission yet
                 if (progress < parseInt(p) + 1) {

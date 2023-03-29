@@ -84,8 +84,7 @@
 import {keyCardInfo} from "../../map/mapConstants";
 import {defineComponent} from "vue";
 import {POSITION, useToast} from "vue-toastification";
-import {missionData, stringTables, techLevelsData, techTreeData} from "../data";
-import {missions} from "../QuestConstants";
+import {missionData, missionListData, stringTables, techLevelsData, techTreeData} from "../data";
 import {factionProgress, quarterProgress} from "../trackProgress";
 
 import {getItemsOfMission, itemName} from "../utils";
@@ -155,40 +154,39 @@ export default defineComponent({
         },
         getIncompleteParts(): void {
             let newData: any = {};
-            for (let f in missions) {
-                for (let m in missions[f]) {
-                    const length = missions[f][m].length;
-                    const progress = this.progressData.get()[f][m];
+            for (let mission in missionListData) {
+                const length = missionListData[mission]['missions'].length;
+                const progress = this.progressData.get()[mission];
 
-                    if (progress >= length) {
-                        // we have already completed this mission
-                    } else {
-                        // we have yet to complete this mission in full, so we get the data
-                        for (let p in missions[f][m]) {
-                            const part = missions[f][m][p];
+                if (progress >= length) {
+                    // we have already completed this mission
+                } else {
+                    // we have yet to complete this mission in full, so we get the data
+                    for (let p in missionListData[mission]['missions']) {
+                        const part = missionListData[mission]['missions'][p];
 
-                            // we have not completed this part of the mission yet
-                            if (progress < parseInt(p) + 1) {
-                                const partData = missionData[part];
+                        // we have not completed this part of the mission yet
+                        if (progress < parseInt(p) + 1) {
+                            const partData = missionData[part];
 
-                                // just in case, if the data exists
-                                if (partData) {
-                                    // get the total items we use for this mission
-                                    let data = getItemsOfMission(partData["objectives"]);
+                            // just in case, if the data exists
+                            if (partData) {
+                                // get the total items we use for this mission
+                                let data = getItemsOfMission(partData["objectives"]);
 
-                                    // save the items, adding duplicate entries together
-                                    for (let item in data) {
-                                        if (newData[item]) {
-                                            newData[item] = newData[item] + data[item];
-                                        } else {
-                                            newData[item] = data[item];
-                                        }
+                                // save the items, adding duplicate entries together
+                                for (let item in data) {
+                                    if (newData[item]) {
+                                        newData[item] = newData[item] + data[item];
+                                    } else {
+                                        newData[item] = data[item];
                                     }
                                 }
                             }
                         }
                     }
                 }
+            
             }
 
             // sort our items by value, https://stackoverflow.com/questions/1069666/sorting-object-property-by-values#comment130783332_16794116

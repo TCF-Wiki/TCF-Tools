@@ -1,23 +1,19 @@
-import { missions } from './QuestConstants'
 import { reactive } from 'vue'
-import { techTreeData } from './data'
+import { missionListData, techTreeData } from './data'
 type progressionList = {
-    [key: string]: { 
-        [key: string]: number
-            // which part the user is on
-    }
+    [key: string]: number
+        // which part the user is on
 }
 
 type quarterList = {
     [key: string]:  number
-            // which part the user is on
-    
+    // which part the user is on
 }
 
 
 // Handle if a new season has started.
 const date = new Date().valueOf() 
-const cuttoff_date = 1680084000
+const cuttoff_date = 1688032800
 if (localStorage.getItem('date-created')) {
     // @ts-ignore
     if (localStorage.getItem('date-created') < cuttoff_date) {
@@ -25,21 +21,24 @@ if (localStorage.getItem('date-created')) {
         localStorage.removeItem('quarters')
         localStorage.removeItem('date-created')
     }
+    // if old format
+    if (localStorage.getItem('progress')) {
+        let storage = JSON.parse(localStorage.getItem('progress') ?? '')
+        if (storage && storage['ica'] && storage['kor'] && storage['osi']) {
+            localStorage.removeItem('progress')
+            localStorage.removeItem('date-created')
+        }
+    }
 }
 
 let storage = {};
 if (!localStorage.getItem('progress') || localStorage.getItem('progress') === '{}') {
     let progressList : progressionList = {}
 
-    for (let f in missions) { 
-
-        progressList[f] = {}
-        for (let m in missions[f]) {
-
-            progressList[f][m] = 0
-        }
+    for (let m in missionListData) { 
+        progressList[m] = 0
     }
-
+    
     localStorage.setItem('progress', JSON.stringify(progressList))
     localStorage.setItem('date-created', date.toString())
     storage = progressList
@@ -68,40 +67,40 @@ export const factionProgress = reactive({
     get() : progressionList {
         return this.list
     },
-    toggle(faction: string, name: string) {
-        const mission = this.list[faction][name]
-        const length = missions[faction][name].length
+    toggle(name: string) {
+        const mission = this.list[name]
+        const length = missionListData[name]['missions'].length
         if (mission >= length) {
-            this.incomplete(faction, name)
+            this.incomplete( name)
         } else {
-            this.complete(faction, name)
+            this.complete(name)
         }
     },
-    complete(faction: string, name: string) : void {
+    complete(name: string) : void {
         // Fully completes a mission
-        const length = missions[faction][name].length
-        this.list[faction][name] = length
+        const length = missionListData[name]['missions'].length
+        this.list[name] = length
         localStorage.setItem('progress', JSON.stringify(this.list))
     },
     
-    incomplete(faction: string, name: string) : void {
+    incomplete(name: string) : void {
         // Sets progress in a mission back to 0
-        this.list[faction][name] = 0
+        this.list[name] = 0
         localStorage.setItem('progress', JSON.stringify(this.list))
     },
 
-    setPart(faction : string, name : string, part: number) : void {
+    setPart(name : string, part: number) : void {
         // sets the part of a specific mission to that number
-        const length = missions[faction][name].length
+        const length = missionListData[name]['missions'].length
 
         if (!length) return
         // if the part number is (greater than) the maximum, set it to maximum
         if (part >= length) {
-            this.list[faction][name]= length
+            this.list[name] = length
             localStorage.setItem('progress', JSON.stringify(this.list))
         } else if (part >= 0) {
             // else if it is a less then the maximum but above zero, set it to that part
-            this.list[faction][name]= part
+            this.list[name] = part
             localStorage.setItem('progress', JSON.stringify(this.list))
         }
     },

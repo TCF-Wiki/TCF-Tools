@@ -215,7 +215,6 @@ input[type="checkbox"]:checked::before {
 
 .leaflet-popup-content {
     max-height: 50vh;
-    width: 40vw;
     overflow: auto;
     background-color: var(--color-surface-3);
     color: var(--color-base);
@@ -356,8 +355,27 @@ input[type="checkbox"]:checked::before {
 }
 
 .leaflet-popup-content table {
-    border-spacing: 1rem 0;
+    border-spacing: 0rem 0;
     border-collapse: separate;
+}
+
+.leaflet-popup-content table thead {
+    background-color: var(--color-surface-2) !important;
+    border-color: var(--color-surface-2);
+    text-align: center;
+}
+
+.leaflet-popup-content table tbody tr td {
+    border-left: 1px solid var(--border-color-base);
+
+}
+.leaflet-popup-content table tbody tr td:nth-child(2) {
+    border-right: 1px solid var(--border-color-base);
+    padding: 0 .4rem;
+}
+
+.leaflet-popup-content table tbody tr td:nth-child(3) {
+    padding-left: .4rem;
 }
 
 .leaflet-tile {

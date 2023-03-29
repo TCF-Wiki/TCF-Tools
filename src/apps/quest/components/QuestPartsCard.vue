@@ -33,7 +33,7 @@
             </section>
             <div class="card__button" role="button" @click.stop.prevent="handleProgress()">
                 <div class="card__button-text" :class="faction">
-                    <svg v-if="progressInfo.get()[faction][name] >= index + 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <svg v-if="progressInfo.get()[name] >= index + 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                         <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
                         <path
                             d="M211.8 339.8C200.9 350.7 183.1 350.7 172.2 339.8L108.2 275.8C97.27 264.9 97.27 247.1 108.2 236.2C119.1 225.3 136.9 225.3 147.8 236.2L192 280.4L300.2 172.2C311.1 161.3 328.9 161.3 339.8 172.2C350.7 183.1 350.7 200.9 339.8 211.8L211.8 339.8zM0 96C0 60.65 28.65 32 64 32H384C419.3 32 448 60.65 448 96V416C448 451.3 419.3 480 384 480H64C28.65 480 0 451.3 0 416V96zM48 96V416C48 424.8 55.16 432 64 432H384C392.8 432 400 424.8 400 416V96C400 87.16 392.8 80 384 80H64C55.16 80 48 87.16 48 96z"
@@ -66,39 +66,39 @@ onClickOutside(card, () => (isExpanded.value = false));
 <script lang="ts">
 import {defineComponent} from "vue";
 import {shieldData, backpackData, helmetData, itemData} from "../../forge/data";
-import {stringTables, missionData} from "../data";
-import {keyCardInfo} from "../../map/mapConstants";
-import {locationNameManager, killCreatureOrPlayer, itemName} from "../utils";
+import {stringTables, missionData, missionListData} from "../data";
+import {alphabeticalContainers} from "../../map/mapConstants";
+import {locationNameManager, killCreatureOrPlayer, itemName, getFactionOfMission} from "../utils";
 import {factionProgress} from "../trackProgress";
 import {missions} from "../QuestConstants";
 
 export default defineComponent({
-    props: ["zIndex", "index", "mission", "faction", "name"],
+    props: ["zIndex", "index", "mission", "name"],
     data() {
         return {
-            missions: missions,
             missionData: missionData,
             stringTable: stringTables["Objectives"],
             helmetData: helmetData,
             shieldData: shieldData,
             backpackData: backpackData,
             progressInfo: factionProgress,
+            faction: getFactionOfMission(this.name)
         };
     },
     methods: {
         handleProgress(): void {
             // This function handles the progress upon click of the part toggler.
-            const currentProgress = this.progressInfo.get()[this.faction][this.name];
+            const currentProgress = this.progressInfo.get()[this.name];
 
             // if the current progress is equal to the current part
             // progress starts at one, index at 0
             if (currentProgress == this.index + 1) {
                 // then that means we click it and want to undo it, setting the current
                 // progress to the card before it
-                this.progressInfo.setPart(this.faction, this.name, this.index);
+                this.progressInfo.setPart(this.name, this.index);
             } else {
                 // otherwise, set it to the card we click
-                this.progressInfo.setPart(this.faction, this.name, this.index + 1);
+                this.progressInfo.setPart(this.name, this.index + 1);
             }
         },
         rewardImageNamer(reward: string, urlFormat = false): string {
@@ -157,7 +157,8 @@ export default defineComponent({
                 }
 
                 let location = "";
-                if (task["locationConditions"]) location = locationNameManager(task["locationConditions"]);
+
+                if (task["locationConditions"]) location = locationNameManager(task["locationConditions"][0]);
                 return "Visit " + location;
             }
 
@@ -165,68 +166,36 @@ export default defineComponent({
                 return killCreatureOrPlayer(task, this.faction);
             }
             if (type == "DeadDrop") {
-                // find the corresponding stringtable for this task
-                let keys = Object.keys(this.stringTable);
+                let amountString = task['maxProgress'] > 1 ? 's' : ''
+                return 'Stash ' + task['maxProgress']  + ' ' + itemName(task['deadDropItem']) + amountString + ' in the dead drop at ' + task['deadDropLocation']
+            }
+            if (type == 'LootContainer') {
+                let amountString = task['maxProgress'] > 1 ? 's' : ''
+                let container = task['container']
+                if (container == 'PowerupContainer') return 'Loot ' + task['maxProgress'] + ' ' + 'Powerup Container' + amountString
 
-                let newKeys: string[] = [];
-                newKeys = keys.filter((a) => a.toLowerCase().includes(mission.toLowerCase()));
-
-                if (newKeys.length == 1) {
-                    let text = this.stringTable[newKeys[0]];
-                    if (text.includes("Stash an")) return text;
-                    // add how many items you have to stash in the text
-                    return text.replace("Stash ", `Stash ${task["maxProgress"]} `);
-                } else if (newKeys.length > 1) {
-                    // Handle edge cases..
-                    if (["Main-KOR-LetiumResearch-4", "Main-KOR-Caverns-13", "Main-ICA-GruntWork-5", "Main-ICA-GruntWork-8"].includes(mission)) index = index - 1;
-
-                    let text = this.stringTable[newKeys[index]];
-
-                    // another edge case
-                    if (["Main-ICA-MeteorReactor-5"].includes(mission)) text = this.stringTable[newKeys[newKeys.length - index - 1]];
-
-                    // goofy ahh edge case
-                    if (['Main-Osiris-Caverns-13.1'].includes(mission)) {
-                        ///console.log(this.stringTable[newKeys[index]], index)
-                        if (index == 1) {
-                            text = this.stringTable[newKeys[2]]
-                        }
-                        if (index == 2) {
-                            text = this.stringTable[newKeys[1]]
-                        }
-                    }
-                    // and another one we are not going to talk about...
-                    if (["Main-ICA-OilPump-1"].includes(mission)) {
-                        if (index == 0) {
-                            text = this.stringTable[newKeys[1]];
-                        }
-                        if (index == 1) {
-                            text = this.stringTable[newKeys[0]];
-                        }
-                    }
-
-                    if (text.includes("Stash an")) return text;
-
-                    // Stringtable is incomplete T_T
-                    if (mission == "Main-ICA-OilPump-1") text += " at Nutrion Office";
-
-                    // Add how many items there are, plus handle another edge case
-                    return text.replace("Stash ", `Stash ${task["maxProgress"]} `).replace("the Tharis Files", "Gregor's Dossier");
+                // @ts-ignore
+                container = alphabeticalContainers[container] ?? 'Container'
+                return 'Loot ' + task['maxProgress'] + ' ' + container + amountString
+            }
+            if (type == 'FactionLevel') {
+                let faction = task['faction'] ?? ''
+                if (faction) {
+                    return 'Reach level ' + task['maxProgress'] + ' in ' + faction
                 }
-                return task["locationConditions"];
+            }
+            if (type == 'CompletedMission') {
+                return 'Complete ' + missionData[task['missionToComplete']]['inGameName']
             }
 
             return type;
         },
         taskImage(task: any) {
-            // This function gets the name of the image that shows in the tasks info
+            // This function gets the name of the image that shows in the tasks info. 
+            // Unless returned otherwise by this function, is simply the type of objective
             const type = task["type"];
             if (type == "OwnNumOfItem") {
                 return this.rewardImageNamer(task["itemToOwn"], true).split('"').join("");
-            }
-
-            if (type == "VisitArea") {
-                return "VisitArea";
             }
 
             if (type == "Kills") {
@@ -236,6 +205,12 @@ export default defineComponent({
                 else return "KillPlayer";
             }
 
+            if (type == "FactionLevel") {
+                if (task['faction'] == 'Korolev') return 'kor_Reputation'
+                if (task['faction'] == 'Osiris') return 'osi_Reputation'
+                if (task['faction'] == 'ICA') return 'ica_Reputation'
+            }
+
             return type;
         },
         orderedRewards(rewardList: any): any {
@@ -243,6 +218,7 @@ export default defineComponent({
             let newList: any = [];
 
             for (let r in rewardList) {
+                if (rewardList[r]["amount"] <= 0) continue;
                 if (rewardList[r]["item"] === "SoftCurrency") {
                     newList.splice(0, 0, rewardList[r]);
                 } else if (rewardList[r]["item"].includes("Reputation")) {
@@ -652,6 +628,11 @@ export default defineComponent({
 .kor {
     outline-color: #d65c1f;
     fill: #d65c1f;
+}
+
+.bad {
+    outline-color: #b85fd2;
+    fill: #b85fd2;
 }
 
 @media screen and (max-width: 900px) {

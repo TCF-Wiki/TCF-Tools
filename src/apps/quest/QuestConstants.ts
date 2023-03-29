@@ -303,6 +303,16 @@ export const missions : missionList = {
         ],
         "Breaking and Entering": [
             "Main-Osiris-TestRun-1"
+        ],
+        "Howling Skies": [
+            "Main-Osiris-Howler-1",
+            "Main-Osiris-Howler-2",
+            "Main-Osiris-Howler-3",
+            "Main-Osiris-Howler-4",
+            "Main-Osiris-Howler-5",
+            "Main-Osiris-Howler-6",
+            "Main-Osiris-Howler-7",
+            "Main-Osiris-Howler-8"
         ]
     }
 }

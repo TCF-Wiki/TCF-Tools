@@ -40,10 +40,10 @@ export const chooseRecipeOutput = (): any => {
             }
         })
 
-        validItems.ingots.forEach((item: string) => {
-            if (input === item && item !== 'GlowingCrystalCoreShard') resolveIngotForge(item)
-            return;
-        })
+        // validItems.ingots.forEach((item: string) => {
+        //     if (input === item && item !== 'GlowingCrystalCoreShard') resolveIngotForge(item)
+        //     return;
+        // })
    })
 }
 

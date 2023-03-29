@@ -44,7 +44,7 @@ const openModal = () => {
 </script>
 
 <script>
-import { armorData } from '../data';
+import { armorData, itemData } from '../data';
 import { selectedArmor } from '../store';
 export default {
     name: "ArmorSelector",
@@ -52,6 +52,7 @@ export default {
         return {
             selectedArmor: selectedArmor,
             armorData: armorData,
+            itemData: itemData,
             showModal: false,
         }
     },
@@ -85,14 +86,8 @@ export default {
             return 'Shield_Common'
         },
         armorName(key) {
-            if (key.includes('PlayerDefault')) return 'None'
-            if (key.includes('Tactical')) {
-                return this.armorData[key]['rarity'] + ' Tactical Armor' 
-            }
-            if (key.includes('Restoration')) {
-                return this.armorData[key]['rarity'] + ' Restoration Armor' 
-            }
-            return this.armorData[key]['rarity'] + ' Armor'
+            if (key == 'PlayerDefault') return 'No Armor'
+            return itemData[key]['inGameName']
         },
         classGiver(key) {
             let output = ''

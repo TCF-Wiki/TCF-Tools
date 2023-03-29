@@ -19,7 +19,7 @@
                             >
                                 <div v-if="Object.keys(creatureNames).includes(key)">
                                     <img :src=" 'calc-images/' + key + '.png' " class="target-image" >  
-                                    <span> {{ creatureNames[key] }} </span> 
+                                    <span> {{ creatureNames[key] ?? key }} </span> 
                                 </div>
                             </div>
                         </div>
