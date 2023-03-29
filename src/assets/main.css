@@ -267,13 +267,12 @@ input[type="checkbox"]:checked::before {
 }
 
 .map-label {
-    background-color: rgba(0, 0, 0, 1);
+    background-color: rgba(0, 0, 0, 0);
     border: none;
     box-shadow: none;
 }
 
 .map-label-text {
-    z-index: 2000 !important;
     color: var(--color-base);
     font-size: 0.6rem;
     /* font-weight: 500; */
@@ -282,6 +281,11 @@ input[type="checkbox"]:checked::before {
     padding: 4px;
     border-radius: var(--space-sm);
     box-shadow: 0 0 2px black;
+}
+
+.map-label-story .map-label-text {
+    background-color: var(--color-surface-1);
+    font-size: .5rem;
 }
 
 .leaflet-tooltip {

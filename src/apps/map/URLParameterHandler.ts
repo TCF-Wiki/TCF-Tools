@@ -83,7 +83,6 @@ export async function loadInitialStore() {
     } 
 
     let creatures : string[] | string | null = params.getAll('creature')
-    console.log(creatures)
     if (creatures.length > 0) {
         // first we clear any default creatures
         selectedCreatures.clear()
@@ -106,7 +105,7 @@ export async function loadInitialStore() {
             }
 
         }
-        console.log(creatureList)
+
         if (creatureList) {
             // and set our selected creatures
             selectedCreatures.set(creatureList)

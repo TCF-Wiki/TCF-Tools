@@ -1,6 +1,6 @@
 import L, { Marker } from 'leaflet';
 
-function mapLabel(text: string, y: number, x: number) : Marker<any> {
+function mapLabel(text: string, y: number, x: number, story: boolean = false) : Marker<any> {
     let content = '<span class="map-label-text">' + text + '</span>';
 
     const locationIcon = L.divIcon({
@@ -9,7 +9,11 @@ function mapLabel(text: string, y: number, x: number) : Marker<any> {
 
     let marker = L.marker([y, x], {icon: locationIcon, opacity: 0});
 
-    return marker.bindTooltip(content, {direction: 'center', permanent: true, className: 'map-label', offset: [0, 12]});
+    let className : string = 'map-label'
+    if (story) {
+        className = 'map-label-story'
+    }
+    return marker.bindTooltip(content, {direction: 'center', permanent: true, className: className, offset: [0, 12]});
 }
 export const mapOneLabels = [
     mapLabel('Science Campus', -191.954, 193.22),
@@ -38,14 +42,15 @@ export const mapOneLabels = [
     mapLabel('Waterfalls', -35.62, 199.141),
     mapLabel('East Caverns', -101.869, 206.141),
     mapLabel('Base Camp', -135.812, 125.115),
-    mapLabel('SOS Sign', -232.382, 116.588),
-    mapLabel('Fossil Area East Caverns', -94.180, 213.437),
-    mapLabel('Old Drill Head', -114.426, 166.876),
-    mapLabel('House on Stilts', -108.902, 146.387),
-    mapLabel('Horse Cave', -29.701, 206.393)
+    mapLabel('SOS Sign', -232.382, 116.588, true),
+    mapLabel('Fossil Area East Caverns', -94.180, 213.437, true),
+    mapLabel('Old Drill Head', -114.426, 166.876, true),
+    mapLabel('House on Stilts', -108.902, 146.387, true),
+    mapLabel('Horse Cave', -29.701, 206.393, true)
 ];
 
 export const mapTwoLabels = [
+    mapLabel('Lost Scientist', -223.981, 80.705, true),
     mapLabel('Favela', -222.298, 80.122),
     mapLabel('Lagoon', -214.944, 121.488),
     mapLabel('Fallen Tree', -131.973, 42.121),
@@ -67,13 +72,12 @@ export const mapTwoLabels = [
     mapLabel('Starport Landing Pad', -68.598, 126.747),
     mapLabel('Starport Warehouse', -74.598, 164.994),
     mapLabel('Lagoon Thermal Ponds', -175.945, 118.74),
-    mapLabel('Extinct Creatures Lab', -93.655, 193.152),
-    mapLabel('Lost Scientist', -223.981, 80.705),
-    mapLabel('Frozen Engineer', -38.985, 203.868),
-    mapLabel('Abandoned Oil Field', -43.791, 188.151),
-    mapLabel('Missing Engineer Body', -98.940, 162.291),
-    mapLabel('Forest Crystal Seal', -183.647, 39.538),
-    mapLabel('Crystal Cave', -188.170, 12.786)
+    mapLabel('Extinct Creatures Lab', -93.655, 193.152, true),
+    mapLabel('Frozen Engineer', -38.985, 203.868, true),
+    mapLabel('Abandoned Oil Field', -43.791, 188.151, true),
+    mapLabel('Missing Engineer Body', -98.940, 162.291, true),
+    mapLabel('Forest Crystal Seal', -183.647, 39.538, true),
+    mapLabel('Crystal Cave', -188.170, 12.786, true)
 ];
 
 export const mapThreeLabels = [
