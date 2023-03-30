@@ -160,7 +160,10 @@ export async function updateItemLayerGroups() {
                 const loot = mapData['lootPools'][pool]['items']
                 if (!loot) continue
 
-                const itemPercent = loot[item]
+                const itemData = loot[item]
+                if (!itemData) continue
+                
+                const itemPercent = itemData['chance']
                 if (!itemPercent) continue
 
                 if (itemPercent >= minimumPercent.get()) tempData.push(spawns[spawn])
