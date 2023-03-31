@@ -170,13 +170,16 @@ export default defineComponent({
                 return 'Stash ' + task['maxProgress']  + ' ' + itemName(task['deadDropItem']) + amountString + ' in the dead drop at ' + task['deadDropLocation']
             }
             if (type == 'LootContainer') {
+                let locationString = ''
                 let amountString = task['maxProgress'] > 1 ? 's' : ''
                 let container = task['container']
                 if (container == 'PowerupContainer') return 'Loot ' + task['maxProgress'] + ' ' + 'Powerup Container' + amountString
 
                 // @ts-ignore
                 container = alphabeticalContainers[container] ?? 'Container'
-                return 'Loot ' + task['maxProgress'] + ' ' + container + amountString
+
+                if (task['locationConditions']) locationString = ' at ' + task['locationConditions'][0] 
+                return 'Loot ' + task['maxProgress'] + ' ' + container + amountString + locationString
             }
             if (type == 'FactionLevel') {
                 let faction = task['faction'] ?? ''
