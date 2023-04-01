@@ -56,10 +56,13 @@ export const locationNames: any = {
 	Uplink: "Uplink",
 	missionItem: "Mission Item",
 	OilPump: "Oil Well",
-	Puzzle: "Puzzle"
+	Puzzle: "Puzzle",
+	PlayerStart: "Player Spawn",
+	Dungeon: "Crusher Caverns",
+	AlienForge: "The Forge"
 };
 
-export const specialLocations = ["HealingPlant", "LaserDrill", "missionItem", "keyDoor", "DeadDrop", "AIFriendly_SpawnLocation", "Evac", "NoiseTrap_Birds", "Meteor", "OilPump", "Uplink", "Puzzle"];
+export const specialLocations = ["HealingPlant", "LaserDrill", "missionItem", "keyDoor", "DeadDrop", "AIFriendly_SpawnLocation", "Evac", "NoiseTrap_Birds", "Meteor", "OilPump", "Uplink", "Puzzle", "PlayerStart", "Dungeon", "AlienForge"];
 
 // alphabetical list of real container names
 export const alphabeticalContainers = {
@@ -83,13 +86,16 @@ export const alphabeticalContainers = {
 export const alphabeticalSpecialLocations = {
 	Evac: "Evac Location",
 	DeadDrop: "Dead Drop",
+	Dungeon: "Dungeon",
 	HealingPlant: "Healing Plant",
 	keyDoor: "Key Door",
 	LaserDrill: "Laser Drill",
 	Meteor: "Meteor Location",
 	NoiseTrap_Birds: "Noise Birds",
 	OilPump: "Oil Well",
+	PlayerStart: "Player Spawn",
 	Puzzle: "Puzzle",
+	AlienForge: "The Forge",
 	Uplink: "Uplink"
 };
 
@@ -117,7 +123,10 @@ export const specialDescriptions: any = {
 	OilPump: "A Letium oil well where an oil pump can be placed using the Oil Pump item.",
 	Evac: "A potential location for an evacuation ship to land.",
 	Uplink: "An uplink station, used to upgrade Data Drives to higher rarities.",
-	Puzzle: "A puzzle that can be solved by moving the batteries to the correct positions."
+	Puzzle: "A puzzle that can be solved by moving the batteries to the correct positions.",
+	PlayerStart: "A potential spawn location for the player.",
+	AlienForge: "The Forge is an ancient machine hidden deep in the caverns of Tharis Island. Its exact origins are still unknown and shrouded in secrecy. This strange structure lies dormant, but some claim that, under the right circumstances, it may come alive once more. The Forge holds great power for those cunning and brave enough to unlock its potential.",
+	Dungeon: "The Crusher Caverns, also called the Dungeon, is an end-game dungeon that requires prospectors to open it, using an Orbital Cannon Beacon on the Forest Crystal Seal above it."
 };
 
 export const DeadDropInfo: any = {
