@@ -312,6 +312,12 @@
                         upgrade="increase_stash_2"
                     />
                 </div>
+
+                <div class="quarter-list__center-right">
+                    <QuarterTechCard
+                        upgrade="increase_bag_2"
+                    />
+                </div>
             </div>
 
             <div class="quarter-list">
@@ -327,7 +333,7 @@
 
                 <div class="quarter-list__center-right">
                     <QuarterTechCard
-                        upgrade="increase_bag_2"
+                        upgrade="increase_bag_3"
                     />
                 </div>
             </div>
@@ -345,7 +351,7 @@
 
                 <div class="quarter-list__center-right">
                     <QuarterTechCard
-                        upgrade="increase_bag_3"
+                        upgrade="increase_bag_4"
                     />
                 </div>
             </div>
@@ -369,7 +375,7 @@
 
                 <div class="quarter-list__center-right">
                     <QuarterTechCard
-                        upgrade="increase_bag_4"
+                        upgrade="increase_bag_5"
                     />
                 </div>
             </div>
@@ -400,7 +406,7 @@
 
                 <div class="quarter-list__center-right">
                     <QuarterTechCard
-                        upgrade="increase_bag_5"
+                        upgrade="increase_bag_6"
                     />
                 </div>
             </div>

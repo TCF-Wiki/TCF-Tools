@@ -62,6 +62,8 @@ if (!localStorage.getItem('quarters') || localStorage.getItem('quarters') === '{
     quarters = JSON.parse(localStorage.getItem('quarters') ?? '')
 }
 
+// @ts-ignore my bad, as this was forgotten and made after release. This means that people who have used the tracker before dont have this yet. This fixes this.
+if (!quarters['increase_bag_6']) quarters['increase_bag_6'] = 0
 export const factionProgress = reactive({
     list: storage as progressionList,
     get() : progressionList {
