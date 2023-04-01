@@ -27,44 +27,7 @@ export const map2TileLayer: TileLayer = L.tileLayer("map-images/2/{z}/{x}/{y}.pn
 
 export const map3TileLayer: TileLayer = L.tileLayer("map-images/3/{z}/{x}/{y}.png", tileLayerOptions);
 
-export const locationNames: any = {
-	HiddenStash: "Hidden Stash",
-	Locker: "Locker",
-	AmmoContainer: "Ammo Box",
-	AlienContainer: "Alien Vent",
-	AbilityBox: "Consumable Box",
-	WeaponCrate: "Military Box",
-	Luggage: "Luggage",
-	MedCase: "Med Case",
-	Safe: "Safe",
-	SuitCase: "Suit Case",
-	Jacket: "Jacket",
-	OrganicsBox: "Cooler",
-	GenericContainer: "Generic Container",
-	KorolevContainer: "Industrial Container",
-	FactoryContainer: "Dumpster",
-	FilingCabinet: "Osiris Filing Cabinet",
-
-	keyDoor: "Key Door",
-	DeadDrop: "Dead Drop",
-	NoiseTrap_Birds: "Noise Birds",
-	AIFriendly_SpawnLocation: "Leafman",
-	Meteor: "Meteor Location",
-	HealingPlant: "Healing Plant",
-	Evac: "Evac Location",
-	LaserDrill: "Laser Drill",
-	Uplink: "Uplink",
-	missionItem: "Mission Item",
-	OilPump: "Oil Well",
-	Puzzle: "Puzzle",
-	PlayerStart: "Player Spawn",
-	Dungeon: "Crusher Caverns",
-	AlienForge: "The Forge"
-};
-
-export const specialLocations = ["HealingPlant", "LaserDrill", "missionItem", "keyDoor", "DeadDrop", "AIFriendly_SpawnLocation", "Evac", "NoiseTrap_Birds", "Meteor", "OilPump", "Uplink", "Puzzle", "PlayerStart", "Dungeon", "AlienForge"];
-
-// alphabetical list of real container names
+// Alphabetical list of real container names
 export const alphabeticalContainers = {
 	AmmoContainer: "Ammo Box",
 	AlienContainer: "Alien Vent",
@@ -82,11 +45,11 @@ export const alphabeticalContainers = {
 	SuitCase: "Suit Case",
 	FilingCabinet: "Osiris Filing Cabinet"
 };
-// alphabetical list of real special location names
+// Alphabetical list of real special location names
 export const alphabeticalSpecialLocations = {
-	Evac: "Evac Location",
+	Dungeon: "Crusher Caverns",
 	DeadDrop: "Dead Drop",
-	Dungeon: "Dungeon",
+	Evac: "Evac Location",
 	HealingPlant: "Healing Plant",
 	keyDoor: "Key Door",
 	LaserDrill: "Laser Drill",
@@ -98,7 +61,7 @@ export const alphabeticalSpecialLocations = {
 	AlienForge: "The Forge",
 	Uplink: "Uplink"
 };
-
+// Alphabetical list of real creature names
 export const alphabeticalCreatures: any = {
 	GlowBeetleAcid: "Acid Tick",
 	Crusher_2: "Alpha Crusher",
@@ -114,6 +77,10 @@ export const alphabeticalCreatures: any = {
 	Strider: "Strider"
 };
 
+// All location names
+export const locationNames: any = {...alphabeticalContainers, ...alphabeticalSpecialLocations, ...alphabeticalCreatures};
+
+// Special location descriptions
 export const specialDescriptions: any = {
 	HealingPlant: "A large green plant that heals you gradually if you stand next to it.",
 	LaserDrill: "A Letium deposit where a laser drill can be deployed using a Laser Drill Beacon.",
@@ -129,6 +96,7 @@ export const specialDescriptions: any = {
 	Dungeon: "The Crusher Caverns, also called the Dungeon, is an end-game dungeon that requires prospectors to open it, using an Orbital Cannon Beacon on the Forest Crystal Seal above it."
 };
 
+// Dead drop info
 export const DeadDropInfo: any = {
 	DeadDrop_CommsBase_Tower_BP: {
 		ingame: "Comms Base Dead Drop",
@@ -193,115 +161,5 @@ export const DeadDropInfo: any = {
 	DeadDrop_NutronFarms_Office: {
 		ingame: "Nutrion Farms Office Dead Drop",
 		description: ""
-	}
-};
-export const keyCardInfo: any = {
-	Map01_KeyCard_03: {
-		name: "Tall House Key",
-		rarity: "Common",
-		description: "A generic keycard, someone drew a house on stilts on the back. ",
-		icon: "Tall House Key.png",
-		videoid: "aOl1RKGkqZc"
-	},
-	Map01_KeyCard_05: {
-		name: "Archaeologist's Office Key",
-		rarity: "Common",
-		description: 'Decades of swampy grime have eaten away at the keycard\'s cover, but someone scratched ""SKELETON"" onto it with a knife. Hopefully still works.',
-		icon: "Skeleton Key.png",
-		videoid: "r13TP3-0yWA"
-	},
-	Map02_KeyCard_02: {
-		name: "Janitors Key",
-		rarity: "Common",
-		description: "A janitors key loop with a single simple key with a cute broom charm attached; it appears to longingly sweep at the floor as it dangles from your hand ",
-		icon: "Janitors Key.png",
-		videoid: "4besguaUyu8"
-	},
-	Map02_KeyCard_05: {
-		name: "Loose House Key",
-		rarity: "Common",
-		description: "Looks like the key to someones house. The amount of rust and moss on it seems to imply its origin is somewhere deep in a jungle. ",
-		icon: "Loose House Key.png",
-		videoid: "4besguaUyu8"
-	},
-	Map01_KeyCard_01: {
-		name: "Server Access Key",
-		rarity: "Uncommon",
-		description: "Labeled only as Servers - Bright Sands, with the Com-Base logo. ",
-		icon: "Server Access Key.png",
-		videoid: "6yMBlF6XVAQ"
-	},
-	Map01_KeyCard_04: {
-		name: "Clean Room Key",
-		rarity: "Uncommon",
-		description: "Keycard carrying the Asclepius Vaccines logo. And several biohazard warnings... may want to wash your hands.",
-		icon: "Bright Sands Observation Room Key.png",
-		videoid: "3NQoy8HMdPo"
-	},
-	Map01_KeyCard_02: {
-		name: "Mine Access Key",
-		rarity: "Uncommon",
-		description: "Appears to be for one of the mine entrances along the northern edge of Bright Sands.",
-		icon: "Mine Access Key.png",
-		videoid: "VpGya1l5XgQ"
-	},
-	Map02_KeyCard_04: {
-		name: "Overseers Office",
-		rarity: "Uncommon",
-		description: "Labeled with Nutrion Farms and is emblazoned the Nutrion Farms logo. Its still covered in a sickly stale pumpkin juice... ew.",
-		icon: "Overseers Office.png",
-		videoid: "F8p6hhuOpcM"
-	},
-	Map01_KeyCard_06: {
-		name: "Storage Room Key",
-		rarity: "Rare",
-		description: 'The keycard is pretty scratched up, and might have been part of some creature\'s meal, but you can still see the words ""Jungle Outpost"" at the top',
-		icon: "Armory Key.png",
-		videoid: "Vc0pzKZu6bA"
-	},
-	Map01_KeyCard_07: {
-		name: "Base Camp Armory Key",
-		rarity: "Rare",
-		description: "The key looks The key is in almost prestine condition. Hopefully so are the contents of the armory it grants access to.",
-		icon: "Luggage Saferoom Key.png",
-		videoid: "_Vnzm2WU-xQ"
-	},
-	Map02_KeyCard_03: {
-		name: "Garage Office",
-		rarity: "Rare",
-		description: "The keycard has an image of one of those rad looking 6-wheeler trucks printed on it with the text Garage Office alongside it.  ",
-		icon: "Garage Office.png",
-		videoid: "W5tWRzaEesk"
-	},
-	Map02_KeyCard_01: {
-		name: "Boss Office",
-		rarity: "Epic",
-		description: "The unmistakable STARPORT logo leaps out from the card. The smaller Top Floor Admin whispers for your attention in pitiful subscript underneath. ",
-		icon: "Boss' Office.png",
-		videoid: "72GUHEHKbjI"
-	},
-	Map02_KeyCard_06: {
-		name: "Lab Keycard",
-		rarity: "Epic",
-		description: "A bright white keycard with the telltale livery of Osiris. Pinnacle Labs is laser etched professionally onto it. ",
-		icon: "Lab Keycard.png",
-		videoid: "KjHRGY_OVjQ"
-	},
-	Map02_KeyCard_07: {
-		name: "Bar Storage Key",
-		rarity: "Epic",
-		description: "A key to The Tipsy Drone attached to a miniature trinket of the namesakes affable drone mascot. ",
-		icon: "Bar Storage Key.png"
-	},
-	Map02_KeyCard_08: {
-		name: "Community Room",
-		rarity: "Epic",
-		description: "A key to a public space ",
-		icon: "Community Room.png"
-	},
-	Map02_KeyCard_09: {
-		name: "Overgrown Keycard",
-		rarity: "Epic",
-		description: "A round green logo is barely visible under the muck that's grown over this keycard."
 	}
 };
