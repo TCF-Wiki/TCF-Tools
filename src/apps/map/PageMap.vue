@@ -1,588 +1,590 @@
 <template>
-    <div class="page-content" id="page-content">
-        <div class="left" id="left">
-            <div id="left-content">
-                <ItemSearch />
-                <LocationSelector />
-                <section>
-                    <header><h2>Options</h2></header>
-                    <div class="setting-container">
-                        <ClusterButton />
-                        <TierToggler />
-                        <ClearSearch />
-                        <ShareLink />
-                    </div>
-                </section>
-                <section class="container">
-                    <ColorSelector />
-                </section>
-            </div>
-        </div>
-        <div class="right" id="right">
-            <button id="sidebar-toggler" @click="toggleSidebar" v-tooltip="{content: 'Collapse/expand menu', html: true}">
-                <font-awesome-icon icon="fa-solid fa-caret-left" v-if="isExpanded" />
-                <font-awesome-icon icon="fa-solid fa-caret-right" v-else />
-            </button>
-            <MapSelector />
-            <div id="map"></div>
-        </div>
-    </div>
+	<div class="page-content" id="page-content">
+		<div class="left" id="left">
+			<div id="left-content">
+				<ItemSearch />
+				<LocationSelector />
+				<section>
+					<header><h2>Options</h2></header>
+					<div class="setting-container">
+						<ClusterButton />
+						<TierToggler />
+						<ClearSearch />
+						<ShareLink />
+					</div>
+				</section>
+				<section class="container">
+					<ColorSelector />
+				</section>
+			</div>
+		</div>
+		<div class="right" id="right">
+			<button id="sidebar-toggler" @click="toggleSidebar" v-tooltip="{content: 'Collapse/expand menu', html: true}">
+				<font-awesome-icon icon="fa-solid fa-caret-left" v-if="isExpanded" />
+				<font-awesome-icon icon="fa-solid fa-caret-right" v-else />
+			</button>
+			<MapSelector />
+			<div id="map"></div>
+		</div>
+	</div>
 </template>
 
 <style src="./MarkerCluster.css" />
 <style src="./MarkerCluster.Default.css" />
 
 <script lang="ts">
-import MapSelector from "./components/MapSelector.vue";
-import LocationSelector from "./components/LocationSelector.vue";
-import ItemSearch from "./components/ItemSearch.vue";
-import TierToggler from "./components/TierToggler.vue";
-import ClearSearch from "./components/ClearSearch.vue";
-import ShareLink from "./components/ShareLink.vue";
-import ColorSelector from "./components/ColorSelector.vue";
-import ClusterButton from "./components/ClusterButton.vue";
-import PercentButton from "./components/PercentButton.vue";
+	import MapSelector from "./components/MapSelector.vue";
+	import LocationSelector from "./components/LocationSelector.vue";
+	import ItemSearch from "./components/ItemSearch.vue";
+	import TierToggler from "./components/TierToggler.vue";
+	import ClearSearch from "./components/ClearSearch.vue";
+	import ShareLink from "./components/ShareLink.vue";
+	import ColorSelector from "./components/ColorSelector.vue";
+	import ClusterButton from "./components/ClusterButton.vue";
+	import PercentButton from "./components/PercentButton.vue";
 
-import {defineComponent} from "vue";
-import L, {Map, type LeafletEvent, type TileLayer} from "leaflet";
+	import {defineComponent} from "vue";
+	import L, {Map, type LeafletEvent, type TileLayer} from "leaflet";
 
-import {selectedMap, selectedLocations, selectedItems, selectedTier, clusterEnabled, minimumPercent, selectedCreatures} from "./store";
-import {getMapData, getTierData} from "./data";
+	import {selectedMap, selectedLocations, selectedItems, selectedTier, clusterEnabled, minimumPercent, selectedCreatures} from "./store";
+	import {getMapData, getTierData} from "./data";
 
-import {map1TileLayer, map2TileLayer, map3TileLayer, bounds, brightsandsColor, crescentfallsColor} from "./mapConstants";
-import {addLeafletStyles, addResponsivePopupScript, addResponsivePopupStyles} from "../../scriptLoader";
-import {mapOneLabels, mapTwoLabels, mapThreeLabels} from "./labels";
+	import {map1TileLayer, map2TileLayer, map3TileLayer, bounds, brightsandsColor, crescentfallsColor} from "./mapConstants";
+	import {addLeafletStyles, addResponsivePopupScript, addResponsivePopupStyles} from "../../scriptLoader";
+	import {mapOneLabels, mapTwoLabels, mapThreeLabels} from "./labels";
 
-import {updateLocationLayerGroups, getLocationLayerGroups, updateItemLayerGroups, getItemLayerGroups, getCreatureLayerGroups, updateCreatureLayerGroups} from "./layerGroups";
-import {loadInitialStore} from "./URLParameterHandler";
+	import {updateLocationLayerGroups, getLocationLayerGroups, updateItemLayerGroups, getItemLayerGroups, getCreatureLayerGroups, updateCreatureLayerGroups} from "./layerGroups";
+	import {loadInitialStore} from "./URLParameterHandler";
 
-import {doneLoading} from "../../all";
+	import {doneLoading} from "../../all";
 
-let locationLayerGroups: any;
-let itemLayerGroups: any;
-let creatureLayerGroups: any;
-export default defineComponent({
-    components: {
-        MapSelector,
-        LocationSelector,
-        ItemSearch,
-        TierToggler,
-        ClearSearch,
-        ShareLink,
-        ColorSelector,
-        ClusterButton,
-        PercentButton,
-    },
-    data() {
-        return {
-            selectedMap,
-            selectedLocations,
-            selectedItems,
-            selectedTier,
-            selectedCreatures,
-            clusterEnabled,
-            minimumPercent,
-            savedLocationMarkers: [] as any,
-            savedItemMarkers: [] as any,
-            savedCreatureMarkers: [] as any,
-            mapData: null as null | any,
-            tierData: null as null | any,
-            isModalVisible: false as boolean,
-            isExpanded: true as boolean,
-        };
-    },
-    async mounted() {
-        addLeafletStyles();
-        addResponsivePopupScript();
-        addResponsivePopupStyles();
-        // this is the main logic of the map.
-        this.mapData = await getMapData();
-        this.tierData = await getTierData();
-        //Update layer groups
-        await updateLocationLayerGroups();
-        locationLayerGroups = getLocationLayerGroups();
+	let locationLayerGroups: any;
+	let itemLayerGroups: any;
+	let creatureLayerGroups: any;
+	export default defineComponent({
+		components: {
+			MapSelector,
+			LocationSelector,
+			ItemSearch,
+			TierToggler,
+			ClearSearch,
+			ShareLink,
+			ColorSelector,
+			ClusterButton,
+			PercentButton
+		},
+		data() {
+			return {
+				selectedMap,
+				selectedLocations,
+				selectedItems,
+				selectedTier,
+				selectedCreatures,
+				clusterEnabled,
+				minimumPercent,
+				savedLocationMarkers: [] as any,
+				savedItemMarkers: [] as any,
+				savedCreatureMarkers: [] as any,
+				mapData: null as null | any,
+				tierData: null as null | any,
+				isModalVisible: false as boolean,
+				isExpanded: true as boolean
+			};
+		},
+		async mounted() {
+			addLeafletStyles();
+			addResponsivePopupScript();
+			addResponsivePopupStyles();
+			// this is the main logic of the map.
+			this.mapData = await getMapData();
+			this.tierData = await getTierData();
+			//Update layer groups
+			await updateLocationLayerGroups();
+			locationLayerGroups = getLocationLayerGroups();
 
-        await updateItemLayerGroups();
-        itemLayerGroups = getItemLayerGroups();
+			await updateItemLayerGroups();
+			itemLayerGroups = getItemLayerGroups();
 
-        await updateCreatureLayerGroups();
-        creatureLayerGroups = getCreatureLayerGroups();
+			await updateCreatureLayerGroups();
+			creatureLayerGroups = getCreatureLayerGroups();
 
-        loadInitialStore();
-        // create our map, mounting it on the '#map' element
-        let map = L.map("map", {
-            crs: L.CRS.Simple,
-            zoom: 1,
-            minZoom: 1,
-            maxZoom: 7,
-            maxBounds: [
-                [1024, -1024],
-                [-1024, 1024],
-            ],
-            zoomDelta: 0.7,
-            zoomSnap: 0.05,
-            wheelPxPerZoomLevel: 40,
-            attributionControl: false,
-        }).setView([-128, 128], 1);
+			loadInitialStore();
+			// create our map, mounting it on the '#map' element
+			let map = L.map("map", {
+				crs: L.CRS.Simple,
+				zoom: 1,
+				minZoom: 1,
+				maxZoom: 7,
+				maxBounds: [
+					[1024, -1024],
+					[-1024, 1024]
+				],
+				zoomDelta: 0.7,
+				zoomSnap: 0.05,
+				wheelPxPerZoomLevel: 40,
+				attributionControl: false
+			}).setView([-128, 128], 1);
 
-        map.zoomControl.setPosition("topright");
-        map.fitBounds(bounds);
+			map.zoomControl.setPosition("topright");
+			map.fitBounds(bounds);
 
-        initiateMapToMapNumber(selectedMap.get()).addTo(map);
+			initiateMapToMapNumber(selectedMap.get()).addTo(map);
 
-        // by adding it 5 miliseconds later it avoids a nasty bug where the coordinates are not loaded properly yet.
-        // so the labels are misplaced
-        // have to find a better solution in the future
-        setTimeout(() => {
-            addMapLabels();
-        }, 5);
+			// by adding it 5 miliseconds later it avoids a nasty bug where the coordinates are not loaded properly yet.
+			// so the labels are misplaced
+			// have to find a better solution in the future
+			setTimeout(() => {
+				addMapLabels();
+			}, 5);
 
-        // utility function used for development. Uncomment it when you need it.
-        // map.on('click', function (e) {
-        //     let coords = e.latlng,
-        //         popup = L.popup()
-        //             .setLatLng(coords)
-        //             .setContent('<p>' + coords + '</p>')
-        //             .openOn(map);
-        //     navigator.clipboard.writeText(coords.toString());
-        // });
+			// utility function used for development. Uncomment it when you need it.
+			/**
+			map.on("click", function (e) {
+				let coords = e.latlng,
+					popup = L.popup()
+						.setLatLng(coords)
+						.setContent("<p>" + coords + "</p>")
+						.openOn(map);
+				navigator.clipboard.writeText(coords.toString());
+			});
+            */
 
-        // we must keep our map variable to this file. We musn't mutate it in weird ways or set it to other variables, etc. That is why this is all kept to this file.
-        this.$watch(
-            "selectedMap",
-            async () => {
-                removeItemTiers();
-                if (selectedTier.get()) {
-                    placeItemTiers();
-                }
-                removeAllMarkers();
+			// we must keep our map variable to this file. We musn't mutate it in weird ways or set it to other variables, etc. That is why this is all kept to this file.
+			this.$watch(
+				"selectedMap",
+				async () => {
+					removeItemTiers();
+					if (selectedTier.get()) {
+						placeItemTiers();
+					}
+					removeAllMarkers();
 
-                await updateItemLayerGroups();
-                itemLayerGroups = getItemLayerGroups();
+					await updateItemLayerGroups();
+					itemLayerGroups = getItemLayerGroups();
 
-                placeMarkersForSelectedItems();
-                placeMarkersForSelectedLocations();
-                placeMarkersForSelectedCreatures();
-                initiateMapToMapNumber(selectedMap.get()).addTo(map);
-                addMapLabels();
-            },
-            {deep: true}
-        );
+					placeMarkersForSelectedItems();
+					placeMarkersForSelectedLocations();
+					placeMarkersForSelectedCreatures();
+					initiateMapToMapNumber(selectedMap.get()).addTo(map);
+					addMapLabels();
+				},
+				{deep: true}
+			);
 
-        this.$watch(
-            "selectedLocations",
-            () => {
-                removeUnselectedLocationMarkers();
-                placeMarkersForSelectedLocations();
-            },
-            {deep: true}
-        );
+			this.$watch(
+				"selectedLocations",
+				() => {
+					removeUnselectedLocationMarkers();
+					placeMarkersForSelectedLocations();
+				},
+				{deep: true}
+			);
 
-        this.$watch(
-            "selectedItems",
-            async () => {
-                removeItemMarkers();
+			this.$watch(
+				"selectedItems",
+				async () => {
+					removeItemMarkers();
 
-                await updateItemLayerGroups();
-                itemLayerGroups = getItemLayerGroups();
+					await updateItemLayerGroups();
+					itemLayerGroups = getItemLayerGroups();
 
-                placeMarkersForSelectedItems();
-            },
-            {deep: true}
-        );
+					placeMarkersForSelectedItems();
+				},
+				{deep: true}
+			);
 
-        this.$watch(
-            "selectedCreatures",
-            () => {
-                removeUnselectedCreatureMarkers();
-                placeMarkersForSelectedCreatures();
-            },
-            {deep: true}
-        );
+			this.$watch(
+				"selectedCreatures",
+				() => {
+					removeUnselectedCreatureMarkers();
+					placeMarkersForSelectedCreatures();
+				},
+				{deep: true}
+			);
 
-        this.$watch(
-            "selectedTier",
-            () => {
-                if (selectedTier.get()) {
-                    placeItemTiers();
-                } else {
-                    removeItemTiers();
-                }
-            },
-            {deep: true}
-        );
+			this.$watch(
+				"selectedTier",
+				() => {
+					if (selectedTier.get()) {
+						placeItemTiers();
+					} else {
+						removeItemTiers();
+					}
+				},
+				{deep: true}
+			);
 
-        this.$watch(
-            "clusterEnabled",
-            async () => {
-                removeItemMarkers();
+			this.$watch(
+				"clusterEnabled",
+				async () => {
+					removeItemMarkers();
 
-                await updateItemLayerGroups();
-                itemLayerGroups = getItemLayerGroups();
+					await updateItemLayerGroups();
+					itemLayerGroups = getItemLayerGroups();
 
-                placeMarkersForSelectedItems();
-            },
-            {deep: true}
-        );
+					placeMarkersForSelectedItems();
+				},
+				{deep: true}
+			);
 
-        this.$watch(
-            "minimumPercent",
-            async () => {
-                removeItemMarkers();
+			this.$watch(
+				"minimumPercent",
+				async () => {
+					removeItemMarkers();
 
-                await updateItemLayerGroups();
-                itemLayerGroups = getItemLayerGroups();
+					await updateItemLayerGroups();
+					itemLayerGroups = getItemLayerGroups();
 
-                placeMarkersForSelectedItems();
-            },
-            {deep: true}
-        );
+					placeMarkersForSelectedItems();
+				},
+				{deep: true}
+			);
 
-        function initiateMapToMapNumber(mapNumber: number): TileLayer {
-            // this function initialises the map to a specified map number.
-            if (mapNumber == 1) {
-                if (map.hasLayer(map2TileLayer)) {
-                    map.removeLayer(map2TileLayer);
-                }
-                if (map.hasLayer(map3TileLayer)) {
-                    map.removeLayer(map3TileLayer);
-                }
+			function initiateMapToMapNumber(mapNumber: number): TileLayer {
+				// this function initialises the map to a specified map number.
+				if (mapNumber == 1) {
+					if (map.hasLayer(map2TileLayer)) {
+						map.removeLayer(map2TileLayer);
+					}
+					if (map.hasLayer(map3TileLayer)) {
+						map.removeLayer(map3TileLayer);
+					}
 
-                return map1TileLayer;
-            } else if (mapNumber == 2) {
-                if (map.hasLayer(map1TileLayer)) {
-                    map.removeLayer(map1TileLayer);
-                }
-                if (map.hasLayer(map3TileLayer)) {
-                    map.removeLayer(map3TileLayer);
-                }
-                return map2TileLayer;
-            } else if (mapNumber == 3) {
-                if (map.hasLayer(map1TileLayer)) {
-                    map.removeLayer(map1TileLayer);
-                }
-                if (map.hasLayer(map2TileLayer)) {
-                    map.removeLayer(map2TileLayer);
-                }
-                return map3TileLayer;
-            } else {
-                return map1TileLayer;
-            }
-        }
+					return map1TileLayer;
+				} else if (mapNumber == 2) {
+					if (map.hasLayer(map1TileLayer)) {
+						map.removeLayer(map1TileLayer);
+					}
+					if (map.hasLayer(map3TileLayer)) {
+						map.removeLayer(map3TileLayer);
+					}
+					return map2TileLayer;
+				} else if (mapNumber == 3) {
+					if (map.hasLayer(map1TileLayer)) {
+						map.removeLayer(map1TileLayer);
+					}
+					if (map.hasLayer(map2TileLayer)) {
+						map.removeLayer(map2TileLayer);
+					}
+					return map3TileLayer;
+				} else {
+					return map1TileLayer;
+				}
+			}
 
-        function addMapLabels() {
-            toggleMapOneLabels();
-            toggleMapTwoLabels();
-            toggleMapThreeLabels();
-        }
+			function addMapLabels() {
+				toggleMapOneLabels();
+				toggleMapTwoLabels();
+				toggleMapThreeLabels();
+			}
 
-        let VM = this;
-        function removeAllMarkers(): void {
-            //console.log('Removing all markers');
-            for (let oldMap in locationLayerGroups) {
-                for (let group in locationLayerGroups[oldMap]) {
-                    let layers = locationLayerGroups[oldMap][group];
-                    if (layers) layers.removeFrom(map);
-                }
-            }
-            removeItemMarkers();
-        }
+			let VM = this;
+			function removeAllMarkers(): void {
+				//console.log('Removing all markers');
+				for (let oldMap in locationLayerGroups) {
+					for (let group in locationLayerGroups[oldMap]) {
+						let layers = locationLayerGroups[oldMap][group];
+						if (layers) layers.removeFrom(map);
+					}
+				}
+				removeItemMarkers();
+			}
 
-        function removeItemMarkers(): void {
-            for (let oldMap in itemLayerGroups) {
-                for (let group in itemLayerGroups[oldMap]) {
-                    let layers = itemLayerGroups[oldMap][group];
-                    if (layers) layers.removeFrom(map);
-                }
-            }
-        }
+			function removeItemMarkers(): void {
+				for (let oldMap in itemLayerGroups) {
+					for (let group in itemLayerGroups[oldMap]) {
+						let layers = itemLayerGroups[oldMap][group];
+						if (layers) layers.removeFrom(map);
+					}
+				}
+			}
 
-        function removeUnselectedLocationMarkers(): void {
-            //console.log('Removing unselected markers');
-            for (let locationType in VM.savedLocationMarkers) {
-                if (selectedLocations.get().includes(VM.savedLocationMarkers[locationType])) continue;
-                let layers = locationLayerGroups[VM.selectedMap.get()][VM.savedLocationMarkers[locationType]];
-                if (layers) layers.removeFrom(map);
-                delete VM.savedLocationMarkers[locationType];
-            }
-        }
+			function removeUnselectedLocationMarkers(): void {
+				//console.log('Removing unselected markers');
+				for (let locationType in VM.savedLocationMarkers) {
+					if (selectedLocations.get().includes(VM.savedLocationMarkers[locationType])) continue;
+					let layers = locationLayerGroups[VM.selectedMap.get()][VM.savedLocationMarkers[locationType]];
+					if (layers) layers.removeFrom(map);
+					delete VM.savedLocationMarkers[locationType];
+				}
+			}
 
-        // function removeUnselectedItemMarkers(): void {
-        //     for (let item in VM.savedItemMarkers) {
-        //         if (selectedItems.get().includes(VM.savedItemMarkers[item])) continue;
-        //         let layers = itemLayerGroups[VM.selectedMap.get()][VM.savedItemMarkers[item]];
-        //         if (layers) layers.removeFrom(map);
-        //         delete VM.savedItemMarkers[item];
-        //     }
-        // }
+			// function removeUnselectedItemMarkers(): void {
+			//     for (let item in VM.savedItemMarkers) {
+			//         if (selectedItems.get().includes(VM.savedItemMarkers[item])) continue;
+			//         let layers = itemLayerGroups[VM.selectedMap.get()][VM.savedItemMarkers[item]];
+			//         if (layers) layers.removeFrom(map);
+			//         delete VM.savedItemMarkers[item];
+			//     }
+			// }
 
-        function removeUnselectedCreatureMarkers(): void {
-            //console.log('Removing unselected markers');
-            for (let creature in VM.savedCreatureMarkers) {
-                if (selectedCreatures.get().includes(VM.savedCreatureMarkers[creature])) continue;
-                let layers = creatureLayerGroups[VM.selectedMap.get()][VM.savedCreatureMarkers[creature]];
-                if (layers) layers.removeFrom(map);
-                delete VM.savedCreatureMarkers[creature];
-            }
-        }
+			function removeUnselectedCreatureMarkers(): void {
+				//console.log('Removing unselected markers');
+				for (let creature in VM.savedCreatureMarkers) {
+					if (selectedCreatures.get().includes(VM.savedCreatureMarkers[creature])) continue;
+					let layers = creatureLayerGroups[VM.selectedMap.get()][VM.savedCreatureMarkers[creature]];
+					if (layers) layers.removeFrom(map);
+					delete VM.savedCreatureMarkers[creature];
+				}
+			}
 
-        function placeMarkersForSelectedLocations(): void {
-            let mapMarkers = [] as any;
-            // this function places the markers for each location. Hurray!
-            for (let locationType in selectedLocations.get()) {
-                let layers = locationLayerGroups[VM.selectedMap.get()][selectedLocations.get()[locationType]];
-                if (layers) layers.addTo(map);
-                mapMarkers.push(selectedLocations.get()[locationType]);
-            }
-            VM.savedLocationMarkers = mapMarkers;
-        }
+			function placeMarkersForSelectedLocations(): void {
+				let mapMarkers = [] as any;
+				// this function places the markers for each location. Hurray!
+				for (let locationType in selectedLocations.get()) {
+					let layers = locationLayerGroups[VM.selectedMap.get()][selectedLocations.get()[locationType]];
+					if (layers) layers.addTo(map);
+					mapMarkers.push(selectedLocations.get()[locationType]);
+				}
+				VM.savedLocationMarkers = mapMarkers;
+			}
 
-        function placeMarkersForSelectedCreatures(): void {
-            let mapMarkers = [] as any;
-            // this function places the markers for each location. Hurray!
-            for (let creature in selectedCreatures.get()) {
-                let layers = creatureLayerGroups[VM.selectedMap.get()][selectedCreatures.get()[creature]];
-                if (layers) layers.addTo(map);
-                mapMarkers.push(selectedCreatures.get()[creature]);
-            }
-            VM.savedCreatureMarkers = mapMarkers;
-        }
+			function placeMarkersForSelectedCreatures(): void {
+				let mapMarkers = [] as any;
+				// this function places the markers for each location. Hurray!
+				for (let creature in selectedCreatures.get()) {
+					let layers = creatureLayerGroups[VM.selectedMap.get()][selectedCreatures.get()[creature]];
+					if (layers) layers.addTo(map);
+					mapMarkers.push(selectedCreatures.get()[creature]);
+				}
+				VM.savedCreatureMarkers = mapMarkers;
+			}
 
-        function placeMarkersForSelectedItems(): void {
-            let mapMarkers = [] as any;
-            for (let item in selectedItems.get()) {
-                let layers = itemLayerGroups[VM.selectedMap.get()][selectedItems.get()[item]];
-                if (layers) layers.addTo(map);
-                mapMarkers.push(selectedItems.get()[item]);
-            }
-            VM.savedItemMarkers = mapMarkers;
-        }
+			function placeMarkersForSelectedItems(): void {
+				let mapMarkers = [] as any;
+				for (let item in selectedItems.get()) {
+					let layers = itemLayerGroups[VM.selectedMap.get()][selectedItems.get()[item]];
+					if (layers) layers.addTo(map);
+					mapMarkers.push(selectedItems.get()[item]);
+				}
+				VM.savedItemMarkers = mapMarkers;
+			}
 
-        const tierOneOptions = {color: "#dfe3e8", weight: 0, fillOpacity: 0.2};
-        const tierTwoOptions = {color: "#4cb31b", weight: 0, fillOpacity: 0.3};
-        const tierThreeOptions = {color: "#1da7ec", weight: 0, fillOpacity: 0.3};
-        const tierFourOptions = {color: "#4f0e8b", weight: 0, fillOpacity: 0.3};
-        const tierFiveOptions = {color: "#ee3355", weight: 0, fillOpacity: 0.3};
+			const tierOneOptions = {color: "#dfe3e8", weight: 0, fillOpacity: 0.2};
+			const tierTwoOptions = {color: "#4cb31b", weight: 0, fillOpacity: 0.3};
+			const tierThreeOptions = {color: "#1da7ec", weight: 0, fillOpacity: 0.3};
+			const tierFourOptions = {color: "#4f0e8b", weight: 0, fillOpacity: 0.3};
+			const tierFiveOptions = {color: "#ee3355", weight: 0, fillOpacity: 0.3};
 
-        const mapOneTierOne = L.polygon(this.tierData["1"]["1"], tierOneOptions);
-        const mapOneTierTwo = L.polygon(this.tierData["1"]["2"], tierTwoOptions);
-        const mapOneTierThree = L.polygon(this.tierData["1"]["3"], tierThreeOptions);
-        const mapOneTierFour = L.polygon(this.tierData["1"]["4"], tierFourOptions);
+			const mapOneTierOne = L.polygon(this.tierData["1"]["1"], tierOneOptions);
+			const mapOneTierTwo = L.polygon(this.tierData["1"]["2"], tierTwoOptions);
+			const mapOneTierThree = L.polygon(this.tierData["1"]["3"], tierThreeOptions);
+			const mapOneTierFour = L.polygon(this.tierData["1"]["4"], tierFourOptions);
 
-        const mapTwoTierThree = L.polygon(this.tierData["2"]["3"], tierThreeOptions);
-        const mapTwoTierFour = L.polygon(this.tierData["2"]["4"], tierFourOptions);
-        const mapTwoTierFive = L.polygon(this.tierData["2"]["5"], tierFiveOptions);
+			const mapTwoTierThree = L.polygon(this.tierData["2"]["3"], tierThreeOptions);
+			const mapTwoTierFour = L.polygon(this.tierData["2"]["4"], tierFourOptions);
+			const mapTwoTierFive = L.polygon(this.tierData["2"]["5"], tierFiveOptions);
 
-        function placeItemTiers() {
-            if (selectedTier.get()) {
-                if (selectedMap.get() == 1) {
-                    map.addLayer(mapOneTierOne);
-                    map.addLayer(mapOneTierTwo);
-                    map.addLayer(mapOneTierThree);
-                    map.addLayer(mapOneTierFour);
-                }
-                if (selectedMap.get() == 2) {
-                    map.addLayer(mapTwoTierThree);
-                    map.addLayer(mapTwoTierFour);
-                    map.addLayer(mapTwoTierFive);
-                }
-                if (selectedMap.get() == 3) {
-                    // ...
-                }
-            }
-        }
+			function placeItemTiers() {
+				if (selectedTier.get()) {
+					if (selectedMap.get() == 1) {
+						map.addLayer(mapOneTierOne);
+						map.addLayer(mapOneTierTwo);
+						map.addLayer(mapOneTierThree);
+						map.addLayer(mapOneTierFour);
+					}
+					if (selectedMap.get() == 2) {
+						map.addLayer(mapTwoTierThree);
+						map.addLayer(mapTwoTierFour);
+						map.addLayer(mapTwoTierFive);
+					}
+					if (selectedMap.get() == 3) {
+						// ...
+					}
+				}
+			}
 
-        function removeItemTiers() {
-            // map one
-            map.removeLayer(mapOneTierOne);
-            map.removeLayer(mapOneTierTwo);
-            map.removeLayer(mapOneTierThree);
-            map.removeLayer(mapOneTierFour);
-            // map two
-            map.removeLayer(mapTwoTierThree);
-            map.removeLayer(mapTwoTierFour);
-            map.removeLayer(mapTwoTierFive);
-            //map three ...
-        }
+			function removeItemTiers() {
+				// map one
+				map.removeLayer(mapOneTierOne);
+				map.removeLayer(mapOneTierTwo);
+				map.removeLayer(mapOneTierThree);
+				map.removeLayer(mapOneTierFour);
+				// map two
+				map.removeLayer(mapTwoTierThree);
+				map.removeLayer(mapTwoTierFour);
+				map.removeLayer(mapTwoTierFive);
+				//map three ...
+			}
 
-        function toggleMapOneLabels() {
-            if (selectedMap.get() == 1) {
-                for (let label in mapOneLabels) {
-                    mapOneLabels[label].addTo(map);
-                }
-            } else {
-                for (let label in mapOneLabels) {
-                    mapOneLabels[label].removeFrom(map);
-                }
-            }
-        }
-        function toggleMapTwoLabels() {
-            if (selectedMap.get() == 2) {
-                for (let label in mapTwoLabels) {
-                    mapTwoLabels[label].addTo(map);
-                }
-            } else {
-                for (let label in mapTwoLabels) {
-                    mapTwoLabels[label].removeFrom(map);
-                }
-            }
-        }
-        function toggleMapThreeLabels() {
-            if (selectedMap.get() == 3) {
-                for (let label in mapThreeLabels) {
-                    mapThreeLabels[label].addTo(map);
-                }
-            } else {
-                for (let label in mapThreeLabels) {
-                    mapThreeLabels[label].removeFrom(map);
-                }
-            }
-        }
+			function toggleMapOneLabels() {
+				if (selectedMap.get() == 1) {
+					for (let label in mapOneLabels) {
+						mapOneLabels[label].addTo(map);
+					}
+				} else {
+					for (let label in mapOneLabels) {
+						mapOneLabels[label].removeFrom(map);
+					}
+				}
+			}
+			function toggleMapTwoLabels() {
+				if (selectedMap.get() == 2) {
+					for (let label in mapTwoLabels) {
+						mapTwoLabels[label].addTo(map);
+					}
+				} else {
+					for (let label in mapTwoLabels) {
+						mapTwoLabels[label].removeFrom(map);
+					}
+				}
+			}
+			function toggleMapThreeLabels() {
+				if (selectedMap.get() == 3) {
+					for (let label in mapThreeLabels) {
+						mapThreeLabels[label].addTo(map);
+					}
+				} else {
+					for (let label in mapThreeLabels) {
+						mapThreeLabels[label].removeFrom(map);
+					}
+				}
+			}
 
-        placeMarkersForSelectedLocations();
-        placeMarkersForSelectedItems();
-        placeMarkersForSelectedCreatures();
-        placeItemTiers();
+			placeMarkersForSelectedLocations();
+			placeMarkersForSelectedItems();
+			placeMarkersForSelectedCreatures();
+			placeItemTiers();
 
-        //Done loading
-        doneLoading();
-    },
-    methods: {
-        showModal() {
-            this.isModalVisible = true;
-        },
-        closeModal() {
-            this.isModalVisible = false;
-        },
-        toggleSidebar() {
-            let content = document.querySelector("#page-content");
-            content?.classList.toggle("collapsed");
-            content?.classList.toggle("add-keyframe");
-            this.isExpanded = !this.isExpanded;
-        },
-    },
-});
+			//Done loading
+			doneLoading();
+		},
+		methods: {
+			showModal() {
+				this.isModalVisible = true;
+			},
+			closeModal() {
+				this.isModalVisible = false;
+			},
+			toggleSidebar() {
+				let content = document.querySelector("#page-content");
+				content?.classList.toggle("collapsed");
+				content?.classList.toggle("add-keyframe");
+				this.isExpanded = !this.isExpanded;
+			}
+		}
+	});
 </script>
 
 <style scoped>
-.left {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-    /* width: 40%; */
-    position: relative;
-    overflow: hidden;
-    white-space: nowrap;
-}
+	.left {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-md);
+		/* width: 40%; */
+		position: relative;
+		overflow: hidden;
+		white-space: nowrap;
+	}
 
-.right {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: start;
-    /* width: 90%; */
-    gap: 0;
-    position: relative;
-}
+	.right {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: start;
+		/* width: 90%; */
+		gap: 0;
+		position: relative;
+	}
 
-#map {
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    background-color: #081021;
-}
+	#map {
+		width: 100%;
+		height: 100%;
+		z-index: 0;
+		background-color: #081021;
+	}
 
-.selectors {
-    display: flex;
-    gap: var(--space-xl);
-    flex-direction: column;
-}
+	.selectors {
+		display: flex;
+		gap: var(--space-xl);
+		flex-direction: column;
+	}
 
-h2 {
-    width: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
-}
+	h2 {
+		width: 50%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin: auto;
+	}
 
-header {
-    border-bottom: 1px solid var(--border-color-base);
-    margin: auto;
-    margin-bottom: var(--space-sm);
-    width: 77%;
-}
+	header {
+		border-bottom: 1px solid var(--border-color-base);
+		margin: auto;
+		margin-bottom: var(--space-sm);
+		width: 77%;
+	}
 
-section {
-    padding: var(--space-md);
-    position: relative;
-}
+	section {
+		padding: var(--space-md);
+		position: relative;
+	}
 
-section:not(:last-child) {
-    margin-bottom: var(--space-md);
-}
-.setting-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-md);
-    position: relative;
-}
+	section:not(:last-child) {
+		margin-bottom: var(--space-md);
+	}
+	.setting-container {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: var(--space-md);
+		position: relative;
+	}
 
-.container {
-    position: relative;
-}
+	.container {
+		position: relative;
+	}
 
-.page-content {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: calc(5 * var(--space-md));
-    padding-right: 1.5%;
-    transition: all 0.4s ease-in-out;
-}
+	.page-content {
+		display: grid;
+		grid-template-columns: 1fr 2fr;
+		gap: calc(5 * var(--space-md));
+		padding-right: 1.5%;
+		transition: all 0.4s ease-in-out;
+	}
 
-.page-content.collapsed {
-    grid-template-columns: 0fr 2fr;
-    gap: 0;
-}
+	.page-content.collapsed {
+		grid-template-columns: 0fr 2fr;
+		gap: 0;
+	}
 
-.page-content.collapsed .left {
-    white-space: nowrap;
-    overflow: hidden;
-}
+	.page-content.collapsed .left {
+		white-space: nowrap;
+		overflow: hidden;
+	}
 
-#sidebar-toggler {
-    position: absolute;
-    left: -2.1rem;
-    width: 2.5rem;
+	#sidebar-toggler {
+		position: absolute;
+		left: -2.1rem;
+		width: 2.5rem;
 
-    font-size: var(--space-xl);
+		font-size: var(--space-xl);
 
-    background-color: transparent;
-    border: transparent;
-    color: var(--rarity-color-rare);
-}
+		background-color: transparent;
+		border: transparent;
+		color: var(--rarity-color-rare);
+	}
 
-@media screen and (max-width: 900px) {
-    .page-content {
-        display: grid;
-        grid-template-columns: 1fr;
-    }
+	@media screen and (max-width: 900px) {
+		.page-content {
+			display: grid;
+			grid-template-columns: 1fr;
+		}
 
-    .left,
-    .right {
-        width: 100%;
-    }
+		.left,
+		.right {
+			width: 100%;
+		}
 
-    #map {
-        margin-top: var(--space-md);
-        margin-right: 0;
-        padding: 0;
-        width: 100%;
-        padding-bottom: 100%;
-    }
+		#map {
+			margin-top: var(--space-md);
+			margin-right: 0;
+			padding: 0;
+			width: 100%;
+			padding-bottom: 100%;
+		}
 
-    #sidebar-toggler {
-        display: none;
-    }
-}
+		#sidebar-toggler {
+			display: none;
+		}
+	}
 </style>
