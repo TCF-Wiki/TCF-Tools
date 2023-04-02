@@ -64,7 +64,11 @@
         <p v-else class="complete">You have completed every upgrade.</p>
 
         <div class="search-container" v-if="Object.keys(currentQuarterItems).length > 0">
-            <input type="text" v-model="searchValue" placeholder="Search for items..." />
+            <input type="text" v-model="searchValue" placeholder="Search for items..." style="display: block; margin:auto" />
+        </div>
+        <div class="search-options-container">
+            <input class="current-levels-only" type="checkbox" v-model="onlyShowCurrentLevels" @change="getQuarterItems()" id="current-only" />
+            <label for="current-only">Only show current levels</label>
         </div>
 
         <section class="list__container">
@@ -100,6 +104,7 @@ export default defineComponent({
 
             currentQuarterItems: {} as any,
             previousQuarterItems: {} as any,
+            onlyShowCurrentLevels: false,
 
             currentItems: {} as any,
             previousItems: {} as any,
@@ -200,32 +205,34 @@ export default defineComponent({
         },
         getQuarterItems(): void {
             let newData: any = {};
+            let quarterProgress = this.quarterProgress.get();
+            let overalQuarterProgress = quarterProgress["overall"];
 
             // Overall quarter level
             let index = 0;
             for (let level in techLevelsData) {
                 index += 1;
 
-                if (this.quarterProgress.get()["overall"] < index) {
+                if (overalQuarterProgress < index) {
                     for (let i in techLevelsData[level]["costs"]) {
                         const item = i;
                         const amount = techLevelsData[level]["costs"][i];
 
-                        if (newData[item]) {
-                            newData[item] = newData[item] + amount;
-                        } else {
-                            newData[item] = amount;
-                        }
+                        newData[item] = newData[item]
+                            ? newData[item] + amount
+                            : amount;
                     }
+                    if (this.onlyShowCurrentLevels) break;
                 }
             }
 
             // tech tree levels
             for (let upgrade in techTreeData) {
                 const levels = techTreeData[upgrade]["levels"];
-                const progress = this.quarterProgress.get()[upgrade];
-
-                if (upgrade >= levels.length) continue;
+                const pqLevelRequired = techTreeData[upgrade]["PQLevelRequired"];
+                const progress = quarterProgress[upgrade];
+                console.log("current: " + overalQuarterProgress + " - required: " + pqLevelRequired);
+                if (upgrade >= levels.length || (this.onlyShowCurrentLevels && overalQuarterProgress < pqLevelRequired)) continue;
 
                 for (let l in levels) {
                     // we have not completed this upgrade yet
@@ -240,6 +247,7 @@ export default defineComponent({
                                 newData[item] = amount;
                             }
                         }
+                        if (this.onlyShowCurrentLevels) break;
                     }
                 }
             }
@@ -491,8 +499,6 @@ p.complete {
 
     padding-bottom: 1rem;
     margin-bottom: 1rem;
-
-    border-bottom: 1px solid var(--border-color-base);
 }
 
 .search-container input {
@@ -500,5 +506,18 @@ p.complete {
     height: 100%;
     font-size: 1.2rem;
     padding: 0.2rem;
+}
+
+.search-options-container {
+    width: 100%;
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+
+    border-bottom: 1px solid var(--border-color-base);
 }
 </style>
