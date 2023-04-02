@@ -34,6 +34,7 @@ export const keyObject = {
     'faction': 'Faction',
     'factionRep': 'Faction Reputation',
     'weight': 'Weight',
+    'audibleRange': 'Audible Range (m)',
 
     //attachment stuff
     "Magazine": "Magazine",
