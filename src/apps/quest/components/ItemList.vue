@@ -75,7 +75,6 @@
             <div v-for="(amount, index) in currentQuarterItems" :key="index.toString()" class="item__row" :class="{matching: rowColor(index.toString())}">
                 <img :src="'/map-images/item-images/' + itemName(index.toString(), true) + '.png'" class="item__image" />
                 <span>
-                    <input type="number" min="0" value="0" :max="amount" style="width: 50px;" @change=" updateBackground($event, amount)" />
                     <span v-if="index.toString() == 'SoftCurrency'"> {{ amount / 1000 }}k </span>
                     <span v-else> {{ amount }}</span>
                     {{ itemName(index.toString()) }}
@@ -232,7 +231,7 @@ export default defineComponent({
                 const levels = techTreeData[upgrade]["levels"];
                 const pqLevelRequired = techTreeData[upgrade]["PQLevelRequired"];
                 const progress = quarterProgress[upgrade];
-                
+                console.log("current: " + overalQuarterProgress + " - required: " + pqLevelRequired);
                 if (upgrade >= levels.length || (this.onlyShowCurrentLevels && overalQuarterProgress < pqLevelRequired)) continue;
 
                 for (let l in levels) {
@@ -260,10 +259,6 @@ export default defineComponent({
             // save it
             this.previousQuarterItems = {...this.previousQuarterItems};
             this.currentQuarterItems = sortedData;
-            console.log(this.currentQuarterItems);
-        },
-        updateBackground(e: any, amount: any) {
-            e.target.style.backgroundColor = e.target.value >= amount ? 'darkgreen' : '';
         },
         sendNotification(): void {
             // send out a function to inform the user that the item list changed when they change if they finished a mission or not
