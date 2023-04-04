@@ -9,6 +9,7 @@
         body-text-direction="center"
         alternating
         :no-hover="true"
+        :hide-footer="true"
     >
         <template #item-inGameName="{inGameName}">
             <div class="name-wrapper" v-html="weaponImage(inGameName)">
@@ -34,6 +35,7 @@
             body-text-direction="center"
             alternating
             :no-hover="true"
+            :hide-footer="true"
         >
             <template #header-Shield_01="header">
                 <img 
@@ -93,6 +95,7 @@
             body-text-direction="center"
             alternating
             :no-hover="true"
+            :hide-footer="true"
         >
             <template #header-Helmet_01="header">
                 <img 
@@ -153,6 +156,7 @@
         body-text-direction="center"
         alternating
         :no-hover="true"
+        :hide-footer="true"
     >
         <template #item-inGameName="{inGameName}">
             <div class="name-wrapper" v-html="weaponImage(inGameName)">
