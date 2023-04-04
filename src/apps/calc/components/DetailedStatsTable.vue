@@ -40,37 +40,37 @@
             <template #header-Shield_01="header">
                 <img 
                     class="table-header-image"
-                    src="map-images/item-images/Basic_Shields.png" 
+                    :src="'map-images/item-images/Basic_Shields.png'" 
                 />
             </template>
             <template #header-Shield_02="header">
                 <img 
                     class="table-header-image"
-                    src="map-images/item-images/Standard_Shields.png" 
+                    :src="'map-images/item-images/Standard_Shields.png'" 
                 />
             </template>
             <template #header-Shield_03="header">
                 <img 
                     class="table-header-image"
-                    src="map-images/item-images/Reinforced_Shields.png" 
+                    :src="'map-images/item-images/Reinforced_Shields.png'" 
                 />
             </template>
             <template #header-Shield_04="header">
                 <img 
                     class="table-header-image"
-                    src="map-images/item-images/Combat_Shields.png" 
+                    :src="'map-images/item-images/Combat_Shields.png'" 
                 />
             </template>
             <template #header-Shield_05="header">
                 <img 
                     class="table-header-image"
-                    src="map-images/item-images/Enhanced_Shields.png" 
+                    :src="'map-images/item-images/Enhanced_Shields.png'" 
                 />
             </template>
             <template #header-Shield_Altered_03="header">
                 <img 
                     class="table-header-image"
-                    src="map-images/item-images/Forged_Shield.png" 
+                    :src="'map-images/item-images/Forged_Shield.png'" 
                 />
             </template>
             <template #item-inGameName="{inGameName}">
@@ -100,37 +100,37 @@
             <template #header-Helmet_01="header">
                 <img 
                     class="table-header-image"
-                    src="map-images/item-images/Basic_Helmet.png" 
+                    :src="'map-images/item-images/Basic_Helmet.png'" 
                 />
             </template>
             <template #header-Helmet_02="header">
                 <img 
                     class="table-header-image"
-                    src="map-images/item-images/Standard_Helmet.png" 
+                    :src="'map-images/item-images/Standard_Helmet.png'" 
                 />
             </template>
             <template #header-Helmet_03="header">
                 <img 
                     class="table-header-image"
-                    src="map-images/item-images/Reinforced_Helmet.png" 
+                    :src="'map-images/item-images/Reinforced_Helmet.png'" 
                 />
             </template>
             <template #header-Helmet_04="header">
                 <img 
                     class="table-header-image"
-                    src="map-images/item-images/Combat_Helmet.png" 
+                    :src="'map-images/item-images/Combat_Helmet.png'" 
                 />
             </template>
             <template #header-Helmet_05="header">
                 <img 
                     class="table-header-image"
-                    src="map-images/item-images/Enhanced_Helmet.png" 
+                    :src="'map-images/item-images/Enhanced_Helmet.png'" 
                 />
             </template>
             <template #header-Helmet_Altered_03="header">
                 <img 
                     class="table-header-image"
-                    src="map-images/item-images/Legendary_NV_Helmet.png" 
+                    :src="'map-images/item-images/Legendary_NV_Helmet.png'" 
                 />
             </template>
             <template #item-inGameName="{inGameName}">
