@@ -1,26 +1,23 @@
 <template>
-    <div class="container" @input="updateSelected" v-if="selectedTarget.selected == 'PlayerDefault'">
-        <v-select  
-            v-model="selected" 
-            :options="sortedData" 
-            :reduce="sortedData => sortedData.codeName" 
+<div class="container" @input="updateSelected" v-if="selectedTarget.selected == 'PlayerDefault'">
+    <v-select  
+        v-model="selected" 
+        :options="sortedData" 
+        :reduce="sortedData => sortedData.codeName" 
+        label="inGameName"
+        placeholder="Select armor"
+        :clearable="false"
+    />
+</div>
+<div v-else class="container"> 
+    <v-select  
+            v-model="value" 
+            :options="weakSpotList" 
             label="inGameName"
-            placeholder="Select armor"
+            placeholder="Select weakspot"
             :clearable="false"
-        />
-    </div>
-    <div v-else class="container"> 
-        <v-select  
-                v-model="value" 
-                :options="weakSpotList" 
-                label="inGameName"
-                placeholder="Select weakspot"
-                :clearable="false"
-        />
-    </div>
-
-    {{ selectedWeakspotValue.value }}
-    {{ value }}
+    />
+</div>
 </template>
 
 
