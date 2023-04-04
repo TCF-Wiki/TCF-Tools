@@ -18,6 +18,9 @@
                 :clearable="false"
         />
     </div>
+
+    {{ selectedWeakspotValue.value }}
+    {{ value }}
 </template>
 
 
@@ -50,7 +53,7 @@ export default {
     methods: {
         getWeakspotList(data) {
             // this is to get a list of weakspots for the current target, removing unused/weird weakspots
-            let output = [{inGameName: 'None', value: 1}]
+            let output = this.weakSpotList
             for (let key in data) {
                 if (key.includes('Ankle') && !key.includes('WeakSpot')) continue;
                 // split it to just the first word
@@ -80,7 +83,8 @@ export default {
         selectedTarget : {
             deep: true,
             handler() {
-                this.value = []
+                this.weakSpotList = [{inGameName: 'None', value: 1}]
+                this.value = {inGameName: 'None', value: 1}
                 selectedWeakspotValue.changeValue(1)
                 if (selectedTarget.selected != 'PlayerDefault') this.getWeakspotList(targetData[selectedTarget.selected]['damageAreas'])
             }
@@ -88,7 +92,7 @@ export default {
         value : {
             deep: true,
             handler() {
-                if (this.value != [])selectedWeakspotValue.changeValue(this.value.value)
+                if (this.weakSpotList.length > 1)selectedWeakspotValue.changeValue(this.value.value)
             }
         },
         selected : {
