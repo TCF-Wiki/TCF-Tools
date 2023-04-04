@@ -171,15 +171,6 @@ export default defineComponent({
             this.getIncompleteMissionItems();
             this.getQuarterItems();
         },
-        getQuestLineFromMissionName(missionName: string): any {
-            for(let name in missionListData) {
-                for (let i in missionListData[name].missions) {
-                    if (missionListData[name].missions[i] === missionName)
-                        return missionListData[name];
-                }
-            }
-            return '';
-        },
         getIncompleteMissionItems(): void {
             let newData: any = {};
             for (let name in missionListData) {
@@ -190,8 +181,8 @@ export default defineComponent({
 
                 if (this.onlyShowCurrentProgress && progress == 0 && questLine.hasOwnProperty('dependsOnMission')) {
                     const requiredQuestName = questLine.dependsOnMission;
-                    const requiredQuestLine = this.getQuestLineFromMissionName(requiredQuestName);
-                    
+                    const requiredQuestLine = missionListData[missionData[requiredQuestName]['chainName']];
+
                     if (this.progressData.get()[requiredQuestLine.name] < requiredQuestLine.missions.length) {
                         // Don't count in the current questline because the dependant questline is not even finished yet
                         continue;
@@ -267,7 +258,6 @@ export default defineComponent({
                 const levels = techTreeData[upgrade]["levels"];
                 const pqLevelRequired = techTreeData[upgrade]["PQLevelRequired"];
                 const progress = quarterProgress[upgrade];
-                console.log("current: " + overalQuarterProgress + " - required: " + pqLevelRequired);
                 if (upgrade >= levels.length || (this.onlyShowCurrentProgress && overalQuarterProgress < pqLevelRequired)) continue;
 
                 for (let l in levels) {
