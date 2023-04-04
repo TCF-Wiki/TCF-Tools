@@ -1,21 +1,31 @@
 <template>
     <section>
-        <div> 
-            <div class="content">
-                <h2> Options </h2>
-                <div class="button-container">
-                    <div> 
-                        <WeaponSelector />
-                    </div>
-                    <div> 
-                        <ArmorSelector />
-                    </div>
-                    <div>
-                        <TargetSelector />
-                    </div> 
-                </div>
+        <div class="button-container">
+            <div> 
+                <span> Weapons </span>
+                <WeaponSelector />
+            </div>
+            <div> 
+                <span> Armor </span>
+                <ArmorSelector />
+            </div>
+             <div>
+                <span> Target </span>
+                <TargetSelector />
+            </div> 
+        </div>
+        <div class="button-container">
+            <div>
+                <span> Accuracy </span>
                 <AccuracySelector />
-                <DistanceSelector />
+            </div>
+            <div class="info-text">
+                <span> Weakspot Accuracy </span>
+                <WeakSpotAccuracySelector />
+            </div>
+            <div>
+                <span> Distance </span>
+                <DistanceSelector /> 
             </div>
         </div>
     </section>
@@ -27,31 +37,57 @@ import WeaponSelector from './WeaponSelector.vue';
 import TargetSelector from './TargetSelector.vue';
 import AccuracySelector from './AccuracySelector.vue';
 import DistanceSelector from './DistanceSelector.vue';
+import WeakSpotAccuracySelector from './WeakSpotAccuracySelector.vue';
 
 export default {
     components : {
-        ArmorSelector,
-        WeaponSelector,
-        TargetSelector,
-        AccuracySelector,
-        DistanceSelector
-    }
+    ArmorSelector,
+    WeaponSelector,
+    TargetSelector,
+    AccuracySelector,
+    DistanceSelector,
+    WeakSpotAccuracySelector
+}
 }
 </script>
 
 <style scoped> 
 section {
     display: flex;
+    width: 70%;
+    margin: auto;
+    margin-bottom: 2rem;
+}
+.button-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 2rem;
-    flex-wrap: wrap;
-    flex-direction: row;
-    margin-bottom: 1rem;
-    width: 20rem;
+}
 
-    padding: var(--space-sm) var(--space-md) var(--space-md) var(--space-md);
+.button-container span {
+    text-align: center;
+    display: block;
+    width: 100%;
+    margin: auto;
+    font-weight: bold;
+    padding: 0;
+    margin: var(--space-xs) 0;
+    font-size: 1.2rem;
 
 }
 
+.info-text {
+    text-align: center;
+}
+
+@media screen and (max-width: 900px) {
+    .button-container {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+        margin: auto;
+    }
+}
+/*
 div {
     display: flex;
     flex-wrap: wrap;
@@ -78,7 +114,7 @@ h2 {
 
 .button-container div {
     width: 5rem;
-}
+} */
 
 </style>
 

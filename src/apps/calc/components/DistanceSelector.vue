@@ -1,43 +1,32 @@
 <template>
-    <div class="container">
-        <h2> Distance: {{ distance }}m</h2>
-            <input type="range" min="0" max="100" 
-                v-model="distance" 
-                @input="selectedDistance.changeValue(distance)"
-            > 
-            <p> This affects if damage falls off at range. See the chart below. </p>
-    </div>
-    </template>
+<div class="container">
+    <input type="range" min="0" max="100" 
+        v-model="distance" 
+        @input="selectedDistance.changeValue(distance)"
+    >  
+    <span> 
+        {{ distance }}m
+    </span>
+</div>
+</template>
     
-    <script>
-    import { selectedDistance } from '../store'
-    export default {
-        data() {
-            return {
-                distance: 0,
-                selectedDistance,
-            }
+<script>
+import { selectedDistance } from '../store'
+export default {
+    data() {
+        return {
+            distance: 0,
+            selectedDistance,
         }
     }
-    
-    </script>
-    
-    <style scoped>
-h2 {
-    line-height: 1;
-    border-bottom: 1px solid var(--border-color-base);
 }
 
+</script>
+    
+<style scoped>
 .container {
- display: flex;
- flex-direction: column;
+    display: grid;
+    grid-template-columns: 8.9fr 1fr;
+    gap: var(--space-md);
 }
-    
-    .inner-container {
-        display: flex;
-        flex-direction: row;
-        gap: var(--space-md)
-    }
-    
-    
-    </style>
+</style>

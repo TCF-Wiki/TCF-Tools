@@ -1,8 +1,5 @@
 <template>
-    <button class="" type="button" @click.prevent="isModalOpen = true"> 
-        <img src="/calc-images/Body_Chart.png">
-    </button>
-
+    <img src="/calc-images/Body_Chart.png" @click.prevent="isModalOpen = true" role="button">
     <Teleport to="#modal">
         <Transition name="modal"> 
             <div class="modal__bg" v-if="isModalOpen">
@@ -93,7 +90,11 @@ export default defineComponent({
 </script>
 
 <style scoped>
-
+img {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
 section {
     width: 30rem !important;
 }
@@ -165,10 +166,6 @@ section {
 span {
     font-size: larger;
     text-transform: uppercase;
-}
-
-button img {
-    filter: invert(1);
 }
 
 h2 {

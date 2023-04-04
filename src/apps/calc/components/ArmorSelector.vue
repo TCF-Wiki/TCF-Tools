@@ -1,100 +1,43 @@
 <template>
-    <div class="container"> 
-        <button class="" type="button" @click.prevent="isModalOpen = true"> 
-            <img :src=" 'calc-images/' + armorImage(selectedArmor.selected) + '.png'  " > 
-        </button>
+    <div class="container" @input="updateSelected">
+        <v-select  
+            v-model="selected" 
+            :options="sortedData" 
+            :reduce="sortedData => sortedData.codeName" 
+            label="inGameName"
+            placeholder="Select armor"
+            :clearable="false"
+        />
     </div>
-    <Teleport to="#modal">
-        <Transition name="modal"> 
-            <div class="modal__bg" v-if="isModalOpen">
-                <section class="modal__content modal__small" ref="modal">  
-                    <button @click="isModalOpen = false" class="modal__close-button" aria-label="Close Modal" type="button"> <font-awesome-icon icon="fa-solid fa-xmark" /> </button>
-                    <div class="weapon-container">
-                        <div class="armor-container">
-                            <div v-for="(armor, key) in armorFilter(armorData)" class="armor-selector" :class="classGiver(key)" @click="selectedArmor.changeSelected(key)">
-                                <img :src=" 'calc-images/' + armorImage(key) + '.png'  " class="armor-image" > 
-                                <span> {{  armorName(key)}} ({{armor['armorAmount']}}) </span> 
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </Transition>
-    </Teleport>
 </template>
 
-<script setup>
-import { ref } from 'vue'
-/* @ts-ignore */
-import { onClickOutside } from '@vueuse/core';
-
-const isModalOpen = ref(false)
-const modal = ref(null)
-onClickOutside(modal, () => (isModalOpen.value = false))
-    
-const openModal = () => {
-    isModalOpen.value = true
-
-    const body = document.body
-    
-    body.style.pointerEvents = 'none'
-
-    setTimeout( () => { body.style.pointerEvents = 'all'},600)
-}
-</script>
 
 <script>
-import { armorData, itemData } from '../data';
-import { selectedArmor } from '../store';
+import {armorData} from "../data";
+import {selectedArmor} from "../store";
 export default {
     name: "ArmorSelector",
     data() {
         return {
-            selectedArmor: selectedArmor,
-            armorData: armorData,
-            itemData: itemData,
-            showModal: false,
-        }
+            data: armorData,
+            sortedData: [
+                {inGameName: 'No Armor', codeName: 'PlayerDefault'},
+                {inGameName: 'Basic Shields (Common)', codeName: 'Shield_01'},
+                {inGameName: 'Standard Shields (Uncommon)', codeName: 'Shield_02'},
+                {inGameName: 'Reinforced Shields (Rare)', codeName: 'Shield_03'},
+                {inGameName: 'Combat Shields (Epic)', codeName: 'Shield_04'},
+                {inGameName: 'Enhanced Shields (Exotic)', codeName: 'Shield_05'},
+                {inGameName: 'Titan Forged Shields (Legendary)', codeName: 'Shield_Altered_03'},
+            ],
+            selected: 'Shield_01'
+        };
     },
-    methods: {
-        armorFilter(data) {
-            let temp = {}
-            temp['PlayerDefault'] = {'armorAmount': 0, 'rarity': 'None'}
-            for (let key in data)  {
-                if (key.includes('Test') || key.includes('Tactical') || key.includes('Restoration') || key.includes('Altered')) continue
-                if (key.includes)
-                temp[key] = data[key]
+    watch: {
+        selected : {
+            deep: true,
+            handler() {
+                selectedArmor.changeSelected(this.selected)
             }
-            temp['Shield_Altered_03'] = data['Shield_Altered_03']
-            return temp;
-        },
-        armorImage(key) {
-            if (key.includes('PlayerDefault')) return 'No_Armor'
-            if (key.includes('Altered_03')) return 'Shield_Forged'
-            if (key.includes('01')) {
-                if (key.includes('Restoration')) return 'Shield_Uncommon'
-                return 'Shield_Common'
-            }
-            if (key.includes('02')) {
-                if (key.includes('Restoration')) return 'Shield_Rare'
-                return 'Shield_Uncommon'
-            }
-            if (key.includes('03')) return 'Shield_Rare'
-            if (key.includes('04')) return 'Shield_Epic'
-            // not a bug. There is no unique image.
-            if (key.includes('05')) return 'Shield_Epic'
-            return 'Shield_Common'
-        },
-        armorName(key) {
-            if (key == 'PlayerDefault') return 'No Armor'
-            return itemData[key]['inGameName']
-        },
-        classGiver(key) {
-            let output = ''
-            output += armorData[key]['rarity'].toLowerCase()
-
-            if (selectedArmor.selected == key) output += ' active'
-            return output
         }
     }
 };

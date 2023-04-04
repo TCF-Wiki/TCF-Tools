@@ -36,6 +36,13 @@ export const selectedHSValue = reactive({
     }
 })
 
+export const selectedAccuracy = reactive({
+    value: 100,
+    changeValue(value) {
+        this.value = value;
+    }
+})
+
 export const selectedDistance = reactive({
     distance: 0,
     changeValue(value) {

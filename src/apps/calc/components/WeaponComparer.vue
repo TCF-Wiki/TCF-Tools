@@ -24,7 +24,7 @@
                     <span> {{ keyNames[key] }} </span>
                 </p>
             </div>
-            <h2>Detailed Stats</h2>
+            <!-- <h2>Detailed Stats</h2> -->
             <p>
                 <span> Penetration Multiplier </span>
             </p>
@@ -68,18 +68,18 @@
         </div>
         <div class="inner-container">
             <div v-for="weapon in selectedWeapons.list" class="flex-item">
-                <h2>{{ weaponData[weapon]["inGameName"] }} <img class="weapon-image" :src="'calc-images/' + weaponData[weapon]['inGameName'].replace(' - Mk.II', '').replace(' - Prototype', '') + '.png'" /></h2>
+                <!-- <h2>{{ weaponData[weapon]["inGameName"] }} <img class="weapon-image" :src="'calc-images/' + weaponData[weapon]['inGameName'].replace(' - Mk.II', '').replace(' - Prototype', '') + '.png'" /></h2> -->
                 <div class="stats-wrapper" :class="{collapsed: collapsed}">
                     <p v-for="(value, key) in filter(weaponData[weapon])">
                         <span :class="colourClassGiver(key, weapon)"> {{ value }} {{ attachmentStat(weapon, key) }}</span>
                     </p>
                 </div>
-                <h2>{{ weaponData[weapon]["inGameName"] }} <img class="weapon-image" :src="'calc-images/' + weaponData[weapon]['inGameName'].replace(' - Mk.II', '').replace(' - Prototype', '') + '.png'" /></h2>
+                <!-- <h2>{{ weaponData[weapon]["inGameName"] }} <img class="weapon-image" :src="'calc-images/' + weaponData[weapon]['inGameName'].replace(' - Mk.II', '').replace(' - Prototype', '') + '.png'" /></h2> -->
                 <p v-for="(value, key) in getDetailedStats(weapon, undefined)">
                     <span :class="colourClassGiver(key, weapon)"> {{ value }} </span>
                 </p>
 
-                <h2>{{ weaponData[weapon]["inGameName"] }} <img class="weapon-image" :src="'calc-images/' + weaponData[weapon]['inGameName'].replace(' - Mk.II', '').replace(' - Prototype', '') + '.png'" /></h2>
+                <!-- <h2>{{ weaponData[weapon]["inGameName"] }} <img class="weapon-image" :src="'calc-images/' + weaponData[weapon]['inGameName'].replace(' - Mk.II', '').replace(' - Prototype', '') + '.png'" /></h2> -->
                 <p class="small">
                     <span v-for="(value, key, index) in getDetailedStats(weapon, 'Shield')" :class="colourClassGiver(key, weapon)" :style="{'--clr': rarity(index)}"> {{ value }} </span>
                 </p>
@@ -101,7 +101,7 @@
 </template>
 
 <script>
-import {selectedWeapons, selectedArmor, selectedTarget, selectedHSValue, selectedDistance, selectedAttachments, selectedWeakspotValue} from "../store";
+import {selectedWeapons, selectedArmor, selectedTarget, selectedHSValue, selectedDistance, selectedAttachments, selectedWeakspotValue, selectedAccuracy} from "../store";
 import {armorData, weaponData as wepData} from "../data";
 import {keyObject, detailedKeyObject, flippedKeys as flippedKeysData, roundToThree} from "../utils";
 import {calculate} from "../calculate";
@@ -125,6 +125,7 @@ export default {
             selectedDistance,
             selectedAttachments,
             selectedWeakspotValue,
+            selectedAccuracy,
             weaponData: wepData,
             keyNames: keyObject,
             detailedKeyNames: detailedKeyObject,
@@ -133,6 +134,7 @@ export default {
             colourList: {},
             detailedStats: {},
             collapsed: true,
+            
         };
     },
     methods: {
@@ -383,6 +385,12 @@ export default {
             handler() {
                 this.updateDetailedStats();
             },
+        },
+        selectedAccuracy: {
+            deep: true,
+            handler() {
+                this.updateDetailedStats()
+            }
         },
         selectedDistance: {
             deep: true,

@@ -1,40 +1,64 @@
 <template>
-    <button class="" type="button" @click.prevent="isModalOpen = true"><img src="/calc-images/Attachment_Icon.png"> </button>
-    <!-- <p> Stats modified by <br> an attachment will<br>  be <span style="text-decoration: underline"> underlined </span> </p>  -->
-    <div class="attachment-list"> 
-        <p> Selected attachments: </p>
-        <p v-for="(key, group) in selectedAttachments.typeList[weapon]" @click="selectedAttachments.toggleSelected(weapon, null, group)"> 
-                <font-awesome-icon icon="fas fa-trash" />
-                {{ attachmentData[key]['inGameName'] }} 
-        </p>
-        <p v-if="!selectedAttachments.list[weapon] || selectedAttachments.list[weapon].length==0"> None </p>
-
-    </div>
-
+    <img src="/calc-images/Attachment_Icon.png" @click.prevent="isModalOpen = true" role="button"> 
     <Teleport to="#modal">
         <Transition name="modal"> 
             <div class="modal__bg" v-if="isModalOpen">
                 <section class="modal__content modal__small" ref="modal">  
                     <button @click="isModalOpen = false" class="modal__close-button" aria-label="Close Modal" type="button"><font-awesome-icon icon="fa-solid fa-xmark" /></button>
                     <h2> Attachment Selector </h2>
+
                     <div class="attachment-container">
-                        <div v-for="(key, group) in groupAttachments(weapon)" class="attachment-selector" :key="key">
-                            <h3> {{ keyNames[group] }} </h3>
-                            <p  
-                                @click="selectedAttachments.toggleSelected(weapon, null, group)"
-                                :class="colourClassGiver(null, group)"
-                                class="attachment-item"
-                            > 
-                                None 
-                            </p>
-                            <p v-for="(attachment, key2) in key"  :key="key2"
-                                :class="colourClassGiver(attachment, group)"
-                                @click="selectedAttachments.toggleSelected(weapon, attachment, group)"
-                                class="attachment-item"
-                            >
-                                {{  attachmentData[attachment]['inGameName'] }} ({{attachmentData[attachment]['rarity']}})
-                            </p>
+                        <div v-if="AmmoConverter.length > 0" class="container">
+                            <h3> Ammo Converter </h3>
+                            <v-select 
+                                :options="AmmoConverter"
+                                placeholder="Select an attachment"
+                                :reduce="AmmoConverter => AmmoConverter.codeName"
+                                label="inGameName"
+                                v-model="selectedAmmo"
+                            />
                         </div>
+                        <div v-if="Magazine.length > 0" class="container">
+                            <h3> Magazine </h3>
+                            <v-select 
+                                :options="Magazine"
+                                placeholder="Select an attachment"
+                                :reduce="AmmoConverter => AmmoConverter.codeName"
+                                label="inGameName"
+                                v-model="selectedMag"
+                            />
+                        </div>
+                        <div v-if="ForeGrip.length > 0" class="container">
+                            <h3> Fore Grip </h3>
+                            <v-select 
+                                :options="ForeGrip"
+                                placeholder="Select an attachment"
+                                :reduce="AmmoConverter => AmmoConverter.codeName"
+                                label="inGameName"
+                                v-model="selectedFore"
+                            />
+                        </div>
+                        <div v-if="RearGrip.length > 0" class="container">
+                            <h3> Rear Grip </h3>
+                            <v-select 
+                                :options="RearGrip"
+                                placeholder="Select an attachment"
+                                :reduce="AmmoConverter => AmmoConverter.codeName"
+                                label="inGameName"
+                                v-model="selectedRear"
+                            />
+                        </div>
+                        <div v-if="Stock.length > 0" class="container">
+                            <h3> Stock </h3>
+                            <v-select 
+                                :options="Stock"
+                                placeholder="Select an attachment"
+                                :reduce="AmmoConverter => AmmoConverter.codeName"
+                                label="inGameName"
+                                v-model="selectedStock"
+                            />
+                        </div>
+                        
                         <div v-if="getAttachments(weapon).length == 0">
                             <p class="center"> This weapon has no attachments available. </p>
                         </div>
@@ -79,6 +103,17 @@ export default {
             showModal: false,
             selectedAttachments,
             keyNames: keyObject,
+            selected: '',
+            AmmoConverter: [],
+            Magazine: [],
+            ForeGrip: [],
+            RearGrip: [],
+            Stock: [],
+            selectedAmmo: '',
+            selectedMag: '',
+            selectedFore: '',
+            selectedRear: '',
+            selectedStock: ''        
         }
     },
     methods: {
@@ -88,111 +123,69 @@ export default {
         getAttachments(weapon) {
             return attachment.getAttachments(weapon)
         },
-        colourClassGiver(attachment, category) {
-            let output = ''
-            if (attachment != null) output += attachmentData[attachment]['rarity'].toLowerCase()
-
-            if (selectedAttachments.typeList[this.weapon]) {
-                if (selectedAttachments.typeList[this.weapon][category]) {
-                    if (selectedAttachments.typeList[this.weapon][category] == attachment) {
-                        output += ' active'
-                    }
-                } else {
-                    if (attachment == null) {
-                        return 'active'
-                    }
-                }
-            } else if (attachment == null) {
-                return 'active'
+    },
+    mounted() {
+        let attachments = attachment.groupAttachments(this.weapon)
+        for (let cat in attachments) {
+            let output = [{inGameName: 'None', codeName: null}]
+            for (let attach in attachments[cat]) {
+                let cur = attachments[cat][attach]
+                output.push({
+                    inGameName: attachmentData[cur]['inGameName'] + ' (' + attachmentData[cur]['rarity'] + ')',
+                    codeName: cur 
+                })
             }
-            return output
+            if (cat == 'AmmoConverter') this.AmmoConverter = output
+            if (cat == 'Stock') this.Stock = output
+            if (cat == 'ForeGrip') this.ForeGrip = output
+            if (cat == 'RearGrip') this.RearGrip = output
+            if (cat == 'Magazine') this.Magazine = output
+        }
+    },
+    watch: {
+        selectedAmmo : {
+            deep: true,
+            handler() {
+                selectedAttachments.toggleSelected(this.weapon, this.selectedAmmo, 'AmmoConverter')
+            }
         },
+        selectedMag : {
+            deep: true,
+            handler() {
+                selectedAttachments.toggleSelected(this.weapon, this.selectedMag, 'Magazine')
+            }
+        },
+        selectedFore : {
+            deep: true,
+            handler() {
+                selectedAttachments.toggleSelected(this.weapon, this.selectedFore, 'ForeGrip')
+            }
+        },
+        selectedRear : {
+            deep: true,
+            handler() {
+                selectedAttachments.toggleSelected(this.weapon, this.selectedRear, 'RearGrip')
+            }
+        },
+        selectedStock : {
+            deep: true,
+            handler() {
+                selectedAttachments.toggleSelected(this.weapon, this.selectedStock, 'Stock')
+            }
+        }
     }
 }
 
 </script>
 
 <style scoped>
-.active {
-    background-color: var(--color-surface-1);
+.modal__content {
+    padding: 5rem 5rem 18rem;
 }
 
-.attachment-image {
-    width: 12em;
-    margin: auto;
-}
-
-
-.attachment-item, span {
-    color: var(--color-base);
-    transition: all .1s ease-in-out;
-}
-
-.attachment-item:not(.active):hover {
-    background-color: var(--color-surface-2);
-}
-
-.attachment-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: var(--space-sm);
-    margin-top: var(--space-md);
-}
-
-@media screen and (max-width: 900px) {
-    .attachment-container {
-        grid-template-columns: 1fr;
-    }
-}
-
-.attachment-selector {
-    margin: .2em;
+img {
+    width: 24px;
+    height: 24px;
     cursor: pointer;
-    padding: .5em;
-    text-align: left;
-}
-
-.attachment-selector p {
-    line-height: 1.5em;
-    border-bottom: 1px solid var(--primary-accent);
-}
-
-.attachment-selector:hover .weapon-image {
-    transform: scale(1.05);
-}
-
-.center {
-    text-align: center;
-    transform: translateX(50%)
-}
-
-.attachment-list {
-    grid-area: 2 / 1 / 2 / 3;
-    width: 100%;
-}
-button {
-    aspect-ratio: 1 /1 ;
-}
-button img {
-    filter: invert(1);    
-    width: 100%;
-    height: 100%
-}
-
-.attachment-list p {
-    padding: var(--space-xs) 0
-}
-.attachment-list p:not(:last-of-type) {
-    border-bottom: 1px solid var(--border-color-base);
-}
-.attachment-list p > svg {
-    color: var(--rarity-color-exotic);
-    padding-left: 0.2rem;
-
-    justify-content: center;
-    align-items: center;
-    flex-wrap: nowrap;
-
-    display: inline-flex;
 }
 </style>
