@@ -1,5 +1,5 @@
 <template>
-    <img src="/calc-images/Body_Chart.png" @click.prevent="isModalOpen = true" role="button">
+    <img src="/calc-images/Body_Chart.png" @click.prevent="isModalOpen = true" role="button" v-tooltip="'Click to show a damage chart per body for this player'">
     <Teleport to="#modal">
         <Transition name="modal"> 
             <div class="modal__bg" v-if="isModalOpen">

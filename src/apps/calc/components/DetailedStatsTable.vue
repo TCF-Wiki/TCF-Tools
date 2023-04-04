@@ -475,7 +475,7 @@ h2 {
 
 
 div.name-wrapper {
-    text-align: left;
+    text-align: center;
     display: flex;
 }
 
