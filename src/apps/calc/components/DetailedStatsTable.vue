@@ -326,7 +326,7 @@ export default defineComponent({
     mounted() {
         let validStats = []
         for (let stat in this.headersStats) {
-            if (parseInt(stat)  == 0 || parseInt(stat) == this.headersStats.length-1) continue
+            if (parseInt(stat)  == 0) continue
             validStats.push(this.headersStats[stat]['value'])
         }
         this.validStats = validStats
