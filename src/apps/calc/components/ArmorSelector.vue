@@ -18,7 +18,6 @@
                 :clearable="false"
         />
     </div>
-    {{ value  }}
 </template>
 
 
