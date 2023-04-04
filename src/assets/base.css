@@ -97,7 +97,7 @@ body {
     ::-webkit-scrollbar-track:hover {
 		background: var( --background-color-quiet--hover );
     }
-	::-webkit-scrollbar-thumb {
+	:not::-webkit-scrollbar-thumb {
 		border: 5px solid transparent;
 		border-radius: var( --border-radius--large );
 		background-clip: content-box;

@@ -66,8 +66,8 @@
                         <QuestCard name="Doing the Work"  />
                     </div>
 
-                    <div class="quest-list__right-line" :class="lineColor('Doing the Work', 6)">
-                        <div class="quest-list__right-line-content">Part 6</div>
+                    <div class="quest-list__right-line" :class="lineColor('Doing the Work', 7)">
+                        <div class="quest-list__right-line-content">Part 7</div>
                     </div>
                     <div class="quest-list__right">
                         <QuestCard name="Toxic Love"  unlock="Gas Grenade" />
@@ -87,8 +87,8 @@
                         <QuestCard name="Project Fireball"  footer="Part 7 unlocks Tharis Island" />
                     </div>
 
-                    <div class="quest-list__right-line" :class="lineColor('Project Fireball', 5)">
-                        <div class="quest-list__right-line-content">Part 5</div>
+                    <div class="quest-list__right-line" :class="lineColor('Project Fireball', 6)">
+                        <div class="quest-list__right-line-content">Part 6</div>
                     </div>
                     <div class="quest-list__right">
                         <QuestCard name="Working for the Community"  />
@@ -186,8 +186,8 @@
                         <QuestCard name="Focused on Crystals"  unlock="Focus Crystal Scanning Module" />
                     </div>
 
-                    <div class="quest-list__left-line-diagonal" :class="lineColor('Good, Honest Work', 7)">
-                        <div class="quest-list__left-line-diagonal-content">Part 7</div>
+                    <div class="quest-list__left-line-diagonal" :class="lineColor('Good, Honest Work', 9)">
+                        <div class="quest-list__left-line-diagonal-content">Part 9</div>
                     </div>
 
                     <div class="quest-list__center" :class="lineColor('A Powerful Discovery')">
@@ -230,8 +230,8 @@
                         <QuestCard name="Crush Hazard"  />
                     </div>
 
-                    <div class="quest-list__left-line" :class="lineColor('Heavy Construction', 6)">
-                        <div class="quest-list__left-line-content">Part 6</div>
+                    <div class="quest-list__left-line" :class="lineColor('Heavy Construction', 7)">
+                        <div class="quest-list__left-line-content">Part 7</div>
                     </div>
 
                     <div class="quest-list__center" :class="lineColor('Heavy Construction')">
@@ -283,8 +283,8 @@
                         <QuestCard name="A Whole New Ecosystem"  />
                     </div>
 
-                    <div class="quest-list__left-line" :class="lineColor('Field Research', 5)">
-                        <div class="quest-list__left-line-content">Part 5</div>
+                    <div class="quest-list__left-line" :class="lineColor('Field Research', 6)">
+                        <div class="quest-list__left-line-content">Part 6</div>
                     </div>
 
                     <div class="quest-list__center" :class="lineColor('Field Research')">
@@ -313,8 +313,8 @@
                         <QuestCard name="Lost Knowledge"  footer="Part 5 unlocks Tharis Island" />
                     </div>
 
-                    <div class="quest-list__right-line-diagonal" :class="lineColor('Field Research', 10)">
-                        <div class="quest-list__right-line-diagonal-content">Part 10</div>
+                    <div class="quest-list__right-line-diagonal" :class="lineColor('Field Research', 11)">
+                        <div class="quest-list__right-line-diagonal-content">Part 11</div>
                     </div>
 
                     <div class="quest-list__right">

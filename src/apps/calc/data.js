@@ -50,9 +50,8 @@ async function get_target_data() {
     return json;
 }
 
-const tempTargetData = await get_target_data();
-
-tempTargetData["PlayerDefault"] = {
+let temp = {}
+temp["PlayerDefault"] = {
     health: 100,
     minDamageReduction: 0.35,
     maxDamageReduction: 2.0,
@@ -64,9 +63,11 @@ tempTargetData["PlayerDefault"] = {
         head: -1,
     },
 };
+let tempTargetData = await get_target_data();
+tempTargetData = Object.assign(temp, tempTargetData)
 
-delete tempTargetData['AI_GlowBeetle_Blast']
-delete tempTargetData['AI_GlowBeetle_Acid']
+// delete tempTargetData['AI_GlowBeetle_Blast']
+// delete tempTargetData['AI_GlowBeetle_Acid']
 delete tempTargetData['AI_Howler_2']
 export const targetData = tempTargetData;
 

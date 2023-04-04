@@ -1,5 +1,5 @@
 import { weaponData, targetData, armorData } from "./data";
-import { selectedTarget, selectedArmor, selectedHSValue, selectedDistance, selectedWeakspotValue } from "./store";
+import { selectedTarget, selectedArmor, selectedAccuracy, selectedHSValue, selectedDistance, selectedWeakspotValue } from "./store";
 import { attachment } from './attachment'
 
 export const calculate = {
@@ -270,7 +270,8 @@ export const calculate = {
     },
     getShotModifiers: function(weapon, armorOverride, hsMultiplier, source = 'normal') {
         return ( 
-            this.headShotMult(weapon, hsMultiplier, source) 
+            ( source == 'normal' ? selectedAccuracy.value / 100 : 1)
+            * this.headShotMult(weapon, hsMultiplier, source) 
             * this.penetrationMultiplier(weapon, armorOverride) 
             * this.falloffMultiplier(weapon) 
             * this.creatureDamageMult(weapon)
