@@ -411,7 +411,7 @@ h2 {
     grid-template-columns: 1fr 1fr;
 }
 
-@media  screen and (max-width: 900px) {
+@media  screen and (max-width: 1500px) {
     .wrapper-small {
         width: 80%;
         margin: auto;

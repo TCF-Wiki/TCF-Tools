@@ -1,5 +1,5 @@
 <template>
-    <div class="container" @input="updateSelected">
+    <div class="container" @input="updateSelected" v-if="selectedTarget.selected == 'PlayerDefault'">
         <v-select  
             v-model="selected" 
             :options="sortedData" 
@@ -9,12 +9,22 @@
             :clearable="false"
         />
     </div>
+    <div v-else class="container"> 
+        <v-select  
+                v-model="value" 
+                :options="weakSpotList" 
+                label="inGameName"
+                placeholder="Select weakspot"
+                :clearable="false"
+        />
+    </div>
+    {{ value  }}
 </template>
 
 
 <script>
-import {armorData} from "../data";
-import {selectedArmor} from "../store";
+import {armorData, targetData} from "../data";
+import {selectedArmor, selectedTarget, selectedWeakspotValue} from "../store";
 export default {
     name: "ArmorSelector",
     data() {
@@ -29,10 +39,58 @@ export default {
                 {inGameName: 'Enhanced Shields (Exotic)', codeName: 'Shield_05'},
                 {inGameName: 'Titan Forged Shields (Legendary)', codeName: 'Shield_Altered_03'},
             ],
-            selected: 'Shield_01'
+            selected: 'Shield_01',
+            targetData,
+            selectedTarget,
+            selectedWeakspotValue,
+            targetData,
+            weakSpotList: [],
+            value: 'None'
         };
     },
+    methods: {
+        getWeakspotList(data) {
+            // this is to get a list of weakspots for the current target, removing unused/weird weakspots
+            let output = [{inGameName: 'None', value: 1}]
+            for (let key in data) {
+                if (key.includes('Ankle') && !key.includes('WeakSpot')) continue;
+                // split it to just the first word
+                let realKey = key.split('_')[0]
+                // remove numbers
+                realKey = realKey.replace(/[0-9]/g, '');
+                // remove trailing A or C
+                if (realKey.charAt(realKey.length-1) == 'A' || realKey.charAt(realKey.length-1) == 'C') {
+                    realKey = realKey.slice(0, -1)
+                }
+                if (realKey == 'NeckSpike') realKey = 'Neck Spike'
+                if (realKey == 'EggSack') realKey = 'Egg Sack'
+                if (['Neck', 'Spine'].includes(realKey)) continue
+                if (realKey == 'EggExploding' || realKey == 'Eggpulse') realKey = 'Exploding Sac'
+                if (output.length > 1 && output[output.length -1]['inGameName'] == realKey) continue
+
+                output.push({inGameName: realKey, value: data[key]['m_damageMultiplier']})
+            }
+
+            this.weakSpotList = output
+        },
+        getWeakspotValue(value) {
+            return value
+        }
+    },
     watch: {
+        selectedTarget : {
+            deep: true,
+            handler() {
+                selectedWeakspotValue.changeValue(1)
+                if (selectedTarget.selected != 'PlayerDefault') this.getWeakspotList(targetData[selectedTarget.selected]['damageAreas'])
+            }
+        },
+        value : {
+            deep: true,
+            handler() {
+                selectedWeakspotValue.changeValue(this.value.value)
+            }
+        },
         selected : {
             deep: true,
             handler() {

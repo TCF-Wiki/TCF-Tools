@@ -65,8 +65,8 @@ tempTargetData["PlayerDefault"] = {
     },
 };
 
-delete tempTargetData['AI_GlowBeetle_Blast']
-delete tempTargetData['AI_GlowBeetle_Acid']
+// delete tempTargetData['AI_GlowBeetle_Blast']
+// delete tempTargetData['AI_GlowBeetle_Acid']
 delete tempTargetData['AI_Howler_2']
 export const targetData = tempTargetData;
 

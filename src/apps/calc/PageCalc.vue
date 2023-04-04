@@ -32,8 +32,8 @@ export default {
             <div class="header">
                 <h1>Weapon Calculator</h1>
                 <p class="basic-info">
-                    The weapon calculator calculates detailed stats for weapon, and makes it easy to compare them.
-                    <br> Change the selectors below to change what the math uses to compare.
+                    The weapon calculator calculates detailed stats for weapon, and makes it easy to compare weapons.
+                    <br> Change the options to change what it is comparing against.
                     <br> Change attachments by clicking on the attachment icon in the options.
                     <br> <b> Click on any table header to sort the results ascending, descending, or not sorted. </b>
                 </p>

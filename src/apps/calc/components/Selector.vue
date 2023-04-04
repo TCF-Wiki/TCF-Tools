@@ -6,12 +6,13 @@
                 <WeaponSelector />
             </div>
             <div> 
-                <span> Armor </span>
-                <ArmorSelector />
-            </div>
-             <div>
                 <span> Target </span>
                 <TargetSelector />
+            </div>
+             <div>
+                <span v-if="selectedTarget.selected == 'PlayerDefault'"> Armor </span>
+                <span v-else> Weakspot </span>
+                <ArmorSelector />
             </div> 
         </div>
         <div class="button-container">
@@ -38,16 +39,21 @@ import TargetSelector from './TargetSelector.vue';
 import AccuracySelector from './AccuracySelector.vue';
 import DistanceSelector from './DistanceSelector.vue';
 import WeakSpotAccuracySelector from './WeakSpotAccuracySelector.vue';
-
+import { selectedTarget } from '../store';
 export default {
     components : {
-    ArmorSelector,
-    WeaponSelector,
-    TargetSelector,
-    AccuracySelector,
-    DistanceSelector,
-    WeakSpotAccuracySelector
-}
+        ArmorSelector,
+        WeaponSelector,
+        TargetSelector,
+        AccuracySelector,
+        DistanceSelector,
+        WeakSpotAccuracySelector
+    },
+    data() {
+        return {
+            selectedTarget
+        }
+    }
 }
 </script>
 

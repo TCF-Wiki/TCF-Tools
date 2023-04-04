@@ -81,7 +81,10 @@ export const creatureNames = {
     "AI_Crusher": "Crusher",
     "AI_Crusher_2": "Alpha Crusher",
     "AI_Howler": "Howler",
-    "AI_Howler_2": "Elite Howler"
+    "AI_Howler_2": "Elite Howler",
+    "AI_GlowBeetle_Blast": "Blast Tick",
+    "AI_GlowBeetle_Acid": "Acid Tick",
+
 }
 
 export const unusableAttachments = [
