@@ -24,7 +24,7 @@
         </template>
     </EasyDataTable>
 </div>
-<div class="shots-container">
+<div class="shots-container" v-if="selectedTarget.selected == 'PlayerDefault'">
     <div class="wrapper wrapper-small"> 
         <h2> Bodyshots to Kill </h2>
         <EasyDataTable
