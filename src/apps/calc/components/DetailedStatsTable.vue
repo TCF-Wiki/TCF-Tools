@@ -262,10 +262,10 @@ export default defineComponent({
                 {text: 'Falloff Range Start (cm)', value: 'FalloffStart', sortable: true}, 
                 // {text: 'Weapon Type', value: 'tags', sortable: true}, 
                 {text: 'Price', value: 'buyValue', sortable: true}, 
-                {text: 'Sell Price', value: 'sellValue', sortable: true}, 
-                {text: 'Faction', value: 'faction', sortable: true}, 
-                {text: 'Faction Reputation', value: 'factionRep', sortable: true}, 
-                {text: 'Weight', value: 'weight', sortable: true},
+                // {text: 'Sell Price', value: 'sellValue', sortable: true}, 
+                // {text: 'Faction', value: 'faction', sortable: true}, 
+                // {text: 'Faction Reputation', value: 'factionRep', sortable: true}, 
+                // {text: 'Weight', value: 'weight', sortable: true},
                 {text: 'Audible Range (m)', value: 'audibleRange', sortable: true},
                 // {text: 'Options', value: 'options'}
             ],
@@ -406,13 +406,14 @@ h2 {
 }
 
 .wrapper-small {
-    width: 90%
+    width: 50%;
 }
 
 
 .shots-container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
+    gap: 2rem
 }
 
 @media  screen and (max-width: 1500px) {
@@ -439,7 +440,7 @@ h2 {
   --easy-table-header-font-color: var(--color-base--emphasized);
   --easy-table-header-background-color: var(--color-surface-2);
 
-  --easy-table-header-item-padding: var(--space-sm) var(--space-sm);
+  --easy-table-header-item-padding: 3px 1px;
 
   --easy-table-body-even-row-font-color: var(--color-base);
   --easy-table-body-even-row-background-color: var(--color-surface-4);
@@ -447,7 +448,7 @@ h2 {
   --easy-table-body-row-font-color: var(--color-base);
   --easy-table-body-row-background-color: var(--color-surface-3);
   --easy-table-body-row-height: 10px;
-  --easy-table-body-row-font-size: var(--space-md);
+  --easy-table-body-row-font-size: 1rem;
 
   --easy-table-body-row-hover-font-color: var(--color-surface-0);
   --easy-table-body-row-hover-background-color: var(--rarity-color-rare);
@@ -471,8 +472,9 @@ h2 {
   --easy-table-scrollbar-corner-color: pink;
 
   --easy-table-loading-mask-background-color: yellow;
-}
 
+
+}
 
 div.name-wrapper {
     text-align: center;
