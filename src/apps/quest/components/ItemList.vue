@@ -27,6 +27,11 @@
             <input type="text" v-model="searchValue" placeholder="Search for items..." />
         </div>
 
+        <div class="search-options-container">
+            <input class="current-progress-only" type="checkbox" v-model="onlyShowCurrentProgress" @change="onlyShowCurrentProgressChanged()" id="current-mission-items-only" />
+            <label for="current-mission-items-only">Only show current levels</label>
+        </div>
+
         <section class="list__container">
             <div v-for="(amount, index) in currentItems" :key="index.toString()" class="item__row" :class="{matching: rowColor(index.toString())}">
                 <img :src="'/map-images/item-images/' + itemName(index.toString(), true) + '.png'" class="item__image" />
@@ -45,6 +50,11 @@
 
         <div class="search-container" v-if="Object.keys(currentMissionsItems).length > 0">
             <input type="text" v-model="searchValue" placeholder="Search for items..." />
+        </div>
+  
+        <div class="search-options-container">
+            <input class="current-progress-only" type="checkbox" v-model="onlyShowCurrentProgress" @change="onlyShowCurrentProgressChanged()" id="current-mission-items-only" />
+            <label for="current-mission-items-only">Only show current levels</label>
         </div>
 
         <section class="list__container">
@@ -67,8 +77,8 @@
             <input type="text" v-model="searchValue" placeholder="Search for items..." />
         </div>
         <div class="search-options-container">
-            <input class="current-levels-only" type="checkbox" v-model="onlyShowCurrentLevels" @change="getQuarterItems()" id="current-only" />
-            <label for="current-only">Only show current levels</label>
+            <input class="current-progress-only" type="checkbox" v-model="onlyShowCurrentProgress" @change="onlyShowCurrentProgressChanged()" id="current-quarter-items-only" />
+            <label for="current-quarter-items-only">Only show current levels</label>
         </div>
 
         <section class="list__container">
@@ -104,7 +114,7 @@ export default defineComponent({
 
             currentQuarterItems: {} as any,
             previousQuarterItems: {} as any,
-            onlyShowCurrentLevels: false,
+            onlyShowCurrentProgress: false,
 
             currentItems: {} as any,
             previousItems: {} as any,
@@ -121,7 +131,7 @@ export default defineComponent({
         };
     },
     mounted() {
-        this.getIncompleteParts();
+        this.getIncompleteMissionItems();
         this.getQuarterItems();
         this.updateList();
 
@@ -157,18 +167,43 @@ export default defineComponent({
 
             slides[this.slideIndex - 1].style.display = "block";
         },
-        getIncompleteParts(): void {
+        onlyShowCurrentProgressChanged(): void {
+            this.getIncompleteMissionItems();
+            this.getQuarterItems();
+        },
+        getQuestLineFromMissionName(missionName: string): any {
+            for(let name in missionListData) {
+                for (let i in missionListData[name].missions) {
+                    if (missionListData[name].missions[i] === missionName)
+                        return missionListData[name];
+                }
+            }
+            return '';
+        },
+        getIncompleteMissionItems(): void {
             let newData: any = {};
-            for (let mission in missionListData) {
-                const length = missionListData[mission]['missions'].length;
-                const progress = this.progressData.get()[mission];
+            for (let name in missionListData) {
+                const questLine = missionListData[name];
+                const missions = questLine['missions'];
+                const length = missions.length;
+                const progress = this.progressData.get()[name];
+
+                if (this.onlyShowCurrentProgress && progress == 0 && questLine.hasOwnProperty('dependsOnMission')) {
+                    const requiredQuestName = questLine.dependsOnMission;
+                    const requiredQuestLine = this.getQuestLineFromMissionName(requiredQuestName);
+                    
+                    if (this.progressData.get()[requiredQuestLine.name] < requiredQuestLine.missions.length) {
+                        // Don't count in the current questline because the dependant questline is not even finished yet
+                        continue;
+                    }
+                }
 
                 if (progress >= length) {
                     // we have already completed this mission
                 } else {
                     // we have yet to complete this mission in full, so we get the data
-                    for (let p in missionListData[mission]['missions']) {
-                        const part = missionListData[mission]['missions'][p];
+                    for (let p in missions) {
+                        const part = missions[p];
 
                         // we have not completed this part of the mission yet
                         if (progress < parseInt(p) + 1) {
@@ -181,12 +216,12 @@ export default defineComponent({
 
                                 // save the items, adding duplicate entries together
                                 for (let item in data) {
-                                    if (newData[item]) {
-                                        newData[item] = newData[item] + data[item];
-                                    } else {
-                                        newData[item] = data[item];
-                                    }
+                                    newData[item] = newData[item]
+                                        ? newData[item] + data[item]
+                                        : data[item];
                                 }
+                                
+                                if (this.onlyShowCurrentProgress) break;
                             }
                         }
                     }
@@ -202,6 +237,7 @@ export default defineComponent({
             // save it
             this.previousMissionItems = {...this.currentMissionsItems};
             this.currentMissionsItems = sortedData;
+            this.updateAllItemList();
         },
         getQuarterItems(): void {
             let newData: any = {};
@@ -222,7 +258,7 @@ export default defineComponent({
                             ? newData[item] + amount
                             : amount;
                     }
-                    if (this.onlyShowCurrentLevels) break;
+                    if (this.onlyShowCurrentProgress) break;
                 }
             }
 
@@ -232,7 +268,7 @@ export default defineComponent({
                 const pqLevelRequired = techTreeData[upgrade]["PQLevelRequired"];
                 const progress = quarterProgress[upgrade];
                 console.log("current: " + overalQuarterProgress + " - required: " + pqLevelRequired);
-                if (upgrade >= levels.length || (this.onlyShowCurrentLevels && overalQuarterProgress < pqLevelRequired)) continue;
+                if (upgrade >= levels.length || (this.onlyShowCurrentProgress && overalQuarterProgress < pqLevelRequired)) continue;
 
                 for (let l in levels) {
                     // we have not completed this upgrade yet
@@ -247,7 +283,7 @@ export default defineComponent({
                                 newData[item] = amount;
                             }
                         }
-                        if (this.onlyShowCurrentLevels) break;
+                        if (this.onlyShowCurrentProgress) break;
                     }
                 }
             }
@@ -259,6 +295,7 @@ export default defineComponent({
             // save it
             this.previousQuarterItems = {...this.previousQuarterItems};
             this.currentQuarterItems = sortedData;
+            this.updateAllItemList();
         },
         sendNotification(): void {
             // send out a function to inform the user that the item list changed when they change if they finished a mission or not
@@ -273,25 +310,21 @@ export default defineComponent({
             if (before === after) return;
             this.toast.info("Item list updated", {timeout: 2000, position: POSITION.BOTTOM_RIGHT});
         },
-        updateList() {
+        updateAllItemList() {
             let bigList: any = {};
 
             for (let item in this.currentMissionsItems) {
                 const amount = this.currentMissionsItems[item];
-                if (bigList[item]) {
-                    bigList[item] = bigList[item] + amount;
-                } else {
-                    bigList[item] = amount;
-                }
+                bigList[item] = bigList[item]
+                    ? bigList[item] + amount
+                    : amount;
             }
 
             for (let item in this.currentQuarterItems) {
                 const amount = this.currentQuarterItems[item];
-                if (bigList[item]) {
-                    bigList[item] = bigList[item] + amount;
-                } else {
-                    bigList[item] = amount;
-                }
+                bigList[item] = bigList[item]
+                    ? bigList[item] + amount
+                    : amount;
             }
 
             const sortedData = Object.keys(bigList)
@@ -300,6 +333,9 @@ export default defineComponent({
 
             this.previousItems = {...this.currentItems};
             this.currentItems = sortedData;
+        },
+        updateList() {
+            this.updateAllItemList();
             this.sendNotification();
         },
         itemName(item: string, urlFormat?: boolean): string {
