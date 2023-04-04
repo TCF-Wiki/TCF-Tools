@@ -81,6 +81,7 @@ export default {
             deep: true,
             handler() {
                 selectedWeakspotValue.changeValue(1)
+                this.value = []
                 if (selectedTarget.selected != 'PlayerDefault') this.getWeakspotList(targetData[selectedTarget.selected]['damageAreas'])
             }
         },
