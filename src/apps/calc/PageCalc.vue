@@ -118,4 +118,8 @@ h2 {
 .basic-info {
     margin: auto;
 }
+
+b {
+    font-size: larger;
+}
 </style>

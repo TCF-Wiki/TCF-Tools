@@ -198,6 +198,7 @@ export default defineComponent({
             selectedAccuracy,
             headersDetailed: [
                 { text: "Weapon", value: "inGameName", sortable: true, width: 200, fixed: true },
+                { text: 'Options', value: 'options'},
                 { text: "Penetration Multiplier", value: "penMult", sortable: true },
                 { text: "Rounds per Minute", value: "rpm", sortable: true },
                 { text: "Reload Adjust RPM", value: "reloadRPM", sortable: true },
@@ -209,7 +210,6 @@ export default defineComponent({
                 { text: "Time to Kill", value: "ttk", sortable: true},
                 { text: "Damage per Bullet", value: "dmgPerBull", sortable: true},
                 { text: "Damage per Bullet (HS)", value: "dmgPerBullHS", sortable: true},
-                { text: 'Options', value: 'options'}
             ],
             headersShotsToKillBody: [
                 { text: "Weapon", value: "inGameName", sortable: true, width: 200, fixed: true },
