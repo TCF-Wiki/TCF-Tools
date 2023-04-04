@@ -1,47 +1,15 @@
 <template>
-    <div class="container">
-        <button class="" type="button" @click.prevent="isModalOpen = true">
-            <img src="/calc-images/Weapon_Icon.png" />
-        </button>
+    <div class="container" @input="updateSelected">
+        <v-select 
+            multiple 
+            v-model="selected" 
+            :options="sortedData" 
+            :reduce="sortedData => sortedData.codeName" 
+            label="inGameName"
+            placeholder="Select a weapon"
+        />
     </div>
-    <Teleport to="#modal">
-        <Transition name="modal">
-            <div class="modal__bg" v-if="isModalOpen">
-                <section class="modal__content modal__small" ref="modal">
-                    <button @click="isModalOpen = false" class="modal__close-button" aria-label="Close Modal" type="button"><font-awesome-icon icon="fa-solid fa-xmark" /></button>
-                    <div class="weapon-container">
-                        <div v-for="weapon in sortedData" class="weapon-selector" :class="{active: selectedWeapons.list.includes(weapon[1])}" @click="selectedWeapons.toggleSelected(weapon[1])">
-                            <img :src="'calc-images/' + weapon[0].replace(' - Mk.II', '').replace(' - Prototype', '') + '.png'" class="weapon-image" />
-                            <span class="weapon-name"> {{ weapon[0] }} </span>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </Transition>
-    </Teleport>
 </template>
-
-<script setup>
-import {ref} from "vue";
-/* @ts-ignore */
-import {onClickOutside} from "@vueuse/core";
-
-const isModalOpen = ref(false);
-const modal = ref(null);
-onClickOutside(modal, () => (isModalOpen.value = false));
-
-const openModal = () => {
-    isModalOpen.value = true;
-
-    const body = document.body;
-
-    body.style.pointerEvents = "none";
-
-    setTimeout(() => {
-        body.style.pointerEvents = "all";
-    }, 600);
-};
-</script>
 
 <script>
 import {weaponData as wepData} from "../data";
@@ -53,7 +21,7 @@ export default {
             weaponData: wepData,
             sortedData: [],
             selectedWeapons,
-            showWeaponModal: false,
+            selected: ['WP_D_AR_Bullet_01','WP_G_Sniper_Energy_01']
         };
     },
     mounted() {
@@ -61,7 +29,7 @@ export default {
         let filtered = [];
         for (const [k, v] of Object.entries(this.weaponData)) {
             if (!v) continue;
-            if (!v["tags"] || v["tags"].length == 0 || v["tags"][0] === "Tools" || k.includes("scrappy")) continue;
+            if (!v["tags"] || v["tags"].length == 0 || v["tags"][0] === "Tools") continue;
             if (v["inGameName"] == "HAZE" || v["inGameName"] == "KARLA" || v["inGameName"] == "FF4 Detonator") continue;
             filtered.push(k);
         }
@@ -71,62 +39,21 @@ export default {
         for (const weapon in filtered) {
             const wData = this.weaponData[filtered[weapon]];
             if (wData == undefined) continue;
-            let pushedData = [wData["inGameName"], filtered[weapon]];
+            let pushedData = {inGameName: wData["inGameName"], codeName: filtered[weapon]};
             sorted.push(pushedData);
         }
-        sorted.sort();
+        // thanks to https://stackoverflow.com/a/1129270
+        sorted.sort((a,b) => (a.inGameName > b.inGameName) ? 1 : ((b.inGameName > a.inGameName) ? -1 : 0));
         // put our sorted names of items into our data
         this.sortedData = sorted;
     },
+    watch: {
+        selected : {
+            deep: true,
+            handler() {
+                selectedWeapons.set(this.selected)
+            }
+        }
+    }
 };
 </script>
-
-<style scoped>
-.active {
-    background-color: var(--color-surface-0);
-}
-.weapon-image {
-    width: 10rem;
-    margin: auto;
-    transition: all 0.2s ease-in-out;
-}
-
-.weapon-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    margin: auto;
-}
-
-@media screen and (max-width: 900px) {
-    .weapon-image {
-        display: none;
-    }
-    .weapon-name {
-        font-size: 0.8rem;
-    }
-    .weapon-container {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-.weapon-selector {
-    margin: 0.2em;
-    text-align: center;
-    cursor: pointer;
-}
-
-.weapon-selector:hover .weapon-image {
-    transform: scale(1.05);
-}
-
-.container button {
-    width: 100%;
-    height: 100%;
-}
-
-.container button img {
-    filter: invert(1);
-    width: 100%;
-    margin-top: 25%;
-    margin-bottom: 25%;
-}
-</style>

@@ -1,100 +1,102 @@
 <template>
-    <div class="container"> 
-        <button class="" type="button" @click.prevent="isModalOpen = true"> 
-            <img :src=" 'calc-images/' + armorImage(selectedArmor.selected) + '.png'  " > 
-        </button>
-    </div>
-    <Teleport to="#modal">
-        <Transition name="modal"> 
-            <div class="modal__bg" v-if="isModalOpen">
-                <section class="modal__content modal__small" ref="modal">  
-                    <button @click="isModalOpen = false" class="modal__close-button" aria-label="Close Modal" type="button"> <font-awesome-icon icon="fa-solid fa-xmark" /> </button>
-                    <div class="weapon-container">
-                        <div class="armor-container">
-                            <div v-for="(armor, key) in armorFilter(armorData)" class="armor-selector" :class="classGiver(key)" @click="selectedArmor.changeSelected(key)">
-                                <img :src=" 'calc-images/' + armorImage(key) + '.png'  " class="armor-image" > 
-                                <span> {{  armorName(key)}} ({{armor['armorAmount']}}) </span> 
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </Transition>
-    </Teleport>
+<div class="container" @input="updateSelected" v-if="selectedTarget.selected == 'PlayerDefault'">
+    <v-select  
+        v-model="selected" 
+        :options="sortedData" 
+        :reduce="sortedData => sortedData.codeName" 
+        label="inGameName"
+        placeholder="Select armor"
+        :clearable="false"
+    />
+</div>
+<div v-else class="container"> 
+    <v-select  
+            v-model="value" 
+            :options="weakSpotList" 
+            label="inGameName"
+            placeholder="Select weakspot"
+            :clearable="false"
+    />
+</div>
 </template>
 
-<script setup>
-import { ref } from 'vue'
-/* @ts-ignore */
-import { onClickOutside } from '@vueuse/core';
-
-const isModalOpen = ref(false)
-const modal = ref(null)
-onClickOutside(modal, () => (isModalOpen.value = false))
-    
-const openModal = () => {
-    isModalOpen.value = true
-
-    const body = document.body
-    
-    body.style.pointerEvents = 'none'
-
-    setTimeout( () => { body.style.pointerEvents = 'all'},600)
-}
-</script>
 
 <script>
-import { armorData, itemData } from '../data';
-import { selectedArmor } from '../store';
+import {armorData, targetData} from "../data";
+import {selectedArmor, selectedTarget, selectedWeakspotValue} from "../store";
 export default {
     name: "ArmorSelector",
     data() {
         return {
-            selectedArmor: selectedArmor,
-            armorData: armorData,
-            itemData: itemData,
-            showModal: false,
-        }
+            data: armorData,
+            sortedData: [
+                {inGameName: 'No Armor', codeName: 'PlayerDefault'},
+                {inGameName: 'Basic Shields (Common)', codeName: 'Shield_01'},
+                {inGameName: 'Standard Shields (Uncommon)', codeName: 'Shield_02'},
+                {inGameName: 'Reinforced Shields (Rare)', codeName: 'Shield_03'},
+                {inGameName: 'Combat Shields (Epic)', codeName: 'Shield_04'},
+                {inGameName: 'Enhanced Shields (Exotic)', codeName: 'Shield_05'},
+                {inGameName: 'Titan Forged Shields (Legendary)', codeName: 'Shield_Altered_03'},
+            ],
+            selected: 'Shield_01',
+            targetData,
+            selectedTarget,
+            selectedWeakspotValue,
+            targetData,
+            weakSpotList: [],
+            value: 'None'
+        };
     },
     methods: {
-        armorFilter(data) {
-            let temp = {}
-            temp['PlayerDefault'] = {'armorAmount': 0, 'rarity': 'None'}
-            for (let key in data)  {
-                if (key.includes('Test') || key.includes('Tactical') || key.includes('Restoration') || key.includes('Altered')) continue
-                if (key.includes)
-                temp[key] = data[key]
-            }
-            temp['Shield_Altered_03'] = data['Shield_Altered_03']
-            return temp;
-        },
-        armorImage(key) {
-            if (key.includes('PlayerDefault')) return 'No_Armor'
-            if (key.includes('Altered_03')) return 'Shield_Forged'
-            if (key.includes('01')) {
-                if (key.includes('Restoration')) return 'Shield_Uncommon'
-                return 'Shield_Common'
-            }
-            if (key.includes('02')) {
-                if (key.includes('Restoration')) return 'Shield_Rare'
-                return 'Shield_Uncommon'
-            }
-            if (key.includes('03')) return 'Shield_Rare'
-            if (key.includes('04')) return 'Shield_Epic'
-            // not a bug. There is no unique image.
-            if (key.includes('05')) return 'Shield_Epic'
-            return 'Shield_Common'
-        },
-        armorName(key) {
-            if (key == 'PlayerDefault') return 'No Armor'
-            return itemData[key]['inGameName']
-        },
-        classGiver(key) {
-            let output = ''
-            output += armorData[key]['rarity'].toLowerCase()
+        getWeakspotList(data) {
+            // this is to get a list of weakspots for the current target, removing unused/weird weakspots
+            let output = this.weakSpotList
+            for (let key in data) {
+                if (key.includes('Ankle') && !key.includes('WeakSpot')) continue;
+                // split it to just the first word
+                let realKey = key.split('_')[0]
+                // remove numbers
+                realKey = realKey.replace(/[0-9]/g, '');
+                // remove trailing A or C
+                if (realKey.charAt(realKey.length-1) == 'A' || realKey.charAt(realKey.length-1) == 'C') {
+                    realKey = realKey.slice(0, -1)
+                }
+                if (realKey == 'NeckSpike') realKey = 'Neck Spike'
+                if (realKey == 'EggSack') realKey = 'Egg Sack'
+                if (['Neck', 'Spine'].includes(realKey)) continue
+                if (realKey == 'EggExploding' || realKey == 'Eggpulse') realKey = 'Exploding Sac'
+                if (output.length > 1 && output[output.length -1]['inGameName'] == realKey) continue
 
-            if (selectedArmor.selected == key) output += ' active'
-            return output
+                output.push({inGameName: realKey, value: data[key]['m_damageMultiplier']})
+            }
+
+            this.weakSpotList = output
+        },
+        getWeakspotValue(value) {
+            return value
+        }
+    },
+    watch: {
+        selectedTarget : {
+            deep: true,
+            handler() {
+                this.weakSpotList = [{inGameName: 'None', value: 1}]
+                this.value = {inGameName: 'None', value: 1}
+                selectedWeakspotValue.changeValue(1)
+                if (selectedTarget.selected != 'PlayerDefault') this.getWeakspotList(targetData[selectedTarget.selected]['damageAreas'])
+            }
+        },
+        value : {
+            deep: true,
+            handler() {
+                if (this.weakSpotList.length > 1)selectedWeakspotValue.changeValue(this.value.value)
+            }
+        },
+        selected : {
+            deep: true,
+            handler() {
+                selectedArmor.changeSelected(this.selected)
+            }
         }
     }
 };

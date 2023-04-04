@@ -102,7 +102,6 @@ export const attachment = {
                 usableInList['FalloffStart'] = [{'value': effectList[eff]['value'] + weaponData[weapon]['FalloffStart'], 'type': effectList[eff]['modifierType']}]
                 usableInList['FalloffEnd'] = [{'value': effectList[eff]['value'] + weaponData[weapon]['FalloffStart'], 'type': effectList[eff]['modifierType']}]   
             }
-            console.log(a)
 
             if (!usableInList[a]) {
                 usableInList[a] = []

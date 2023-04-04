@@ -269,6 +269,7 @@ export default defineComponent({
                 const levels = techTreeData[upgrade]["levels"];
                 const pqLevelRequired = techTreeData[upgrade]["PQLevelRequired"];
                 const progress = quarterProgress[upgrade];
+
                 if (upgrade >= levels.length || (this.onlyShowCurrentProgress && overalQuarterProgress < pqLevelRequired)) continue;
 
                 for (let l in levels) {
