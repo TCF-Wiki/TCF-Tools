@@ -30,6 +30,9 @@
         <div class="search-options-container">
             <input class="current-progress-only" type="checkbox" v-model="onlyShowCurrentProgress" @change="onlyShowCurrentProgressChanged()" id="current-mission-items-only" />
             <label for="current-mission-items-only">Only show current levels</label>
+
+            <input class="main-missions-only" type="checkbox" v-model="onlyShowMainMissions" @change="onlyShowMainMissionsChanged()" id="main-mission-items-only" />
+            <label for="main-mission-items-only">Only show main missions</label>
         </div>
 
         <section class="list__container">
@@ -55,6 +58,8 @@
         <div class="search-options-container">
             <input class="current-progress-only" type="checkbox" v-model="onlyShowCurrentProgress" @change="onlyShowCurrentProgressChanged()" id="current-mission-items-only" />
             <label for="current-mission-items-only">Only show current levels</label>
+            <input class="main-missions-only" type="checkbox" v-model="onlyShowMainMissions" @change="onlyShowMainMissionsChanged()" id="main-mission-items-only" />
+            <label for="main-mission-items-only">Only show main missions</label>
         </div>
 
         <section class="list__container">
@@ -115,6 +120,7 @@ export default defineComponent({
             currentQuarterItems: {} as any,
             previousQuarterItems: {} as any,
             onlyShowCurrentProgress: false,
+            onlyShowMainMissions: false,
 
             currentItems: {} as any,
             previousItems: {} as any,
@@ -171,6 +177,9 @@ export default defineComponent({
             this.getIncompleteMissionItems();
             this.getQuarterItems();
         },
+        onlyShowMainMissionsChanged(): void {
+            this.getIncompleteMissionItems();
+        },
         getIncompleteMissionItems(): void {
             let newData: any = {};
             for (let name in missionListData) {
@@ -178,12 +187,14 @@ export default defineComponent({
                 const missions = questLine['missions'];
                 const length = missions.length;
                 const progress = this.progressData.get()[name];
+                if (this.onlyShowMainMissions && !questLine.isMain)
+                    continue;
 
                 if (this.onlyShowCurrentProgress && progress == 0 && questLine.hasOwnProperty('dependsOnMission')) {
                     const requiredQuestName = questLine.dependsOnMission;
-                    const requiredQuestLine = missionListData[missionData[requiredQuestName]['chainName']];
+                    const requiredQuest = missionData[requiredQuestName];
 
-                    if (this.progressData.get()[requiredQuestLine.name] < requiredQuestLine.missions.length) {
+                    if (this.progressData.get()[requiredQuest.chainName] < requiredQuest.chainPart) {
                         // Don't count in the current questline because the dependant questline is not even finished yet
                         continue;
                     }
@@ -336,7 +347,7 @@ export default defineComponent({
         progressData: {
             deep: true,
             handler() {
-                this.getIncompleteParts();
+                this.getIncompleteMissionItems();
                 this.updateList();
             },
         },
@@ -352,6 +363,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
+input[type=checkbox] {
+    margin: auto 10px auto 20px;
+}
+
 p {
     text-align: center;
     font-size: var(--space-xl);
