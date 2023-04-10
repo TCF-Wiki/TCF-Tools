@@ -114,6 +114,10 @@ export function roundToThree(num) {
     return +(Math.round(num + 'e+3') + 'e-3');
 }
 
+export function roundToOne(num) {
+    return +(Math.round(num + 'e+1') + 'e-1');
+}
+
 export function lowercaseFirstLetter(string) {
     return string.charAt(0).toLowerCase() + string.slice(1);
 }

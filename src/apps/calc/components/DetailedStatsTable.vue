@@ -183,8 +183,8 @@ import { weaponData, armorData, itemData } from "../data";
 import BodyChart from "./BodyChart.vue";
 import AttachmentSelector from "./AttachmentSelector.vue";
 import { helmetData } from "@/apps/forge/data";
-
 import { penetrationChart, falloffChart } from "../charts";
+
 export default defineComponent({
     components: {
         BodyChart,
@@ -331,6 +331,14 @@ export default defineComponent({
         }
         this.validStats = validStats
         this.updateDetailedStats()
+
+        const els = document.querySelectorAll('.wrapper') 
+        for (let el in els) {
+            window.addEventListener("wheel", function(e) {
+                if (e.deltaY > 0) els[el].scrollLeft += 100;
+                els[el].scrollLeft -= 100;
+            })
+        }
 
     },
     watch: {

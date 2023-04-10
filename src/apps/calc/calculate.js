@@ -1,6 +1,7 @@
 import { weaponData, targetData, armorData } from "./data";
 import { selectedTarget, selectedArmor, selectedAccuracy, selectedHSValue, selectedDistance, selectedWeakspotValue } from "./store";
 import { attachment } from './attachment'
+import { roundToOne } from "./utils";
 
 export const calculate = {
     damagePerMag: function(weapon, armorOverride) {
@@ -141,7 +142,7 @@ export const calculate = {
         )
     },
     totalDamagePerClick: function(weapon, armorOverride, hsMultiplier, source) {
-        return (
+        return roundToOne(
             // raw bullet damage
             ( 
                 ( this.s(weapon, 'directDamage') + this.s(weapon, 'radialDamage') )
