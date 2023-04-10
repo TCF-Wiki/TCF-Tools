@@ -125,6 +125,7 @@ export function penetrationChart() {
             minimum: 0.0,
             maximum: 2.0,
             interval: 0.2,
+            gridThickness: 1
         },
         axisX: {
             title: "penetration - armor",
@@ -184,6 +185,7 @@ export function falloffChart() {
             minimum: 0.0,
             maximum: 1.2,
             interval: 0.1,
+            gridThickness: 1
         },
         axisX: {
             title: "distance (m)",
