@@ -32,7 +32,7 @@
             <label for="current-mission-items-only">Only show current levels</label>
 
             <input class="main-missions-only" type="checkbox" v-model="onlyShowMainMissions" @change="onlyShowMainMissionsChanged()" id="main-mission-items-only" />
-            <label for="main-mission-items-only">Only show main missions</label>
+            <label for="main-mission-items-only">Hide side missions</label>
         </div>
 
         <section class="list__container">
@@ -59,7 +59,7 @@
             <input class="current-progress-only" type="checkbox" v-model="onlyShowCurrentProgress" @change="onlyShowCurrentProgressChanged()" id="current-mission-items-only" />
             <label for="current-mission-items-only">Only show current levels</label>
             <input class="main-missions-only" type="checkbox" v-model="onlyShowMainMissions" @change="onlyShowMainMissionsChanged()" id="main-mission-items-only" />
-            <label for="main-mission-items-only">Only show main missions</label>
+            <label for="main-mission-items-only">Hide side missions</label>
         </div>
 
         <section class="list__container">
