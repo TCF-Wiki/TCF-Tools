@@ -2,7 +2,7 @@
 <div class="container">
     <input type="range" min="0" max="100" 
         v-model="distance" 
-        @input="selectedDistance.changeValue(distance)"
+        @change="selectedDistance.changeValue(distance)"
     >  
     <span> 
         {{ distance }}m

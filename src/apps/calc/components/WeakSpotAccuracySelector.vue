@@ -3,7 +3,7 @@
     <div class="container">
         <input type="range" min="0" max="100" 
             v-model="HSValue" 
-            @input="selectedHSValue.changeValue(HSValue)"
+            @change="selectedHSValue.changeValue(HSValue)"
         > <span> {{ HSValue }}%</span>
     </div>
 </div>

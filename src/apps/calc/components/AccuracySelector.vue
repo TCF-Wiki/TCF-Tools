@@ -3,7 +3,7 @@
     <div class="container">
         <input type="range" min="1" max="100" 
             v-model="value" 
-            @input="selectedAccuracy.changeValue(value)"
+            @change="selectedAccuracy.changeValue(value)"
         > <span> {{ value }}%</span>
     </div>
 

@@ -20,6 +20,7 @@
     "@vueuse/core": "^9.3.1",
     "chroma-js": "^2.4.2",
     "floating-vue": "^2.0.0-beta.20",
+    "highcharts": "^10.3.3",
     "install": "^0.13.0",
     "leaflet": "^1.8.0",
     "leaflet-draw": "^1.0.4",
