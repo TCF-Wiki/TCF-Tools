@@ -248,13 +248,6 @@ export function penetrationChart() {
             buttons: {
               contextButton: {
                 menuItems: [
-                    "printChart",
-                    "separator",
-                    "downloadPNG",
-                    "downloadJPEG",
-                    "downloadPDF",
-                    "downloadSVG",
-                    "separator",
                     "downloadCSV",
                     "downloadXLS",
                 ]
@@ -347,13 +340,6 @@ export function falloffChart() {
             buttons: {
               contextButton: {
                 menuItems: [
-                    "printChart",
-                    "separator",
-                    "downloadPNG",
-                    "downloadJPEG",
-                    "downloadPDF",
-                    "downloadSVG",
-                    "separator",
                     "downloadCSV",
                     "downloadXLS",
                 ]
@@ -431,13 +417,6 @@ export function ttkChart() {
             buttons: {
               contextButton: {
                 menuItems: [
-                    "printChart",
-                    "separator",
-                    "downloadPNG",
-                    "downloadJPEG",
-                    "downloadPDF",
-                    "downloadSVG",
-                    "separator",
                     "downloadCSV",
                     "downloadXLS",
                 ]
