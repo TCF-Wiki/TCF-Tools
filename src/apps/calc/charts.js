@@ -121,13 +121,13 @@ Highcharts.theme =  {
     },
 
     navigation: {
-    buttonOptions: {
-        symbolStroke: 'var(--color-warning)',
-        theme: {
-            fill: "var(--color-surface-2)",
-            stroke: 'var(--border-color-base)'
+        buttonOptions: {
+            symbolStroke: 'var(--color-warning)',
+            theme: {
+                fill: "var(--color-surface-2)",
+                stroke: 'var(--border-color-base)'
+            }
         }
-    }
     },
 
 
@@ -209,7 +209,6 @@ export function penetrationChart() {
                 text: "penetration - armor"
             },
             tickInterval: 10,
-            minorTickInterval: 5
         },
     
         legend: {
