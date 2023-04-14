@@ -1,7 +1,7 @@
 <script>
 import Selector from "./components/Selector.vue";
 import WeaponComparer from "./components/WeaponComparer.vue";
-import {penetrationChart, falloffChart} from "./charts";
+import {penetrationChart, falloffChart, ttkChart, stkChart} from "./charts";
 import AccuracySelector from "./components/WeakSpotAccuracySelector.vue";
 import DistanceSelector from "./components/DistanceSelector.vue";
 import DetailedStatsTable from "./components/DetailedStatsTable.vue";
@@ -20,6 +20,8 @@ export default {
         window.history.pushState({}, document.title, location.pathname.replace(".html", ""));
         penetrationChart();
         falloffChart();
+        ttkChart();
+        stkChart()
         //done loading
         doneLoading();
     },
@@ -52,6 +54,7 @@ export default {
             <div class="outer-chart-container">
                 <div class="chart-container">
                     <h2>Penetration Chart</h2>
+                    <span> This chart shows the effect of penetration on the damage a weapon deals. <a href="https://thecyclefrontier.wiki/wiki/Penetration"> See the wiki for more info</a>.</span>
                     <div class="inner-chart-container">
                         <div id="penChart">CHART HERE!</div>
                     </div>
@@ -59,8 +62,25 @@ export default {
 
                 <div class="chart-container">
                     <h2>Falloff Chart</h2>
+                    <span> This chart shows the effect of distance on the damage a weapon deals.</span>
                     <div class="inner-chart-container">
                         <div id="falloffChart">Chart HERE!</div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h2>Time to Kill Chart</h2>
+                    <span> This chart shows how the time to kill of a weapon changes as normal accuracy changes. Range: [20, 100], steps of 10%.</span>
+                    <div class="inner-chart-container">
+                        <div id="ttkChart">Chart HERE!</div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h2>Shots to Kill Chart</h2>
+                    <span> This chart shows how the shots to kill of a weapon changes as the armor it is shooting changes.</span>
+                    <div class="inner-chart-container">
+                        <div id="stkChart">Chart HERE!</div>
                     </div>
                 </div>
             </div>
@@ -90,12 +110,15 @@ h2 {
     gap: var(--space-md);
     flex-wrap: wrap;
     margin: auto;
+    justify-content: space-evenly;
+    text-align: center;
+    align-content: space-evenly;
 }
 
 .chart-container {
     position: relative;
     width: 30rem;
-    height: 30rem;
+    height: 34rem;
     display: flex;
     flex-direction: column;
     gap: var(--space-md);

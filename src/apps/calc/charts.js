@@ -1,6 +1,6 @@
 // Charts are buggy with vue. Use default DOM instead.
 
-import {selectedTarget, selectedWeapons, selectedArmor, selectedDistance} from "./store";
+import {selectedTarget, selectedWeapons, selectedArmor, selectedDistance, selectedAccuracy} from "./store";
 import {targetData, weaponData, armorData} from "./data";
 import {roundToThree} from "./utils";
 import {calculate} from "./calculate";
@@ -165,7 +165,7 @@ export function falloffChart() {
             showInLegend: true,
             legendText: weaponData[weapon]["inGameName"],
             dataPoints: weaponPoints,
-            lineThickness: 3,
+            lineThickness: 2,
         });
     }
 
@@ -202,3 +202,105 @@ export function falloffChart() {
     falloffChart.render();
 }
 
+export function ttkChart() {
+    let data = [];
+    for (let wep in selectedWeapons.list) {
+        let weapon = selectedWeapons.list[wep];
+
+        let weaponPoints = [];
+        for (let x = 2; x <= 10; x++) {
+            weaponPoints.push({x: x*10, y: calculate.timeToKill(weapon, (x*10)/100 )})
+        }
+        //console.log(weaponPoints)
+        data.push({
+            type: "line",
+            showInLegend: true,
+            legendText: weaponData[weapon]["inGameName"],
+            dataPoints: weaponPoints,
+            lineThickness: 2,
+        });
+    }
+
+    let ttkChart = new CanvasJS.Chart("ttkChart", {
+        title: {
+            text: "Time to kill",
+        },
+        theme: "Pnoexz",
+        legend: {
+            horizontalAlign: "center",
+            fontSize: 15,
+            verticalAlign: "top",
+        },
+        axisY: {
+            title: "ttk (s)",
+            includeZero: true,
+            minimum: 0.0,
+            gridThickness: 1
+        },
+        axisX: {
+            title: "accuracy",
+            gridThickness: 1,
+            interval: 10,
+            minimum: 15,
+            stripLines: [
+                {
+                    value: selectedAccuracy.value,
+                    showOnTop: true
+                }
+            ]
+        },
+        data: data,
+    });
+    ttkChart.render();
+}
+
+export function stkChart() {
+    let data = [];
+    for (let wep in selectedWeapons.list) {
+        let weapon = selectedWeapons.list[wep];
+
+        let weaponPoints = [
+            {label: "No Armor", y: calculate.shotsToKill(weapon, 0)},
+            {label: "Common", y: calculate.shotsToKill(weapon, 10)},
+            {label: "Uncommon", y: calculate.shotsToKill(weapon, 15)},
+            {label: "Rare", y: calculate.shotsToKill(weapon, 20)},
+            {label: "Epic", y: calculate.shotsToKill(weapon, 25)},
+            {label: "Exotic", y: calculate.shotsToKill(weapon, 30)},
+            {label: "Legendary", y: calculate.shotsToKill(weapon, 33)},
+
+        ];
+        data.push({
+            type: "column",
+            showInLegend: true,
+            legendText: weaponData[weapon]["inGameName"],
+            dataPoints: weaponPoints,
+            lineThickness: 2,
+        });
+    }
+
+    let stkChart = new CanvasJS.Chart("stkChart", {
+        title: {
+            text: "Shots to kill",
+        },
+        theme: "Pnoexz",
+        legend: {
+            horizontalAlign: "center",
+            fontSize: 15,
+            verticalAlign: "top",
+        },
+        axisY: {
+            title: "shots",
+            includeZero: true,
+            minimum: 0.0,
+            gridThickness: 1,
+            interval: 1
+        },
+        axisX: {
+            title: "armor",
+            gridThickness: 1,
+            minimum: 0,
+        },
+        data: data,
+    });
+    stkChart.render();
+}

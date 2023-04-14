@@ -64,7 +64,8 @@ export const calculate = {
         )
     },
 
-    shotsToKill: function(weapon, armorOverride, hsMultiplier, source='normal') {
+    shotsToKill: function(weapon, armorOverride, hsMultiplier, source='normal', accuracy=null) {
+        
         let hp;
         if (armorOverride !== undefined) {
             hp = targetData['PlayerDefault'].health
@@ -72,7 +73,7 @@ export const calculate = {
             hp = targetData[selectedTarget.selected].health;
         }
 
-        let clicks = hp / this.totalDamagePerClick(weapon, armorOverride, hsMultiplier, source)
+        let clicks = hp / this.totalDamagePerClick(weapon, armorOverride, hsMultiplier, source, accuracy)
         let shots = clicks * ( this.s(weapon, 'amountOfBurst') + 1 )
 
         // adjust for small JS rounding errors (e.g. PDW vs exotic armor)
@@ -82,9 +83,9 @@ export const calculate = {
         return Math.ceil(shots)
     },
 
-    timeToKill: function(weapon) {
+    timeToKill: function(weapon, accuracy=null) {
         let hp = targetData[selectedTarget.selected].health;
-        let shots = this.shotsToKill(weapon);
+        let shots = this.shotsToKill(weapon, null, null, null, accuracy);
         let clicks = shots / ( this.s(weapon, 'amountOfBurst') + 1 )
         if (clicks == 1) return this.s(weapon, 'spinupTime')
 
@@ -141,12 +142,12 @@ export const calculate = {
             // * this.s(weapon, 'amountOfImmediateFires')
         )
     },
-    totalDamagePerClick: function(weapon, armorOverride, hsMultiplier, source) {
+    totalDamagePerClick: function(weapon, armorOverride, hsMultiplier, source, accuracy) {
         return roundToOne(
             // raw bullet damage
             ( 
                 ( this.s(weapon, 'directDamage') + this.s(weapon, 'radialDamage') )
-                * this.getShotModifiers(weapon, armorOverride, hsMultiplier, source)
+                * this.getShotModifiers(weapon, armorOverride, hsMultiplier, source, accuracy)
             )
             // adjust for burst and shotguns.
             * this.s(weapon, 'amountOfImmediateFires')
@@ -269,9 +270,18 @@ export const calculate = {
         return 1
 
     },
-    getShotModifiers: function(weapon, armorOverride, hsMultiplier, source = 'normal') {
+    getShotModifiers: function(weapon, armorOverride, hsMultiplier, source = 'normal', accuracy) {
+        let wantedAccuracy = 1;
+        if (accuracy) {
+            wantedAccuracy = accuracy
+        } else if (source != "normal") {
+            wantedAccuracy = 1
+        } else {
+            wantedAccuracy = selectedAccuracy.value / 100
+        }
+
         return ( 
-            ( source == 'normal' ? selectedAccuracy.value / 100 : 1)
+            wantedAccuracy
             * this.headShotMult(weapon, hsMultiplier, source) 
             * this.penetrationMultiplier(weapon, armorOverride) 
             * this.falloffMultiplier(weapon) 

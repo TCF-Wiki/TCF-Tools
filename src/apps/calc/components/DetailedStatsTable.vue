@@ -183,7 +183,7 @@ import { weaponData, armorData, itemData } from "../data";
 import BodyChart from "./BodyChart.vue";
 import AttachmentSelector from "./AttachmentSelector.vue";
 import { helmetData } from "@/apps/forge/data";
-import { penetrationChart, falloffChart } from "../charts";
+import { penetrationChart, falloffChart, ttkChart, stkChart } from "../charts";
 
 export default defineComponent({
     components: {
@@ -331,15 +331,6 @@ export default defineComponent({
         }
         this.validStats = validStats
         this.updateDetailedStats()
-
-        const els = document.querySelectorAll('.wrapper') 
-        for (let el in els) {
-            window.addEventListener("wheel", function(e) {
-                if (e.deltaY > 0) els[el].scrollLeft += 100;
-                els[el].scrollLeft -= 100;
-            })
-        }
-
     },
     watch: {
         selectedWeapons: {
@@ -348,6 +339,8 @@ export default defineComponent({
                 this.updateDetailedStats();
                 penetrationChart()
                 falloffChart()
+                ttkChart()
+                stkChart()
             },
         },
         selectedAttachments: {
@@ -356,6 +349,8 @@ export default defineComponent({
                 this.updateDetailedStats();
                 penetrationChart()
                 falloffChart()
+                ttkChart()
+                stkChart()
             },
         },
         selectedTarget: {
@@ -363,6 +358,7 @@ export default defineComponent({
             handler() {
                 this.updateDetailedStats();
                 penetrationChart()
+                ttkChart()
             },
         },
         selectedArmor: {
@@ -370,18 +366,21 @@ export default defineComponent({
             handler() {
                 this.updateDetailedStats();
                 penetrationChart()
+                ttkChart()
             },
         },
         selectedHSValue: {
             deep: true,
             handler() {
                 this.updateDetailedStats();
+                stkChart()
             },
         },
         selectedAccuracy: {
             deep: true,
             handler() {
                 this.updateDetailedStats()
+                stkChart()
             }
         },
         selectedDistance: {
@@ -389,12 +388,15 @@ export default defineComponent({
             handler() {
                 this.updateDetailedStats();
                 falloffChart()
+                ttkChart()
+                stkChart()
             },
         },
         selectedWeakspotValue: {
             deep: true,
             handler() {
                 this.updateDetailedStats();
+                ttkChart()
             },
         },
     }
