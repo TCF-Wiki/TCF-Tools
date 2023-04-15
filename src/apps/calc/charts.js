@@ -2,8 +2,8 @@
 
 import {selectedTarget, selectedWeapons, selectedArmor, selectedDistance, selectedAccuracy} from "./store";
 import {targetData, weaponData, armorData} from "./data";
-import {roundToThree} from "./utils";
-import {calculate} from "./calculate";
+import {armorValues, roundToThree} from "./utils";
+import {calculate, setCurrentWeapon, setRunTimeSettings, setRunTimeSettingsAccuracy, setRunTimeSettingsArmor} from "./calculate";
 
 Highcharts.theme =  {
     colors: ['var(--rarity-color-common)','var(--rarity-color-uncommon)', 'var(--rarity-color-rare)', '#b85fd2', 'var(--rarity-color-exotic)', 'var(--rarity-color-legendary)'],
@@ -159,13 +159,15 @@ export function penetrationChart() {
 
         for (let wep in selectedWeapons.list) {
             let weapon = selectedWeapons.list[wep];
+            setCurrentWeapon(weapon)
+            setRunTimeSettings("default")
             if (!wepData[weapon]) wepData[weapon] = []
     
             let penDiff;
             if (selectedTarget.selected == "PlayerDefault" && selectedTarget.selected != "None") {
-                penDiff = calculate.s(weapon, "penetration") - armorData[selectedArmor.selected]["armorAmount"];
+                penDiff = calculate.s("penetration") - armorData[selectedArmor.selected]["armorAmount"];
             } else {
-                penDiff = calculate.s(weapon, "penetration") - target.armorValue;
+                penDiff = calculate.s("penetration") - target.armorValue;
             }
 
             
@@ -174,7 +176,7 @@ export function penetrationChart() {
                 continue
             };
             
-            let weaponValue = roundToThree(calculate.penetrationMultiplier(weapon));
+            let weaponValue = roundToThree(calculate.penetrationMultiplier());
     
             wepData[weapon].push(weaponValue)
         }
@@ -260,14 +262,15 @@ export function falloffChart() {
     let data = [];
     for (let wep in selectedWeapons.list) {
         let weapon = selectedWeapons.list[wep];
-
+        setCurrentWeapon(weapon)
+        setRunTimeSettings("default")
         let weaponPoints = [];
         for (let x = 0; x <= 200; x++) {
             let distance = x * 100;
 
-            let start = calculate.s(weapon, "FalloffStart");
-            let end = calculate.s(weapon, "FalloffEnd");
-            let mult = calculate.s(weapon, "FalloffMultiplier");
+            let start = calculate.s("FalloffStart");
+            let end = calculate.s("FalloffEnd");
+            let mult = calculate.s("FalloffMultiplier");
 
             if (distance >= end) {
                 weaponPoints.push({x: x, y: mult});
@@ -349,14 +352,17 @@ export function falloffChart() {
 }
 export function ttkChart() {
     let data = [];
+    setRunTimeSettings("timeToKillPlayer")
     for (let wep in selectedWeapons.list) {
         let weapon = selectedWeapons.list[wep];
+        setCurrentWeapon(weapon)
 
         let weaponPoints = [];
         for (let x = 2; x <= 10; x++) {
-            weaponPoints.push({x: x*10, y: roundToThree(calculate.timeToKill(weapon, (x*10)/100 ))})
+            setRunTimeSettingsAccuracy(x*10)
+            weaponPoints.push({x: x, y: roundToThree(calculate.timeToKill())})
         }
-        //console.log(weaponPoints)
+
         data.push({
             name: weaponData[weapon]["inGameName"],
             data: weaponPoints,
@@ -426,18 +432,17 @@ export function ttkChart() {
 }
 export function stkChart() {
     let data = []
+    setRunTimeSettings("shotsToKillChart")
     for (let wep in selectedWeapons.list) {
         let weapon = selectedWeapons.list[wep];
+        setCurrentWeapon(weapon)
 
-        let weaponPoints = [
-            calculate.shotsToKill(weapon, 0),
-            calculate.shotsToKill(weapon, 10),
-            calculate.shotsToKill(weapon, 15),
-            calculate.shotsToKill(weapon, 20),
-            calculate.shotsToKill(weapon, 25), 
-            calculate.shotsToKill(weapon, 30),
-            calculate.shotsToKill(weapon, 33)
-        ];
+        let weaponPoints = []
+        for (let shield in armorValues) {
+            setRunTimeSettingsArmor(armorValues[shield])
+            weaponPoints.push(calculate.shotsToKill())
+        }
+
         data.push({
             name: weaponData[weapon]["inGameName"],
             data: weaponPoints,
@@ -523,58 +528,3 @@ export function stkChart() {
           }
     });
 }
-
-
-
-
-// export function stkChart() {
-    let data = [];
-    for (let wep in selectedWeapons.list) {
-        let weapon = selectedWeapons.list[wep];
-
-        let weaponPoints = [
-            {label: "No Armor", y: calculate.shotsToKill(weapon, 0)},
-            {label: "Common", y: calculate.shotsToKill(weapon, 10)},
-            {label: "Uncommon", y: calculate.shotsToKill(weapon, 15)},
-            {label: "Rare", y: calculate.shotsToKill(weapon, 20)},
-            {label: "Epic", y: calculate.shotsToKill(weapon, 25)},
-            {label: "Exotic", y: calculate.shotsToKill(weapon, 30)},
-            {label: "Legendary", y: calculate.shotsToKill(weapon, 33)},
-
-        ];
-        data.push({
-            type: "column",
-            showInLegend: true,
-            legendText: weaponData[weapon]["inGameName"],
-            dataPoints: weaponPoints,
-            lineThickness: 2,
-        });
-    }
-
-//     let stkChart = new CanvasJS.Chart("stkChart", {
-//         title: {
-//             text: "Shots to kill",
-//         },
-//         theme: "Pnoexz",
-//         legend: {
-//             horizontalAlign: "center",
-//             fontSize: 15,
-//             verticalAlign: "top",
-//         },
-//         axisY: {
-//             title: "shots",
-//             includeZero: true,
-//             minimum: 0.0,
-//             gridThickness: 1,
-//             interval: 1
-//         },
-//         axisX: {
-//             title: "armor",
-//             gridThickness: 1,
-//             minimum: 0,
-//         },
-//         data: data,
-//     });
-//     stkChart.render();
-// }
-

@@ -42,8 +42,8 @@ const openModal = () => {
 
 <script>
 import  { defineComponent } from 'vue';
-import { calculate } from '../calculate';
-import { roundToThree } from '../utils';
+import { calculate, setCurrentWeapon } from '../calculate';
+import { roundToOne, roundToThree } from '../utils';
 import { selectedAttachments, selectedArmor } from '../store'
 export default defineComponent({
     props: ["weapon"],
@@ -64,10 +64,11 @@ export default defineComponent({
     },
     methods: {
         updateChart() {
-            this.head = roundToThree( ( (calculate.s(this.weapon, 'directDamage') + calculate.s(this.weapon, 'radialDamage') ) * calculate.penetrationMultiplier(this.weapon) * calculate.s(this.weapon, 'amountOfImmediateFires') ) * calculate.s(this.weapon, 'weakDamageMultiplier') )
-            this.chest = roundToThree(  ( (calculate.s(this.weapon, 'directDamage') + calculate.s(this.weapon, 'radialDamage') ) * calculate.penetrationMultiplier(this.weapon) * calculate.s(this.weapon, 'amountOfImmediateFires') ) * 1.0 )
-            this.hip = roundToThree(  ( (calculate.s(this.weapon, 'directDamage') + calculate.s(this.weapon, 'radialDamage') ) * calculate.penetrationMultiplier(this.weapon) * calculate.s(this.weapon, 'amountOfImmediateFires') ) * 1.1 )
-            this.legs = roundToThree( ( (calculate.s(this.weapon, 'directDamage') + calculate.s(this.weapon, 'radialDamage') ) * calculate.penetrationMultiplier(this.weapon) * calculate.s(this.weapon, 'amountOfImmediateFires') ) * 0.8 )
+            setCurrentWeapon(this.weapon)
+            this.head = roundToOne( ( (calculate.s('directDamage') + calculate.s('radialDamage') ) * calculate.penetrationMultiplier() * calculate.s('amountOfImmediateFires') ) * calculate.s('weakDamageMultiplier') )
+            this.chest = roundToOne(  ( (calculate.s('directDamage') + calculate.s('radialDamage') ) * calculate.penetrationMultiplier() * calculate.s('amountOfImmediateFires') ) * 1.0 )
+            this.hip = roundToOne(  ( (calculate.s('directDamage') + calculate.s('radialDamage') ) * calculate.penetrationMultiplier() * calculate.s('amountOfImmediateFires') ) * 1.1 )
+            this.legs = roundToOne( ( (calculate.s('directDamage') + calculate.s('radialDamage') ) * calculate.penetrationMultiplier() * calculate.s('amountOfImmediateFires') ) * 0.8 )
         }
     },
     watch: {

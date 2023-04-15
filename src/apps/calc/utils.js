@@ -1,3 +1,4 @@
+import { armorData } from "./data"
 export const keyObject = {
     'inGameName': 'Weapon',
     'rarity': 'Rarity',
@@ -110,6 +111,15 @@ export const ignoredEffects = [
     'WeaponTargetingSpreadMultiplier'
 ]
 
+export const armorValues = [
+    0,
+    armorData["Shield_01"]["armorAmount"],
+    armorData["Shield_02"]["armorAmount"],
+    armorData["Shield_03"]["armorAmount"],
+    armorData["Shield_04"]["armorAmount"],
+    armorData["Shield_05"]["armorAmount"],
+    armorData["Shield_Altered_03"]["armorAmount"]
+]
 export function roundToThree(num) {
     return +(Math.round(num + 'e+3') + 'e-3');
 }

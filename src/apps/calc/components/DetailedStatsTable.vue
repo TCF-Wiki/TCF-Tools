@@ -176,14 +176,16 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import {selectedWeapons, selectedArmor, selectedTarget, selectedHSValue, selectedDistance, selectedAttachments, selectedWeakspotValue, selectedAccuracy} from "../store";
-import { calculate } from "../calculate";
+import { calculate, setCurrentWeapon, updateRunTimeSettings } from "../calculate";
 import type { Item } from "vue3-easy-data-table";
-import { roundToThree } from "../utils";
+import { roundToThree, armorValues } from "../utils";
 import { weaponData, armorData, itemData } from "../data";
 import BodyChart from "./BodyChart.vue";
 import AttachmentSelector from "./AttachmentSelector.vue";
 import { helmetData } from "@/apps/forge/data";
 import { penetrationChart, falloffChart, ttkChart, stkChart } from "../charts";
+import { setRunTimeSettings } from "../calculate";
+import { setRunTimeSettingsArmor } from "../calculate";
 
 export default defineComponent({
     components: {
@@ -270,50 +272,67 @@ export default defineComponent({
                 // {text: 'Options', value: 'options'}
             ],
             validStats: [] as string[],
-            detailedData: [] as Item
+            detailedData: [] as Item,
+            shotsToKillHeaderNames: [
+                "PlayerDefault",
+                "Shield_01",
+                "Shield_02",
+                "Shield_03",
+                "Shield_04",
+                "Shield_05",
+                "Shield_Altered_03"
+            ],
+            shotsToKillHeaderNamesHead: [
+                "PlayerDefaultHS",
+                "Helmet_01",
+                "Helmet_02",
+                "Helmet_03",
+                "Helmet_04",
+                "Helmet_05",
+                "Helmet_Altered_03"
+            ]
         }
     },
     methods: {
         updateDetailedStats() {
+            updateRunTimeSettings()
             const data : Item = [];
             for (let wep in selectedWeapons.list) {
                 let wepName = selectedWeapons.list[wep];
+                setCurrentWeapon(wepName)
+                setRunTimeSettings("default")
                 let wepStats : any = {
                     "weapon": wepName,
                     "inGameName":      weaponData[wepName]['inGameName'],
-                    "penMult":     roundToThree(calculate.penetrationMultiplier(wepName)),
-                    "rpm":         Math.round(calculate.roundsPerMinute(wepName)),
-                    "reloadRPM":   Math.round(calculate.roundsPerMinuteReloadAdjusted(wepName)),
-                    "dps":         Math.round(calculate.damagePerSecond(wepName)),
-                    "reloadDPS":   Math.round(calculate.damagePerSecondReloadAdjusted(wepName)),
-                    "dpm":         Math.round(calculate.damagePerMag(wepName)),
-                    "timeToEmpty": roundToThree(calculate.totalTimeToEmptyMag(wepName)),
-                    "stk":         Math.round(calculate.shotsToKill(wepName)),
-                    "ttk":         roundToThree(calculate.timeToKill(wepName)),
-                    "dmgPerBull":  roundToThree(calculate.damageOnBodyShot(wepName)),
-                    "dmgPerBullHS":roundToThree(calculate.damageOnWeakSpotShot(wepName)),
+                    "penMult":     roundToThree(calculate.penetrationMultiplier()),
+                    "rpm":         Math.round(calculate.roundsPerMinute()),
+                    "reloadRPM":   Math.round(calculate.roundsPerMinuteReloadAdjusted()),
+                    "dps":         Math.round(calculate.damagePerSecond()),
+                    "reloadDPS":   Math.round(calculate.damagePerSecondReloadAdjusted()),
+                    "dpm":         Math.round(calculate.damagePerMag()),
+                    "timeToEmpty": roundToThree(calculate.totalTimeToEmptyMag()),
+                    "stk":         Math.round(calculate.shotsToKill()),
+                    "ttk":         roundToThree(calculate.timeToKill()),
+                    "dmgPerBull":  roundToThree(calculate.damageOnBodyShot()),
+                    "dmgPerBullHS":roundToThree(calculate.damageOnWeakSpotShot()),
+                }
 
-                    "PlayerDefault": Math.round(calculate.shotsToKill(wepName, 0, 0, "special")),
-                    "Shield_01": Math.round(calculate.shotsToKill(wepName, armorData["Shield_01"]["armorAmount"], 0, "special")),
-                    "Shield_02": Math.round(calculate.shotsToKill(wepName, armorData["Shield_02"]["armorAmount"], 0, "special")),
-                    "Shield_03": Math.round(calculate.shotsToKill(wepName, armorData["Shield_03"]["armorAmount"], 0, "special")),
-                    "Shield_04": Math.round(calculate.shotsToKill(wepName, armorData["Shield_04"]["armorAmount"], 0, "special")),
-                    "Shield_05": Math.round(calculate.shotsToKill(wepName, armorData["Shield_05"]["armorAmount"], 0, "special")),
-                    "Shield_Altered_03": Math.round(calculate.shotsToKill(wepName, armorData["Shield_Altered_03"]["armorAmount"], 0, "special")),
+                setRunTimeSettings("shotsToKillTableBody")
+                for (let shield in this.shotsToKillHeaderNames) {
+                    setRunTimeSettingsArmor(armorValues[shield])
+                    wepStats[this.shotsToKillHeaderNames[shield]] = calculate.shotsToKill()
+                }
 
-                    "PlayerDefaultHS": Math.round(calculate.shotsToKill(wepName, 0, 100, "special")),
-                    "Helmet_01": Math.round(calculate.shotsToKill(wepName, helmetData["Helmet_01"]["armorAmount"], 100, "special")),
-                    "Helmet_02": Math.round(calculate.shotsToKill(wepName, helmetData["Helmet_02"]["armorAmount"], 100, "special")),
-                    "Helmet_03": Math.round(calculate.shotsToKill(wepName, helmetData["Helmet_03"]["armorAmount"], 100, "special")),
-                    "Helmet_04": Math.round(calculate.shotsToKill(wepName, helmetData["Helmet_04"]["armorAmount"], 100, "special")),
-                    "Helmet_05": Math.round(calculate.shotsToKill(wepName, helmetData["Helmet_05"]["armorAmount"], 100, "special")),
-                    "Helmet_Altered_03": Math.round(calculate.shotsToKill(wepName, helmetData["Helmet_Altered_03"]["armorAmount"], 100, "special")),
+                setRunTimeSettings("shotsToKillTableHead")
+                for (let shield in this.shotsToKillHeaderNamesHead) {
+                    setRunTimeSettingsArmor(armorValues[shield])
+                    wepStats[this.shotsToKillHeaderNamesHead[shield]] = calculate.shotsToKill()
+                }
 
-                };
                 for (let stat in this.validStats) {
-                    if (this.validStats[stat] == 'ammoType') wepStats[this.validStats[stat]] = itemData['Ammo_' + calculate.s(wepName, this.validStats[stat])]['inGameName']
+                    if (this.validStats[stat] == 'ammoType') wepStats[this.validStats[stat]] = itemData['Ammo_' + calculate.s(this.validStats[stat])]['inGameName']
                     
-                    else wepStats[this.validStats[stat]] = calculate.s(wepName, this.validStats[stat])
+                    else wepStats[this.validStats[stat]] = calculate.s(this.validStats[stat])
                 }
                 data.push(wepStats)
             }
