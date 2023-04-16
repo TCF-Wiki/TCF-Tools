@@ -13,7 +13,7 @@ type quarterList = {
 
 // Handle if a new season has started.
 const date = new Date().valueOf() 
-const cuttoff_date = 1688032800
+const cuttoff_date = 16880328000000000000000000000000000
 if (localStorage.getItem('date-created')) {
     // @ts-ignore
     if (localStorage.getItem('date-created') < cuttoff_date) {

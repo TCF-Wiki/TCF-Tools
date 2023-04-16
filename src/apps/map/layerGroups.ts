@@ -3,7 +3,7 @@ import L, {LayerGroup, Marker, type Content, type LeafletEvent, type LeafletEven
 import 'leaflet.markercluster';
 import 'leaflet-responsive-popup';
 import {getMapData} from './data';
-import {alphabeticalCreatures, specialLocations} from './mapConstants';
+import {alphabeticalCreatures, alphabeticalSpecialLocations, specialLocations} from './mapConstants';
 import {createLootPopup, createSpecialPopup} from './popup';
 import { clusterEnabled, minimumPercent, selectedItems, selectedMap } from './store';
 let locationLayerGroups: any = {};
@@ -30,11 +30,21 @@ export async function updateLocationLayerGroups() {
         // our layer group for our markers.
         let locationGroup = L.layerGroup();
         // the icon that will be used for this group
-        let LocationMarker = L.icon({
-            iconUrl: `map-images/marker-icons/${locationType}.png`,
-            iconSize: [25, 25],
-            className: 'marker',
-        });
+        let LocationMarker : L.Icon;
+        if (Object.keys(alphabeticalSpecialLocations).includes(locationType)) {
+            LocationMarker = L.icon({
+                iconUrl: `map-images/marker-icons/${locationType}.png`,
+                iconSize: [25, 25],
+                className: 'marker marker-type-special',
+            });
+        } else {
+            LocationMarker = L.icon({
+                iconUrl: `map-images/marker-icons/${locationType}.png`,
+                iconSize: [25, 25],
+                className: 'marker marker-type-container',
+            });
+        }
+
         // add each location to the group
         for (let location in locationData) {
             // create the marker for it at the location, and add it to the group
@@ -107,7 +117,7 @@ export async function updateCreatureLayerGroups() {
         let LocationMarker = L.icon({
             iconUrl: url,
             iconSize: [25, 25],
-            className: 'marker',
+            className: 'marker marker-type-creature',
         });
         // add each location to the group
         for (let location in locationData) {
@@ -213,7 +223,7 @@ export async function updateItemLayerGroups() {
         let ItemMarker = L.icon({
             iconUrl: `map-images/item-images/${icon}`,
             iconSize: [25, 25],
-            className: 'marker',
+            className: 'marker marker-type-item',
         });
         for (let location in locationData) {
             let m = new Marker(locationData[location]['location'], {

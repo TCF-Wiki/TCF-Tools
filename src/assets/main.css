@@ -239,9 +239,24 @@ input[type="checkbox"]:checked::before {
     display: none;
 }
 
-.marker {
-    -webkit-filter: drop-shadow(2px 2px 0 var(--rarity-color-exotic)) drop-shadow(-1px -1px 0 var(--rarity-color-exotic));
-    filter: drop-shadow(2px 2px 0 var(--rarity-color-exotic)) drop-shadow(-1px -1px 0 var(--rarity-color-exotic)) contrast(1.5);
+.marker-type-creature {
+    -webkit-filter: drop-shadow(2px 2px 0 var(--rarity-color-exotic)) drop-shadow(-2px -2px 0 var(--rarity-color-exotic));
+    filter: drop-shadow(2px 2px 0 var(--rarity-color-exotic)) drop-shadow(-2px -2px 0 var(--rarity-color-exotic));
+}
+
+.marker-type-special {
+    -webkit-filter: drop-shadow(2px 2px 0 var(--rarity-color-legendary)) drop-shadow(-2px -2px 0 var(--rarity-color-legendary));
+    filter: drop-shadow(2px 2px 0 var(--rarity-color-legendary)) drop-shadow(-2px -2px 0 var(--rarity-color-legendary));
+}
+
+.marker-type-container {
+    -webkit-filter: drop-shadow(2px 2px 0 var(--rarity-color-rare)) drop-shadow(-2px -2px 0 var(--rarity-color-rare));
+    filter: drop-shadow(2px 2px 0 var(--rarity-color-rare)) drop-shadow(-2px -2px 0 var(--rarity-color-rare));
+}
+
+.marker-type-item {
+    -webkit-filter: drop-shadow(2px 2px 0 var(--rarity-color-uncommon)) drop-shadow(-2px -2px 0 var(--rarity-color-uncommon));
+    filter: drop-shadow(2px 2px 0 var(--rarity-color-uncommon)) drop-shadow(-2px -2px 0 var(--rarity-color-uncommon));
 }
 
 .item-image {
