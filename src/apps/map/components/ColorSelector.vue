@@ -64,9 +64,10 @@ export default defineComponent({
     },
     mounted() {
         this.sheet = document.createElement('style')
-        if (localStorage.getItem('markerOutlineColorNew') != '{}') {
+        const userSettings = localStorage.getItem('markerOutlineColorNew')
+        if (userSettings && userSettings != '{}') {
             // @ts-ignore
-            this.color = JSON.parse(localStorage.getItem('markerOutlineColorNew'))
+            this.color = JSON.parse(userSettings)
             this.setColor()
         }
     },
