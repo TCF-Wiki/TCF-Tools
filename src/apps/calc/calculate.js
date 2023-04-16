@@ -44,7 +44,7 @@ let runTimeSettings = {
     },
     timeToKillPlayer: {
         target: "PlayerDefault",
-        armor: selectedArmor.armor,
+        armor: selectedArmor.selected,
         accuracy: null,
         armorValue: null,
         hsAccuracy: 0,
@@ -74,7 +74,7 @@ export function updateRunTimeSettings() {
     runTimeSettings.shotsToKillChart.distance          = selectedDistance.distance
     runTimeSettings.shotsToKillChart.weakspotValue     = selectedWeakspotValue.value
 
-    runTimeSettings.timeToKillPlayer.armor             = selectedArmor.armor
+    runTimeSettings.timeToKillPlayer.armor             = selectedArmor.selected
     runTimeSettings.timeToKillPlayer.distance          = selectedDistance.distance
     runTimeSettings.timeToKillPlayer.weakspotValue     = selectedWeakspotValue.value
 }
