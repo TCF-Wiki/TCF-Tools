@@ -4,7 +4,7 @@
 			<section class="citizen-footer__content">
 				<div class="citizen-footer__siteinfo">
 					<div id="footer-sitetitle" class="mw-wiki-title">TC:F Wiki Tools</div>
-					<p id="footer-desc">Welcome to the Official The Cycle: Frontier Wiki Tools, the official source of documentation for of The Cycle: Frontier.</p>
+					<p id="footer-desc">Welcome to the Official The Cycle: Frontier Wiki Tools, the official source of documentation for The Cycle: Frontier.</p>
 				</div>
 				<nav id="footer-places">
 					<ul>
