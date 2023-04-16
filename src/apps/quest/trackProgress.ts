@@ -12,24 +12,16 @@ type quarterList = {
 
 
 // Handle if a new season has started.
-const date = new Date().valueOf() 
-const cuttoff_date = 16880328000000000000000000000000000
-if (localStorage.getItem('date-created')) {
-    // @ts-ignore
-    if (localStorage.getItem('date-created') < cuttoff_date) {
+
+// if old format
+if (localStorage.getItem('progress')) {
+    let storage = JSON.parse(localStorage.getItem('progress') ?? '')
+    if (storage && storage['ica'] && storage['kor'] && storage['osi']) {
         localStorage.removeItem('progress')
-        localStorage.removeItem('quarters')
         localStorage.removeItem('date-created')
     }
-    // if old format
-    if (localStorage.getItem('progress')) {
-        let storage = JSON.parse(localStorage.getItem('progress') ?? '')
-        if (storage && storage['ica'] && storage['kor'] && storage['osi']) {
-            localStorage.removeItem('progress')
-            localStorage.removeItem('date-created')
-        }
-    }
 }
+
 
 let storage = {};
 if (!localStorage.getItem('progress') || localStorage.getItem('progress') === '{}') {
@@ -40,7 +32,6 @@ if (!localStorage.getItem('progress') || localStorage.getItem('progress') === '{
     }
     
     localStorage.setItem('progress', JSON.stringify(progressList))
-    localStorage.setItem('date-created', date.toString())
     storage = progressList
 } else {
     storage = JSON.parse(localStorage.getItem('progress') ?? '')
