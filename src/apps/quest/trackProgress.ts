@@ -55,6 +55,14 @@ if (!localStorage.getItem('quarters') || localStorage.getItem('quarters') === '{
 
 // @ts-ignore my bad, as this was forgotten and made after release. This means that people who have used the tracker before dont have this yet. This fixes this.
 if (!quarters['increase_bag_6']) quarters['increase_bag_6'] = 0
+
+//@ts-ignore
+if (!storage['Race to the Bottom']) storage['Race to the Bottom'] = 0
+//@ts-ignore
+if (!storage['In a Deep Dark Hole']) storage['In a Deep Dark Hole'] = 0
+//@ts-ignore
+if (!storage['The Progenitor Device']) storage['The Progenitor Device'] = 0
+
 export const factionProgress = reactive({
     list: storage as progressionList,
     get() : progressionList {

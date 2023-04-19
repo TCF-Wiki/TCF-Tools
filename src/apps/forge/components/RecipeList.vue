@@ -93,17 +93,17 @@ export default defineComponent({
                         return;
                     });
 
-                    validItems.catalyst.forEach((item: string) => {
-                        if (input === item) {
-                            if (item === "ForgeIronIngot") {
-                                this.catalyst.push([item, "Gear Upgrade, Rare to Epic"]);
-                            } else if (item === "ChargedForgeIronIngot") {
-                                this.catalyst.push([item, "Gear Upgrade, Epic to Exotic"]);
-                            } else if (item === "SuperChargedForgeIronIngot") {
-                                this.catalyst.push([item, "Gear Upgrade, Exotic to Leg."]);
-                            }
-                        }
-                    });
+                    // validItems.catalyst.forEach((item: string) => {
+                    //     if (input === item) {
+                    //         if (item === "ForgeIronIngot") {
+                    //             this.catalyst.push([item, "Gear Upgrade, Rare to Epic"]);
+                    //         } else if (item === "ChargedForgeIronIngot") {
+                    //             this.catalyst.push([item, "Gear Upgrade, Epic to Exotic"]);
+                    //         } else if (item === "SuperChargedForgeIronIngot") {
+                    //             this.catalyst.push([item, "Gear Upgrade, Exotic to Leg."]);
+                    //         }
+                    //     }
+                    // });
                 });
             },
         },

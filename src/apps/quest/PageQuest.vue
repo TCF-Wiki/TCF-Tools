@@ -49,8 +49,8 @@
 
                 <div class="quest-list">
                     <div class="quest-list__left">
-                        <QuestCard name="Audiophiles Beware"  />
-                    </div>
+                        <QuestCard name="Race to the Bottom"  footer="Part 2 unlocks Tharis Island"/>
+                    </div> 
 
                     <div class="quest-list__left-line" :class="lineColor('Your Civic Duty', 5)">
                         <div class="quest-list__left-line-content">Part 5</div>
@@ -58,6 +58,14 @@
 
                     <div class="quest-list__center" :class="lineColor('Your Civic Duty')">
                         <QuestCard name="Your Civic Duty"  footer="Part 5 unlocks Crescent Falls" />
+                    </div>
+
+                    <div class="quest-list__right-line" :class="lineColor('Your Civic Duty', 5)">
+                        <div class="quest-list__right-line-content">Part 5</div>
+                    </div>
+
+                    <div class="quest-list__right">
+                        <QuestCard name="Audiophiles Beware"  />
                     </div>
                 </div>
 
@@ -75,16 +83,8 @@
                 </div>
 
                 <div class="quest-list">
-                    <!-- <div class="quest-list__left">
-                        <QuestCard name="Race to the Bottom"  />
-                    </div> 
-
-                    <div class="quest-list__left-line" :class="lineColor('Project Fireball', 7)">
-                        <div class="quest-list__left-line-content">Part 7</div>
-                    </div> -->
-
                     <div class="quest-list__center" :class="lineColor('Project Fireball')">
-                        <QuestCard name="Project Fireball"  footer="Part 7 unlocks Tharis Island" />
+                        <QuestCard name="Project Fireball"  />
                     </div>
 
                     <div class="quest-list__right-line" :class="lineColor('Project Fireball', 6)">
@@ -147,6 +147,14 @@
                 </div>
 
                 <div class="quest-list">
+                    <div class="quest-list__left">
+                        <QuestCard name="In a Deep Dark Hole" footer="Part 2 unlocks Tharis Island" />
+                    </div> 
+
+                    <div class="quest-list__left-line" :class="lineColor('Time to Punch In', 5)">
+                        <div class="quest-list__left-line-content">Part 5</div>
+                    </div>
+
                     <div class="quest-list__center" :class="lineColor('Time to Punch In')">
                         <QuestCard name="Time to Punch In"  footer="Part 5 unlocks Crescent Falls" />
                     </div>
@@ -204,16 +212,9 @@
                 </div>
 
                 <div class="quest-list">
-                    <!-- <div class="quest-list__left">
-                        <QuestCard name="In a Deep Dark Hole"  />
-                    </div> 
-
-                    <div class="quest-list__left-line" :class="lineColor('Research Costs', 5)">
-                        <div class="quest-list__left-line-content">Part 5</div>
-                    </div> -->
 
                     <div class="quest-list__center" :class="lineColor('Research Costs')">
-                        <QuestCard name="Research Costs"  footer="Part 5 unlocks Tharis Island" />
+                        <QuestCard name="Research Costs"/>
                     </div>
 
                     <div class="quest-list__right-line-diagonal" :class="lineColor('A Powerful Discovery', 2)">
@@ -265,6 +266,13 @@
                 </div>
 
                 <div class="quest-list">
+                    <div class="quest-list__left">
+                        <QuestCard name="The Progenitor Device"  footer="Part 2 unlocks Crescent Falls"/>
+                    </div>
+
+                    <div class="quest-list__left-line" :class="lineColor('Dangerous Science', 5)">
+                        <div class="quest-list__left-line-content">Part 5</div>
+                    </div>
                     <div class="quest-list__center" :class="lineColor('Dangerous Science')">
                         <QuestCard name="Dangerous Science"  footer="Part 5 unlocks Crescent Falls" />
                     </div>
@@ -301,16 +309,9 @@
                 </div>
 
                 <div class="quest-list">
-                    <!-- <div class="quest-list__left">
-                        <QuestCard name="The Progenitor Device"  />
-                    </div>
-
-                    <div class="quest-list__left-line" :class="lineColor('Lost Knowledge', 5)">
-                        <div class="quest-list__left-line-content">Part 5</div>
-                    </div> -->
 
                     <div class="quest-list__center" :class="lineColor('Lost Knowledge')">
-                        <QuestCard name="Lost Knowledge"  footer="Part 5 unlocks Tharis Island" />
+                        <QuestCard name="Lost Knowledge"/>
                     </div>
 
                     <div class="quest-list__right-line-diagonal" :class="lineColor('Field Research', 11)">

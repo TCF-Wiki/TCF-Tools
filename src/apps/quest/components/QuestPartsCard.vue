@@ -178,7 +178,7 @@ export default defineComponent({
                 // @ts-ignore
                 container = alphabeticalContainers[container] ?? 'Container'
 
-                if (task['locationConditions']) locationString = ' at ' + task['locationConditions'][0] 
+                if (task['locationConditions'].length > 0) locationString = ' at ' + task['locationConditions'][0] 
                 return 'Loot ' + task['maxProgress'] + ' ' + container + amountString + locationString
             }
             if (type == 'FactionLevel') {

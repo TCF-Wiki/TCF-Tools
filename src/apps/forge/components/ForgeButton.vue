@@ -9,7 +9,7 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
 import { outputItems, selectedItems } from '../store';
-import { chooseRecipeOutput, resolveAbyssToken } from '../ForgeLogic';
+import { chooseRecipeOutput } from '../ForgeLogic';
 
 export default defineComponent({
     props: ['item'],
@@ -33,7 +33,7 @@ export default defineComponent({
     border-radius: 50%;
     text-align: center;
     cursor: pointer;
-    z-index: 0;
+    z-index: 1;
     position: absolute;
 }
 
@@ -45,6 +45,7 @@ export default defineComponent({
     opacity: 0;
     transition: all .2s ease-out;
     transform: scale(1.80) translateY(-20%) translateX(-.5%);
+    pointer-events: none;
 }
 
 
@@ -53,6 +54,7 @@ export default defineComponent({
     transition: all .2s ease-out;
     animation: pulse 5s infinite;
     min-width: 100%;
+    pointer-events: none;
 }
 
 </style>

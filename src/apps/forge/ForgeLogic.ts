@@ -40,14 +40,15 @@ export const chooseRecipeOutput = (): any => {
             }
         })
 
-        // validItems.ingots.forEach((item: string) => {
-        //     if (input === item && item !== 'GlowingCrystalCoreShard') resolveIngotForge(item)
-        //     return;
-        // })
+        validItems.ingots.forEach((item: string) => {
+            if (input === item && item !== 'GlowingCrystalCoreShard') resolveIngotForge(item)
+            return;
+        })
    })
 }
 
 export const resolveIngotForge = (item: string) => {
+    // disabled since 3.2.0
     const data = ingotData
     const inputItems = Object.keys(selectedItems.get())
     const wantedIngredients: string[] = []
@@ -233,9 +234,9 @@ export function resolveGearForge(item: string) {
 
     // then we figure out what catalyst to check for...
     let wantedCatalyst: string;
-    if (data['rarity'] == 'Rare') wantedCatalyst = 'ForgeIronIngot'
-    else if (data['rarity'] == 'Epic') wantedCatalyst = 'ChargedForgeIronIngot'
-    else if (data['rarity'] == 'Exotic') wantedCatalyst = 'SuperChargedForgeIronIngot'
+    if (data['rarity'] == 'Epic') wantedCatalyst = 'ForgeIronIngot'
+    else if (data['rarity'] == 'Exotic') wantedCatalyst = 'ChargedForgeIronIngot'
+    else if (data['rarity'] == 'Legendary') wantedCatalyst = 'SuperChargedForgeIronIngot'
     else return toast.error('You do not have the required Forge Iron Ingot!', {timeout: 3000});;
     
     // check if we have the required ingot and amount...
@@ -252,26 +253,28 @@ export function resolveGearForge(item: string) {
 
     // if no perk item is found, simply upgrade the item and remove the catalyst
     if (possiblePerkItems.length == 0) {
-        // remove the input 
-        outputItems.clear()
-        if (consumeInput.get()){
-            selectedItems.remove(item)
-            selectedItems.remove(wantedCatalyst, settingData['catalystAmount'])
-        } 
+        // disabled since 3.2.0
+        toast.error('Since Patch 3.2.0, gear can no longer be forged without a perk item. Please supply a perk item.')
+        // // remove the input 
+        // outputItems.clear()
+        // if (consumeInput.get()){
+        //     selectedItems.remove(item)
+        //     selectedItems.remove(wantedCatalyst, settingData['catalystAmount'])
+        // } 
         
-        // construct the information for our output item
-        const outputString = `${type}_Altered_0${rarityMap[itemData[wantedCatalyst]['rarity']]}`
-        const outputData = {
-            "rarity": rarityMap[itemData[wantedCatalyst]['rarity']],
-            "type": type
-        }
+        // // construct the information for our output item
+        // const outputString = `${type}_Altered_0${rarityMap[itemData[wantedCatalyst]['rarity']]}`
+        // const outputData = {
+        //     "rarity": rarityMap[itemData[wantedCatalyst]['rarity']],
+        //     "type": type
+        // }
 
-        // and then finally add it to our output items
-        outputItems.clear()
-        outputItems.add(outputString, 1, outputData)
+        // // and then finally add it to our output items
+        // outputItems.clear()
+        // outputItems.add(outputString, 1, outputData)
 
-        //and roll for lottery item...
-        resolveLotteryItems()
+        // //and roll for lottery item...
+        // resolveLotteryItems()
     } else {
         // @ts-ignore
         const perks : any = perksByType[type]
@@ -351,7 +354,7 @@ export function resolveGearForge(item: string) {
             foundPerks.push(matchingPerks[foundPerkIndexes[perk]])
         }
 
-                // now we are going to create the perkInfo for this item.
+        // now we are going to create the perkInfo for this item.
 
         let perkInfo = []
         for (let perk in foundPerks) {
