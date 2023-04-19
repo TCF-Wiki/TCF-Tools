@@ -369,14 +369,7 @@ export const calculate = {
 
     savedWeaponData: {},
     s: function(stat) {
-        // let us not repeat ourselves 
-        let wData;
-        if (this.savedWeaponData[curWeapon]) {
-            wData = this.savedWeaponData[curWeapon]
-        } else {
-            wData = weaponData[curWeapon]
-            this.savedWeaponData[curWeapon] = wData
-        }
+        let wData = weaponData[curWeapon]
 
         let effects = attachment.getAttachmentEffects(curWeapon)
 

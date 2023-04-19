@@ -6,15 +6,17 @@ import AccuracySelector from "./components/WeakSpotAccuracySelector.vue";
 import DistanceSelector from "./components/DistanceSelector.vue";
 import DetailedStatsTable from "./components/DetailedStatsTable.vue";
 import {doneLoading} from "../../all";
+import StatCustomiser from "./components/StatCustomiser.vue";
 
 export default {
     components: {
-        Selector,
-        WeaponComparer,
-        AccuracySelector,
-        DistanceSelector,
-        DetailedStatsTable
-    },
+    Selector,
+    WeaponComparer,
+    AccuracySelector,
+    DistanceSelector,
+    DetailedStatsTable,
+    StatCustomiser
+},
     mounted() {
         // clear out the url bar
         window.history.pushState({}, document.title, location.pathname.replace(".html", ""));
@@ -30,7 +32,7 @@ export default {
 
 <template>
     <section>
-        <section>
+        <section class="container">
             <div class="header">
                 <h1>Weapon Calculator</h1>
                 <p class="basic-info">
@@ -41,19 +43,18 @@ export default {
                 </p>
             </div>
             <div class="main-container">
-
                 <Selector />
                 <DetailedStatsTable />
             </div>
         </section>
-        <section>
+        <section class="container">
             <div class="header">
-                <header><h1>Charts</h1></header>
+                <header><h2>Charts</h2></header>
                 <!-- <p>The following charts show the detailed stats above in a visual way. More charts will be added in the future.</p> -->
             </div>
             <div class="outer-chart-container">
                 <div class="chart-container">
-                    <h2>Penetration Chart</h2>
+                    <h3>Penetration Chart</h3>
                     <span> This chart shows the effect of penetration on the damage a weapon deals. <a href="https://thecyclefrontier.wiki/wiki/Penetration"> See the wiki for more info</a>.</span>
                     <div class="inner-chart-container">
                         <div id="penChart">CHART HERE!</div>
@@ -61,7 +62,7 @@ export default {
                 </div>
 
                 <div class="chart-container">
-                    <h2>Falloff Chart</h2>
+                    <h3>Falloff Chart</h3>
                     <span> This chart shows the effect of distance on the damage a weapon deals.</span>
                     <div class="inner-chart-container">
                         <div id="falloffChart">Chart HERE!</div>
@@ -69,7 +70,7 @@ export default {
                 </div>
 
                 <div class="chart-container">
-                    <h2>Time to Kill Chart</h2>
+                    <h3>Time to Kill Chart</h3>
                     <span> This chart shows how the time to kill of a weapon changes as normal accuracy changes. Range: [20, 100], steps of 10%.</span>
                     <div class="inner-chart-container">
                         <div id="ttkChart">Chart HERE!</div>
@@ -77,7 +78,7 @@ export default {
                 </div>
 
                 <div class="chart-container">
-                    <h2>Shots to Kill Chart</h2>
+                    <h3>Shots to Kill Chart</h3>
                     <span> This chart shows how the shots to kill of a weapon changes as the armor it is shooting changes.</span>
                     <div class="inner-chart-container">
                         <div id="stkChart">Chart HERE!</div>
@@ -85,16 +86,18 @@ export default {
                 </div>
             </div>
         </section>
+        <section  class="container">
+            <StatCustomiser />
+        </section>
     </section>
 </template>
 
 <style scoped>
-section {
+section.container {
     display: flex;
     flex-direction: column;
     gap: 2rem 0rem;
 }
-
 
 h1 {
     font-size: 3rem;

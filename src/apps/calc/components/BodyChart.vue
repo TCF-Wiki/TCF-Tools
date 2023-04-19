@@ -5,7 +5,7 @@
             <div class="modal__bg" v-if="isModalOpen">
                 <section class="modal__content modal__small" ref="modal">  
                     <button @click="isModalOpen = false" class="modal__close-button" aria-label="Close Modal" type="button"><font-awesome-icon icon="fa-solid fa-xmark" /></button>
-                    <h2> Body Chart </h2>
+                    <h2> Body Chart for {{ weaponData[weapon].inGameName }}</h2>
                     <p> Damage per bullet </p>
                     <div id="figure">
                         <span id="head">{{head}}</span>
@@ -42,8 +42,9 @@ const openModal = () => {
 
 <script>
 import  { defineComponent } from 'vue';
+import { weaponData } from '../data';
 import { calculate, setCurrentWeapon } from '../calculate';
-import { roundToOne, roundToThree } from '../utils';
+import { roundToOne } from '../utils';
 import { selectedAttachments, selectedArmor } from '../store'
 export default defineComponent({
     props: ["weapon"],

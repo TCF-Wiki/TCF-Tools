@@ -11,8 +11,8 @@
         :no-hover="true"
         :hide-footer="true"
     >
-        <template #item-inGameName="{inGameName}">
-            <div class="name-wrapper" v-html="weaponImage(inGameName)">
+        <template #item-inGameName="{inGameName, weapon}">
+            <div class="name-wrapper" v-html="weaponImage(inGameName, weapon)">
 
             </div>
         </template>
@@ -73,8 +73,8 @@
                     :src="'map-images/item-images/Forged_Shield.png'" 
                 />
             </template>
-            <template #item-inGameName="{inGameName}">
-                <div class="name-wrapper" v-html="weaponImage(inGameName)">
+            <template #item-inGameName="{inGameName, weapon}">
+                <div class="name-wrapper" v-html="weaponImage(inGameName, weapon)">
                 </div>
             </template>
             <template #item-options="{weapon}">
@@ -133,8 +133,8 @@
                     :src="'map-images/item-images/Legendary_NV_Helmet.png'" 
                 />
             </template>
-            <template #item-inGameName="{inGameName}">
-                <div class="name-wrapper" v-html="weaponImage(inGameName)">
+            <template #item-inGameName="{inGameName, weapon}">
+                <div class="name-wrapper" v-html="weaponImage(inGameName, weapon)">
                 </div>
             </template>
             <template #item-options="{weapon}">
@@ -158,9 +158,8 @@
         :no-hover="true"
         :hide-footer="true"
     >
-        <template #item-inGameName="{inGameName}">
-            <div class="name-wrapper" v-html="weaponImage(inGameName)">
-
+        <template #item-inGameName="{inGameName, weapon}">
+            <div class="name-wrapper" v-html="weaponImage(inGameName, weapon)">
             </div>
         </template>
         <template #item-options="{weapon}">
@@ -175,10 +174,10 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import {selectedWeapons, selectedArmor, selectedTarget, selectedHSValue, selectedDistance, selectedAttachments, selectedWeakspotValue, selectedAccuracy} from "../store";
+import {selectedWeapons, selectedArmor, selectedTarget, selectedHSValue, selectedDistance, selectedAttachments, selectedWeakspotValue, selectedAccuracy, updateGlobalStateUtility } from "../store";
 import { calculate, setCurrentWeapon, updateRunTimeSettings } from "../calculate";
 import type { Item } from "vue3-easy-data-table";
-import { roundToThree, armorValues } from "../utils";
+import { roundToThree } from "../utils";
 import { weaponData, armorData, itemData } from "../data";
 import BodyChart from "./BodyChart.vue";
 import AttachmentSelector from "./AttachmentSelector.vue";
@@ -202,6 +201,7 @@ export default defineComponent({
             selectedAttachments,
             selectedWeakspotValue,
             selectedAccuracy,
+            updateGlobalStateUtility,
             headersDetailed: [
                 { text: "Weapon", value: "inGameName", sortable: true, width: 200, fixed: true },
                 { text: 'Options', value: 'options'},
@@ -296,6 +296,17 @@ export default defineComponent({
     methods: {
         updateDetailedStats() {
             updateRunTimeSettings()
+
+            let armorValues = [
+                armorData["PlayerDefault"]["armorAmount"],
+                armorData["Shield_01"]["armorAmount"],
+                armorData["Shield_02"]["armorAmount"],
+                armorData["Shield_03"]["armorAmount"],
+                armorData["Shield_04"]["armorAmount"],
+                armorData["Shield_05"]["armorAmount"],
+                armorData["Shield_Altered_03"]["armorAmount"]
+            ]
+
             const data : Item = [];
             for (let wep in selectedWeapons.list) {
                 let wepName = selectedWeapons.list[wep];
@@ -338,8 +349,11 @@ export default defineComponent({
             }
             this.detailedData = data;
         },
-        weaponImage(weapon: string) {
-            return `<img style="display: inline; width: 48px; max-height: 19px; margin: auto 0" src="map-images/item-images/${weapon.replace(' - Mk.II', '').replace(' - Prototype', '').replaceAll(' ', '_')}.png" /> <span> ${weapon} </span>`
+        weaponImage(weapon: string, codeName: string) {
+            let image = weapon
+            if (codeName.includes("CUSTOM_WPN")) image = "Weapon_Icon"
+
+            return `<img style="display: inline; width: 48px; max-height: 19px; margin: auto 0" src="map-images/item-images/${image.replace(' - Mk.II', '').replace(' - Prototype', '').replaceAll(' ', '_')}.png" /> <span> ${weapon} </span>`
         }
     },
     mounted() {
@@ -352,6 +366,17 @@ export default defineComponent({
         this.updateDetailedStats()
     },
     watch: {
+        // listen to the global state utility to see if we should update the math from changes not made to the selected options
+        updateGlobalStateUtility: {
+            deep: true,
+            handler() {
+                this.updateDetailedStats();
+                penetrationChart()
+                falloffChart()
+                ttkChart()
+                stkChart()
+            },
+        },
         selectedWeapons: {
             deep: true,
             handler() {

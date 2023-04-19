@@ -1,4 +1,4 @@
-import { armorData } from "./data"
+import { weaponData } from "./data"
 export const keyObject = {
     'inGameName': 'Weapon',
     'rarity': 'Rarity',
@@ -111,15 +111,6 @@ export const ignoredEffects = [
     'WeaponTargetingSpreadMultiplier'
 ]
 
-export const armorValues = [
-    0,
-    armorData["Shield_01"]["armorAmount"],
-    armorData["Shield_02"]["armorAmount"],
-    armorData["Shield_03"]["armorAmount"],
-    armorData["Shield_04"]["armorAmount"],
-    armorData["Shield_05"]["armorAmount"],
-    armorData["Shield_Altered_03"]["armorAmount"]
-]
 export function roundToThree(num) {
     return +(Math.round(num + 'e+3') + 'e-3');
 }
@@ -130,4 +121,28 @@ export function roundToOne(num) {
 
 export function lowercaseFirstLetter(string) {
     return string.charAt(0).toLowerCase() + string.slice(1);
+}
+
+export function getWeaponList() {
+    // Filter out weapons from our data we not show
+    let filtered = [];
+    for (const [k, v] of Object.entries(weaponData)) {
+        if (!v) continue;
+        if (!v["tags"] || v["tags"].length == 0 || v["tags"][0] === "Tools") continue;
+        if (v["inGameName"] == "HAZE" || v["inGameName"] == "KARLA" || v["inGameName"] == "FF4 Detonator") continue;
+        filtered.push(k);
+    }
+
+    // sort our array of items alphabetically
+    let sorted = [];
+    for (const weapon in filtered) {
+        const wData = weaponData[filtered[weapon]];
+        if (wData == undefined) continue;
+        let pushedData = {inGameName: wData["inGameName"], codeName: filtered[weapon]};
+        sorted.push(pushedData);
+    }
+    // thanks to https://stackoverflow.com/a/1129270
+    sorted.sort((a,b) => (a.inGameName > b.inGameName) ? 1 : ((b.inGameName > a.inGameName) ? -1 : 0));
+    // put our sorted names of items into our data
+    return sorted;
 }

@@ -5,7 +5,7 @@
             <div class="modal__bg" v-if="isModalOpen">
                 <section class="modal__content modal__small" ref="modal">  
                     <button @click="isModalOpen = false" class="modal__close-button" aria-label="Close Modal" type="button"><font-awesome-icon icon="fa-solid fa-xmark" /></button>
-                    <h2> Attachment Selector </h2>
+                    <h2> Attachments for {{ weaponData[weapon].inGameName }} </h2>
 
                     <div class="attachment-container">
                         <div v-if="AmmoConverter.length > 0" class="container">
@@ -90,7 +90,7 @@ const openModal = () => {
 </script>
 
 <script>
-import { attachmentData } from '../data'
+import { attachmentData, weaponData } from '../data'
 import { attachment } from '../attachment'
 import { selectedAttachments } from '../store'
 import { keyObject } from '../utils'
@@ -100,6 +100,7 @@ export default {
     data() {
         return {
             attachmentData: attachmentData,
+            weaponData,
             showModal: false,
             selectedAttachments,
             keyNames: keyObject,

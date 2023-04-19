@@ -508,8 +508,8 @@ input[type="checkbox"]:checked::before {
     color: var(--primary);
 }
 
-warning {
-    color: var(--rarity-color-exotic);
+warning, .warning {
+    color: var(--color-destructive);
 }
 
 .container {

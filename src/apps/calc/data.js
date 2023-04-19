@@ -1,3 +1,4 @@
+import { reactive } from "vue";
 import {githubURL} from "../constants.json";
 
 async function get_weapon_data() {
@@ -21,7 +22,10 @@ for (let wep in tempWeaponData) {
 }
 delete tempWeaponData['WP_A_Sniper_Shard_01']
 
-export const weaponData = tempWeaponData;
+// we make it reactive so adding / changing it triggers watchers on this.
+export let weaponData = reactive(tempWeaponData);
+// make a deep copy
+export let weaponDataCopy = JSON.parse(JSON.stringify(weaponData))
 
 async function get_attachment_data() {
     const response = await fetch(githubURL + "attachments.json", {});
@@ -42,6 +46,8 @@ async function get_armor_data() {
 }
 
 export const armorData = await get_armor_data();
+// make a deep copy
+export const armorDataCopy = JSON.parse(JSON.stringify(armorData));
 
 async function get_target_data() {
     const response = await fetch(githubURL + "creatures.json");
@@ -70,6 +76,8 @@ tempTargetData = Object.assign(temp, tempTargetData)
 // delete tempTargetData['AI_GlowBeetle_Acid']
 delete tempTargetData['AI_Howler_2']
 export const targetData = tempTargetData;
+// make a deep copy
+export const targetDataCopy = JSON.parse(JSON.stringify(targetData))
 
 async function get_item_data() {
     const response = await fetch(githubURL + "items.json");
