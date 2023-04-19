@@ -212,7 +212,7 @@
 		.citizen-footer {
 			margin-bottom: 0;
 			margin-left: var(--header-size);
-			width: 95vw;
+			width: 100vw;
 			&__siteinfo {
 				max-width: 40vw;
 			}

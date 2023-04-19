@@ -14,6 +14,7 @@
 <script>
 import {weaponData as wepData} from "../data";
 import {selectedWeapons} from "../store";
+import { getWeaponList } from "../utils";
 export default {
     name: "WeaponSelector",
     data() {
@@ -25,33 +26,25 @@ export default {
         };
     },
     mounted() {
-        // Filter out weapons from our data we not show
-        let filtered = [];
-        for (const [k, v] of Object.entries(this.weaponData)) {
-            if (!v) continue;
-            if (!v["tags"] || v["tags"].length == 0 || v["tags"][0] === "Tools") continue;
-            if (v["inGameName"] == "HAZE" || v["inGameName"] == "KARLA" || v["inGameName"] == "FF4 Detonator") continue;
-            filtered.push(k);
-        }
-
-        // sort our array of items alphabetically
-        let sorted = [];
-        for (const weapon in filtered) {
-            const wData = this.weaponData[filtered[weapon]];
-            if (wData == undefined) continue;
-            let pushedData = {inGameName: wData["inGameName"], codeName: filtered[weapon]};
-            sorted.push(pushedData);
-        }
-        // thanks to https://stackoverflow.com/a/1129270
-        sorted.sort((a,b) => (a.inGameName > b.inGameName) ? 1 : ((b.inGameName > a.inGameName) ? -1 : 0));
-        // put our sorted names of items into our data
-        this.sortedData = sorted;
+        this.sortedData = getWeaponList()
     },
     watch: {
         selected : {
             deep: true,
             handler() {
                 selectedWeapons.set(this.selected)
+            }
+        },
+        selectedWeapons: {
+            deep: true,
+            handler() {
+                this.selected = selectedWeapons.list
+            }
+        },
+        weaponData: {
+            deep: true,
+            handler() {
+                this.sortedData = getWeaponList()
             }
         }
     }

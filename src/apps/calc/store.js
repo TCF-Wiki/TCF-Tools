@@ -98,3 +98,11 @@ export const selectedWeakspotValue = reactive({
         this.value = value;
     }
 })
+
+// global event dispatcher we can watch to see if something needs to be updated. Used in DetailedStatsTable.vue
+export const updateGlobalStateUtility = reactive({
+    value: 0,
+    update() {
+        this.value += 1
+    }
+})

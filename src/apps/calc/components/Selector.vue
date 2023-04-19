@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <section class="container">
         <div class="button-container">
             <div> 
                 <span> Weapons </span>

@@ -2,7 +2,7 @@
 
 import {selectedTarget, selectedWeapons, selectedArmor, selectedDistance, selectedAccuracy} from "./store";
 import {targetData, weaponData, armorData} from "./data";
-import {armorValues, roundToThree} from "./utils";
+import {roundToThree} from "./utils";
 import {calculate, setCurrentWeapon, setRunTimeSettings, setRunTimeSettingsAccuracy, setRunTimeSettingsArmor} from "./calculate";
 
 Highcharts.theme =  {
@@ -133,6 +133,13 @@ Highcharts.theme =  {
 
 
 };
+Highcharts.setOptions({
+	plotOptions: {
+		series: {
+			animation: false
+		}
+	}
+});
 // Apply the theme
 Highcharts.setOptions(Highcharts.theme);
 
@@ -147,7 +154,15 @@ export function penetrationChart() {
     let min = target.minDamageReduction;
     let max = target.maxDamageReduction;
 
-    for (let x = -40; x <= 40; x++) {
+    // we need to find the maximum armor / penetration value of all creatures/weapons/armor and find the biggest one. 
+    // This will be the lower and upper bound of our chart. We add a bit to compensate for pen attachments / room on the chart.
+    let values = []
+    for (let a in armorData) values.push(armorData[a].armorAmount)
+    for (let w in weaponData) values.push(weaponData[w].penetration)
+    for (let t in targetData) values.push(targetData[t].armorValue)
+    let bound = Math.max(...values) + 5
+
+    for (let x = -bound; x <= bound; x++) {
         let eHP = hp + Math.abs(x) * armorScale * hp;
         let ratio = hp / eHP;
 
@@ -201,6 +216,9 @@ export function penetrationChart() {
             text: 'Penetration',
             align: 'center'
         },
+        chart: {
+            animation: false
+        },
         yAxis: {
             title: {
                 text: 'DMG Multiplier'
@@ -224,7 +242,7 @@ export function penetrationChart() {
                 label: {
                     connectorAllowed: false
                 },
-                pointStart: -40,                
+                pointStart: -bound,                
             }
         },
     
@@ -293,6 +311,9 @@ export function falloffChart() {
         title: {
             text: 'Falloff',
             align: 'center'
+        },
+        chart: {
+            animation: false
         },
         yAxis: {
             title: {
@@ -374,6 +395,9 @@ export function ttkChart() {
             text: 'Time to kill',
             align: 'center'
         },
+        chart: {
+            animation: false
+        },
         yAxis: {
             title: {
                 text: 'Time (s)'
@@ -433,6 +457,17 @@ export function ttkChart() {
 export function stkChart() {
     let data = []
     setRunTimeSettings("shotsToKillChart")
+
+    let armorValues = [
+        armorData["PlayerDefault"]["armorAmount"],
+        armorData["Shield_01"]["armorAmount"],
+        armorData["Shield_02"]["armorAmount"],
+        armorData["Shield_03"]["armorAmount"],
+        armorData["Shield_04"]["armorAmount"],
+        armorData["Shield_05"]["armorAmount"],
+        armorData["Shield_Altered_03"]["armorAmount"]
+    ]
+
     for (let wep in selectedWeapons.list) {
         let weapon = selectedWeapons.list[wep];
         setCurrentWeapon(weapon)
@@ -451,7 +486,8 @@ export function stkChart() {
 
     Highcharts.chart('stkChart', {
         chart: {
-            type: 'column'
+            type: 'column',
+            animation: false
         },
         title: {
             text: 'Shots to kill',
