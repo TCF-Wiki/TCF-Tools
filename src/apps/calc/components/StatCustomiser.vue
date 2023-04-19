@@ -38,13 +38,13 @@
                                 <td> DMG Multiplier Minimum</td>
                                 <td> <input type="number" min="0" v-model="targetData.PlayerDefault.minDamageReduction"
                                         step="0.05"></td>
-                                <td> {{ targetDataCopy.PlayerDefault.health }}</td>
+                                <td> {{ targetDataCopy.PlayerDefault.minDamageReduction }}</td>
                             </tr>
                             <tr>
                                 <td> DMG Multiplier Maximum</td>
                                 <td> <input type="number" min="0" v-model="targetData.PlayerDefault.maxDamageReduction"
                                         step="0.05"></td>
-                                <td> {{ targetDataCopy.PlayerDefault.health }}</td>
+                                <td> {{ targetDataCopy.PlayerDefault.maxDamageReduction }}</td>
                             </tr>
                         </tbody>
                     </table>
