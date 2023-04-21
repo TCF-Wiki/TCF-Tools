@@ -42,8 +42,8 @@ let runTimeSettings = {
         distance: selectedDistance.distance,
         weakspotValue: selectedWeakspotValue.value
     },
-    timeToKillPlayer: {
-        target: "PlayerDefault",
+    timeToKill: {
+        target: selectedTarget.target,
         armor: selectedArmor.selected,
         accuracy: null,
         armorValue: null,
@@ -74,9 +74,12 @@ export function updateRunTimeSettings() {
     runTimeSettings.shotsToKillChart.distance          = selectedDistance.distance
     runTimeSettings.shotsToKillChart.weakspotValue     = selectedWeakspotValue.value
 
-    runTimeSettings.timeToKillPlayer.armor             = selectedArmor.selected
-    runTimeSettings.timeToKillPlayer.distance          = selectedDistance.distance
-    runTimeSettings.timeToKillPlayer.weakspotValue     = selectedWeakspotValue.value
+    runTimeSettings.timeToKill.target                  = selectedTarget.selected
+    runTimeSettings.timeToKill.armor                   = selectedArmor.selected
+    runTimeSettings.timeToKill.distance                = selectedDistance.distance
+    runTimeSettings.timeToKill.weakspotValue           = selectedWeakspotValue.value
+    runTimeSettings.timeToKill.hsAccuracy              = selectedHSValue.HSValue
+
 }
 
 let settings = runTimeSettings.default
@@ -356,8 +359,6 @@ export const calculate = {
 
     },
     getShotModifiers: function() {
-
-
         return ( 
             ( settings.accuracy / 100 )
             * this.headShotMult() 

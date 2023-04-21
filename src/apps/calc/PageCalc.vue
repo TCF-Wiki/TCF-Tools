@@ -71,7 +71,7 @@ export default {
 
                 <div class="chart-container">
                     <h3>Time to Kill Chart</h3>
-                    <span> This chart shows how the time to kill of a weapon changes as normal accuracy changes. Range: [20, 100], steps of 10%.</span>
+                    <span> This chart shows how the time to kill of a weapon changes as normal accuracy changes. Range: [50, 100], steps of 5%.</span>
                     <div class="inner-chart-container">
                         <div id="ttkChart">Chart HERE!</div>
                     </div>

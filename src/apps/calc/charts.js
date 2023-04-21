@@ -373,15 +373,15 @@ export function falloffChart() {
 }
 export function ttkChart() {
     let data = [];
-    setRunTimeSettings("timeToKillPlayer")
+    setRunTimeSettings("timeToKill")
     for (let wep in selectedWeapons.list) {
         let weapon = selectedWeapons.list[wep];
         setCurrentWeapon(weapon)
 
         let weaponPoints = [];
-        for (let x = 2; x <= 10; x++) {
-            setRunTimeSettingsAccuracy(x*10)
-            weaponPoints.push({x: x, y: roundToThree(calculate.timeToKill())})
+        for (let x = 10; x <= 20; x++) {
+            setRunTimeSettingsAccuracy(x*5)
+            weaponPoints.push({x: x*5, y: roundToThree(calculate.timeToKill())})
         }
 
         data.push({
@@ -407,7 +407,7 @@ export function ttkChart() {
             title: {
                 text: "Accuracy (%)"
             },
-            tickInterval: 20,
+            tickInterval: 5,
         },
     
         legend: {
@@ -421,7 +421,7 @@ export function ttkChart() {
                 label: {
                     connectorAllowed: false
                 },
-                pointStart: 15,                
+                pointStart: 45,                
             }
         },
     
