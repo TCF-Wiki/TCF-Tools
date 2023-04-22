@@ -267,7 +267,7 @@
 
                 <div class="quest-list">
                     <div class="quest-list__left">
-                        <QuestCard name="The Progenitor Device"  footer="Part 2 unlocks Crescent Falls"/>
+                        <QuestCard name="The Progenitor Device"  footer="Part 2 unlocks Tharis Island"/>
                     </div>
 
                     <div class="quest-list__left-line" :class="lineColor('Dangerous Science', 5)">
