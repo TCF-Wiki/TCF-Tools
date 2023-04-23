@@ -128,7 +128,7 @@ export default defineComponent({
             previousQuarterItems: {} as any,
             onlyShowCurrentProgress: false,
             onlyShowMainMissions: false,
-            sortAlphabetically: true,
+            sortAlphabetically: false,
 
             currentItems: {} as any,
             previousItems: {} as any,
