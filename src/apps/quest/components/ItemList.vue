@@ -154,9 +154,8 @@ export default defineComponent({
     methods: {
         rowColor(name: string): boolean {
             if (this.searchValue.length < 3) return false;
-            const itemName = this.itemName(name);
 
-            if (itemName.toLowerCase().includes(this.searchValue.toLowerCase())) return true;
+            if (name.toLowerCase().includes(this.searchValue.toLowerCase())) return true;
 
             return false;
         },
