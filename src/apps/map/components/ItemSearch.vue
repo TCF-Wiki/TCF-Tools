@@ -77,7 +77,7 @@ export default defineComponent({
                 if (term.toLowerCase().includes(input)) {
                     return term;
                 }
-            });
+            }).sort();
         },
         setSearchItem(item: string) {
             this.searchInput = item;

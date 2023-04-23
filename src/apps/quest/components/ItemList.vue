@@ -33,15 +33,18 @@
 
             <input class="main-missions-only" type="checkbox" v-model="onlyShowMainMissions" @change="onlyShowMainMissionsChanged()" id="main-mission-items-only" />
             <label for="main-mission-items-only">Hide side missions</label>
+
+            <input class="main-missions-only" type="checkbox" v-model="sortAlphabetically" @change="updateSortMethod" id="sort-alphabetically" />
+            <label for="sort-alphabetically">{{ !sortAlphabetically ? 'Sort Alphabetically' : 'Sort by Amount' }}</label>
         </div>
 
         <section class="list__container">
             <div v-for="(amount, index) in currentItems" :key="index.toString()" class="item__row" :class="{matching: rowColor(index.toString())}">
                 <img :src="'/map-images/item-images/' + itemName(index.toString(), true) + '.png'" class="item__image" />
                 <span>
-                    <span v-if="index.toString() == 'SoftCurrency'"> {{ amount / 1000 }}k </span>
+                    <span v-if="index.toString() == 'K-Marks'"> {{ amount / 1000 }}k </span>
                     <span v-else> {{ amount }}</span>
-                    {{ itemName(index.toString()) }}
+                    {{ index.toString() }}
                 </span>
             </div>
         </section>
@@ -60,15 +63,17 @@
             <label for="current-mission-items-only">Only show current levels</label>
             <input class="main-missions-only" type="checkbox" v-model="onlyShowMainMissions" @change="onlyShowMainMissionsChanged()" id="main-mission-items-only" />
             <label for="main-mission-items-only">Hide side missions</label>
+            <input class="main-missions-only" type="checkbox" v-model="sortAlphabetically" @change="updateSortMethod" id="sort-alphabetically" />
+            <label for="sort-alphabetically">{{ !sortAlphabetically ? 'Sort Alphabetically' : 'Sort by Amount' }}</label>
         </div>
 
         <section class="list__container">
             <div v-for="(amount, index) in currentMissionsItems" :key="index.toString()" class="item__row" :class="{matching: rowColor(index.toString())}">
                 <img :src="'/map-images/item-images/' + itemName(index.toString(), true) + '.png'" class="item__image" />
                 <span>
-                    <span v-if="index.toString() == 'SoftCurrency'"> {{ amount / 1000 }}k </span>
+                    <span v-if="index.toString() == 'K-Marks'"> {{ amount / 1000 }}k </span>
                     <span v-else> {{ amount }}</span>
-                    {{ itemName(index.toString()) }}
+                    {{ index.toString() }}
                 </span>
             </div>
         </section>
@@ -84,15 +89,17 @@
         <div class="search-options-container">
             <input class="current-progress-only" type="checkbox" v-model="onlyShowCurrentProgress" @change="onlyShowCurrentProgressChanged()" id="current-quarter-items-only" />
             <label for="current-quarter-items-only">Only show current levels</label>
+            <input class="main-missions-only" type="checkbox" v-model="sortAlphabetically" @change="updateSortMethod" id="sort-alphabetically" />
+            <label for="sort-alphabetically">{{ !sortAlphabetically ? 'Sort Alphabetically' : 'Sort by Amount' }}</label>
         </div>
 
         <section class="list__container">
             <div v-for="(amount, index) in currentQuarterItems" :key="index.toString()" class="item__row" :class="{matching: rowColor(index.toString())}">
                 <img :src="'/map-images/item-images/' + itemName(index.toString(), true) + '.png'" class="item__image" />
                 <span>
-                    <span v-if="index.toString() == 'SoftCurrency'"> {{ amount / 1000 }}k </span>
+                    <span v-if="index.toString() == 'K-Marks'"> {{ amount / 1000 }}k </span>
                     <span v-else> {{ amount }}</span>
-                    {{ itemName(index.toString()) }}
+                    {{ index.toString() }}
                 </span>
             </div>
         </section>
@@ -121,6 +128,7 @@ export default defineComponent({
             previousQuarterItems: {} as any,
             onlyShowCurrentProgress: false,
             onlyShowMainMissions: false,
+            sortAlphabetically: true,
 
             currentItems: {} as any,
             previousItems: {} as any,
@@ -218,8 +226,9 @@ export default defineComponent({
 
                                 // save the items, adding duplicate entries together
                                 for (let item in data) {
-                                    newData[item] = newData[item]
-                                        ? newData[item] + data[item]
+                                    const name = itemName(item, false)
+                                    newData[name] = newData[name]
+                                        ? newData[name] + data[item]
                                         : data[item];
                                 }
                                 
@@ -231,10 +240,7 @@ export default defineComponent({
             
             }
 
-            // sort our items by value, https://stackoverflow.com/questions/1069666/sorting-object-property-by-values#comment130783332_16794116
-            const sortedData = Object.keys(newData)
-                .sort((a, b) => newData[b] - newData[a])
-                .reduce((r, k) => ({...r, [k]: newData[k]}), {});
+            const sortedData = this.sortData(newData)
 
             // save it
             this.previousMissionItems = {...this.currentMissionsItems};
@@ -278,20 +284,17 @@ export default defineComponent({
                             const item = i;
                             const amount = techTreeData[upgrade]["levels"][l]["costs"][i];
 
-                            if (newData[item]) {
-                                newData[item] = newData[item] + amount;
-                            } else {
-                                newData[item] = amount;
-                            }
+                            const name = itemName(item, false)
+                            newData[name] = newData[name]
+                                ? newData[name] + amount
+                                : amount;
                         }
                         if (this.onlyShowCurrentProgress) break;
                     }
                 }
             }
 
-            const sortedData = Object.keys(newData)
-                .sort((a, b) => newData[b] - newData[a])
-                .reduce((r, k) => ({...r, [k]: newData[k]}), {});
+            const sortedData = this.sortData(newData)
 
             // save it
             this.previousQuarterItems = {...this.previousQuarterItems};
@@ -315,25 +318,38 @@ export default defineComponent({
             let bigList: any = {};
 
             for (let item in this.currentMissionsItems) {
+                const name = itemName(item, false)
                 const amount = this.currentMissionsItems[item];
-                bigList[item] = bigList[item]
-                    ? bigList[item] + amount
+                bigList[name] = bigList[name]
+                    ? bigList[name] + amount
                     : amount;
             }
 
             for (let item in this.currentQuarterItems) {
+                const name = itemName(item, false)
                 const amount = this.currentQuarterItems[item];
-                bigList[item] = bigList[item]
-                    ? bigList[item] + amount
+                bigList[name] = bigList[name]
+                    ? bigList[name] + amount
                     : amount;
             }
 
-            const sortedData = Object.keys(bigList)
-                .sort((a, b) => bigList[b] - bigList[a])
-                .reduce((r, k) => ({...r, [k]: bigList[k]}), {});
-
+            const sortedData = this.sortData(bigList)
+        
             this.previousItems = {...this.currentItems};
             this.currentItems = sortedData;
+        },
+        sortData(data : any) {
+            let sortedData = {}
+            // sort by amount (descending)
+            if (!this.sortAlphabetically) {
+                sortedData = Object.keys(data)
+                    .sort((a, b) => data[b] - data[a])
+                    .reduce((r, k) => ({...r, [k]: data[k]}), {});
+            } else {
+                // sort alphabetically
+                sortedData = Object.fromEntries(Object.entries(data).sort())
+            }
+            return sortedData;
         },
         updateList() {
             this.updateAllItemList();
@@ -342,6 +358,11 @@ export default defineComponent({
         itemName(item: string, urlFormat?: boolean): string {
             return itemName(item, urlFormat);
         },
+        updateSortMethod() {
+            this.getIncompleteMissionItems();
+            this.getQuarterItems();
+            this.updateList()
+        }
     },
     watch: {
         progressData: {
