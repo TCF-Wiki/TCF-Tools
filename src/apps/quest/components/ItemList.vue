@@ -261,8 +261,9 @@ export default defineComponent({
                         const item = i;
                         const amount = techLevelsData[level]["costs"][i];
 
-                        newData[item] = newData[item]
-                            ? newData[item] + amount
+                        const name = itemName(item, false)
+                        newData[name] = newData[name]
+                            ? newData[name] + amount
                             : amount;
                     }
                     if (this.onlyShowCurrentProgress) break;

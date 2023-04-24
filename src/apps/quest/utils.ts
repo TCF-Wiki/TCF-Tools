@@ -169,8 +169,8 @@ export function itemName(item: string, urlFormat?: boolean): string {
             item = itemData[item]["inGameName"];
         }
     }
-    if (item.includes("Fusion Cartridge")) item = "Fusion_Cartridge_Batteries";
-    if (item.includes("OrbitalCanonTarget")) item = "Orbital_Cannon_Beacon";
+    if (item.includes("Fusion Cartridge")) item = "Fusion Cartridge Batteries";
+    if (item.includes("OrbitalCanonTarget")) item = "Orbital Cannon Beacon";
 
     if (urlFormat) return item.split(" ").join("_").replace("#", "%23");
 
