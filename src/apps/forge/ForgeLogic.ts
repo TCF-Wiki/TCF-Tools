@@ -140,7 +140,7 @@ export const resolveIngotForge = (item: string) => {
 
 export function getPerkStrength(perk: string) : string {
     if (!perk) return '0';
-    const data = perkData[perk]['AttributeOverrides']
+    const data = perkData[perk]['attributeOverrides']
     if (!data) return  '0'
 
     let possibleResults : number[] = []
@@ -155,8 +155,9 @@ export function getPerkStrength(perk: string) : string {
     }
 
     let randomStrength : number = possibleResults[Math.floor(Math.random()* possibleResults.length)]
-    let type = perkData[perk]['Attributes'][0]['Type']
+    let type = perkData[perk]['attributes'][0]['type']
 
+    console.log(type)
     if (type.includes('Multiplicitive_PreAdd')) {
         return Math.round((randomStrength-1)*100) + '%'
     } else if (type.includes('Additive')) {
@@ -244,7 +245,7 @@ export function resolveGearForge(item: string) {
 
     // now, check if there is the possibility of there being a perk added to it by checking if the input has any overlap with items used in perk recipes.
     const possiblePerkItems = Object.keys(selectedItems.get()).filter(x => validItems.perkRecipes.includes(x))
-    console.log(possiblePerkItems)
+
     let type : string;
     if (item.includes('Shield_')) type = 'Shield'
     else if (item.includes('Helmet_')) type = 'Helmet'
@@ -281,7 +282,7 @@ export function resolveGearForge(item: string) {
 
         // create a list of matching perks with current input
         let result = getMatchingPerks(perks)
-        console.log(result)
+
         let matchingPerks = result[0]
         let itemsInOrder  = result[1]
 
@@ -356,6 +357,7 @@ export function resolveGearForge(item: string) {
 
         // now we are going to create the perkInfo for this item.
 
+        console.log(getPerkStrength(foundPerks[0]))
         let perkInfo = []
         for (let perk in foundPerks) {
             perkInfo.push({
@@ -365,6 +367,7 @@ export function resolveGearForge(item: string) {
         }
         // Pick a random perk + strength from the matching perk list
 
+        console.log(perkInfo)
         // remove the input items
         // gear
         if (consumeInput.get()) {
@@ -389,6 +392,7 @@ export function resolveGearForge(item: string) {
             "perkInfo": perkInfo
         }
 
+        console.log(outputData)
         // and then finally add it to our output items
         outputItems.clear()
         outputItems.add(outputString, 1, outputData)
