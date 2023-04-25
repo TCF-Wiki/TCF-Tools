@@ -174,7 +174,7 @@ export const calculate = {
                 (
                     // true mag size
                     ( this.s('ammoInClip') / this.s('ammoPerBullet') )
-                    * this.s(weapon, 'refireTime')
+                    * this.s('refireTime')
                 )
                 + this.s('spinupTime')
                 - this.s('refireTime')
