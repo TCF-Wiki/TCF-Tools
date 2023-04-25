@@ -3,7 +3,7 @@
 import {selectedTarget, selectedWeapons, selectedArmor, selectedDistance, selectedAccuracy} from "./store";
 import {targetData, weaponData, armorData} from "./data";
 import {roundToThree} from "./utils";
-import {calculate, setCurrentWeapon, setRunTimeSettings, setRunTimeSettingsAccuracy, setRunTimeSettingsArmor} from "./calculate";
+import {calculate, setCurrentWeapon, setRunTimeSettings, setRunTimeSettingsAccuracy, setRunTimeSettingsArmor, setRunTimeSettingsPenBonus} from "./calculate";
 
 Highcharts.theme =  {
     colors: ['var(--rarity-color-common)','var(--rarity-color-uncommon)', 'var(--rarity-color-rare)', '#b85fd2', 'var(--rarity-color-exotic)', 'var(--rarity-color-legendary)'],
@@ -155,7 +155,7 @@ export function penetrationChart() {
     let max = target.maxDamageReduction;
 
     // we need to find the maximum armor / penetration value of all creatures/weapons/armor and find the biggest one. 
-    // This will be the lower and upper bound of our chart. We add a bit to compensate for pen attachments / room on the chart.
+    // This will be the lower and upper bound of our chart. We add a bit to compensate forattachments / room on the chart.
     let values = []
     for (let a in armorData) values.push(armorData[a].armorAmount)
     for (let w in weaponData) values.push(weaponData[w].penetration)
@@ -454,6 +454,7 @@ export function ttkChart() {
           }
     });
 }
+
 export function stkChart() {
     let data = []
     setRunTimeSettings("shotsToKillChart")
@@ -475,7 +476,14 @@ export function stkChart() {
         let weaponPoints = []
         for (let shield in armorValues) {
             setRunTimeSettingsArmor(armorValues[shield])
-            weaponPoints.push(calculate.shotsToKill())
+            setRunTimeSettingsPenBonus(0)
+
+            let noMod  = calculate.shotsToKill()
+            weaponPoints.push(noMod)
+            for (let x = 1; x <=3; x++) {
+                setRunTimeSettingsPenBonus(x)
+                weaponPoints.push(calculate.shotsToKill())
+            }       
         }
 
         data.push({
@@ -487,11 +495,17 @@ export function stkChart() {
     Highcharts.chart('stkChart', {
         chart: {
             type: 'column',
-            animation: false
+            animation: false,
+            zooming: {
+                type: "x"
+            }
         },
         title: {
             text: 'Shots to kill',
             align: 'center'
+        },
+        subtitle: {
+            text: 'Shots to kill against all types of armor. Considers current accuracy and distance settings. The +1/+2/+3 stands for any potential penetration attachments used against that armor. This can be used to see if using that penetration mod changes anything.'
         },
         yAxis: {
             title: {
@@ -504,14 +518,137 @@ export function stkChart() {
             },
             categories: [
                 'None',
+                '+1',
+                '+2',
+                '+3',
                 'Common',
+                '+1',
+                '+2',
+                '+3',
                 'Uncommon',
+                '+1',
+                '+2',
+                '+3',
                 'Rare',
+                '+1',
+                '+2',
+                '+3',
                 'Epic',
+                '+1',
+                '+2',
+                '+3',
                 'Exotic',
+                '+1',
+                '+2',
+                '+3',
                 'Legendary',
+                '+1',
+                '+2',
+                'Pen +3',
+
               ],
               crosshair: true
+        },
+    
+        legend: {
+            layout: 'horizontal',
+        },
+    
+        plotOptions: {
+            series: {
+                label: {
+                    connectorAllowed: false
+                },
+                borderWidth: 0
+            }
+        },
+    
+        series: data,
+    
+        responsive: {
+            rules: [{
+                condition: {
+                    maxWidth: 500
+                },
+                chartOptions: {
+                    legend: {
+                        layout: 'horizontal',
+                        align: 'center',
+                        verticalAlign: 'bottom'
+                    }
+                }
+            }]
+        },
+
+        exporting: {
+            buttons: {
+              contextButton: {
+                menuItems: [
+                    "downloadCSV",
+                    "downloadXLS",
+                ],
+                align: 'left'
+              }
+            }
+          }
+    });
+}
+
+export function penModDifferenceChart() {
+    let data = []
+    setRunTimeSettings("penDifference")
+
+    for (let wep in selectedWeapons.list) {
+        let weapon = selectedWeapons.list[wep];
+        let weaponPoints = []
+
+        setCurrentWeapon(weapon)
+
+        setRunTimeSettingsPenBonus(0)
+        let noMod  = calculate.shotsToKill()
+        for (let x = 1; x <=3; x++) {
+            setRunTimeSettingsPenBonus(x)
+            
+            let value =  Math.abs(calculate.shotsToKill() - noMod)
+            if (!value) value = 0.03
+
+            weaponPoints.push(value)
+        }
+
+        data.push({
+            name: weaponData[weapon]["inGameName"],
+            data: weaponPoints,
+        });
+    }
+
+    Highcharts.chart('penDifference', {
+        chart: {
+            type: 'column',
+            animation: false
+        },
+        title: {
+            text: 'Pen Mod Difference in Shots to Kill',
+            align: 'center'
+        },
+        yAxis: {
+            title: {
+                text: 'Shots to Kill Difference'
+            },
+            tickInterval: 1,
+            minimum: 2
+
+        },
+        xAxis: {
+            title: {
+                text: "Pen Mod"
+            },
+            categories: [
+                'Pen +1',
+                'Pen +2',
+                'Pen +3',
+              ],
+            crosshair: true,
+            tickInterval: 1
         },
     
         legend: {
@@ -549,13 +686,6 @@ export function stkChart() {
             buttons: {
               contextButton: {
                 menuItems: [
-                    "printChart",
-                    "separator",
-                    "downloadPNG",
-                    "downloadJPEG",
-                    "downloadPDF",
-                    "downloadSVG",
-                    "separator",
                     "downloadCSV",
                     "downloadXLS",
                 ]

@@ -13,7 +13,8 @@ let runTimeSettings = {
         accuracy: selectedAccuracy.value,
         hsAccuracy: selectedHSValue.HSValue,
         distance: selectedDistance.distance,
-        weakspotValue: selectedWeakspotValue.value
+        weakspotValue: selectedWeakspotValue.value,
+        penBonus: null
     },
     shotsToKillTableBody: {
         target: "PlayerDefault",
@@ -22,7 +23,8 @@ let runTimeSettings = {
         accuracy: 100,
         hsAccuracy: 0,
         distance: selectedDistance.distance,
-        weakspotValue: selectedWeakspotValue.value
+        weakspotValue: selectedWeakspotValue.value,
+        penBonus: null
     },
     shotsToKillTableHead: {
         target: "PlayerDefault",
@@ -31,7 +33,8 @@ let runTimeSettings = {
         accuracy: 100,
         hsAccuracy: 100,
         distance: selectedDistance.distance,
-        weakspotValue: selectedWeakspotValue.value
+        weakspotValue: selectedWeakspotValue.value,
+        penBonus: null
     },
     shotsToKillChart: {
         target: "PlayerDefault",
@@ -40,7 +43,8 @@ let runTimeSettings = {
         accuracy: selectedAccuracy.accuracy,
         hsAccuracy: selectedHSValue.HSValue,
         distance: selectedDistance.distance,
-        weakspotValue: selectedWeakspotValue.value
+        weakspotValue: selectedWeakspotValue.value,
+        penBonus: null
     },
     timeToKill: {
         target: selectedTarget.target,
@@ -49,8 +53,20 @@ let runTimeSettings = {
         armorValue: null,
         hsAccuracy: 0,
         distance: selectedDistance.distance,
-        weakspotValue: selectedWeakspotValue.value
+        weakspotValue: selectedWeakspotValue.value,
+        penBonus: null
     },
+    penDifference: {
+        target: selectedTarget.target,
+        armor: selectedArmor.selected,
+        accuracy: selectedAccuracy.accuracy,
+        armorValue: null,
+        hsAccuracy: selectedHSValue.HSValue,
+        distance: selectedDistance.distance,
+        weakspotValue: selectedWeakspotValue.value,
+
+        penBonus: 0
+    }
 }
 export function updateRunTimeSettings() {
     runTimeSettings.default = {
@@ -80,6 +96,15 @@ export function updateRunTimeSettings() {
     runTimeSettings.timeToKill.weakspotValue           = selectedWeakspotValue.value
     runTimeSettings.timeToKill.hsAccuracy              = selectedHSValue.HSValue
 
+    runTimeSettings.penDifference = {
+        target: selectedTarget.selected,
+        armor: selectedArmor.selected,
+        armorValue: null,
+        accuracy: selectedAccuracy.value,
+        hsAccuracy: selectedHSValue.HSValue,
+        distance: selectedDistance.distance,
+        weakspotValue: selectedWeakspotValue.value,
+    }
 }
 
 let settings = runTimeSettings.default
@@ -93,6 +118,10 @@ export function setRunTimeSettingsArmor(armorValue) {
 
 export function setRunTimeSettingsAccuracy(accuracyValue) {
     settings["accuracy"] = accuracyValue
+}
+
+export function setRunTimeSettingsPenBonus(penBonus) {
+    settings['penBonus'] = penBonus
 }
 
 let curWeapon = ''
@@ -296,12 +325,20 @@ export const calculate = {
         let target = targetData[settings.target]
         let penDiff;
 
-        if (settings.armorValue) {
-            penDiff = this.s('penetration') - settings.armorValue
-        } else if (settings.target == "PlayerDefault" && settings.armor) {
-            penDiff = this.s('penetration') - armorData[settings.armor]['armorAmount']
+        let pen; 
+
+        if (settings['penBonus'] != null) {
+            pen = weaponData[curWeapon]['penetration'] + settings['penBonus']
         } else {
-            penDiff = this.s('penetration') - target.armorValue
+            pen = this.s('penetration')
+        }
+
+        if (settings.armorValue) {
+            penDiff = pen - settings.armorValue
+        } else if (settings.target == "PlayerDefault" && settings.armor) {
+            penDiff = pen - armorData[settings.armor]['armorAmount']
+        } else {
+            penDiff = pen - target.armorValue
         }
     
         let hp = target.health;

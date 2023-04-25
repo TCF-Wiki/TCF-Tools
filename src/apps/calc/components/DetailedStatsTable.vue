@@ -181,10 +181,9 @@ import { roundToThree } from "../utils";
 import { weaponData, armorData, itemData } from "../data";
 import BodyChart from "./BodyChart.vue";
 import AttachmentSelector from "./AttachmentSelector.vue";
-import { helmetData } from "@/apps/forge/data";
-import { penetrationChart, falloffChart, ttkChart, stkChart } from "../charts";
-import { setRunTimeSettings } from "../calculate";
-import { setRunTimeSettingsArmor } from "../calculate";
+
+import { penetrationChart, falloffChart, ttkChart, stkChart, penModDifferenceChart } from "../charts";
+import { setRunTimeSettings, setRunTimeSettingsArmor } from "../calculate";
 
 export default defineComponent({
     components: {
@@ -375,6 +374,7 @@ export default defineComponent({
                 falloffChart()
                 ttkChart()
                 stkChart()
+                penModDifferenceChart()
             },
         },
         selectedWeapons: {
@@ -385,6 +385,7 @@ export default defineComponent({
                 falloffChart()
                 ttkChart()
                 stkChart()
+                penModDifferenceChart()
             },
         },
         selectedAttachments: {
@@ -395,6 +396,7 @@ export default defineComponent({
                 falloffChart()
                 ttkChart()
                 stkChart()
+                penModDifferenceChart()
             },
         },
         selectedTarget: {
@@ -403,6 +405,7 @@ export default defineComponent({
                 this.updateDetailedStats();
                 penetrationChart()
                 ttkChart()
+                penModDifferenceChart()
             },
         },
         selectedArmor: {
@@ -411,6 +414,7 @@ export default defineComponent({
                 this.updateDetailedStats();
                 penetrationChart()
                 ttkChart()
+                penModDifferenceChart()
             },
         },
         selectedHSValue: {
@@ -418,6 +422,7 @@ export default defineComponent({
             handler() {
                 this.updateDetailedStats();
                 stkChart()
+                penModDifferenceChart()
             },
         },
         selectedAccuracy: {
@@ -425,6 +430,7 @@ export default defineComponent({
             handler() {
                 this.updateDetailedStats()
                 stkChart()
+                penModDifferenceChart()
             }
         },
         selectedDistance: {
@@ -434,6 +440,7 @@ export default defineComponent({
                 falloffChart()
                 ttkChart()
                 stkChart()
+                penModDifferenceChart()
             },
         },
         selectedWeakspotValue: {
@@ -441,6 +448,7 @@ export default defineComponent({
             handler() {
                 this.updateDetailedStats();
                 ttkChart()
+                penModDifferenceChart()
             },
         },
     }

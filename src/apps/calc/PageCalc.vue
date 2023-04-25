@@ -1,12 +1,13 @@
 <script>
 import Selector from "./components/Selector.vue";
 import WeaponComparer from "./components/WeaponComparer.vue";
-import {penetrationChart, falloffChart, ttkChart, stkChart} from "./charts";
+import {penetrationChart, falloffChart, ttkChart, stkChart, penModDifferenceChart} from "./charts";
 import AccuracySelector from "./components/WeakSpotAccuracySelector.vue";
 import DistanceSelector from "./components/DistanceSelector.vue";
 import DetailedStatsTable from "./components/DetailedStatsTable.vue";
 import {doneLoading} from "../../all";
 import StatCustomiser from "./components/StatCustomiser.vue";
+import { loadInitialStore } from "./URLParameterHandler";
 
 export default {
     components: {
@@ -19,13 +20,16 @@ export default {
 },
     mounted() {
         // clear out the url bar
+        loadInitialStore()
         window.history.pushState({}, document.title, location.pathname.replace(".html", ""));
         penetrationChart();
         falloffChart();
         ttkChart();
         stkChart()
+        penModDifferenceChart()
         //done loading
         doneLoading();
+        
     },
 };
 </script>
@@ -77,11 +81,19 @@ export default {
                     </div>
                 </div>
 
-                <div class="chart-container">
+                <div class="chart-container wide">
                     <h3>Shots to Kill Chart</h3>
                     <span> This chart shows how the shots to kill of a weapon changes as the armor it is shooting changes.</span>
                     <div class="inner-chart-container">
                         <div id="stkChart">Chart HERE!</div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h3>Penetration Mod Chart</h3>
+                    <span> This chart shows how the shots to kill of a weapon change as different penetration mods are equipped (+1, +2, +3). This considers your current selected options.</span>
+                    <div class="inner-chart-container">
+                        <div id="penDifference">Chart HERE!</div>
                     </div>
                 </div>
             </div>
@@ -128,6 +140,9 @@ h2 {
     padding-left: var(--space-md);
 }
 
+.chart-container.wide {
+    width: 50rem;
+}
 .header {
     margin: auto;
     border-bottom: 1px solid var(--border-color-base);
