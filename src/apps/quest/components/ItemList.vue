@@ -146,7 +146,8 @@ export default defineComponent({
 
             searchValue: "",
 
-            itemPopupInfo: {} as any
+            itemPopupInfoQuarters: {} as any,
+            itemPopupInfoMissions: {} as any
         };
     },
     mounted() {
@@ -194,7 +195,8 @@ export default defineComponent({
         },
         getIncompleteMissionItems(): void {
             let newData: any = {};
-            let itemPopupsSaved : string[] = []
+            this.itemPopupInfoMissions = {}
+
             for (let name in missionListData) {
                 const questLine = missionListData[name];
                 const missions = questLine['missions'];
@@ -236,16 +238,9 @@ export default defineComponent({
                                         ? newData[name] + data[item]
                                         : data[item];
 
-                                    // reset the popup info for this item if we have not saved it before.
-                                    if (!itemPopupsSaved.includes(name) && this.itemPopupInfo[name]) {
-                                        
-                                        this.itemPopupInfo[name]['missions'] = []
-                                    }
-                                    itemPopupsSaved.push(name)
-
+                                    if (name == "Charged Spinal Base") console.log(partData['inGameName'])
                                     this.savePopupInfo(name, data[item], partData['inGameName'], 'missions')
                                 }
-                                
                                 if (this.onlyShowCurrentProgress) break;
                             }
                         }
@@ -265,7 +260,7 @@ export default defineComponent({
             let newData: any = {};
             let quarterProgress = this.quarterProgress.get();
             let overalQuarterProgress = quarterProgress["overall"];
-            let itemPopupsSaved : string[] = []
+            this.itemPopupInfoQuarters = {}
 
             // Overall quarter level
             let index = 0;
@@ -281,12 +276,7 @@ export default defineComponent({
                         newData[name] = newData[name]
                             ? newData[name] + amount
                             : amount;
-
-                        // reset the popup info for this item if we have not saved it before.
-                        if (!itemPopupsSaved.includes(name) && this.itemPopupInfo[name]) {
-                            this.itemPopupInfo[name]['quarters'] = []
-                        }
-                        itemPopupsSaved.push(name)
+                            if (name == "Charged Spinal Base") console.log(techLevelsData[level]['inGameName'])
 
                         this.savePopupInfo(name, amount, techLevelsData[level]['inGameName'], 'quarters')
                     }
@@ -312,11 +302,8 @@ export default defineComponent({
                             newData[name] = newData[name]
                                 ? newData[name] + amount
                                 : amount;
-                            // reset the popup info for this item if we have not saved it before.
-                            if (!itemPopupsSaved.includes(name) && this.itemPopupInfo[name]) {
-                                this.itemPopupInfo[name]['quarters'] = []
-                            }
-                            itemPopupsSaved.push(name)
+                                if (name == "Charged Spinal Base") console.log(techTreeData[upgrade]["levels"][l]['inGameName'])
+
                             this.savePopupInfo(name, amount, techTreeData[upgrade]["levels"][l]['inGameName'], 'quarters')
                         }
                         if (this.onlyShowCurrentProgress) break;
@@ -332,31 +319,34 @@ export default defineComponent({
             this.updateAllItemList();
         },
         savePopupInfo(item : string, amount : number, objectiveName : string, list: "missions" | "quarters") {
-            let info = this.itemPopupInfo[item]
-            if (!this.itemPopupInfo[item]) this.itemPopupInfo[item] = {
-                'missions': [],
-                'quarters': []
+            if (list == "missions") {
+                if (!this.itemPopupInfoMissions[item]) this.itemPopupInfoMissions[item] = []
+                this.itemPopupInfoMissions[item].push({name: objectiveName, amount: amount})
+            } else {
+                if (!this.itemPopupInfoQuarters[item]) this.itemPopupInfoQuarters[item] = []
+                this.itemPopupInfoQuarters[item].push({name: objectiveName, amount: amount})
             }
 
-            this.itemPopupInfo[item][list].push({name: objectiveName, amount: amount})
+            
         },
         getToolTipText(item : string, type:  null | "missions" | "quarters" = null) {
             if (item == 'K-Marks' || item == 'ICA Scrip' || item == 'Korolev Scrip' || item == 'Osiris Scrip') return;
 
-            let itemInfo = this.itemPopupInfo[item]
-
-            let list = []
+            let list = [];
             if (type == null) {
-                list = itemInfo['missions'].concat(itemInfo['quarters'])
-            } else {
-                list = itemInfo[type]
+                list = (this.itemPopupInfoMissions[item] ?? []).concat(this.itemPopupInfoQuarters[item] ?? [])
+            } else if (type=="quarters") {
+                list = this.itemPopupInfoQuarters[item]
+            } else if (type=="missions") {
+                list = this.itemPopupInfoMissions[item]
             }
-
+            
             list.sort((i1 : any, i2 : any) => {
                 return i2.amount - i1.amount;
             })
 
             let output = ''
+
             for (let use in list) {
                 output += `${list[use].amount}× ${list[use].name}<br>`
             }
