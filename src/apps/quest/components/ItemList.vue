@@ -39,7 +39,8 @@
         </div>
 
         <section class="list__container">
-            <div v-for="(amount, index) in currentItems" :key="index.toString()" class="item__row" :class="{matching: rowColor(index.toString())}">
+            <div v-for="(amount, index) in currentItems" :key="index.toString()" class="item__row" :class="{matching: rowColor(index.toString())}" 
+            v-tooltip="{html: true, content: getToolTipText(index.toString())}">
                 <img :src="'/map-images/item-images/' + itemName(index.toString(), true) + '.png'" class="item__image" />
                 <span>
                     <span v-if="index.toString() == 'K-Marks'"> {{ amount / 1000 }}k </span>
@@ -68,7 +69,8 @@
         </div>
 
         <section class="list__container">
-            <div v-for="(amount, index) in currentMissionsItems" :key="index.toString()" class="item__row" :class="{matching: rowColor(index.toString())}">
+            <div v-for="(amount, index) in currentMissionsItems" :key="index.toString()" class="item__row" :class="{matching: rowColor(index.toString())}"
+            v-tooltip="{html: true, content: getToolTipText(index.toString(), 'missions')}">
                 <img :src="'/map-images/item-images/' + itemName(index.toString(), true) + '.png'" class="item__image" />
                 <span>
                     <span v-if="index.toString() == 'K-Marks'"> {{ amount / 1000 }}k </span>
@@ -94,7 +96,8 @@
         </div>
 
         <section class="list__container">
-            <div v-for="(amount, index) in currentQuarterItems" :key="index.toString()" class="item__row" :class="{matching: rowColor(index.toString())}">
+            <div v-for="(amount, index) in currentQuarterItems" :key="index.toString()" class="item__row" :class="{matching: rowColor(index.toString())}"
+            v-tooltip="{html: true, content: getToolTipText(index.toString(), 'quarters')}">
                 <img :src="'/map-images/item-images/' + itemName(index.toString(), true) + '.png'" class="item__image" />
                 <span>
                     <span v-if="index.toString() == 'K-Marks'"> {{ amount / 1000 }}k </span>
@@ -142,6 +145,8 @@ export default defineComponent({
             slideIndex: 1,
 
             searchValue: "",
+
+            itemPopupInfo: {} as any
         };
     },
     mounted() {
@@ -229,6 +234,8 @@ export default defineComponent({
                                     newData[name] = newData[name]
                                         ? newData[name] + data[item]
                                         : data[item];
+
+                                    this.savePopupInfo(name, data[item], partData['inGameName'], 'missions')
                                 }
                                 
                                 if (this.onlyShowCurrentProgress) break;
@@ -265,6 +272,7 @@ export default defineComponent({
                         newData[name] = newData[name]
                             ? newData[name] + amount
                             : amount;
+                        this.savePopupInfo(name, amount, techLevelsData[level]['inGameName'], 'quarters')
                     }
                     if (this.onlyShowCurrentProgress) break;
                 }
@@ -288,6 +296,7 @@ export default defineComponent({
                             newData[name] = newData[name]
                                 ? newData[name] + amount
                                 : amount;
+                            this.savePopupInfo(name, amount, techTreeData[upgrade]["levels"][l]['inGameName'], 'quarters')
                         }
                         if (this.onlyShowCurrentProgress) break;
                     }
@@ -300,6 +309,37 @@ export default defineComponent({
             this.previousQuarterItems = {...this.previousQuarterItems};
             this.currentQuarterItems = sortedData;
             this.updateAllItemList();
+        },
+        savePopupInfo(item : string, amount : number, objectiveName : string, list: "missions" | "quarters") {
+            let info = this.itemPopupInfo[item]
+            if (!this.itemPopupInfo[item]) this.itemPopupInfo[item] = {
+                'missions': [],
+                'quarters': []
+            }
+
+            this.itemPopupInfo[item][list].push({name: objectiveName, amount: amount})
+        },
+        getToolTipText(item : string, type:  null | "missions" | "quarters" = null) {
+            if (item == 'K-Marks' || item == 'ICA Scrip' || item == 'Korolev Scrip' || item == 'Osiris Scrip') return;
+
+            let itemInfo = this.itemPopupInfo[item]
+
+            let list = []
+            if (type == null) {
+                list = itemInfo['missions'].concat(itemInfo['quarters'])
+            } else {
+                list = itemInfo[type]
+            }
+
+            list.sort((i1 : any, i2 : any) => {
+                return i2.amount - i1.amount;
+            })
+
+            let output = ''
+            for (let use in list) {
+                output += `${list[use].amount}× ${list[use].name}<br>`
+            }
+            return output
         },
         sendNotification(): void {
             // send out a function to inform the user that the item list changed when they change if they finished a mission or not

@@ -1,6 +1,4 @@
-import {weaponData} from "../calc/data";
 import {locationData, itemData, missionListData} from "./data";
-import {creatureNames} from "./QuestConstants";
 
 export function locationNameManager(name: string): string {
     // Utility function to get the name of a location by its codename

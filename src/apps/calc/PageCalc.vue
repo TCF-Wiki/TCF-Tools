@@ -1,23 +1,23 @@
 <script>
 import Selector from "./components/Selector.vue";
 import WeaponComparer from "./components/WeaponComparer.vue";
-import {penetrationChart, falloffChart, ttkChart, stkChart, penModDifferenceChart} from "./charts";
+import { penetrationChart, falloffChart, ttkChart, stkChart, penModDifferenceChart } from "./charts";
 import AccuracySelector from "./components/WeakSpotAccuracySelector.vue";
 import DistanceSelector from "./components/DistanceSelector.vue";
 import DetailedStatsTable from "./components/DetailedStatsTable.vue";
-import {doneLoading} from "../../all";
+import { doneLoading } from "../../all";
 import StatCustomiser from "./components/StatCustomiser.vue";
 import { loadInitialStore } from "./URLParameterHandler";
-
+import { selectedTarget } from "./store";
 export default {
     components: {
-    Selector,
-    WeaponComparer,
-    AccuracySelector,
-    DistanceSelector,
-    DetailedStatsTable,
-    StatCustomiser
-},
+        Selector,
+        WeaponComparer,
+        AccuracySelector,
+        DistanceSelector,
+        DetailedStatsTable,
+        StatCustomiser,
+    },
     mounted() {
         // clear out the url bar
         loadInitialStore()
@@ -29,8 +29,13 @@ export default {
         penModDifferenceChart()
         //done loading
         doneLoading();
-        
+
     },
+    data() {
+        return {
+            selectedTarget
+        }
+    }
 };
 </script>
 
@@ -53,13 +58,16 @@ export default {
         </section>
         <section class="container">
             <div class="header">
-                <header><h2>Charts</h2></header>
+                <header>
+                    <h2>Charts</h2>
+                </header>
                 <!-- <p>The following charts show the detailed stats above in a visual way. More charts will be added in the future.</p> -->
             </div>
             <div class="outer-chart-container">
                 <div class="chart-container">
                     <h3>Penetration Chart</h3>
-                    <span> This chart shows the effect of penetration on the damage a weapon deals. <a href="https://thecyclefrontier.wiki/wiki/Penetration"> See the wiki for more info</a>.</span>
+                    <span> This chart shows the effect of penetration on the damage a weapon deals. <a
+                            href="https://thecyclefrontier.wiki/wiki/Penetration"> See the wiki for more info</a>.</span>
                     <div class="inner-chart-container">
                         <div id="penChart">CHART HERE!</div>
                     </div>
@@ -75,7 +83,8 @@ export default {
 
                 <div class="chart-container">
                     <h3>Time to Kill Chart</h3>
-                    <span> This chart shows how the time to kill of a weapon changes as normal accuracy changes. Range: [50, 100], steps of 5%.</span>
+                    <span> This chart shows how the time to kill of a weapon changes as normal accuracy changes. Range: [50,
+                        100], steps of 5%.</span>
                     <div class="inner-chart-container">
                         <div id="ttkChart">Chart HERE!</div>
                     </div>
@@ -83,22 +92,23 @@ export default {
 
                 <div class="chart-container wide">
                     <h3>Shots to Kill Chart</h3>
-                    <span> This chart shows how the shots to kill of a weapon changes as the armor it is shooting changes.</span>
+                    <span> This chart shows how the shots to kill of a weapon changes as the armor it is shooting
+                        changes.</span>
                     <div class="inner-chart-container">
                         <div id="stkChart">Chart HERE!</div>
                     </div>
                 </div>
 
                 <div class="chart-container">
-                    <h3>Penetration Mod Chart</h3>
-                    <span> This chart shows how the shots to kill of a weapon change as different penetration mods are equipped (+1, +2, +3). This considers your current selected options.</span>
+                    <h3>{{ selectedTarget.selected == 'PlayerDefault' ? 'Penetration Mod Chart' : 'Penetration & Creature DMG Mod Chart'}}</h3>
+                    <span> This chart shows how the shots to kill change according to specific attachements.</span>
                     <div class="inner-chart-container">
                         <div id="penDifference">Chart HERE!</div>
                     </div>
                 </div>
             </div>
         </section>
-        <section  class="container">
+        <section class="container">
             <StatCustomiser />
         </section>
     </section>
@@ -115,6 +125,7 @@ h1 {
     font-size: 3rem;
     padding-left: 0;
 }
+
 h2 {
     text-align: center;
 }
@@ -136,13 +147,13 @@ h2 {
     height: 34rem;
     display: flex;
     flex-direction: column;
-    gap: var(--space-md);
-    padding-left: var(--space-md);
+    gap: var(--space-sm);
 }
 
 .chart-container.wide {
     width: 50rem;
 }
+
 .header {
     margin: auto;
     border-bottom: 1px solid var(--border-color-base);
@@ -162,5 +173,4 @@ h2 {
 
 b {
     font-size: larger;
-}
-</style>
+}</style>

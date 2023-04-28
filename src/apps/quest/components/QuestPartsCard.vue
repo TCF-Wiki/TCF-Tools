@@ -70,7 +70,6 @@ import {stringTables, missionData, missionListData} from "../data";
 import {alphabeticalContainers} from "../../map/mapConstants";
 import {locationNameManager, killCreatureOrPlayer, itemName, getFactionOfMission} from "../utils";
 import {factionProgress} from "../trackProgress";
-import {missions} from "../QuestConstants";
 
 export default defineComponent({
     props: ["zIndex", "index", "mission", "name"],

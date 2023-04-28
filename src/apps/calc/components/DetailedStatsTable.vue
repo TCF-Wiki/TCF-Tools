@@ -214,7 +214,7 @@ export default defineComponent({
                 { text: "Shots to Kill", value: "stk", sortable: true},
                 { text: "Time to Kill", value: "ttk", sortable: true},
                 { text: "Damage per Bullet", value: "dmgPerBull", sortable: true},
-                { text: "Damage per Bullet (HS)", value: "dmgPerBullHS", sortable: true},
+                { text: "Damage per Bullet Weakspot", value: "dmgPerBullHS", sortable: true},
             ],
             headersShotsToKillBody: [
                 { text: "Weapon", value: "inGameName", sortable: true, width: 200, fixed: true },

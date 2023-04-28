@@ -14,7 +14,8 @@ let runTimeSettings = {
         hsAccuracy: selectedHSValue.HSValue,
         distance: selectedDistance.distance,
         weakspotValue: selectedWeakspotValue.value,
-        penBonus: null
+        penBonus: null,
+        creatureDmgMult: null
     },
     shotsToKillTableBody: {
         target: "PlayerDefault",
@@ -24,7 +25,8 @@ let runTimeSettings = {
         hsAccuracy: 0,
         distance: selectedDistance.distance,
         weakspotValue: selectedWeakspotValue.value,
-        penBonus: null
+        penBonus: null,
+        creatureDmgMult: null
     },
     shotsToKillTableHead: {
         target: "PlayerDefault",
@@ -34,7 +36,8 @@ let runTimeSettings = {
         hsAccuracy: 100,
         distance: selectedDistance.distance,
         weakspotValue: selectedWeakspotValue.value,
-        penBonus: null
+        penBonus: null,
+        creatureDmgMult: null
     },
     shotsToKillChart: {
         target: "PlayerDefault",
@@ -44,7 +47,8 @@ let runTimeSettings = {
         hsAccuracy: selectedHSValue.HSValue,
         distance: selectedDistance.distance,
         weakspotValue: selectedWeakspotValue.value,
-        penBonus: null
+        penBonus: null,
+        creatureDmgMult: null
     },
     timeToKill: {
         target: selectedTarget.target,
@@ -54,7 +58,8 @@ let runTimeSettings = {
         hsAccuracy: 0,
         distance: selectedDistance.distance,
         weakspotValue: selectedWeakspotValue.value,
-        penBonus: null
+        penBonus: null,
+        creatureDmgMult: null
     },
     penDifference: {
         target: selectedTarget.target,
@@ -65,7 +70,8 @@ let runTimeSettings = {
         distance: selectedDistance.distance,
         weakspotValue: selectedWeakspotValue.value,
 
-        penBonus: 0
+        penBonus: 0,
+        creatureDmgMult: 0
     }
 }
 export function updateRunTimeSettings() {
@@ -122,6 +128,10 @@ export function setRunTimeSettingsAccuracy(accuracyValue) {
 
 export function setRunTimeSettingsPenBonus(penBonus) {
     settings['penBonus'] = penBonus
+}
+
+export function setRunTimeSettingsCreatureDmgMult(dmgMult) {
+    settings['creatureDmgMult'] = dmgMult
 }
 
 let curWeapon = ''
@@ -318,7 +328,7 @@ export const calculate = {
             * this.penetrationMultiplier() 
             * this.falloffMultiplier() 
             * this.creatureDamageMult()
-            * this.s('weakDamageMultiplier')
+            * (selectedTarget.selected == 'PlayerDefault' ? this.s('weakDamageMultiplier') : selectedWeakspotValue.value)
         )
     },
     penetrationMultiplier: function() {
@@ -386,6 +396,7 @@ export const calculate = {
 
     creatureDamageMult: function () {
         if (settings.target != 'PlayerDefault') {
+            if (settings['creatureDmgMult'] != null) return settings['creatureDmgMult']
             const effects = attachment.getAttachmentEffects(curWeapon)
             
             if (effects['DamageEnemyMultiplier']) {
@@ -405,7 +416,7 @@ export const calculate = {
         )
     },
 
-    savedWeaponData: {},
+    // s stands for stat
     s: function(stat) {
         let wData = weaponData[curWeapon]
 
