@@ -194,6 +194,7 @@ export default defineComponent({
         },
         getIncompleteMissionItems(): void {
             let newData: any = {};
+            let itemPopupsSaved : string[] = []
             for (let name in missionListData) {
                 const questLine = missionListData[name];
                 const missions = questLine['missions'];
@@ -235,6 +236,13 @@ export default defineComponent({
                                         ? newData[name] + data[item]
                                         : data[item];
 
+                                    // reset the popup info for this item if we have not saved it before.
+                                    if (!itemPopupsSaved.includes(name) && this.itemPopupInfo[name]) {
+                                        
+                                        this.itemPopupInfo[name]['missions'] = []
+                                    }
+                                    itemPopupsSaved.push(name)
+
                                     this.savePopupInfo(name, data[item], partData['inGameName'], 'missions')
                                 }
                                 
@@ -257,6 +265,7 @@ export default defineComponent({
             let newData: any = {};
             let quarterProgress = this.quarterProgress.get();
             let overalQuarterProgress = quarterProgress["overall"];
+            let itemPopupsSaved : string[] = []
 
             // Overall quarter level
             let index = 0;
@@ -272,6 +281,13 @@ export default defineComponent({
                         newData[name] = newData[name]
                             ? newData[name] + amount
                             : amount;
+
+                        // reset the popup info for this item if we have not saved it before.
+                        if (!itemPopupsSaved.includes(name) && this.itemPopupInfo[name]) {
+                            this.itemPopupInfo[name]['quarters'] = []
+                        }
+                        itemPopupsSaved.push(name)
+
                         this.savePopupInfo(name, amount, techLevelsData[level]['inGameName'], 'quarters')
                     }
                     if (this.onlyShowCurrentProgress) break;
@@ -296,6 +312,11 @@ export default defineComponent({
                             newData[name] = newData[name]
                                 ? newData[name] + amount
                                 : amount;
+                            // reset the popup info for this item if we have not saved it before.
+                            if (!itemPopupsSaved.includes(name) && this.itemPopupInfo[name]) {
+                                this.itemPopupInfo[name]['quarters'] = []
+                            }
+                            itemPopupsSaved.push(name)
                             this.savePopupInfo(name, amount, techTreeData[upgrade]["levels"][l]['inGameName'], 'quarters')
                         }
                         if (this.onlyShowCurrentProgress) break;
