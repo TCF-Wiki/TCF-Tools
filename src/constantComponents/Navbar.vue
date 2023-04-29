@@ -3,7 +3,7 @@
 	<div class="header-outer">
         <div class="header-item" v-tooltip.right="{content: 'Official Wiki'}"> 
             <a href="https://thecyclefrontier.wiki/wiki/Main_Page" target="_blank"> 
-                <img  src="/wiki_logo_notext.png">
+                <img  src="/wiki_logo_square.png">
             </a>
         </div>
 		<div class="header-item" v-tooltip.right="{content: 'Home Page'}"> 
@@ -255,6 +255,8 @@ onClickOutside(modal2, () => (isLoadModalOpen.value = false))
             margin: auto;
             display: block;
         }
+
+
     }
 }
 
@@ -297,6 +299,12 @@ onClickOutside(modal2, () => (isLoadModalOpen.value = false))
         flex-direction: column;
         width: unset;
         justify-content: start;
+
+		.header-item {
+			&:first-of-type {
+				border-bottom: 1px solid var(--border-color-base)
+			}
+		}
     }
 }
 

@@ -244,6 +244,7 @@ export function penetrationChart() {
       title: {
         text: "DMG Multiplier",
       },
+      tickInterval: 0.2
     },
     xAxis: {
       title: {
