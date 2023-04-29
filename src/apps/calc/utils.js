@@ -111,6 +111,23 @@ export const ignoredEffects = [
     'WeaponTargetingSpreadMultiplier'
 ]
 
+export const ammoStackBuySize = {
+    'Medium': 125,
+    'Medium_03': 125,
+    'Medium_04': 125,
+    'Light': 125,
+    'Light_03': 125,
+    'Light_04': 125,
+    'Shotgun': 20,
+    'Shotgun_03': 20,
+
+    'Heavy': 20,
+    'Heavy_03': 20,
+    'Heavy_05': 20,
+    'Special_06_1': 18,
+    'Special_06_2': 100
+}
+
 export function roundToThree(num) {
     return +(Math.round(num + 'e+3') + 'e-3');
 }

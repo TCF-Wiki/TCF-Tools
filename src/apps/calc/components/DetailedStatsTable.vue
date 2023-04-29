@@ -206,6 +206,7 @@ export default defineComponent({
                 { text: 'Options', value: 'options'},
                 { text: "Penetration Multiplier", value: "penMult", sortable: true },
                 { text: "Rounds per Minute", value: "rpm", sortable: true },
+                { text: "Ammo Cost Per Kill", value: "ammoCost", sortable: true },
                 { text: "Reload Adjust RPM", value: "reloadRPM", sortable: true },
                 { text: "Damage per Second (Approx)", value: "dps", sortable: true},
                 { text: "Reload Adjust DPS", value: "reloadDPS", sortable: true},
@@ -225,7 +226,7 @@ export default defineComponent({
                 { text: "Epic", value: "Shield_04", sortable: true },
                 { text: "Exotic", value: "Shield_05", sortable: true },
                 { text: "Legendary", value: "Shield_Altered_03", sortable: true },
-                // { text: 'Options', value: 'options'}
+                { text: 'Options', value: 'options'}
             ],
             headersShotsToKillHead: [
                 { text: "Weapon", value: "inGameName", sortable: true, width: 200, fixed: true },
@@ -236,7 +237,7 @@ export default defineComponent({
                 { text: "Epic", value: "Helmet_04", sortable: true },
                 { text: "Exotic", value: "Helmet_05", sortable: true },
                 { text: "Legendary", value: "Helmet_Altered_03", sortable: true },
-                // { text: 'Options', value: 'options'}
+                { text: 'Options', value: 'options'}
             ],
             headersStats: [
                 {text: "Weapon", value: "inGameName", sortable: true, width: 200, fixed: true},
@@ -325,6 +326,7 @@ export default defineComponent({
                     "ttk":         roundToThree(calculate.timeToKill()),
                     "dmgPerBull":  roundToThree(calculate.damageOnBodyShot()),
                     "dmgPerBullHS":roundToThree(calculate.damageOnWeakSpotShot()),
+                    "ammoCost": Math.round(calculate.ammoCostPerKill())
                 }
 
                 setRunTimeSettings("shotsToKillTableBody")
@@ -468,7 +470,7 @@ h2 {
 }
 
 .wrapper-small {
-    width: 50%;
+    width: 60%;
 }
 
 

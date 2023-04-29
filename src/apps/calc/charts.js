@@ -650,8 +650,6 @@ export function penModDifferenceChart() {
       name: weaponData[weapon]["inGameName"],
       data: weaponPoints,
     });
-
-    console.log(data);
   }
 
   let categories;

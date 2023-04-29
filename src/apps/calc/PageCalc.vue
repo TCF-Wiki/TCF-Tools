@@ -111,6 +111,7 @@ export default {
         <section class="container">
             <StatCustomiser />
         </section>
+        <a class="back-to-top" href="#top"> <div class="back-to-top-text">Back To Top</div></a>
     </section>
 </template>
 
@@ -173,4 +174,26 @@ h2 {
 
 b {
     font-size: larger;
-}</style>
+}
+
+.back-to-top-text {
+    margin-top: 2rem;
+    width: 100%;
+    text-align: center;
+    font-size: 1.6rem;
+    background-color: var(--color-surface-3);
+    padding: 0.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3rem;
+
+    border-radius: 0.3rem;
+}
+
+a.back-to-top {
+    transition: 0.2s ease-in-out;
+}
+
+a.back-to-top:hover {
+    color: var(--color-link);
+}
+</style>
