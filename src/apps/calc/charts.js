@@ -661,9 +661,9 @@ export function penModDifferenceChart() {
       "Pen +1",
       "Pen +2",
       "Pen +3",
-      "Creature DMG +25%",
-      "Creature DMG +50%",
-      "Creature DMG +75%",
+      "Creat. +25%",
+      "Creat. +50%",
+      "Creat. +75%",
     ];
   }
 
