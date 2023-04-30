@@ -270,6 +270,16 @@ export const calculate = {
   },
 
   totalDamagePerClick: function () {
+    if (curWeapon.includes('WP_A_Launch_MSL')) {
+      return roundToOne(
+        (this.s("directDamage") + this.s("radialDamage")) *
+        (settings.accuracy / 100) *
+        this.penetrationMultiplier() *
+        this.falloffMultiplier() *
+        this.creatureDamageMult()
+      )
+
+    }
     return roundToOne(
       // raw bullet damage
       (this.s("directDamage") + this.s("radialDamage")) *
@@ -318,6 +328,7 @@ export const calculate = {
 
   damageOnWeakSpotShot: function () {
     // To get damage on a weakspot hit
+    if (curWeapon.includes('WP_A_Launch_MSL')) return this.damageOnBodyShot()
     return (
       // raw bullet damage
       (this.s("directDamage") +
