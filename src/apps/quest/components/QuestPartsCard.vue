@@ -377,7 +377,6 @@ export default defineComponent({
     overscroll-behavior: contain;
 }
 
-
 .card__button {
     position: absolute;
     bottom: calc(var(--padding) * 0.5);
