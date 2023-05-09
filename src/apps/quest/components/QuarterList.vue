@@ -26,7 +26,7 @@
     </div>
 </section>
 
-<section>
+<section class="quarter-list__container">
     <!-- Quarter Level -->
     <div class="quarter-list__container-inner fade">       
         <div class="quarter-line"> 
@@ -550,7 +550,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
-
+.quarter-list__container {
+    max-height: 100vh;
+    overflow-y: scroll;
+}
 .quarter-line__container-inner {
     display: none;
 }

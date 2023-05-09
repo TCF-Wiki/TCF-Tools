@@ -315,7 +315,7 @@ export const calculate = {
 
   damageOnBodyShot: function () {
     // To get damage on a body shot
-    return (
+    return roundToOne(
       // raw bullet damage
       (this.s("directDamage") +
         this.s("radialDamage") * this.s("amountOfImmediateFires")) *
@@ -329,7 +329,7 @@ export const calculate = {
   damageOnWeakSpotShot: function () {
     // To get damage on a weakspot hit
     if (curWeapon.includes('WP_A_Launch_MSL')) return this.damageOnBodyShot()
-    return (
+    return roundToOne(
       // raw bullet damage
       (this.s("directDamage") +
         this.s("radialDamage") * this.s("amountOfImmediateFires")) *

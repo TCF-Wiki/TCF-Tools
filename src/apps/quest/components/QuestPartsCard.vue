@@ -260,7 +260,7 @@ export default defineComponent({
     --border-radius: 0.5rem;
     --duration: 0.25s;
     --timing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    --delay: 0.1s;
+    --delay: 0.0s;
 
     transition: all var(--duration) var(--timing) var(--delay);
 
@@ -269,7 +269,6 @@ export default defineComponent({
 
 .card.expanded {
     height: calc(200% + 3rem + 3px);
-    -padding: 3%;
     border: none;
 }
 
@@ -378,30 +377,7 @@ export default defineComponent({
     overscroll-behavior: contain;
 }
 
-.card__desc-text::-webkit-scrollbar {
-    width: 5px;
-    border-top: none;
-    border-bottom: none;
-    cursor: pointer;
-    opacity: 0;
-}
 
-/* Track */
-.card__desc-text::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0);
-}
-
-/* Handle */
-.card__desc-text::-webkit-scrollbar-thumb {
-    background-color: var(--text-color-body-white);
-    border-radius: 2px;
-    cursor: pointer;
-}
-
-/* Handle on hover */
-.card__desc-text::-webkit-scrollbar-thumb:hover {
-    filter: brightness(300%);
-}
 .card__button {
     position: absolute;
     bottom: calc(var(--padding) * 0.5);

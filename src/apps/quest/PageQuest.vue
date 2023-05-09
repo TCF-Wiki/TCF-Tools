@@ -37,7 +37,8 @@
                 <img src="/quest-images/Quarters/ItemList.png" class="modal__header-image" />
             </div>
         </div>
-
+    </div>
+    <div class="quest-line__container">
         <!-- ICA -->
         <div class="quest-line__container-inner fade">
             <div class="quest-line">
@@ -499,6 +500,9 @@ export default defineComponent({
     max-width: 100%;
     position: relative;
     margin: auto;
+
+    max-height: 120vh;
+    overflow-y: scroll;
 }
 
 .quest-line .quest-list:first-child {

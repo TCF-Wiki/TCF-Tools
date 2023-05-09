@@ -238,7 +238,6 @@ export default defineComponent({
                                         ? newData[name] + data[item]
                                         : data[item];
 
-                                    if (name == "Charged Spinal Base") console.log(partData['inGameName'])
                                     this.savePopupInfo(name, data[item], partData['inGameName'], 'missions')
                                 }
                                 if (this.onlyShowCurrentProgress) break;
@@ -443,6 +442,11 @@ p {
     text-align: center;
     font-size: var(--space-xl);
     margin-bottom: 0.3rem;
+}
+
+.item-list__container-inner {
+    max-height: 100vh;
+    overflow-y: scroll;
 }
 
 p.complete {

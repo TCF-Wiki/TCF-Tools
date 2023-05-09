@@ -108,7 +108,7 @@ export function killCreatureOrPlayer(task: any, faction: string): string {
     let locationString = ''
     let stormString = ''
     if (killInfo['m_onlyDuringStorm']) stormString = ' during an active Storm'
-    if (task['locationConditions'].lenght > 0) locationString = ' at ' + locationNameManager(task['locationConditions'[0]])
+    if (task['locationConditions'].length > 0) locationString = ' at ' + locationNameManager(task['locationConditions'][0])
     else if (killInfo['m_mapName']) {
         locationString = ' on ' + mapNameManager(killInfo['m_mapName'])
     }
