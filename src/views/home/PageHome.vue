@@ -1,8 +1,8 @@
 <template>
     <div class="home">
-        <div class="logo">
+        <!-- <div class="logo">
             <img class="logoImg" src="/wiki_logo_bar.png" />
-        </div>
+        </div> -->
         <div class="about">
             <div>
                 <h3>The Cycle: Frontier Wiki:</h3>
@@ -75,20 +75,12 @@
                         <li>Loadout Generator</li>
                     </ul>
                 </div>
-                <div class="contrib-item">
-                    <img src="./images/soulin_avatar.png" />
-                    <h4>Soulin (クリス)</h4>
-                    <ul>
-                        <li>TC:F Toolbox App (WIP)</li>
-                    </ul>
-                </div>
             </div>
         </div>
     </div>
 </template>
 <style scoped>
 /* Main */
-@import url("https://fonts.googleapis.com/css2?family=Sora");
 .home {
     display: flex;
     flex-direction: column;
