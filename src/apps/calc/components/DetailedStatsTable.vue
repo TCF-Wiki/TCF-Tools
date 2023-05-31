@@ -263,7 +263,7 @@ export default defineComponent({
                 {text: 'Falloff Multiplier', value: 'FalloffMultiplier', sortable: true}, 
                 {text: 'Falloff Range Start (cm)', value: 'FalloffStart', sortable: true}, 
                 // {text: 'Weapon Type', value: 'tags', sortable: true}, 
-                {text: 'Price', value: 'buyValue', sortable: true}, 
+                // {text: 'Price', value: 'buyValue', sortable: true}, 
                 // {text: 'Sell Price', value: 'sellValue', sortable: true}, 
                 // {text: 'Faction', value: 'faction', sortable: true}, 
                 // {text: 'Faction Reputation', value: 'factionRep', sortable: true}, 
@@ -326,7 +326,7 @@ export default defineComponent({
                     "ttk":         roundToThree(calculate.timeToKill()),
                     "dmgPerBull":  roundToThree(calculate.damageOnBodyShot()),
                     "dmgPerBullHS":roundToThree(calculate.damageOnWeakSpotShot()),
-                    "ammoCost": Math.round(calculate.ammoCostPerKill())
+                    // "ammoCost": Math.round(calculate.ammoCostPerKill())
                 }
 
                 setRunTimeSettings("shotsToKillTableBody")
